@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ParentalGatePageInfo _$ParentalGatePageInfoFromJson(Map<String, dynamic> json) {
-  return _ParentalGatePageInfo.fromJson(json);
-}
-
 /// @nodoc
 class _$ParentalGatePageInfoTearOff {
   const _$ParentalGatePageInfoTearOff();
@@ -30,10 +26,6 @@ class _$ParentalGatePageInfoTearOff {
       targetData: targetData,
     );
   }
-
-  ParentalGatePageInfo fromJson(Map<String, Object?> json) {
-    return ParentalGatePageInfo.fromJson(json);
-  }
 }
 
 /// @nodoc
@@ -45,7 +37,6 @@ mixin _$ParentalGatePageInfo {
   int get maxAnswerNum => throw _privateConstructorUsedError;
   ParentalGateData? get targetData => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ParentalGatePageInfoCopyWith<ParentalGatePageInfo> get copyWith =>
       throw _privateConstructorUsedError;
@@ -152,15 +143,12 @@ class __$ParentalGatePageInfoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_ParentalGatePageInfo
     with DiagnosticableTreeMixin
     implements _ParentalGatePageInfo {
   const _$_ParentalGatePageInfo(
       {this.answerNum = 0, this.maxAnswerNum = 0, this.targetData});
-
-  factory _$_ParentalGatePageInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_ParentalGatePageInfoFromJson(json);
 
   @JsonKey()
   @override
@@ -210,11 +198,6 @@ class _$_ParentalGatePageInfo
   _$ParentalGatePageInfoCopyWith<_ParentalGatePageInfo> get copyWith =>
       __$ParentalGatePageInfoCopyWithImpl<_ParentalGatePageInfo>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_ParentalGatePageInfoToJson(this);
-  }
 }
 
 abstract class _ParentalGatePageInfo implements ParentalGatePageInfo {
@@ -222,9 +205,6 @@ abstract class _ParentalGatePageInfo implements ParentalGatePageInfo {
       {int answerNum,
       int maxAnswerNum,
       ParentalGateData? targetData}) = _$_ParentalGatePageInfo;
-
-  factory _ParentalGatePageInfo.fromJson(Map<String, dynamic> json) =
-      _$_ParentalGatePageInfo.fromJson;
 
   @override
   int get answerNum;

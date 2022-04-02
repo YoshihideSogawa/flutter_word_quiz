@@ -6,8 +6,8 @@ import 'package:word_quiz/model/parental_gate_page_info.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 
 /// ペアレンタルゲートのProviderです。
-final parentalGatePageProvider =
-    StateNotifierProvider.autoDispose<ParentalGatePageNotifier, ParentalGatePageInfo>(
+final parentalGatePageProvider = StateNotifierProvider.autoDispose<
+    ParentalGatePageNotifier, ParentalGatePageInfo>(
   ParentalGatePageNotifier.new,
 );
 

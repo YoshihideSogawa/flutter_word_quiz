@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ParentalGateData _$ParentalGateDataFromJson(Map<String, dynamic> json) {
-  return _ParentalGateData.fromJson(json);
-}
-
 /// @nodoc
 class _$ParentalGateDataTearOff {
   const _$ParentalGateDataTearOff();
@@ -30,10 +26,6 @@ class _$ParentalGateDataTearOff {
       answerList: answerList,
     );
   }
-
-  ParentalGateData fromJson(Map<String, Object?> json) {
-    return ParentalGateData.fromJson(json);
-  }
 }
 
 /// @nodoc
@@ -45,7 +37,6 @@ mixin _$ParentalGateData {
   String? get correct => throw _privateConstructorUsedError;
   List<String>? get answerList => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ParentalGateDataCopyWith<ParentalGateData> get copyWith =>
       throw _privateConstructorUsedError;
@@ -136,14 +127,11 @@ class __$ParentalGateDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_ParentalGateData
     with DiagnosticableTreeMixin
     implements _ParentalGateData {
   const _$_ParentalGateData({this.question, this.correct, this.answerList});
-
-  factory _$_ParentalGateData.fromJson(Map<String, dynamic> json) =>
-      _$$_ParentalGateDataFromJson(json);
 
   @override
   final String? question;
@@ -189,11 +177,6 @@ class _$_ParentalGateData
   @override
   _$ParentalGateDataCopyWith<_ParentalGateData> get copyWith =>
       __$ParentalGateDataCopyWithImpl<_ParentalGateData>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_ParentalGateDataToJson(this);
-  }
 }
 
 abstract class _ParentalGateData implements ParentalGateData {
@@ -201,9 +184,6 @@ abstract class _ParentalGateData implements ParentalGateData {
       {String? question,
       String? correct,
       List<String>? answerList}) = _$_ParentalGateData;
-
-  factory _ParentalGateData.fromJson(Map<String, dynamic> json) =
-      _$_ParentalGateData.fromJson;
 
   @override
   String? get question;
