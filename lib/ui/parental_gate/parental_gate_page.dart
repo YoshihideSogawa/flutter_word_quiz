@@ -76,7 +76,7 @@ class ParentalGatePage extends ConsumerWidget {
       builder: (context) => AlertDialog(
         content: const Text(
           'シェアなどの いちぶきのうを せいげんしました\n'
-          'やりなおすばあいは メニューから [ペアレンタルゲート]を えらんでください',
+          'やりなおすばあいは メニューから [せってい]>[ペアレンタルゲート]を えらんでください',
         ),
         actions: [
           TextButton(
