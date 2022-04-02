@@ -33,14 +33,14 @@ const kamituku = ParentalGateData(
   ],
 );
 
-const hissatuMaeba = ParentalGateData(
-  question: 'ひっさつまえば',
-  correct: '必殺前歯',
+const hakaiKosen = ParentalGateData(
+  question: 'はかいこうせん',
+  correct: '破壊光線',
   answerList: [
+    '破壊光線',
     '必殺前歯',
-    '必中奥歯',
-    '術中犬歯',
-    '最強歯',
+    '亜空切断',
+    '我武者羅',
   ],
 );
 
@@ -114,7 +114,7 @@ final parentalGateList = [
   sorawoTobu,
   naminori,
   kamituku,
-  hissatuMaeba,
+  hakaiKosen,
   jitensha,
   konjo,
   kairiki,
