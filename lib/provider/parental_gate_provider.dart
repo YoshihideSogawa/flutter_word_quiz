@@ -7,7 +7,7 @@ import 'package:word_quiz/repository/app_property_repository.dart';
 
 /// ペアレンタルゲートのProviderです。
 final parentalGatePageProvider =
-    StateNotifierProvider<ParentalGatePageNotifier, ParentalGatePageInfo>(
+    StateNotifierProvider.autoDispose<ParentalGatePageNotifier, ParentalGatePageInfo>(
   ParentalGatePageNotifier.new,
 );
 
