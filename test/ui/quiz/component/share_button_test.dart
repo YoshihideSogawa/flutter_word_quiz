@@ -42,6 +42,31 @@ void main() {
     expect(find.byIcon(Icons.share), findsOneWidget);
   });
 
+  testWidgets('ShareButton(ペアレンタルコントロール)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(true);
+
+    const quizType = QuizTypes.daily;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          parentalControlProvider.overrideWithValue(mockParentalControl),
+        ],
+        child: const MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: Scaffold(
+              body: ShareButton(shareText: 'text'),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('シェア'), findsNothing);
+    expect(find.byType(SizedBox), findsOneWidget);
+  });
+
   testWidgets('ShareButton(Tap)', (tester) async {
     final mockParentalControl = MockParentalControl();
     when(mockParentalControl.isParentalControl()).thenReturn(false);
