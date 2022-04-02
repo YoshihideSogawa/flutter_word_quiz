@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 
 /// スプラッシュページの処理を行うProviderです。
-final splashPageProvider =
-    StateNotifierProvider<SplashPageNotifier, AsyncValue<SplashPageInfo>>(
+final splashPageProvider = StateNotifierProvider.autoDispose<SplashPageNotifier,
+    AsyncValue<SplashPageInfo>>(
   SplashPageNotifier.new,
 );
 
@@ -23,8 +24,26 @@ class SplashPageNotifier extends StateNotifier<AsyncValue<SplashPageInfo>> {
   /// 初期化を行います。
   @visibleForTesting
   Future<void> init() async {
+    final appPropertyRepository = _ref.read(appPropertyRepositoryProvider);
+
+    // ペアレンタルコントロールが設定されていない場合
+    if (appPropertyRepository.parentalControl() == null) {
+      // iOSの場合はペアレンタルゲートを表示
+      if (AppPlatform.isIOS) {
+        state = const AsyncValue.data(
+          SplashPageInfo(
+            showParentalGate: true,
+          ),
+        );
+        return;
+      } else {
+        // iOS以外はペアレンタルコントロールをオフ
+        await appPropertyRepository.saveParentalControl(parentalControl: false);
+      }
+    }
+
     // すでに起動済みの場合はルールを表示しない
-    if (_ref.read(appPropertyRepositoryProvider).alreadyLaunched()) {
+    if (appPropertyRepository.alreadyLaunched()) {
       state = const AsyncValue.data(
         SplashPageInfo(
           showRule: false,
@@ -34,7 +53,7 @@ class SplashPageNotifier extends StateNotifier<AsyncValue<SplashPageInfo>> {
     }
 
     // 起動済みをマーク
-    await _ref.watch(appPropertyRepositoryProvider).saveLaunched();
+    await appPropertyRepository.saveLaunched();
 
     // ルールを表示する
     state = const AsyncValue.data(

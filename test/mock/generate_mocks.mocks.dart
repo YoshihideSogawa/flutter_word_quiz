@@ -66,6 +66,13 @@ class MockAppPropertyRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#saveLaunched, []),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
+  @override
+  _i9.Future<void> saveParentalControl({bool? parentalControl}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #saveParentalControl, [], {#parentalControl: parentalControl}),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i9.Future<void>);
 }
 
 /// A class which mocks [DataSettings].

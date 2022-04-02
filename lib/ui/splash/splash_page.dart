@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
 import 'package:word_quiz/provider/splash_page_provider.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
+import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 
 /// 起動時の処理を行うスプラッシュページです。
@@ -45,6 +46,19 @@ class SplashPage extends ConsumerWidget {
     BuildContext context,
     SplashPageInfo splashPageInfo,
   ) async {
+    // ペアレンタルゲートの表示
+    if (splashPageInfo.showParentalGate) {
+      unawaited(
+        Navigator.of(context).pushAndRemoveUntil<void>(
+          MaterialPageRoute(
+            builder: (context) => const ParentalGatePage(),
+          ),
+          (route) => false,
+        ),
+      );
+      return;
+    }
+
     unawaited(
       Navigator.of(context).pushAndRemoveUntil<void>(
         MaterialPageRoute(
