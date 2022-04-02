@@ -7,6 +7,7 @@ import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
+import 'package:word_quiz/provider/parental_control_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
@@ -43,7 +44,7 @@ void main() {
                 lastChain: 2,
               ),
             ),
-          )
+          ),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -72,6 +73,9 @@ void main() {
   });
 
   testWidgets('ResultView(failure)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.daily;
     final mockQuizPageNotifier = MockQuizPageNotifier();
     await tester.pumpWidget(
@@ -96,7 +100,8 @@ void main() {
                 lastChain: 2,
               ),
             ),
-          )
+          ),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -122,6 +127,9 @@ void main() {
   });
 
   testWidgets('ResultView(quit)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.daily;
     final mockQuizPageNotifier = MockQuizPageNotifier();
     await tester.pumpWidget(
@@ -146,7 +154,8 @@ void main() {
                 lastChain: 2,
               ),
             ),
-          )
+          ),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -273,6 +282,9 @@ void main() {
 
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -285,7 +297,8 @@ void main() {
                 lastChain: 2,
               ),
             ),
-          )
+          ),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(

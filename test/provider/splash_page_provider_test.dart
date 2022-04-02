@@ -10,6 +10,7 @@ void main() {
   test('showFirstRule(初回起動)', () async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final container = ProviderContainer(
       overrides: [
@@ -25,6 +26,7 @@ void main() {
   test('showFirstRule(起動済み)', () async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final container = ProviderContainer(
       overrides: [

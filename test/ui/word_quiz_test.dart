@@ -21,6 +21,8 @@ void main() {
   testWidgets('WordQuiz', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
+
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);

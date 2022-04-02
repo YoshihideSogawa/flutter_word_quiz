@@ -25,6 +25,7 @@ void main() {
   testWidgets('SplashPage>QuizPage', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -65,6 +66,7 @@ void main() {
   testWidgets('SplashPage>HowToPlayPage', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);

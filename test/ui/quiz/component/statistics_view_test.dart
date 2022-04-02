@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -8,6 +9,7 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
+import 'package:word_quiz/provider/parental_control_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
@@ -19,9 +21,13 @@ import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
+import '../../../mock/generate_mocks.mocks.dart';
 
 void main() {
   testWidgets('StatisticsView(Daily)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -52,6 +58,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -87,6 +94,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Endless)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.endless;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -117,6 +127,7 @@ void main() {
               ),
             ),
           ),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -150,6 +161,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -180,6 +194,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -199,6 +214,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -229,6 +247,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -245,6 +264,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily failure)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -275,6 +297,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -291,6 +314,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily none)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -322,6 +348,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -338,6 +365,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily quit)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -369,6 +399,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -388,6 +419,9 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily null)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(false);
+
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -415,6 +449,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWithValue(fakeStatisticsNotifier),
+          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(
           home: QuizType(
