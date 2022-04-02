@@ -2,195 +2,193 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
-import 'package:word_quiz/constant/app_platform.dart';
+import 'package:word_quiz/model/parental_gate_list.dart';
+import 'package:word_quiz/model/parental_gate_page_info.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
+import 'package:word_quiz/provider/parental_gate_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
-import 'package:word_quiz/provider/splash_page_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
-import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
-import 'package:word_quiz/ui/splash/splash_page.dart';
 
+import '../../mock/fake_parental_gate_page_notifier.dart';
 import '../../mock/fake_quiz_info_notifier.dart';
 import '../../mock/fake_settings_input_type_notifier.dart';
-import '../../mock/fake_splash_page_notifier.dart';
 import '../../mock/fake_word_input_notifier.dart';
 import '../../mock/generate_mocks.mocks.dart';
 
 void main() {
-  setUp(() {
-    AppPlatform.overridePlatForm = null;
+  testWidgets('表示の確認', (tester) async {
+    const parentalGatePageInfo = ParentalGatePageInfo(
+      maxAnswerNum: 3,
+      answerNum: 1,
+      targetData: mizuDeppou,
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          parentalGatePageProvider.overrideWithValue(
+            FakeParentalGatePageNotifier(
+              parentalGatePageInfo,
+            ),
+          ),
+        ],
+        child: const MaterialApp(
+          home: ParentalGatePage(),
+        ),
+      ),
+    );
+
+    expect(find.text('ねんれいかくにん'), findsOneWidget);
+    expect(find.text('みずでっぽうを選んでください(1/3)'), findsOneWidget);
+    expect(find.text('水鉄砲'), findsOneWidget);
+    expect(find.text('岩雪崩'), findsOneWidget);
+    expect(find.text('大文字'), findsOneWidget);
+    expect(find.text('火炎放射'), findsOneWidget);
   });
 
-  testWidgets('SplashPage>QuizPage', (tester) async {
+  testWidgets('不正解のタップ', (tester) async {
+    const parentalGatePageInfo = ParentalGatePageInfo(
+      maxAnswerNum: 3,
+      answerNum: 1,
+      targetData: mizuDeppou,
+    );
+
+    // Splash
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
     when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
-
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizInfoNotifier =
         FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
     final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          parentalGatePageProvider.overrideWithValue(
+            FakeParentalGatePageNotifier(
+              parentalGatePageInfo,
+            ),
+          ),
+          // 以下Splash
           appPropertyRepositoryProvider
               .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
               .overrideWithValue(fakeSettingsInputTypeNotifier),
-          //daily
           quizInfoProvider(QuizTypes.daily)
               .overrideWithValue(fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
               .overrideWithValue(fakeWordInputNotifier),
-          // endless
           quizInfoProvider(QuizTypes.endless)
               .overrideWithValue(fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWithValue(fakeWordInputNotifier),
         ],
         child: const MaterialApp(
-          home: SplashPage(),
+          home: ParentalGatePage(),
         ),
       ),
     );
 
+    await tester.tap(find.text('岩雪崩'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('シェアなどの いちぶきのうを せいげんしました'), findsOneWidget);
+
+    await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizPage), findsOneWidget);
   });
 
-  testWidgets('SplashPage>HowToPlayPage', (tester) async {
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
+  testWidgets('正解のタップ', (tester) async {
+    const parentalGatePageInfo = ParentalGatePageInfo(
+      maxAnswerNum: 3,
+      answerNum: 1,
+      targetData: mizuDeppou,
+    );
 
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
+    final fakeParentalGatePageNotifier =
+        FakeParentalGatePageNotifier(parentalGatePageInfo);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyRepositoryProvider
-              .overrideWithValue(mockAppPropertyRepository),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
-          // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+          parentalGatePageProvider
+              .overrideWithValue(fakeParentalGatePageNotifier),
         ],
         child: const MaterialApp(
-          home: SplashPage(),
+          home: ParentalGatePage(),
         ),
       ),
     );
 
+    await tester.tap(find.text('水鉄砲'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(HowToPlayPage), findsOneWidget);
+    expect(fakeParentalGatePageNotifier.pickCallTimes, 1);
   });
 
-  testWidgets('SplashPage>error', (tester) async {
-    final fakeSplashPageNotifier =
-        FakeSplashPageNotifier(const AsyncValue.error(''));
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
-
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          splashPageProvider.overrideWithValue(fakeSplashPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
-          // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
-        ],
-        child: const MaterialApp(
-          home: SplashPage(),
-        ),
-      ),
+  testWidgets('正解のタップ(全問正解)', (tester) async {
+    const parentalGatePageInfo = ParentalGatePageInfo(
+      maxAnswerNum: 3,
+      answerNum: 3,
+      targetData: mizuDeppou,
     );
 
-    await tester.pumpAndSettle();
-
-    expect(
-      find.text('もんだいが おこりました\nアプリを さいきどう してください'),
-      findsOneWidget,
-    );
-  });
-
-  testWidgets('SplashPage>ParentGatePage(iOS)', (tester) async {
-    AppPlatform.overridePlatForm = Platforms.iOS;
-
+    // Splash
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(null);
-
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
+    final fakeParentalGatePageNotifier =
+        FakeParentalGatePageNotifier(parentalGatePageInfo);
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizInfoNotifier =
         FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
     final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          parentalGatePageProvider
+              .overrideWithValue(fakeParentalGatePageNotifier),
+          // 以下Splash
           appPropertyRepositoryProvider
               .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
               .overrideWithValue(fakeSettingsInputTypeNotifier),
-          //daily
           quizInfoProvider(QuizTypes.daily)
               .overrideWithValue(fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
               .overrideWithValue(fakeWordInputNotifier),
-          // endless
           quizInfoProvider(QuizTypes.endless)
               .overrideWithValue(fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWithValue(fakeWordInputNotifier),
         ],
         child: const MaterialApp(
-          home: SplashPage(),
+          home: ParentalGatePage(),
         ),
       ),
     );
 
+    await tester.tap(find.text('水鉄砲'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(ParentalGatePage), findsOneWidget);
+    expect(find.textContaining('シェアなどの いちぶきのうを かいじょしました'), findsOneWidget);
+
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(QuizPage), findsOneWidget);
   });
 }

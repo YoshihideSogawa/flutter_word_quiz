@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
+import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/settings/settings_page.dart';
 
 import '../../mock/fake_settings_input_type_notifier.dart';
@@ -15,6 +17,10 @@ import '../../mock/fake_settings_quiz_range_notifier.dart';
 import '../../mock/generate_mocks.mocks.dart';
 
 void main() {
+  setUp(() {
+    AppPlatform.overridePlatForm = null;
+  });
+
   testWidgets('SettingsPage(きりかえタイプ)', (tester) async {
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -202,9 +208,9 @@ void main() {
 
   testWidgets('いっぱいやるのデータ削除のタップ', (tester) async {
     final fakeSettingsInputTypeNotifier =
-    FakeSettingsInputTypeNotifier(inputTypeSwitching);
+        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeSettingsQuizRangeNotifier =
-    FakeSettingsQuizRangeNotifier(blackWhite);
+        FakeSettingsQuizRangeNotifier(blackWhite);
     final mockDataSettings = MockDataSettings();
 
     await tester.pumpWidget(
@@ -246,5 +252,34 @@ void main() {
     expect(find.text(confirmTitle), findsNothing);
 
     verify(mockDataSettings.deleteAll()).called(1);
+  });
+
+  testWidgets('ペアレンタルゲートのタップ', (tester) async {
+    AppPlatform.overridePlatForm = Platforms.iOS;
+    final fakeSettingsInputTypeNotifier =
+        FakeSettingsInputTypeNotifier(inputTypeSwitching);
+    final fakeSettingsQuizRangeNotifier =
+        FakeSettingsQuizRangeNotifier(blackWhite);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          settingsInputTypeProvider
+              .overrideWithValue(fakeSettingsInputTypeNotifier),
+          settingsQuizRangeProvider
+              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+        ],
+        child: const MaterialApp(
+          home: SettingsPage(),
+        ),
+      ),
+    );
+
+    expect(find.text('ペアレンタルゲート'), findsOneWidget);
+
+    await tester.tap(find.text('ペアレンタルゲート'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ParentalGatePage), findsOneWidget);
   });
 }

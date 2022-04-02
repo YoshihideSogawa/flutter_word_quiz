@@ -7,7 +7,7 @@ import 'package:word_quiz/ui/splash/splash_page.dart';
 class ParentalGatePage extends ConsumerWidget {
   const ParentalGatePage({
     Key? key,
-  }) : super(key: key);
+  }) : super(key: key); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
