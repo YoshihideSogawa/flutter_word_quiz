@@ -70,4 +70,40 @@ void main() {
       'https://github.com/YoshihideSogawa/flutter_word_quiz',
     );
   });
+
+  testWidgets('リンクタップ(ペアレンタルコントロール)', (tester) async {
+    final mockParentalControl = MockParentalControl();
+    when(mockParentalControl.isParentalControl()).thenReturn(true);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          parentalControlProvider.overrideWithValue(mockParentalControl),
+        ],
+        child: const MaterialApp(
+          home: Scaffold(
+            body: HowToPlayPage(),
+          ),
+        ),
+      ),
+    );
+
+    await tester.ensureVisible(find.byKey(const Key('for_developer')));
+    final textRich =
+        tester.widget<Text>(find.byKey(const Key('for_developer')));
+    textRich.textSpan?.visitChildren(
+      (visitor) {
+        if (visitor is TextSpan && visitor.text == 'オープンソース') {
+          (visitor.recognizer as TapGestureRecognizer?)?.onTap!();
+          return false;
+        }
+
+        return true;
+      },
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(urlLauncher.launchCalled, isFalse);
+  });
 }
