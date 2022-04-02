@@ -1,17 +1,17 @@
 import 'package:word_quiz/model/parental_gate_data.dart';
 
-const sorawoTobu = ParentalGateData(
-  question: 'そらをとぶ',
-  correct: '空を飛ぶ',
+const zettaiReido = ParentalGateData(
+  question: 'ぜったいれいど',
+  correct: '絶対零度',
   answerList: [
-    '空を飛ぶ',
-    '青を見る',
-    '足るを知る',
-    '勝ちに行く',
+    '絶対零度',
+    '亜空切断',
+    '空前絶後',
+    '絶対音感',
   ],
 );
 
-const naminori = ParentalGateData(
+const namiNori = ParentalGateData(
   question: 'なみのり',
   correct: '波乗り',
   answerList: [
@@ -22,14 +22,14 @@ const naminori = ParentalGateData(
   ],
 );
 
-const kamituku = ParentalGateData(
-  question: 'かみつく',
-  correct: '噛み付く',
+const jikoSaisei = ParentalGateData(
+  question: 'じこさいせい',
+  correct: '自己再生',
   answerList: [
-    '噛み付く',
-    '歯に衣',
-    '髪抜く',
-    '愛する',
+    '自己再生',
+    '輪廻転生',
+    '生々流転',
+    '自然再生',
   ],
 );
 
@@ -77,7 +77,7 @@ const kairiki = ParentalGateData(
   ],
 );
 
-const daimonji = ParentalGateData(
+const daiMonji = ParentalGateData(
   question: 'だいもんじ',
   correct: '大文字',
   answerList: [
@@ -111,14 +111,14 @@ const mizuDeppou = ParentalGateData(
 );
 
 final parentalGateList = [
-  sorawoTobu,
-  naminori,
-  kamituku,
+  zettaiReido,
+  namiNori,
+  jikoSaisei,
   hakaiKosen,
   jitensha,
   konjo,
   kairiki,
-  daimonji,
+  daiMonji,
   ishiAtama,
   mizuDeppou
 ];
