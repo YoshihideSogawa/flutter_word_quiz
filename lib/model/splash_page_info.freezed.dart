@@ -22,10 +22,9 @@ SplashPageInfo _$SplashPageInfoFromJson(Map<String, dynamic> json) {
 class _$SplashPageInfoTearOff {
   const _$SplashPageInfoTearOff();
 
-  _SplashPageInfo call({bool showRule = false, bool showParentalGate = false}) {
+  _SplashPageInfo call({bool showRule = false}) {
     return _SplashPageInfo(
       showRule: showRule,
-      showParentalGate: showParentalGate,
     );
   }
 
@@ -40,7 +39,6 @@ const $SplashPageInfo = _$SplashPageInfoTearOff();
 /// @nodoc
 mixin _$SplashPageInfo {
   bool get showRule => throw _privateConstructorUsedError;
-  bool get showParentalGate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +51,7 @@ abstract class $SplashPageInfoCopyWith<$Res> {
   factory $SplashPageInfoCopyWith(
           SplashPageInfo value, $Res Function(SplashPageInfo) then) =
       _$SplashPageInfoCopyWithImpl<$Res>;
-  $Res call({bool showRule, bool showParentalGate});
+  $Res call({bool showRule});
 }
 
 /// @nodoc
@@ -68,16 +66,11 @@ class _$SplashPageInfoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? showRule = freezed,
-    Object? showParentalGate = freezed,
   }) {
     return _then(_value.copyWith(
       showRule: showRule == freezed
           ? _value.showRule
           : showRule // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showParentalGate: showParentalGate == freezed
-          ? _value.showParentalGate
-          : showParentalGate // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -90,7 +83,7 @@ abstract class _$SplashPageInfoCopyWith<$Res>
           _SplashPageInfo value, $Res Function(_SplashPageInfo) then) =
       __$SplashPageInfoCopyWithImpl<$Res>;
   @override
-  $Res call({bool showRule, bool showParentalGate});
+  $Res call({bool showRule});
 }
 
 /// @nodoc
@@ -107,16 +100,11 @@ class __$SplashPageInfoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? showRule = freezed,
-    Object? showParentalGate = freezed,
   }) {
     return _then(_SplashPageInfo(
       showRule: showRule == freezed
           ? _value.showRule
           : showRule // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showParentalGate: showParentalGate == freezed
-          ? _value.showParentalGate
-          : showParentalGate // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -127,8 +115,7 @@ class __$SplashPageInfoCopyWithImpl<$Res>
 class _$_SplashPageInfo
     with DiagnosticableTreeMixin
     implements _SplashPageInfo {
-  const _$_SplashPageInfo(
-      {this.showRule = false, this.showParentalGate = false});
+  const _$_SplashPageInfo({this.showRule = false});
 
   factory _$_SplashPageInfo.fromJson(Map<String, dynamic> json) =>
       _$$_SplashPageInfoFromJson(json);
@@ -136,13 +123,10 @@ class _$_SplashPageInfo
   @JsonKey()
   @override
   final bool showRule;
-  @JsonKey()
-  @override
-  final bool showParentalGate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SplashPageInfo(showRule: $showRule, showParentalGate: $showParentalGate)';
+    return 'SplashPageInfo(showRule: $showRule)';
   }
 
   @override
@@ -150,8 +134,7 @@ class _$_SplashPageInfo
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SplashPageInfo'))
-      ..add(DiagnosticsProperty('showRule', showRule))
-      ..add(DiagnosticsProperty('showParentalGate', showParentalGate));
+      ..add(DiagnosticsProperty('showRule', showRule));
   }
 
   @override
@@ -159,16 +142,12 @@ class _$_SplashPageInfo
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SplashPageInfo &&
-            const DeepCollectionEquality().equals(other.showRule, showRule) &&
-            const DeepCollectionEquality()
-                .equals(other.showParentalGate, showParentalGate));
+            const DeepCollectionEquality().equals(other.showRule, showRule));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(showRule),
-      const DeepCollectionEquality().hash(showParentalGate));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(showRule));
 
   @JsonKey(ignore: true)
   @override
@@ -182,16 +161,13 @@ class _$_SplashPageInfo
 }
 
 abstract class _SplashPageInfo implements SplashPageInfo {
-  const factory _SplashPageInfo({bool showRule, bool showParentalGate}) =
-      _$_SplashPageInfo;
+  const factory _SplashPageInfo({bool showRule}) = _$_SplashPageInfo;
 
   factory _SplashPageInfo.fromJson(Map<String, dynamic> json) =
       _$_SplashPageInfo.fromJson;
 
   @override
   bool get showRule;
-  @override
-  bool get showParentalGate;
   @override
   @JsonKey(ignore: true)
   _$SplashPageInfoCopyWith<_SplashPageInfo> get copyWith =>

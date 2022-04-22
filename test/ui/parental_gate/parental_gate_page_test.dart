@@ -101,7 +101,7 @@ void main() {
     await tester.tap(find.text('岩雪崩'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('シェアなどの いちぶきのうを せいげんしました'), findsOneWidget);
+    expect(find.textContaining('シェアなどの いちぶきのうを せいげんします'), findsOneWidget);
 
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();

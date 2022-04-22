@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 /// ツイートボタンです。
 class TweetButton extends ConsumerWidget {
@@ -15,17 +18,23 @@ class TweetButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ペアレンタルコントロールがオンなら表示しない
-    if (ref.read(parentalControlProvider).isParentalControl()) {
-      return const SizedBox.shrink();
-    }
-
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         primary: Colors.blue,
       ),
       onPressed: () async {
-        await launch(_tweetUri(tweetText));
+        if (ref.read(parentalControlProvider).isParentalControl()) {
+          unawaited(
+            Navigator.of(context).pushAndRemoveUntil<void>(
+              MaterialPageRoute(
+                builder: (context) => const ParentalGatePage(),
+              ),
+              (route) => false,
+            ),
+          );
+        } else {
+          await launch(_tweetUri(tweetText));
+        }
       },
       label: const Text('ツイート'),
       icon: const Icon(Icons.send),

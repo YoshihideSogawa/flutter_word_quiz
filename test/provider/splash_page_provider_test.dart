@@ -44,27 +44,7 @@ void main() {
     expect(splashPageInfo.showRule, isFalse);
   });
 
-  test('初回起動(iOS)', () async {
-    AppPlatform.overridePlatForm = Platforms.iOS;
-
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(null);
-
-    final container = ProviderContainer(
-      overrides: [
-        appPropertyRepositoryProvider
-            .overrideWithValue(mockAppPropertyRepository),
-      ],
-    );
-
-    final splashPageInfo = await container.read(splashPageProvider.future);
-    expect(splashPageInfo.showParentalGate, isTrue);
-  });
-
-  test('初回起動(Android)', () async {
-    AppPlatform.overridePlatForm = Platforms.android;
-
+  test('初回起動', () async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
     when(mockAppPropertyRepository.parentalControl()).thenReturn(null);

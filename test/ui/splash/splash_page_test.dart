@@ -150,47 +150,4 @@ void main() {
       findsOneWidget,
     );
   });
-
-  testWidgets('SplashPage>ParentGatePage(iOS)', (tester) async {
-    AppPlatform.overridePlatForm = Platforms.iOS;
-
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(null);
-
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
-
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          appPropertyRepositoryProvider
-              .overrideWithValue(mockAppPropertyRepository),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
-          // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
-        ],
-        child: const MaterialApp(
-          home: SplashPage(),
-        ),
-      ),
-    );
-
-    await tester.pumpAndSettle();
-
-    expect(find.byType(ParentalGatePage), findsOneWidget);
-  });
 }

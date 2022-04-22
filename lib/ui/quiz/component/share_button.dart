@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 /// シェアボタンです。
 class ShareButton extends ConsumerWidget {
@@ -15,18 +16,23 @@ class ShareButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ペアレンタルコントロールがオンなら表示しない
-    if (ref.read(parentalControlProvider).isParentalControl()) {
-      return const SizedBox.shrink();
-    }
-
     return ElevatedButton.icon(
       key: const Key('share_button'),
       style: ElevatedButton.styleFrom(
         primary: Colors.grey,
       ),
       onPressed: () {
-        Share.share(shareText);
+        // ペアレンタルコントロールがオンの場合
+        if (ref.read(parentalControlProvider).isParentalControl()) {
+          Navigator.of(context).pushAndRemoveUntil<void>(
+            MaterialPageRoute(
+              builder: (context) => const ParentalGatePage(),
+            ),
+            (route) => false,
+          );
+        } else {
+          Share.share(shareText);
+        }
       },
       label: const Text('シェア'),
       icon: const Icon(Icons.share),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
@@ -8,7 +7,6 @@ import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
@@ -49,19 +47,6 @@ class SettingsPage extends ConsumerWidget {
             ),
             onTap: () => _onTapDeleteEndlessData(context, ref),
           ),
-          if (AppPlatform.isIOS)
-            ListTile(
-              title: const Text(
-                'ペアレンタルゲート',
-              ),
-              onTap: () => Navigator.pushAndRemoveUntil<void>(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ParentalGatePage(),
-                ),
-                (route) => false,
-              ),
-            ),
         ],
       ),
     );

@@ -9,7 +9,6 @@ part 'splash_page_info.g.dart';
 class SplashPageInfo with _$SplashPageInfo {
   const factory SplashPageInfo({
     @Default(false) bool showRule,
-    @Default(false) bool showParentalGate,
   }) = _SplashPageInfo;
 
   factory SplashPageInfo.fromJson(Map<String, dynamic> json) =>

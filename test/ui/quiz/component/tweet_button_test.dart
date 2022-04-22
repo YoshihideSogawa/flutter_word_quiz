@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
@@ -42,7 +43,7 @@ void main() {
     expect(find.byIcon(Icons.send), findsOneWidget);
   });
 
-  testWidgets('TweetButton(ペアレンタルコントロール)', (tester) async {
+  testWidgets('TweetButton(ペアレンタルコントロール中のタップ)', (tester) async {
     final mockParentalControl = MockParentalControl();
     when(mockParentalControl.isParentalControl()).thenReturn(true);
 
@@ -63,8 +64,10 @@ void main() {
       ),
     );
 
-    expect(find.text('ツイート'), findsNothing);
-    expect(find.byType(SizedBox), findsOneWidget);
+    await tester.tap(find.text('ツイート'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ParentalGatePage), findsOneWidget);
   });
 
   testWidgets('TweetButton(Tap)', (tester) async {

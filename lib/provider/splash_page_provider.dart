@@ -28,16 +28,8 @@ class SplashPageNotifier extends StateNotifier<AsyncValue<SplashPageInfo>> {
 
     // ペアレンタルコントロールが設定されていない場合
     if (appPropertyRepository.parentalControl() == null) {
-      // iOSの場合はペアレンタルゲートを表示
-      if (AppPlatform.isIOS) {
-        state = const AsyncValue.data(
-          SplashPageInfo(
-            showParentalGate: true,
-          ),
-        );
-        return;
-      } else {
-        // iOS以外はペアレンタルコントロールをオフ
+      // iOS以外はペアレンタルコントロールをオフ
+      if (!AppPlatform.isIOS) {
         await appPropertyRepository.saveParentalControl(parentalControl: false);
       }
     }
