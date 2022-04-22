@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/provider/parental_gate_provider.dart';
-import 'package:word_quiz/ui/splash/splash_page.dart';
 
 /// ペアレンタルゲートページです。(Apple用)
 class ParentalGatePage extends ConsumerWidget {
@@ -60,7 +59,7 @@ class ParentalGatePage extends ConsumerWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => _navigateSplashPage(context),
+            onPressed: () => _navigatePage(context),
             child: Text(MaterialLocalizations.of(context).okButtonLabel),
           ),
         ],
@@ -77,7 +76,7 @@ class ParentalGatePage extends ConsumerWidget {
         content: const Text('シェアなどの いちぶきのうを せいげんします'),
         actions: [
           TextButton(
-            onPressed: () => _navigateSplashPage(context),
+            onPressed: () => _navigatePage(context),
             child: Text(MaterialLocalizations.of(context).okButtonLabel),
           ),
         ],
@@ -108,14 +107,9 @@ class ParentalGatePage extends ConsumerWidget {
     }
   }
 
-  /// スプラッシュページに遷移します。
-  void _navigateSplashPage(BuildContext context) {
-    Navigator.pushAndRemoveUntil<void>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SplashPage(),
-      ),
-      (route) => false,
-    );
+  /// もとのページに遷移します。
+  void _navigatePage(BuildContext context) {
+    Navigator.pop(context);
+    Navigator.maybePop(context);
   }
 }

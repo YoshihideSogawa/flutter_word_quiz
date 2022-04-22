@@ -25,11 +25,11 @@ class TweetButton extends ConsumerWidget {
       onPressed: () async {
         if (ref.read(parentalControlProvider).isParentalControl()) {
           unawaited(
-            Navigator.of(context).pushAndRemoveUntil<void>(
+            Navigator.of(context).push<void>(
               MaterialPageRoute(
                 builder: (context) => const ParentalGatePage(),
+                fullscreenDialog: true,
               ),
-              (route) => false,
             ),
           );
         } else {

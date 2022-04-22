@@ -13,7 +13,6 @@ import 'package:word_quiz/provider/splash_page_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 import 'package:word_quiz/ui/splash/splash_page.dart';
 

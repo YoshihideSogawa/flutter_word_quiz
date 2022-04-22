@@ -24,11 +24,11 @@ class ShareButton extends ConsumerWidget {
       onPressed: () {
         // ペアレンタルコントロールがオンの場合
         if (ref.read(parentalControlProvider).isParentalControl()) {
-          Navigator.of(context).pushAndRemoveUntil<void>(
+          Navigator.of(context).push<void>(
             MaterialPageRoute(
               builder: (context) => const ParentalGatePage(),
+              fullscreenDialog: true,
             ),
-            (route) => false,
           );
         } else {
           Share.share(shareText);

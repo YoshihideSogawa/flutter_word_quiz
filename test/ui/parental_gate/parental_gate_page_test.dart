@@ -14,7 +14,6 @@ import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
-import 'package:word_quiz/ui/quiz/quiz_page.dart';
 
 import '../../mock/fake_parental_gate_page_notifier.dart';
 import '../../mock/fake_quiz_info_notifier.dart';
@@ -92,11 +91,31 @@ void main() {
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWithValue(fakeWordInputNotifier),
         ],
-        child: const MaterialApp(
-          home: ParentalGatePage(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    Navigator.push<void>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ParentalGatePage(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  child: const Text('button'),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
+
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('岩雪崩'));
     await tester.pumpAndSettle();
@@ -106,7 +125,7 @@ void main() {
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(QuizPage), findsOneWidget);
+    expect(find.byType(ElevatedButton), findsOneWidget);
   });
 
   testWidgets('正解のタップ', (tester) async {
@@ -175,11 +194,31 @@ void main() {
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWithValue(fakeWordInputNotifier),
         ],
-        child: const MaterialApp(
-          home: ParentalGatePage(),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    Navigator.push<void>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ParentalGatePage(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  child: const Text('button'),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
+
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('水鉄砲'));
     await tester.pumpAndSettle();
@@ -189,6 +228,6 @@ void main() {
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(QuizPage), findsOneWidget);
+    expect(find.byType(ElevatedButton), findsOneWidget);
   });
 }
