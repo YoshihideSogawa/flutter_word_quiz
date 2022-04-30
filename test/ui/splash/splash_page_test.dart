@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
@@ -22,9 +23,14 @@ import '../../mock/fake_word_input_notifier.dart';
 import '../../mock/generate_mocks.mocks.dart';
 
 void main() {
+  setUp(() {
+    AppPlatform.overridePlatForm = null;
+  });
+
   testWidgets('SplashPage>QuizPage', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -65,6 +71,7 @@ void main() {
   testWidgets('SplashPage>HowToPlayPage', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
+    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);

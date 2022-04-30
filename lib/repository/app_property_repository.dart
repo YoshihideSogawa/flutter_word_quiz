@@ -14,6 +14,12 @@ abstract class AppPropertyRepository {
 
   /// 起動済みであることを保存します。
   Future<void> saveLaunched();
+
+  /// ペアレンタルコントロール状態を取得します。
+  bool? parentalControl();
+
+  /// ペアレンタルコントロールを保存します。
+  Future<void> saveParentalControl({required bool parentalControl});
 }
 
 /// アプリプロパティ（ローカル保存）です。
@@ -35,7 +41,21 @@ class _LocalAppPropertyRepository implements AppPropertyRepository {
   Future<void> saveLaunched() async {
     await _appPropertyBox.put(_launchFirstTimeKey, true);
   }
+
+  @override
+  bool? parentalControl() {
+    return _appPropertyBox.get(_parentalControlKey, defaultValue: null)
+        as bool?;
+  }
+
+  @override
+  Future<void> saveParentalControl({required bool parentalControl}) async {
+    await _appPropertyBox.put(_parentalControlKey, parentalControl);
+  }
 }
 
 /// 初回起動の保存キー
 const _launchFirstTimeKey = 'launch_first_time';
+
+/// ペアレンタルコントロールのキー
+const _parentalControlKey = 'parental_control';

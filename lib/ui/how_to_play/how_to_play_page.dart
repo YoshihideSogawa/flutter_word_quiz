@@ -1,18 +1,21 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
+import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/component/name_text.dart';
 
 /// 遊び方のページです。
-class HowToPlayPage extends StatelessWidget {
+class HowToPlayPage extends ConsumerWidget {
   const HowToPlayPage({
     Key? key,
   }) : super(key: key); // coverage:ignore-line
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('あそびかた'),
@@ -54,11 +57,15 @@ class HowToPlayPage extends StatelessWidget {
                           ' ゲームであそべます🎉\n',
                     ),
                     _buildLinkSpan(
+                      context,
+                      ref,
                       'Wordle',
                       'https://www.nytimes.com/games/wordle/',
                     ),
                     const TextSpan(text: 'と'),
                     _buildLinkSpan(
+                      context,
+                      ref,
                       'ポケモンWordle',
                       'https://wordle.mega-yadoran.jp/',
                     ),
@@ -76,7 +83,7 @@ class HowToPlayPage extends StatelessWidget {
               const Divider(),
               _buildRuleSameWordContent(),
               const Divider(),
-              _buildOtherInfo(),
+              _buildOtherInfo(context, ref),
             ],
           ),
         ),
@@ -85,7 +92,12 @@ class HowToPlayPage extends StatelessWidget {
   }
 
   /// リンク表示を構築します。
-  TextSpan _buildLinkSpan(String text, String link) {
+  TextSpan _buildLinkSpan(
+    BuildContext context,
+    WidgetRef ref,
+    String text,
+    String link,
+  ) {
     return TextSpan(
       text: text,
       style: const TextStyle(
@@ -94,7 +106,18 @@ class HowToPlayPage extends StatelessWidget {
       ),
       recognizer: TapGestureRecognizer()
         ..onTap = () {
-          launch(link);
+          if (ref.read(parentalControlProvider).isParentalControl()) {
+            // ペアレンタルコントロールがオンならペアレンタルゲートに遷移
+            Navigator.of(context).push<void>(
+              MaterialPageRoute(
+                builder: (context) => const ParentalGatePage(),
+                fullscreenDialog: true,
+              ),
+            );
+          } else {
+            // ペアレンタルコントロールがオフならURLに遷移
+            launch(link);
+          }
         },
     );
   }
@@ -294,7 +317,7 @@ class HowToPlayPage extends StatelessWidget {
   }
 
   /// その他の情報を構築します。
-  Widget _buildOtherInfo() {
+  Widget _buildOtherInfo(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -315,6 +338,8 @@ class HowToPlayPage extends StatelessWidget {
                     '\nソースコードはすべて',
               ),
               _buildLinkSpan(
+                context,
+                ref,
                 'オープンソース',
                 'https://github.com/YoshihideSogawa/flutter_word_quiz',
               ),
