@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 
-// ignore: avoid_classes_with_only_static_members
 /// アプリのPlatform判定を行います。(テスト可能にした)
 class AppPlatform {
+  /// private constructor
+  AppPlatform._();
+
   /// 動作中のPlatformを上書きします。
   @visibleForTesting
   static Platforms? overridePlatForm;
