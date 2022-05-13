@@ -12,12 +12,12 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 入力テキスト1文字です。
 class InputKey extends ConsumerWidget {
   const InputKey({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
     required this.keyboardState,
     required this.text,
-  }) : super(key: key); // coverage:ignore-line
+  }); // coverage:ignore-line
 
   /// 幅
   final double width;

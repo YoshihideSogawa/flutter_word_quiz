@@ -11,8 +11,8 @@ import 'package:word_quiz/ui/quiz/component/name_text.dart';
 /// 遊び方のページです。
 class HowToPlayPage extends ConsumerWidget {
   const HowToPlayPage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,7 +116,7 @@ class HowToPlayPage extends ConsumerWidget {
             );
           } else {
             // ペアレンタルコントロールがオフならURLに遷移
-            launch(link);
+            launchUrl(Uri.parse(link));
           }
         },
     );

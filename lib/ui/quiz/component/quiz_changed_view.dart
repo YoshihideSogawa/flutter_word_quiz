@@ -7,8 +7,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 問題が切り替わったことを表す画面です。
 class QuizChangedView extends ConsumerWidget {
   const QuizChangedView({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

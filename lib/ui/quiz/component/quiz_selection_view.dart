@@ -14,8 +14,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 問題の選択を行う画面です。(いっぱいやるモードのみ)
 class QuizSelectionView extends HookConsumerWidget {
   const QuizSelectionView({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -85,7 +85,6 @@ class QuizSelectionView extends HookConsumerWidget {
                   child: TextField(
                     controller: seedController,
                     maxLength: 10,
-                    maxLines: 1,
                     decoration: const InputDecoration(
                       hintText: '',
                       counterText: '',

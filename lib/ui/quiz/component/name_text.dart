@@ -8,12 +8,12 @@ import 'package:word_quiz/ui/quiz/app_colors.dart';
 /// 1文字を表します。
 class NameText extends HookWidget {
   const NameText({
-    Key? key,
+    super.key,
     this.text,
     required this.width,
     required this.height,
     required this.nameState,
-  }) : super(key: key); // coverage:ignore-line
+  }); // coverage:ignore-line
 
   /// 幅
   final double width;

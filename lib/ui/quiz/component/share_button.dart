@@ -7,9 +7,9 @@ import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 /// シェアボタンです。
 class ShareButton extends ConsumerWidget {
   const ShareButton({
-    Key? key,
+    super.key,
     required this.shareText,
-  }) : super(key: key); // coverage:ignore-line
+  }); // coverage:ignore-line
 
   /// テキスト
   final String shareText;

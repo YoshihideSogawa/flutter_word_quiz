@@ -12,31 +12,11 @@ part of 'quiz_range.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 QuizRange _$QuizRangeFromJson(Map<String, dynamic> json) {
   return _QuizRange.fromJson(json);
 }
-
-/// @nodoc
-class _$QuizRangeTearOff {
-  const _$QuizRangeTearOff();
-
-  _QuizRange call({int id = 0, int maxNo = 0, String? displayName}) {
-    return _QuizRange(
-      id: id,
-      maxNo: maxNo,
-      displayName: displayName,
-    );
-  }
-
-  QuizRange fromJson(Map<String, Object?> json) {
-    return QuizRange.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $QuizRange = _$QuizRangeTearOff();
 
 /// @nodoc
 mixin _$QuizRange {
@@ -89,22 +69,23 @@ class _$QuizRangeCopyWithImpl<$Res> implements $QuizRangeCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$QuizRangeCopyWith<$Res> implements $QuizRangeCopyWith<$Res> {
-  factory _$QuizRangeCopyWith(
-          _QuizRange value, $Res Function(_QuizRange) then) =
-      __$QuizRangeCopyWithImpl<$Res>;
+abstract class _$$_QuizRangeCopyWith<$Res> implements $QuizRangeCopyWith<$Res> {
+  factory _$$_QuizRangeCopyWith(
+          _$_QuizRange value, $Res Function(_$_QuizRange) then) =
+      __$$_QuizRangeCopyWithImpl<$Res>;
   @override
   $Res call({int id, int maxNo, String? displayName});
 }
 
 /// @nodoc
-class __$QuizRangeCopyWithImpl<$Res> extends _$QuizRangeCopyWithImpl<$Res>
-    implements _$QuizRangeCopyWith<$Res> {
-  __$QuizRangeCopyWithImpl(_QuizRange _value, $Res Function(_QuizRange) _then)
-      : super(_value, (v) => _then(v as _QuizRange));
+class __$$_QuizRangeCopyWithImpl<$Res> extends _$QuizRangeCopyWithImpl<$Res>
+    implements _$$_QuizRangeCopyWith<$Res> {
+  __$$_QuizRangeCopyWithImpl(
+      _$_QuizRange _value, $Res Function(_$_QuizRange) _then)
+      : super(_value, (v) => _then(v as _$_QuizRange));
 
   @override
-  _QuizRange get _value => super._value as _QuizRange;
+  _$_QuizRange get _value => super._value as _$_QuizRange;
 
   @override
   $Res call({
@@ -112,7 +93,7 @@ class __$QuizRangeCopyWithImpl<$Res> extends _$QuizRangeCopyWithImpl<$Res>
     Object? maxNo = freezed,
     Object? displayName = freezed,
   }) {
-    return _then(_QuizRange(
+    return _then(_$_QuizRange(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -137,11 +118,11 @@ class _$_QuizRange with DiagnosticableTreeMixin implements _QuizRange {
   factory _$_QuizRange.fromJson(Map<String, dynamic> json) =>
       _$$_QuizRangeFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final int id;
-  @JsonKey()
   @override
+  @JsonKey()
   final int maxNo;
   @override
   final String? displayName;
@@ -165,13 +146,14 @@ class _$_QuizRange with DiagnosticableTreeMixin implements _QuizRange {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _QuizRange &&
+            other is _$_QuizRange &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.maxNo, maxNo) &&
             const DeepCollectionEquality()
                 .equals(other.displayName, displayName));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -181,8 +163,8 @@ class _$_QuizRange with DiagnosticableTreeMixin implements _QuizRange {
 
   @JsonKey(ignore: true)
   @override
-  _$QuizRangeCopyWith<_QuizRange> get copyWith =>
-      __$QuizRangeCopyWithImpl<_QuizRange>(this, _$identity);
+  _$$_QuizRangeCopyWith<_$_QuizRange> get copyWith =>
+      __$$_QuizRangeCopyWithImpl<_$_QuizRange>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -191,20 +173,22 @@ class _$_QuizRange with DiagnosticableTreeMixin implements _QuizRange {
 }
 
 abstract class _QuizRange implements QuizRange {
-  const factory _QuizRange({int id, int maxNo, String? displayName}) =
-      _$_QuizRange;
+  const factory _QuizRange(
+      {final int id,
+      final int maxNo,
+      final String? displayName}) = _$_QuizRange;
 
   factory _QuizRange.fromJson(Map<String, dynamic> json) =
       _$_QuizRange.fromJson;
 
   @override
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
-  int get maxNo;
+  int get maxNo => throw _privateConstructorUsedError;
   @override
-  String? get displayName;
+  String? get displayName => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$QuizRangeCopyWith<_QuizRange> get copyWith =>
+  _$$_QuizRangeCopyWith<_$_QuizRange> get copyWith =>
       throw _privateConstructorUsedError;
 }

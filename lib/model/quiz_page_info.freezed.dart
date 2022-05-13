@@ -12,40 +12,11 @@ part of 'quiz_page_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 QuizPageInfo _$QuizPageInfoFromJson(Map<String, dynamic> json) {
   return _QuizPageInfo.fromJson(json);
 }
-
-/// @nodoc
-class _$QuizPageInfoTearOff {
-  const _$QuizPageInfoTearOff();
-
-  _QuizPageInfo call(
-      {bool showAnswer = false,
-      bool showStatistics = false,
-      bool normalKeyboard = true,
-      bool showQuizSelection = false,
-      bool showResult = false,
-      bool showQuizChanged = false}) {
-    return _QuizPageInfo(
-      showAnswer: showAnswer,
-      showStatistics: showStatistics,
-      normalKeyboard: normalKeyboard,
-      showQuizSelection: showQuizSelection,
-      showResult: showResult,
-      showQuizChanged: showQuizChanged,
-    );
-  }
-
-  QuizPageInfo fromJson(Map<String, Object?> json) {
-    return QuizPageInfo.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $QuizPageInfo = _$QuizPageInfoTearOff();
 
 /// @nodoc
 mixin _$QuizPageInfo {
@@ -123,11 +94,11 @@ class _$QuizPageInfoCopyWithImpl<$Res> implements $QuizPageInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$QuizPageInfoCopyWith<$Res>
+abstract class _$$_QuizPageInfoCopyWith<$Res>
     implements $QuizPageInfoCopyWith<$Res> {
-  factory _$QuizPageInfoCopyWith(
-          _QuizPageInfo value, $Res Function(_QuizPageInfo) then) =
-      __$QuizPageInfoCopyWithImpl<$Res>;
+  factory _$$_QuizPageInfoCopyWith(
+          _$_QuizPageInfo value, $Res Function(_$_QuizPageInfo) then) =
+      __$$_QuizPageInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool showAnswer,
@@ -139,14 +110,15 @@ abstract class _$QuizPageInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$QuizPageInfoCopyWithImpl<$Res> extends _$QuizPageInfoCopyWithImpl<$Res>
-    implements _$QuizPageInfoCopyWith<$Res> {
-  __$QuizPageInfoCopyWithImpl(
-      _QuizPageInfo _value, $Res Function(_QuizPageInfo) _then)
-      : super(_value, (v) => _then(v as _QuizPageInfo));
+class __$$_QuizPageInfoCopyWithImpl<$Res>
+    extends _$QuizPageInfoCopyWithImpl<$Res>
+    implements _$$_QuizPageInfoCopyWith<$Res> {
+  __$$_QuizPageInfoCopyWithImpl(
+      _$_QuizPageInfo _value, $Res Function(_$_QuizPageInfo) _then)
+      : super(_value, (v) => _then(v as _$_QuizPageInfo));
 
   @override
-  _QuizPageInfo get _value => super._value as _QuizPageInfo;
+  _$_QuizPageInfo get _value => super._value as _$_QuizPageInfo;
 
   @override
   $Res call({
@@ -157,7 +129,7 @@ class __$QuizPageInfoCopyWithImpl<$Res> extends _$QuizPageInfoCopyWithImpl<$Res>
     Object? showResult = freezed,
     Object? showQuizChanged = freezed,
   }) {
-    return _then(_QuizPageInfo(
+    return _then(_$_QuizPageInfo(
       showAnswer: showAnswer == freezed
           ? _value.showAnswer
           : showAnswer // ignore: cast_nullable_to_non_nullable
@@ -200,23 +172,23 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
   factory _$_QuizPageInfo.fromJson(Map<String, dynamic> json) =>
       _$$_QuizPageInfoFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showAnswer;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showStatistics;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool normalKeyboard;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showQuizSelection;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showResult;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showQuizChanged;
 
   @override
@@ -241,7 +213,7 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _QuizPageInfo &&
+            other is _$_QuizPageInfo &&
             const DeepCollectionEquality()
                 .equals(other.showAnswer, showAnswer) &&
             const DeepCollectionEquality()
@@ -256,6 +228,7 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
                 .equals(other.showQuizChanged, showQuizChanged));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -268,8 +241,8 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
 
   @JsonKey(ignore: true)
   @override
-  _$QuizPageInfoCopyWith<_QuizPageInfo> get copyWith =>
-      __$QuizPageInfoCopyWithImpl<_QuizPageInfo>(this, _$identity);
+  _$$_QuizPageInfoCopyWith<_$_QuizPageInfo> get copyWith =>
+      __$$_QuizPageInfoCopyWithImpl<_$_QuizPageInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -279,30 +252,30 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
 
 abstract class _QuizPageInfo implements QuizPageInfo {
   const factory _QuizPageInfo(
-      {bool showAnswer,
-      bool showStatistics,
-      bool normalKeyboard,
-      bool showQuizSelection,
-      bool showResult,
-      bool showQuizChanged}) = _$_QuizPageInfo;
+      {final bool showAnswer,
+      final bool showStatistics,
+      final bool normalKeyboard,
+      final bool showQuizSelection,
+      final bool showResult,
+      final bool showQuizChanged}) = _$_QuizPageInfo;
 
   factory _QuizPageInfo.fromJson(Map<String, dynamic> json) =
       _$_QuizPageInfo.fromJson;
 
   @override
-  bool get showAnswer;
+  bool get showAnswer => throw _privateConstructorUsedError;
   @override
-  bool get showStatistics;
+  bool get showStatistics => throw _privateConstructorUsedError;
   @override
-  bool get normalKeyboard;
+  bool get normalKeyboard => throw _privateConstructorUsedError;
   @override
-  bool get showQuizSelection;
+  bool get showQuizSelection => throw _privateConstructorUsedError;
   @override
-  bool get showResult;
+  bool get showResult => throw _privateConstructorUsedError;
   @override
-  bool get showQuizChanged;
+  bool get showQuizChanged => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$QuizPageInfoCopyWith<_QuizPageInfo> get copyWith =>
+  _$$_QuizPageInfoCopyWith<_$_QuizPageInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

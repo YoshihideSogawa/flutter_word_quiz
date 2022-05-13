@@ -22,8 +22,8 @@
 コードレビュー、Issues、Pull requestsについては受け付けております。ぜひよろしくおねがいします。
 
 ## 開発環境
-- Flutter : 2.10.3
-- Dart : 2.16.1
+- Flutter : 3.0.0
+- Dart : 2.17.0
 - Android Studio : 2021.1
 - Xcode : 13.3
 - fvm : 2.2.5

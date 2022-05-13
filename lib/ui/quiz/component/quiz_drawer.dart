@@ -5,8 +5,8 @@ import 'package:word_quiz/ui/settings/settings_page.dart';
 /// クイズ画面共通のドロワーです。
 class QuizDrawer extends StatelessWidget {
   const QuizDrawer({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context) {

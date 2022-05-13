@@ -22,7 +22,7 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 統計とシェアの表示です。
 class StatisticsView extends ConsumerWidget {
-  const StatisticsView({Key? key}) : super(key: key); // coverage:ignore-line
+  const StatisticsView({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -152,7 +152,7 @@ class StatisticsView extends ConsumerWidget {
 
 /// 結果を表すテキストです。
 class _ResultText extends ConsumerWidget {
-  const _ResultText({Key? key}) : super(key: key); // coverage:ignore-line
+  const _ResultText(); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -231,7 +231,7 @@ class _ResultText extends ConsumerWidget {
 
 /// 結果詳細です。
 class _ResultDetail extends ConsumerWidget {
-  const _ResultDetail({Key? key}) : super(key: key); // coverage:ignore-line
+  const _ResultDetail(); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -272,9 +272,7 @@ class _ResultDetail extends ConsumerWidget {
 
 /// 問題が変わるまでの時間表示を行います。
 class _ClockText extends ConsumerWidget {
-  const _ClockText({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+  const _ClockText(); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

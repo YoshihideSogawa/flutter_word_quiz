@@ -10,8 +10,8 @@ import 'package:word_quiz/ui/quiz/quiz_page.dart';
 /// 起動時の処理を行うスプラッシュページです。
 class SplashPage extends ConsumerWidget {
   const SplashPage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +32,7 @@ class SplashPage extends ConsumerWidget {
         ),
       ),
       data: (value) {
-        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
           await launchPage(context, value);
         });
         return emptyWidget;

@@ -5,8 +5,8 @@ import 'package:word_quiz/provider/parental_gate_provider.dart';
 /// ペアレンタルゲートページです。(Apple用)
 class ParentalGatePage extends ConsumerWidget {
   const ParentalGatePage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

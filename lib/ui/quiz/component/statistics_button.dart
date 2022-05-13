@@ -6,8 +6,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 結果表示ボタンです。
 class StatisticsButton extends ConsumerWidget {
   const StatisticsButton({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

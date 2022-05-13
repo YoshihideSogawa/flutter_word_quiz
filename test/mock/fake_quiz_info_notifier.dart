@@ -5,7 +5,7 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 
 class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
     implements QuizInfoNotifier {
-  FakeQuizInfoNotifier(AsyncValue<QuizInfo> state) : super(state);
+  FakeQuizInfoNotifier(super.state);
 
   bool updateQuizCalled = false;
 
