@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 /// アプリのPlatform判定を行います。(テスト可能にした)
 class AppPlatform {
   /// private constructor
-  AppPlatform._();
+  AppPlatform._(); // coverage:ignore-line
 
   /// 動作中のPlatformを上書きします。
   @visibleForTesting
