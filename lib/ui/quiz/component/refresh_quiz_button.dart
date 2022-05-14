@@ -8,8 +8,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 問題を更新するボタンです。
 class RefreshQuizButton extends ConsumerWidget {
   const RefreshQuizButton({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

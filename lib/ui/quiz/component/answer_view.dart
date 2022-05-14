@@ -8,8 +8,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 答えの表示です。
 class AnswerView extends ConsumerWidget {
   const AnswerView({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

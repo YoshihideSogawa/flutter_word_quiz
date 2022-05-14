@@ -7,8 +7,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 「いっぱいやる」を終わりにするボタンです。
 class GiveUpButton extends ConsumerWidget {
   const GiveUpButton({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

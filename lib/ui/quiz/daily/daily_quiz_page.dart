@@ -12,8 +12,8 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 /// きょうのもんだいの画面です。
 class DailyQuizPage extends ConsumerWidget {
   const DailyQuizPage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   /// [QuizTypes]
   static const _quizType = QuizTypes.daily;

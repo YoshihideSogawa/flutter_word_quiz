@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 /// 擬似的なダイアログを構成します。
 class QuizDialog extends StatelessWidget {
   const QuizDialog({
-    Key? key,
+    super.key,
     this.child,
     this.onTap,
-  }) : super(key: key);
+  });
 
   /// コンテンツ
   final Widget? child;

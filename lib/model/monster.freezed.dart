@@ -12,30 +12,11 @@ part of 'monster.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Monster _$MonsterFromJson(Map<String, dynamic> json) {
   return _Monster.fromJson(json);
 }
-
-/// @nodoc
-class _$MonsterTearOff {
-  const _$MonsterTearOff();
-
-  _Monster call({required int id, required String name}) {
-    return _Monster(
-      id: id,
-      name: name,
-    );
-  }
-
-  Monster fromJson(Map<String, Object?> json) {
-    return Monster.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Monster = _$MonsterTearOff();
 
 /// @nodoc
 mixin _$Monster {
@@ -81,28 +62,29 @@ class _$MonsterCopyWithImpl<$Res> implements $MonsterCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$MonsterCopyWith<$Res> implements $MonsterCopyWith<$Res> {
-  factory _$MonsterCopyWith(_Monster value, $Res Function(_Monster) then) =
-      __$MonsterCopyWithImpl<$Res>;
+abstract class _$$_MonsterCopyWith<$Res> implements $MonsterCopyWith<$Res> {
+  factory _$$_MonsterCopyWith(
+          _$_Monster value, $Res Function(_$_Monster) then) =
+      __$$_MonsterCopyWithImpl<$Res>;
   @override
   $Res call({int id, String name});
 }
 
 /// @nodoc
-class __$MonsterCopyWithImpl<$Res> extends _$MonsterCopyWithImpl<$Res>
-    implements _$MonsterCopyWith<$Res> {
-  __$MonsterCopyWithImpl(_Monster _value, $Res Function(_Monster) _then)
-      : super(_value, (v) => _then(v as _Monster));
+class __$$_MonsterCopyWithImpl<$Res> extends _$MonsterCopyWithImpl<$Res>
+    implements _$$_MonsterCopyWith<$Res> {
+  __$$_MonsterCopyWithImpl(_$_Monster _value, $Res Function(_$_Monster) _then)
+      : super(_value, (v) => _then(v as _$_Monster));
 
   @override
-  _Monster get _value => super._value as _Monster;
+  _$_Monster get _value => super._value as _$_Monster;
 
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
   }) {
-    return _then(_Monster(
+    return _then(_$_Monster(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -146,11 +128,12 @@ class _$_Monster with DiagnosticableTreeMixin implements _Monster {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Monster &&
+            other is _$_Monster &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -159,8 +142,8 @@ class _$_Monster with DiagnosticableTreeMixin implements _Monster {
 
   @JsonKey(ignore: true)
   @override
-  _$MonsterCopyWith<_Monster> get copyWith =>
-      __$MonsterCopyWithImpl<_Monster>(this, _$identity);
+  _$$_MonsterCopyWith<_$_Monster> get copyWith =>
+      __$$_MonsterCopyWithImpl<_$_Monster>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -169,16 +152,17 @@ class _$_Monster with DiagnosticableTreeMixin implements _Monster {
 }
 
 abstract class _Monster implements Monster {
-  const factory _Monster({required int id, required String name}) = _$_Monster;
+  const factory _Monster({required final int id, required final String name}) =
+      _$_Monster;
 
   factory _Monster.fromJson(Map<String, dynamic> json) = _$_Monster.fromJson;
 
   @override
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$MonsterCopyWith<_Monster> get copyWith =>
+  _$$_MonsterCopyWith<_$_Monster> get copyWith =>
       throw _privateConstructorUsedError;
 }

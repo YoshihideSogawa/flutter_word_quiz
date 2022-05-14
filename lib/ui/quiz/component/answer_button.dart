@@ -9,8 +9,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 答えを確認するボタンです。
 class AnswerButton extends ConsumerWidget {
   const AnswerButton({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

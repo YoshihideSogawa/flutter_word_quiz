@@ -11,8 +11,8 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 /// いっぱいやる画面のページです。
 class EndlessQuizPage extends ConsumerWidget {
   const EndlessQuizPage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   /// [QuizTypes]
   static const _quizType = QuizTypes.endless;

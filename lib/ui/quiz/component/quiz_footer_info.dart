@@ -11,8 +11,8 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 /// 問題のフッター部分の情報
 class QuizFooterInfo extends HookConsumerWidget {
   const QuizFooterInfo({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

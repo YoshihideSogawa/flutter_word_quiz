@@ -5,8 +5,8 @@ import 'package:word_quiz/ui/splash/splash_page.dart';
 /// WordQuizアプリです。
 class WordQuiz extends StatelessWidget {
   const WordQuiz({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,6 @@ class WordQuiz extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

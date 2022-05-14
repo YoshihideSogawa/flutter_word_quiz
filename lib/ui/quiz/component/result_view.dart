@@ -16,7 +16,7 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 結果画面を表示します。（いっぱいやるモードのみ）
 class ResultView extends ConsumerWidget {
-  const ResultView({Key? key}) : super(key: key); // coverage:ignore-line
+  const ResultView({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -88,7 +88,7 @@ class ResultView extends ConsumerWidget {
 
 /// 結果を表すテキストです。
 class _ResultText extends ConsumerWidget {
-  const _ResultText({Key? key}) : super(key: key); // coverage:ignore-line
+  const _ResultText(); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -138,7 +138,7 @@ class _ResultText extends ConsumerWidget {
 
 /// 結果詳細です。
 class _ResultDetail extends ConsumerWidget {
-  const _ResultDetail({Key? key}) : super(key: key); // coverage:ignore-line
+  const _ResultDetail(); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -181,9 +181,7 @@ String shareText(QuizInfo? info, QuizStatistics statistics) {
 
 /// 下部のボタンです。
 class _ActionButtons extends ConsumerWidget {
-  const _ActionButtons({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+  const _ActionButtons(); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -10,7 +10,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 入力した名前の一覧です。
 class WordNames extends ConsumerStatefulWidget {
-  const WordNames({Key? key}) : super(key: key); // coverage:ignore-line
+  const WordNames({super.key}); // coverage:ignore-line
 
   @override
   _WordNamesState createState() => _WordNamesState();

@@ -8,8 +8,8 @@ import 'package:word_quiz/ui/quiz/endless/endless_quiz_page.dart';
 /// クイズページを表示します。
 class QuizPage extends HookConsumerWidget {
   const QuizPage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

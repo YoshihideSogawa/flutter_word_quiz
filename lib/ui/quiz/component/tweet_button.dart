@@ -9,9 +9,9 @@ import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 /// ツイートボタンです。
 class TweetButton extends ConsumerWidget {
   const TweetButton({
-    Key? key,
+    super.key,
     required this.tweetText,
-  }) : super(key: key);
+  });
 
   /// ツイートするテキスト
   final String tweetText;
@@ -33,7 +33,7 @@ class TweetButton extends ConsumerWidget {
             ),
           );
         } else {
-          await launch(_tweetUri(tweetText));
+          await launchUrl(_tweetUri(tweetText));
         }
       },
       label: const Text('ツイート'),
@@ -42,13 +42,13 @@ class TweetButton extends ConsumerWidget {
   }
 
   /// Tweet用のテキストに変換します。
-  String _tweetUri(String tweetText) {
+  Uri _tweetUri(String tweetText) {
     return Uri.https(
       'twitter.com',
       'intent/tweet',
       <String, dynamic>{
         'text': tweetText,
       },
-    ).toString();
+    );
   }
 }

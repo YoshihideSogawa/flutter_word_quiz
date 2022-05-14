@@ -4,39 +4,38 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   collection: ^1.15.0
-  crypto: ^3.0.1
+  crypto: ^3.0.2
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.18.2+1
+  flutter_hooks: ^0.18.4
   flutter_localizations:
     sdk: flutter
-  freezed_annotation: ^1.1.0
+  freezed_annotation: ^2.0.3
   hive: ^2.0.6
   hive_flutter: ^1.1.0
-  hooks_riverpod: ^1.0.3
+  hooks_riverpod: ^1.0.4
   intl: ^0.17.0
-  json_annotation: ^4.4.0
-  mockito: ^5.1.0
-  share_plus: ^3.1.0
-  url_launcher: ^6.0.20
+  json_annotation: ^4.5.0
+  share_plus: ^4.0.4
+  url_launcher: ^6.1.2
 
 dev_dependencies:
-  build_runner: ^2.1.8
+  build_runner: ^2.1.10
   fake_async: ^1.2.0
-  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
-  freezed: ^1.1.1
+  freezed: ^2.0.3+1
   hive_generator: ^1.1.2
-  json_serializable: ^6.1.5
+  json_serializable: ^6.2.0
+  mockito: ^5.1.0
   pedantic_mono: any
   plugin_platform_interface: ^2.1.2
-  share_plus_platform_interface: ^2.0.1
+  share_plus_platform_interface: ^3.0.2
   url_launcher_platform_interface: ^2.0.5
 
 flutter:

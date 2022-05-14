@@ -3,7 +3,7 @@ import 'package:word_quiz/provider/settings_input_type_provider.dart';
 
 class FakeSettingsInputTypeNotifier extends StateNotifier<int>
     implements SettingsInputTypeNotifier {
-  FakeSettingsInputTypeNotifier(int state) : super(state);
+  FakeSettingsInputTypeNotifier(super.state);
 
   int? inputType;
 

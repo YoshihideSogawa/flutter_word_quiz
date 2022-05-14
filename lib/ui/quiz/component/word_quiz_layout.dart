@@ -28,7 +28,7 @@ import 'package:word_quiz/ui/quiz/component/word_names.dart';
 
 /// 問題表示の共通レイアウトです。
 class WordQuizLayout extends ConsumerWidget {
-  const WordQuizLayout({Key? key}) : super(key: key); //coverage:ignore-line
+  const WordQuizLayout({super.key}); //coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,7 +65,7 @@ class WordQuizLayout extends ConsumerWidget {
                             _buildNextQuizButton(quizInfo, quizType),
                             _buildRestartButton(quizInfo, quizType),
                             _buildResultButton(quizInfo, quizType),
-                            const Spacer(flex: 1),
+                            const Spacer(),
                             const DeleteButton(),
                           ],
                         ),

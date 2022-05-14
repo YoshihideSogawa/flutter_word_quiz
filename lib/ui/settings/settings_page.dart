@@ -11,8 +11,8 @@ import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({
-    Key? key,
-  }) : super(key: key); // coverage:ignore-line
+    super.key,
+  }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

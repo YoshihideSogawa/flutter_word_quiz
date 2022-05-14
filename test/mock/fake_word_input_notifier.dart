@@ -4,7 +4,7 @@ import 'package:word_quiz/provider/word_input_provider.dart';
 
 class FakeWordInputNotifier extends StateNotifier<WordInput>
     implements WordInputNotifier {
-  FakeWordInputNotifier(WordInput state) : super(state);
+  FakeWordInputNotifier(super.state);
 
   @override
   void deleteWord() {}

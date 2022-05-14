@@ -19,7 +19,6 @@ void main() {
   testWidgets('HowToPlayPage', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(
-        overrides: [],
         child: MaterialApp(
           home: Scaffold(
             body: HowToPlayPage(),

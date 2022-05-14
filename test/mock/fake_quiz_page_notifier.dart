@@ -4,7 +4,7 @@ import 'package:word_quiz/provider/quiz_page_provider.dart';
 
 class FakeQuizPageNotifier extends StateNotifier<QuizPageInfo>
     implements QuizPageNotifier {
-  FakeQuizPageNotifier(QuizPageInfo state) : super(state);
+  FakeQuizPageNotifier(super.state);
 
   bool updateKeyboardCalled = false;
 

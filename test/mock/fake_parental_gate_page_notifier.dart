@@ -4,7 +4,7 @@ import 'package:word_quiz/provider/parental_gate_provider.dart';
 
 class FakeParentalGatePageNotifier extends StateNotifier<ParentalGatePageInfo>
     implements ParentalGatePageNotifier {
-  FakeParentalGatePageNotifier(ParentalGatePageInfo state) : super(state);
+  FakeParentalGatePageNotifier(super.state);
 
   int pickCallTimes = 0;
 

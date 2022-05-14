@@ -14,7 +14,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// キーボードです。
 class WordKeyboard extends ConsumerStatefulWidget {
-  const WordKeyboard({Key? key}) : super(key: key); // coverage:ignore-line
+  const WordKeyboard({super.key}); // coverage:ignore-line
 
   @override
   _WordKeyboardState createState() => _WordKeyboardState();
