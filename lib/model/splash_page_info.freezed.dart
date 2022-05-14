@@ -12,29 +12,11 @@ part of 'splash_page_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 SplashPageInfo _$SplashPageInfoFromJson(Map<String, dynamic> json) {
   return _SplashPageInfo.fromJson(json);
 }
-
-/// @nodoc
-class _$SplashPageInfoTearOff {
-  const _$SplashPageInfoTearOff();
-
-  _SplashPageInfo call({bool showRule = false}) {
-    return _SplashPageInfo(
-      showRule: showRule,
-    );
-  }
-
-  SplashPageInfo fromJson(Map<String, Object?> json) {
-    return SplashPageInfo.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SplashPageInfo = _$SplashPageInfoTearOff();
 
 /// @nodoc
 mixin _$SplashPageInfo {
@@ -77,31 +59,31 @@ class _$SplashPageInfoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SplashPageInfoCopyWith<$Res>
+abstract class _$$_SplashPageInfoCopyWith<$Res>
     implements $SplashPageInfoCopyWith<$Res> {
-  factory _$SplashPageInfoCopyWith(
-          _SplashPageInfo value, $Res Function(_SplashPageInfo) then) =
-      __$SplashPageInfoCopyWithImpl<$Res>;
+  factory _$$_SplashPageInfoCopyWith(
+          _$_SplashPageInfo value, $Res Function(_$_SplashPageInfo) then) =
+      __$$_SplashPageInfoCopyWithImpl<$Res>;
   @override
   $Res call({bool showRule});
 }
 
 /// @nodoc
-class __$SplashPageInfoCopyWithImpl<$Res>
+class __$$_SplashPageInfoCopyWithImpl<$Res>
     extends _$SplashPageInfoCopyWithImpl<$Res>
-    implements _$SplashPageInfoCopyWith<$Res> {
-  __$SplashPageInfoCopyWithImpl(
-      _SplashPageInfo _value, $Res Function(_SplashPageInfo) _then)
-      : super(_value, (v) => _then(v as _SplashPageInfo));
+    implements _$$_SplashPageInfoCopyWith<$Res> {
+  __$$_SplashPageInfoCopyWithImpl(
+      _$_SplashPageInfo _value, $Res Function(_$_SplashPageInfo) _then)
+      : super(_value, (v) => _then(v as _$_SplashPageInfo));
 
   @override
-  _SplashPageInfo get _value => super._value as _SplashPageInfo;
+  _$_SplashPageInfo get _value => super._value as _$_SplashPageInfo;
 
   @override
   $Res call({
     Object? showRule = freezed,
   }) {
-    return _then(_SplashPageInfo(
+    return _then(_$_SplashPageInfo(
       showRule: showRule == freezed
           ? _value.showRule
           : showRule // ignore: cast_nullable_to_non_nullable
@@ -120,8 +102,8 @@ class _$_SplashPageInfo
   factory _$_SplashPageInfo.fromJson(Map<String, dynamic> json) =>
       _$$_SplashPageInfoFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showRule;
 
   @override
@@ -141,18 +123,19 @@ class _$_SplashPageInfo
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SplashPageInfo &&
+            other is _$_SplashPageInfo &&
             const DeepCollectionEquality().equals(other.showRule, showRule));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(showRule));
 
   @JsonKey(ignore: true)
   @override
-  _$SplashPageInfoCopyWith<_SplashPageInfo> get copyWith =>
-      __$SplashPageInfoCopyWithImpl<_SplashPageInfo>(this, _$identity);
+  _$$_SplashPageInfoCopyWith<_$_SplashPageInfo> get copyWith =>
+      __$$_SplashPageInfoCopyWithImpl<_$_SplashPageInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -161,15 +144,15 @@ class _$_SplashPageInfo
 }
 
 abstract class _SplashPageInfo implements SplashPageInfo {
-  const factory _SplashPageInfo({bool showRule}) = _$_SplashPageInfo;
+  const factory _SplashPageInfo({final bool showRule}) = _$_SplashPageInfo;
 
   factory _SplashPageInfo.fromJson(Map<String, dynamic> json) =
       _$_SplashPageInfo.fromJson;
 
   @override
-  bool get showRule;
+  bool get showRule => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SplashPageInfoCopyWith<_SplashPageInfo> get copyWith =>
+  _$$_SplashPageInfoCopyWith<_$_SplashPageInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
