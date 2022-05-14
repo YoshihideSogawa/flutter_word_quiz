@@ -12,7 +12,24 @@ part of 'parental_gate_page_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
+class _$ParentalGatePageInfoTearOff {
+  const _$ParentalGatePageInfoTearOff();
+
+  _ParentalGatePageInfo call(
+      {int answerNum = 0, int maxAnswerNum = 0, ParentalGateData? targetData}) {
+    return _ParentalGatePageInfo(
+      answerNum: answerNum,
+      maxAnswerNum: maxAnswerNum,
+      targetData: targetData,
+    );
+  }
+}
+
+/// @nodoc
+const $ParentalGatePageInfo = _$ParentalGatePageInfoTearOff();
 
 /// @nodoc
 mixin _$ParentalGatePageInfo {
@@ -79,11 +96,11 @@ class _$ParentalGatePageInfoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_ParentalGatePageInfoCopyWith<$Res>
+abstract class _$ParentalGatePageInfoCopyWith<$Res>
     implements $ParentalGatePageInfoCopyWith<$Res> {
-  factory _$$_ParentalGatePageInfoCopyWith(_$_ParentalGatePageInfo value,
-          $Res Function(_$_ParentalGatePageInfo) then) =
-      __$$_ParentalGatePageInfoCopyWithImpl<$Res>;
+  factory _$ParentalGatePageInfoCopyWith(_ParentalGatePageInfo value,
+          $Res Function(_ParentalGatePageInfo) then) =
+      __$ParentalGatePageInfoCopyWithImpl<$Res>;
   @override
   $Res call({int answerNum, int maxAnswerNum, ParentalGateData? targetData});
 
@@ -92,15 +109,15 @@ abstract class _$$_ParentalGatePageInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ParentalGatePageInfoCopyWithImpl<$Res>
+class __$ParentalGatePageInfoCopyWithImpl<$Res>
     extends _$ParentalGatePageInfoCopyWithImpl<$Res>
-    implements _$$_ParentalGatePageInfoCopyWith<$Res> {
-  __$$_ParentalGatePageInfoCopyWithImpl(_$_ParentalGatePageInfo _value,
-      $Res Function(_$_ParentalGatePageInfo) _then)
-      : super(_value, (v) => _then(v as _$_ParentalGatePageInfo));
+    implements _$ParentalGatePageInfoCopyWith<$Res> {
+  __$ParentalGatePageInfoCopyWithImpl(
+      _ParentalGatePageInfo _value, $Res Function(_ParentalGatePageInfo) _then)
+      : super(_value, (v) => _then(v as _ParentalGatePageInfo));
 
   @override
-  _$_ParentalGatePageInfo get _value => super._value as _$_ParentalGatePageInfo;
+  _ParentalGatePageInfo get _value => super._value as _ParentalGatePageInfo;
 
   @override
   $Res call({
@@ -108,7 +125,7 @@ class __$$_ParentalGatePageInfoCopyWithImpl<$Res>
     Object? maxAnswerNum = freezed,
     Object? targetData = freezed,
   }) {
-    return _then(_$_ParentalGatePageInfo(
+    return _then(_ParentalGatePageInfo(
       answerNum: answerNum == freezed
           ? _value.answerNum
           : answerNum // ignore: cast_nullable_to_non_nullable
@@ -133,11 +150,11 @@ class _$_ParentalGatePageInfo
   const _$_ParentalGatePageInfo(
       {this.answerNum = 0, this.maxAnswerNum = 0, this.targetData});
 
-  @override
   @JsonKey()
+  @override
   final int answerNum;
-  @override
   @JsonKey()
+  @override
   final int maxAnswerNum;
   @override
   final ParentalGateData? targetData;
@@ -161,7 +178,7 @@ class _$_ParentalGatePageInfo
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ParentalGatePageInfo &&
+            other is _ParentalGatePageInfo &&
             const DeepCollectionEquality().equals(other.answerNum, answerNum) &&
             const DeepCollectionEquality()
                 .equals(other.maxAnswerNum, maxAnswerNum) &&
@@ -178,25 +195,25 @@ class _$_ParentalGatePageInfo
 
   @JsonKey(ignore: true)
   @override
-  _$$_ParentalGatePageInfoCopyWith<_$_ParentalGatePageInfo> get copyWith =>
-      __$$_ParentalGatePageInfoCopyWithImpl<_$_ParentalGatePageInfo>(
+  _$ParentalGatePageInfoCopyWith<_ParentalGatePageInfo> get copyWith =>
+      __$ParentalGatePageInfoCopyWithImpl<_ParentalGatePageInfo>(
           this, _$identity);
 }
 
 abstract class _ParentalGatePageInfo implements ParentalGatePageInfo {
   const factory _ParentalGatePageInfo(
-      {final int answerNum,
-      final int maxAnswerNum,
-      final ParentalGateData? targetData}) = _$_ParentalGatePageInfo;
+      {int answerNum,
+      int maxAnswerNum,
+      ParentalGateData? targetData}) = _$_ParentalGatePageInfo;
 
   @override
-  int get answerNum => throw _privateConstructorUsedError;
+  int get answerNum;
   @override
-  int get maxAnswerNum => throw _privateConstructorUsedError;
+  int get maxAnswerNum;
   @override
-  ParentalGateData? get targetData => throw _privateConstructorUsedError;
+  ParentalGateData? get targetData;
   @override
   @JsonKey(ignore: true)
-  _$$_ParentalGatePageInfoCopyWith<_$_ParentalGatePageInfo> get copyWith =>
+  _$ParentalGatePageInfoCopyWith<_ParentalGatePageInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -12,11 +12,42 @@ part of 'quiz_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 QuizInfo _$QuizInfoFromJson(Map<String, dynamic> json) {
   return _QuizInfo.fromJson(json);
 }
+
+/// @nodoc
+class _$QuizInfoTearOff {
+  const _$QuizInfoTearOff();
+
+  _QuizInfo call(
+      {Monster? answer,
+      int maxAnswer = 0,
+      QuizTypes? quizType,
+      QuizProcessType quizProcess = QuizProcessType.none,
+      QuizRange? quizRange,
+      String? seedText,
+      int playDate = 0}) {
+    return _QuizInfo(
+      answer: answer,
+      maxAnswer: maxAnswer,
+      quizType: quizType,
+      quizProcess: quizProcess,
+      quizRange: quizRange,
+      seedText: seedText,
+      playDate: playDate,
+    );
+  }
+
+  QuizInfo fromJson(Map<String, Object?> json) {
+    return QuizInfo.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $QuizInfo = _$QuizInfoTearOff();
 
 /// @nodoc
 mixin _$QuizInfo {
@@ -125,10 +156,9 @@ class _$QuizInfoCopyWithImpl<$Res> implements $QuizInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_QuizInfoCopyWith<$Res> implements $QuizInfoCopyWith<$Res> {
-  factory _$$_QuizInfoCopyWith(
-          _$_QuizInfo value, $Res Function(_$_QuizInfo) then) =
-      __$$_QuizInfoCopyWithImpl<$Res>;
+abstract class _$QuizInfoCopyWith<$Res> implements $QuizInfoCopyWith<$Res> {
+  factory _$QuizInfoCopyWith(_QuizInfo value, $Res Function(_QuizInfo) then) =
+      __$QuizInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {Monster? answer,
@@ -146,14 +176,13 @@ abstract class _$$_QuizInfoCopyWith<$Res> implements $QuizInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_QuizInfoCopyWithImpl<$Res> extends _$QuizInfoCopyWithImpl<$Res>
-    implements _$$_QuizInfoCopyWith<$Res> {
-  __$$_QuizInfoCopyWithImpl(
-      _$_QuizInfo _value, $Res Function(_$_QuizInfo) _then)
-      : super(_value, (v) => _then(v as _$_QuizInfo));
+class __$QuizInfoCopyWithImpl<$Res> extends _$QuizInfoCopyWithImpl<$Res>
+    implements _$QuizInfoCopyWith<$Res> {
+  __$QuizInfoCopyWithImpl(_QuizInfo _value, $Res Function(_QuizInfo) _then)
+      : super(_value, (v) => _then(v as _QuizInfo));
 
   @override
-  _$_QuizInfo get _value => super._value as _$_QuizInfo;
+  _QuizInfo get _value => super._value as _QuizInfo;
 
   @override
   $Res call({
@@ -165,7 +194,7 @@ class __$$_QuizInfoCopyWithImpl<$Res> extends _$QuizInfoCopyWithImpl<$Res>
     Object? seedText = freezed,
     Object? playDate = freezed,
   }) {
-    return _then(_$_QuizInfo(
+    return _then(_QuizInfo(
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
@@ -215,20 +244,20 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
 
   @override
   final Monster? answer;
-  @override
   @JsonKey()
+  @override
   final int maxAnswer;
   @override
   final QuizTypes? quizType;
-  @override
   @JsonKey()
+  @override
   final QuizProcessType quizProcess;
   @override
   final QuizRange? quizRange;
   @override
   final String? seedText;
-  @override
   @JsonKey()
+  @override
   final int playDate;
 
   @override
@@ -254,7 +283,7 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuizInfo &&
+            other is _QuizInfo &&
             const DeepCollectionEquality().equals(other.answer, answer) &&
             const DeepCollectionEquality().equals(other.maxAnswer, maxAnswer) &&
             const DeepCollectionEquality().equals(other.quizType, quizType) &&
@@ -265,7 +294,6 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
             const DeepCollectionEquality().equals(other.playDate, playDate));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -279,8 +307,8 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
 
   @JsonKey(ignore: true)
   @override
-  _$$_QuizInfoCopyWith<_$_QuizInfo> get copyWith =>
-      __$$_QuizInfoCopyWithImpl<_$_QuizInfo>(this, _$identity);
+  _$QuizInfoCopyWith<_QuizInfo> get copyWith =>
+      __$QuizInfoCopyWithImpl<_QuizInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -290,32 +318,32 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
 
 abstract class _QuizInfo implements QuizInfo {
   const factory _QuizInfo(
-      {final Monster? answer,
-      final int maxAnswer,
-      final QuizTypes? quizType,
-      final QuizProcessType quizProcess,
-      final QuizRange? quizRange,
-      final String? seedText,
-      final int playDate}) = _$_QuizInfo;
+      {Monster? answer,
+      int maxAnswer,
+      QuizTypes? quizType,
+      QuizProcessType quizProcess,
+      QuizRange? quizRange,
+      String? seedText,
+      int playDate}) = _$_QuizInfo;
 
   factory _QuizInfo.fromJson(Map<String, dynamic> json) = _$_QuizInfo.fromJson;
 
   @override
-  Monster? get answer => throw _privateConstructorUsedError;
+  Monster? get answer;
   @override
-  int get maxAnswer => throw _privateConstructorUsedError;
+  int get maxAnswer;
   @override
-  QuizTypes? get quizType => throw _privateConstructorUsedError;
+  QuizTypes? get quizType;
   @override
-  QuizProcessType get quizProcess => throw _privateConstructorUsedError;
+  QuizProcessType get quizProcess;
   @override
-  QuizRange? get quizRange => throw _privateConstructorUsedError;
+  QuizRange? get quizRange;
   @override
-  String? get seedText => throw _privateConstructorUsedError;
+  String? get seedText;
   @override
-  int get playDate => throw _privateConstructorUsedError;
+  int get playDate;
   @override
   @JsonKey(ignore: true)
-  _$$_QuizInfoCopyWith<_$_QuizInfo> get copyWith =>
+  _$QuizInfoCopyWith<_QuizInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

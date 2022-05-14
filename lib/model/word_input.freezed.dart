@@ -12,11 +12,39 @@ part of 'word_input.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 WordInput _$WordInputFromJson(Map<String, dynamic> json) {
   return _WordInput.fromJson(json);
 }
+
+/// @nodoc
+class _$WordInputTearOff {
+  const _$WordInputTearOff();
+
+  _WordInput call(
+      {List<List<String>?> wordsList = const <InputWords?>[],
+      List<List<WordNameState>?> wordsResultList = const <WordResults?>[],
+      Map<String, WordKeyboardState> keyResultList =
+          const <String, WordKeyboardState>{},
+      int inputIndex = 0,
+      bool isWordChecking = false}) {
+    return _WordInput(
+      wordsList: wordsList,
+      wordsResultList: wordsResultList,
+      keyResultList: keyResultList,
+      inputIndex: inputIndex,
+      isWordChecking: isWordChecking,
+    );
+  }
+
+  WordInput fromJson(Map<String, Object?> json) {
+    return WordInput.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $WordInput = _$WordInputTearOff();
 
 /// @nodoc
 mixin _$WordInput {
@@ -88,10 +116,10 @@ class _$WordInputCopyWithImpl<$Res> implements $WordInputCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_WordInputCopyWith<$Res> implements $WordInputCopyWith<$Res> {
-  factory _$$_WordInputCopyWith(
-          _$_WordInput value, $Res Function(_$_WordInput) then) =
-      __$$_WordInputCopyWithImpl<$Res>;
+abstract class _$WordInputCopyWith<$Res> implements $WordInputCopyWith<$Res> {
+  factory _$WordInputCopyWith(
+          _WordInput value, $Res Function(_WordInput) then) =
+      __$WordInputCopyWithImpl<$Res>;
   @override
   $Res call(
       {List<List<String>?> wordsList,
@@ -102,14 +130,13 @@ abstract class _$$_WordInputCopyWith<$Res> implements $WordInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_WordInputCopyWithImpl<$Res> extends _$WordInputCopyWithImpl<$Res>
-    implements _$$_WordInputCopyWith<$Res> {
-  __$$_WordInputCopyWithImpl(
-      _$_WordInput _value, $Res Function(_$_WordInput) _then)
-      : super(_value, (v) => _then(v as _$_WordInput));
+class __$WordInputCopyWithImpl<$Res> extends _$WordInputCopyWithImpl<$Res>
+    implements _$WordInputCopyWith<$Res> {
+  __$WordInputCopyWithImpl(_WordInput _value, $Res Function(_WordInput) _then)
+      : super(_value, (v) => _then(v as _WordInput));
 
   @override
-  _$_WordInput get _value => super._value as _$_WordInput;
+  _WordInput get _value => super._value as _WordInput;
 
   @override
   $Res call({
@@ -119,17 +146,17 @@ class __$$_WordInputCopyWithImpl<$Res> extends _$WordInputCopyWithImpl<$Res>
     Object? inputIndex = freezed,
     Object? isWordChecking = freezed,
   }) {
-    return _then(_$_WordInput(
+    return _then(_WordInput(
       wordsList: wordsList == freezed
-          ? _value._wordsList
+          ? _value.wordsList
           : wordsList // ignore: cast_nullable_to_non_nullable
               as List<List<String>?>,
       wordsResultList: wordsResultList == freezed
-          ? _value._wordsResultList
+          ? _value.wordsResultList
           : wordsResultList // ignore: cast_nullable_to_non_nullable
               as List<List<WordNameState>?>,
       keyResultList: keyResultList == freezed
-          ? _value._keyResultList
+          ? _value.keyResultList
           : keyResultList // ignore: cast_nullable_to_non_nullable
               as Map<String, WordKeyboardState>,
       inputIndex: inputIndex == freezed
@@ -148,48 +175,29 @@ class __$$_WordInputCopyWithImpl<$Res> extends _$WordInputCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_WordInput with DiagnosticableTreeMixin implements _WordInput {
   const _$_WordInput(
-      {final List<List<String>?> wordsList = const <InputWords?>[],
-      final List<List<WordNameState>?> wordsResultList = const <WordResults?>[],
-      final Map<String, WordKeyboardState> keyResultList =
-          const <String, WordKeyboardState>{},
+      {this.wordsList = const <InputWords?>[],
+      this.wordsResultList = const <WordResults?>[],
+      this.keyResultList = const <String, WordKeyboardState>{},
       this.inputIndex = 0,
-      this.isWordChecking = false})
-      : _wordsList = wordsList,
-        _wordsResultList = wordsResultList,
-        _keyResultList = keyResultList;
+      this.isWordChecking = false});
 
   factory _$_WordInput.fromJson(Map<String, dynamic> json) =>
       _$$_WordInputFromJson(json);
 
-  final List<List<String>?> _wordsList;
-  @override
   @JsonKey()
-  List<List<String>?> get wordsList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_wordsList);
-  }
-
-  final List<List<WordNameState>?> _wordsResultList;
   @override
+  final List<List<String>?> wordsList;
   @JsonKey()
-  List<List<WordNameState>?> get wordsResultList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_wordsResultList);
-  }
-
-  final Map<String, WordKeyboardState> _keyResultList;
   @override
+  final List<List<WordNameState>?> wordsResultList;
   @JsonKey()
-  Map<String, WordKeyboardState> get keyResultList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_keyResultList);
-  }
-
   @override
+  final Map<String, WordKeyboardState> keyResultList;
   @JsonKey()
+  @override
   final int inputIndex;
-  @override
   @JsonKey()
+  @override
   final bool isWordChecking;
 
   @override
@@ -213,33 +221,31 @@ class _$_WordInput with DiagnosticableTreeMixin implements _WordInput {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WordInput &&
+            other is _WordInput &&
+            const DeepCollectionEquality().equals(other.wordsList, wordsList) &&
             const DeepCollectionEquality()
-                .equals(other._wordsList, _wordsList) &&
+                .equals(other.wordsResultList, wordsResultList) &&
             const DeepCollectionEquality()
-                .equals(other._wordsResultList, _wordsResultList) &&
-            const DeepCollectionEquality()
-                .equals(other._keyResultList, _keyResultList) &&
+                .equals(other.keyResultList, keyResultList) &&
             const DeepCollectionEquality()
                 .equals(other.inputIndex, inputIndex) &&
             const DeepCollectionEquality()
                 .equals(other.isWordChecking, isWordChecking));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_wordsList),
-      const DeepCollectionEquality().hash(_wordsResultList),
-      const DeepCollectionEquality().hash(_keyResultList),
+      const DeepCollectionEquality().hash(wordsList),
+      const DeepCollectionEquality().hash(wordsResultList),
+      const DeepCollectionEquality().hash(keyResultList),
       const DeepCollectionEquality().hash(inputIndex),
       const DeepCollectionEquality().hash(isWordChecking));
 
   @JsonKey(ignore: true)
   @override
-  _$$_WordInputCopyWith<_$_WordInput> get copyWith =>
-      __$$_WordInputCopyWithImpl<_$_WordInput>(this, _$identity);
+  _$WordInputCopyWith<_WordInput> get copyWith =>
+      __$WordInputCopyWithImpl<_WordInput>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -249,29 +255,27 @@ class _$_WordInput with DiagnosticableTreeMixin implements _WordInput {
 
 abstract class _WordInput implements WordInput {
   const factory _WordInput(
-      {final List<List<String>?> wordsList,
-      final List<List<WordNameState>?> wordsResultList,
-      final Map<String, WordKeyboardState> keyResultList,
-      final int inputIndex,
-      final bool isWordChecking}) = _$_WordInput;
+      {List<List<String>?> wordsList,
+      List<List<WordNameState>?> wordsResultList,
+      Map<String, WordKeyboardState> keyResultList,
+      int inputIndex,
+      bool isWordChecking}) = _$_WordInput;
 
   factory _WordInput.fromJson(Map<String, dynamic> json) =
       _$_WordInput.fromJson;
 
   @override
-  List<List<String>?> get wordsList => throw _privateConstructorUsedError;
+  List<List<String>?> get wordsList;
   @override
-  List<List<WordNameState>?> get wordsResultList =>
-      throw _privateConstructorUsedError;
+  List<List<WordNameState>?> get wordsResultList;
   @override
-  Map<String, WordKeyboardState> get keyResultList =>
-      throw _privateConstructorUsedError;
+  Map<String, WordKeyboardState> get keyResultList;
   @override
-  int get inputIndex => throw _privateConstructorUsedError;
+  int get inputIndex;
   @override
-  bool get isWordChecking => throw _privateConstructorUsedError;
+  bool get isWordChecking;
   @override
   @JsonKey(ignore: true)
-  _$$_WordInputCopyWith<_$_WordInput> get copyWith =>
+  _$WordInputCopyWith<_WordInput> get copyWith =>
       throw _privateConstructorUsedError;
 }

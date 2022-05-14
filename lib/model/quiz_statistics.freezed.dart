@@ -12,11 +12,38 @@ part of 'quiz_statistics.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 QuizStatistics _$QuizStatisticsFromJson(Map<String, dynamic> json) {
   return _QuizStatistics.fromJson(json);
 }
+
+/// @nodoc
+class _$QuizStatisticsTearOff {
+  const _$QuizStatisticsTearOff();
+
+  _QuizStatistics call(
+      {int clearCount = 0,
+      int currentChain = 0,
+      int lastChain = 0,
+      int maxChain = 0,
+      int playCount = 0}) {
+    return _QuizStatistics(
+      clearCount: clearCount,
+      currentChain: currentChain,
+      lastChain: lastChain,
+      maxChain: maxChain,
+      playCount: playCount,
+    );
+  }
+
+  QuizStatistics fromJson(Map<String, Object?> json) {
+    return QuizStatistics.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $QuizStatistics = _$QuizStatisticsTearOff();
 
 /// @nodoc
 mixin _$QuizStatistics {
@@ -88,11 +115,11 @@ class _$QuizStatisticsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_QuizStatisticsCopyWith<$Res>
+abstract class _$QuizStatisticsCopyWith<$Res>
     implements $QuizStatisticsCopyWith<$Res> {
-  factory _$$_QuizStatisticsCopyWith(
-          _$_QuizStatistics value, $Res Function(_$_QuizStatistics) then) =
-      __$$_QuizStatisticsCopyWithImpl<$Res>;
+  factory _$QuizStatisticsCopyWith(
+          _QuizStatistics value, $Res Function(_QuizStatistics) then) =
+      __$QuizStatisticsCopyWithImpl<$Res>;
   @override
   $Res call(
       {int clearCount,
@@ -103,15 +130,15 @@ abstract class _$$_QuizStatisticsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_QuizStatisticsCopyWithImpl<$Res>
+class __$QuizStatisticsCopyWithImpl<$Res>
     extends _$QuizStatisticsCopyWithImpl<$Res>
-    implements _$$_QuizStatisticsCopyWith<$Res> {
-  __$$_QuizStatisticsCopyWithImpl(
-      _$_QuizStatistics _value, $Res Function(_$_QuizStatistics) _then)
-      : super(_value, (v) => _then(v as _$_QuizStatistics));
+    implements _$QuizStatisticsCopyWith<$Res> {
+  __$QuizStatisticsCopyWithImpl(
+      _QuizStatistics _value, $Res Function(_QuizStatistics) _then)
+      : super(_value, (v) => _then(v as _QuizStatistics));
 
   @override
-  _$_QuizStatistics get _value => super._value as _$_QuizStatistics;
+  _QuizStatistics get _value => super._value as _QuizStatistics;
 
   @override
   $Res call({
@@ -121,7 +148,7 @@ class __$$_QuizStatisticsCopyWithImpl<$Res>
     Object? maxChain = freezed,
     Object? playCount = freezed,
   }) {
-    return _then(_$_QuizStatistics(
+    return _then(_QuizStatistics(
       clearCount: clearCount == freezed
           ? _value.clearCount
           : clearCount // ignore: cast_nullable_to_non_nullable
@@ -161,20 +188,20 @@ class _$_QuizStatistics
   factory _$_QuizStatistics.fromJson(Map<String, dynamic> json) =>
       _$$_QuizStatisticsFromJson(json);
 
-  @override
   @JsonKey()
+  @override
   final int clearCount;
-  @override
   @JsonKey()
+  @override
   final int currentChain;
-  @override
   @JsonKey()
+  @override
   final int lastChain;
-  @override
   @JsonKey()
+  @override
   final int maxChain;
-  @override
   @JsonKey()
+  @override
   final int playCount;
 
   @override
@@ -198,7 +225,7 @@ class _$_QuizStatistics
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuizStatistics &&
+            other is _QuizStatistics &&
             const DeepCollectionEquality()
                 .equals(other.clearCount, clearCount) &&
             const DeepCollectionEquality()
@@ -208,7 +235,6 @@ class _$_QuizStatistics
             const DeepCollectionEquality().equals(other.playCount, playCount));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -220,8 +246,8 @@ class _$_QuizStatistics
 
   @JsonKey(ignore: true)
   @override
-  _$$_QuizStatisticsCopyWith<_$_QuizStatistics> get copyWith =>
-      __$$_QuizStatisticsCopyWithImpl<_$_QuizStatistics>(this, _$identity);
+  _$QuizStatisticsCopyWith<_QuizStatistics> get copyWith =>
+      __$QuizStatisticsCopyWithImpl<_QuizStatistics>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -231,27 +257,27 @@ class _$_QuizStatistics
 
 abstract class _QuizStatistics implements QuizStatistics {
   const factory _QuizStatistics(
-      {final int clearCount,
-      final int currentChain,
-      final int lastChain,
-      final int maxChain,
-      final int playCount}) = _$_QuizStatistics;
+      {int clearCount,
+      int currentChain,
+      int lastChain,
+      int maxChain,
+      int playCount}) = _$_QuizStatistics;
 
   factory _QuizStatistics.fromJson(Map<String, dynamic> json) =
       _$_QuizStatistics.fromJson;
 
   @override
-  int get clearCount => throw _privateConstructorUsedError;
+  int get clearCount;
   @override
-  int get currentChain => throw _privateConstructorUsedError;
+  int get currentChain;
   @override
-  int get lastChain => throw _privateConstructorUsedError;
+  int get lastChain;
   @override
-  int get maxChain => throw _privateConstructorUsedError;
+  int get maxChain;
   @override
-  int get playCount => throw _privateConstructorUsedError;
+  int get playCount;
   @override
   @JsonKey(ignore: true)
-  _$$_QuizStatisticsCopyWith<_$_QuizStatistics> get copyWith =>
+  _$QuizStatisticsCopyWith<_QuizStatistics> get copyWith =>
       throw _privateConstructorUsedError;
 }

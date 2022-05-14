@@ -19,7 +19,7 @@ printf "/// *** GENERATED FILE - ANY CHANGES WOULD BE OBSOLETE ON NEXT GENERATIO
   printf "\nvoid main() {}"
 } >> "$outputFile"
 
-flutter test --coverage
+fvm flutter test --coverage
 
 lcov --remove coverage/lcov.info '**/*.g.dart' '**/*.freezed.dart' -o coverage/lcov.info
 

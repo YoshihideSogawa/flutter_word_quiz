@@ -12,7 +12,24 @@ part of 'parental_gate_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
+class _$ParentalGateDataTearOff {
+  const _$ParentalGateDataTearOff();
+
+  _ParentalGateData call(
+      {String? question, String? correct, List<String>? answerList}) {
+    return _ParentalGateData(
+      question: question,
+      correct: correct,
+      answerList: answerList,
+    );
+  }
+}
+
+/// @nodoc
+const $ParentalGateData = _$ParentalGateDataTearOff();
 
 /// @nodoc
 mixin _$ParentalGateData {
@@ -66,25 +83,25 @@ class _$ParentalGateDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_ParentalGateDataCopyWith<$Res>
+abstract class _$ParentalGateDataCopyWith<$Res>
     implements $ParentalGateDataCopyWith<$Res> {
-  factory _$$_ParentalGateDataCopyWith(
-          _$_ParentalGateData value, $Res Function(_$_ParentalGateData) then) =
-      __$$_ParentalGateDataCopyWithImpl<$Res>;
+  factory _$ParentalGateDataCopyWith(
+          _ParentalGateData value, $Res Function(_ParentalGateData) then) =
+      __$ParentalGateDataCopyWithImpl<$Res>;
   @override
   $Res call({String? question, String? correct, List<String>? answerList});
 }
 
 /// @nodoc
-class __$$_ParentalGateDataCopyWithImpl<$Res>
+class __$ParentalGateDataCopyWithImpl<$Res>
     extends _$ParentalGateDataCopyWithImpl<$Res>
-    implements _$$_ParentalGateDataCopyWith<$Res> {
-  __$$_ParentalGateDataCopyWithImpl(
-      _$_ParentalGateData _value, $Res Function(_$_ParentalGateData) _then)
-      : super(_value, (v) => _then(v as _$_ParentalGateData));
+    implements _$ParentalGateDataCopyWith<$Res> {
+  __$ParentalGateDataCopyWithImpl(
+      _ParentalGateData _value, $Res Function(_ParentalGateData) _then)
+      : super(_value, (v) => _then(v as _ParentalGateData));
 
   @override
-  _$_ParentalGateData get _value => super._value as _$_ParentalGateData;
+  _ParentalGateData get _value => super._value as _ParentalGateData;
 
   @override
   $Res call({
@@ -92,7 +109,7 @@ class __$$_ParentalGateDataCopyWithImpl<$Res>
     Object? correct = freezed,
     Object? answerList = freezed,
   }) {
-    return _then(_$_ParentalGateData(
+    return _then(_ParentalGateData(
       question: question == freezed
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
@@ -102,7 +119,7 @@ class __$$_ParentalGateDataCopyWithImpl<$Res>
           : correct // ignore: cast_nullable_to_non_nullable
               as String?,
       answerList: answerList == freezed
-          ? _value._answerList
+          ? _value.answerList
           : answerList // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ));
@@ -114,22 +131,14 @@ class __$$_ParentalGateDataCopyWithImpl<$Res>
 class _$_ParentalGateData
     with DiagnosticableTreeMixin
     implements _ParentalGateData {
-  const _$_ParentalGateData(
-      {this.question, this.correct, final List<String>? answerList})
-      : _answerList = answerList;
+  const _$_ParentalGateData({this.question, this.correct, this.answerList});
 
   @override
   final String? question;
   @override
   final String? correct;
-  final List<String>? _answerList;
   @override
-  List<String>? get answerList {
-    final value = _answerList;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final List<String>? answerList;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -150,11 +159,11 @@ class _$_ParentalGateData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ParentalGateData &&
+            other is _ParentalGateData &&
             const DeepCollectionEquality().equals(other.question, question) &&
             const DeepCollectionEquality().equals(other.correct, correct) &&
             const DeepCollectionEquality()
-                .equals(other._answerList, _answerList));
+                .equals(other.answerList, answerList));
   }
 
   @override
@@ -162,28 +171,28 @@ class _$_ParentalGateData
       runtimeType,
       const DeepCollectionEquality().hash(question),
       const DeepCollectionEquality().hash(correct),
-      const DeepCollectionEquality().hash(_answerList));
+      const DeepCollectionEquality().hash(answerList));
 
   @JsonKey(ignore: true)
   @override
-  _$$_ParentalGateDataCopyWith<_$_ParentalGateData> get copyWith =>
-      __$$_ParentalGateDataCopyWithImpl<_$_ParentalGateData>(this, _$identity);
+  _$ParentalGateDataCopyWith<_ParentalGateData> get copyWith =>
+      __$ParentalGateDataCopyWithImpl<_ParentalGateData>(this, _$identity);
 }
 
 abstract class _ParentalGateData implements ParentalGateData {
   const factory _ParentalGateData(
-      {final String? question,
-      final String? correct,
-      final List<String>? answerList}) = _$_ParentalGateData;
+      {String? question,
+      String? correct,
+      List<String>? answerList}) = _$_ParentalGateData;
 
   @override
-  String? get question => throw _privateConstructorUsedError;
+  String? get question;
   @override
-  String? get correct => throw _privateConstructorUsedError;
+  String? get correct;
   @override
-  List<String>? get answerList => throw _privateConstructorUsedError;
+  List<String>? get answerList;
   @override
   @JsonKey(ignore: true)
-  _$$_ParentalGateDataCopyWith<_$_ParentalGateData> get copyWith =>
+  _$ParentalGateDataCopyWith<_ParentalGateData> get copyWith =>
       throw _privateConstructorUsedError;
 }
