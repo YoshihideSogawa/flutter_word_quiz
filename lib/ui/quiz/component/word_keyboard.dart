@@ -17,10 +17,10 @@ class WordKeyboard extends ConsumerStatefulWidget {
   const WordKeyboard({super.key}); // coverage:ignore-line
 
   @override
-  _WordKeyboardState createState() => _WordKeyboardState();
+  WordKeyboardState createState() => WordKeyboardState();
 }
 
-class _WordKeyboardState extends ConsumerState<WordKeyboard> {
+class WordKeyboardState extends ConsumerState<WordKeyboard> {
   /// キー同士のスペース
   static const double _keySpace = 4;
 
@@ -90,8 +90,9 @@ class _WordKeyboardState extends ConsumerState<WordKeyboard> {
               width: _keySize.width,
               height: _keySize.height,
               keyboardState: resultList.containsKey(keyMap[index * 5 + i])
-                  ? resultList[keyMap[index * 5 + i]] ?? WordKeyboardState.none
-                  : WordKeyboardState.none,
+                  ? resultList[keyMap[index * 5 + i]] as WordKeyboardInfo? ??
+                      WordKeyboardInfo.none
+                  : WordKeyboardInfo.none,
             ),
           ),
       ],

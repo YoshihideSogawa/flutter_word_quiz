@@ -41,12 +41,17 @@ class RefreshQuizButton extends ConsumerWidget {
     WidgetRef ref,
     QuizTypes quizType,
   ) async {
+    final state = ScaffoldMessenger.of(context);
     final result =
         await ref.read(quizInfoProvider(quizType).notifier).refreshDailyQuiz();
 
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    if (!state.mounted) {
+      return;
+    }
+
+    state.hideCurrentSnackBar();
     if (!result) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      state.showSnackBar(
         const SnackBar(
           content: Text('こうしんは ありません'),
         ),

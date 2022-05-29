@@ -31,7 +31,7 @@ void main() {
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput.wordsList, <List<String?>>[[]]);
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
-    expect(wordInput.keyResultList, <String, WordKeyboardState>{});
+    expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
     expect(wordInput.inputIndex, 0);
     expect(wordInput.isWordChecking, isFalse);
   });
@@ -372,7 +372,7 @@ void main() {
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput.wordsList, <List<String?>>[[]]);
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
-    expect(wordInput.keyResultList, <String, WordKeyboardState>{});
+    expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
     expect(wordInput.inputIndex, 0);
     expect(wordInput.isWordChecking, isFalse);
 
@@ -389,10 +389,10 @@ const _wordInputTest = WordInput(
   wordsResultList: <WordResults>[
     [WordNameState.notMatch, WordNameState.notMatch, WordNameState.match],
   ],
-  keyResultList: <String, WordKeyboardState>{
-    'テ': WordKeyboardState.notMatch,
-    'ス': WordKeyboardState.notMatch,
-    'ト': WordKeyboardState.match,
+  keyResultList: <String, WordKeyboardInfo>{
+    'テ': WordKeyboardInfo.notMatch,
+    'ス': WordKeyboardInfo.notMatch,
+    'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
   isWordChecking: true,
@@ -407,10 +407,10 @@ const _wordInputTest2 = WordInput(
   wordsResultList: <WordResults>[
     [WordNameState.notMatch, WordNameState.notMatch, WordNameState.match],
   ],
-  keyResultList: <String, WordKeyboardState>{
-    'テ': WordKeyboardState.notMatch,
-    'ス': WordKeyboardState.notMatch,
-    'ト': WordKeyboardState.match,
+  keyResultList: <String, WordKeyboardInfo>{
+    'テ': WordKeyboardInfo.notMatch,
+    'ス': WordKeyboardInfo.notMatch,
+    'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
   isWordChecking: false,
@@ -425,10 +425,10 @@ final _wordInputTest3 = WordInput(
   wordsResultList: <WordResults>[
     [WordNameState.notMatch, WordNameState.notMatch, WordNameState.match],
   ],
-  keyResultList: <String, WordKeyboardState>{
-    'テ': WordKeyboardState.notMatch,
-    'ス': WordKeyboardState.notMatch,
-    'ト': WordKeyboardState.match,
+  keyResultList: <String, WordKeyboardInfo>{
+    'テ': WordKeyboardInfo.notMatch,
+    'ス': WordKeyboardInfo.notMatch,
+    'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
   isWordChecking: false,
@@ -443,10 +443,10 @@ const _wordInputTest4 = WordInput(
   wordsResultList: <WordResults>[
     [WordNameState.notMatch, WordNameState.notMatch, WordNameState.match],
   ],
-  keyResultList: <String, WordKeyboardState>{
-    'テ': WordKeyboardState.notMatch,
-    'ス': WordKeyboardState.notMatch,
-    'ト': WordKeyboardState.match,
+  keyResultList: <String, WordKeyboardInfo>{
+    'テ': WordKeyboardInfo.notMatch,
+    'ス': WordKeyboardInfo.notMatch,
+    'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
   isWordChecking: false,
@@ -461,9 +461,9 @@ final _wordInputTest5 = WordInput(
   wordsResultList: <WordResults>[
     [WordNameState.notMatch, WordNameState.notMatch, WordNameState.match],
   ],
-  keyResultList: <String, WordKeyboardState>{
-    'ル': WordKeyboardState.notMatch,
-    'リ': WordKeyboardState.notMatch,
+  keyResultList: <String, WordKeyboardInfo>{
+    'ル': WordKeyboardInfo.notMatch,
+    'リ': WordKeyboardInfo.notMatch,
   },
   inputIndex: 1,
   isWordChecking: false,

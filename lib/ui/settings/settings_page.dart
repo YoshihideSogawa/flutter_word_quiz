@@ -156,8 +156,13 @@ class SettingsPage extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async {
+              final navigator = Navigator.of(context);
               await ref.read(dataSettingsProvider(QuizTypes.daily)).deleteAll();
-              Navigator.pop(context);
+              if (!navigator.mounted) {
+                return;
+              }
+
+              navigator.pop();
             },
             child: const Text('データをけす'),
           )
@@ -184,10 +189,15 @@ class SettingsPage extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async {
+              final navigator = Navigator.of(context);
               await ref
                   .read(dataSettingsProvider(QuizTypes.endless))
                   .deleteAll();
-              Navigator.pop(context);
+              if (!navigator.mounted) {
+                return;
+              }
+
+              navigator.pop();
             },
             child: const Text('データをけす'),
           )

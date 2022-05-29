@@ -20,11 +20,11 @@ void main() {
     ];
 
     final result = checkKeyboard(inputWords, wordState);
-    expect(result['ポ'], WordKeyboardState.hit);
-    expect(result['ッ'], WordKeyboardState.hit);
-    expect(result['チ'], WordKeyboardState.notMatch);
-    expect(result['ャ'], WordKeyboardState.match);
-    expect(result['マ'], WordKeyboardState.match);
+    expect(result['ポ'], WordKeyboardInfo.hit);
+    expect(result['ッ'], WordKeyboardInfo.hit);
+    expect(result['チ'], WordKeyboardInfo.notMatch);
+    expect(result['ャ'], WordKeyboardInfo.match);
+    expect(result['マ'], WordKeyboardInfo.match);
   });
 
   test('checkKeyboard(matchがnotMatchで上書きされない)', () {
@@ -42,9 +42,9 @@ void main() {
     ];
 
     final result = checkKeyboard(inputWords, wordState);
-    expect(result['マ'], WordKeyboardState.hit);
-    expect(result['リ'], WordKeyboardState.match);
-    expect(result['ル'], WordKeyboardState.notMatch);
+    expect(result['マ'], WordKeyboardInfo.hit);
+    expect(result['リ'], WordKeyboardInfo.match);
+    expect(result['ル'], WordKeyboardInfo.notMatch);
   });
 
   test('checkKeyboard(hitがnotMatchで上書きされない)', () {
@@ -61,8 +61,8 @@ void main() {
     ];
 
     final result = checkKeyboard(inputWords, wordState);
-    expect(result['ル'], WordKeyboardState.notMatch);
-    expect(result['リ'], WordKeyboardState.hit);
+    expect(result['ル'], WordKeyboardInfo.notMatch);
+    expect(result['リ'], WordKeyboardInfo.hit);
   });
 
   test('checkKeyboard(通常入力では発生しないケース[WordNameState.none])', () {
@@ -79,9 +79,9 @@ void main() {
     ];
 
     final result = checkKeyboard(inputWords, wordState);
-    expect(result['テ'], WordKeyboardState.none);
-    expect(result['ス'], WordKeyboardState.hit);
-    expect(result['ト'], WordKeyboardState.notMatch);
+    expect(result['テ'], WordKeyboardInfo.none);
+    expect(result['ス'], WordKeyboardInfo.hit);
+    expect(result['ト'], WordKeyboardInfo.notMatch);
   });
 
   test('checkKeyboard(リストの長さが異なる場合)', () {
@@ -104,15 +104,15 @@ void main() {
 
     // wordStateが長い場合
     final result = checkKeyboard(inputWords, wordState);
-    expect(result['テ'], WordKeyboardState.none);
-    expect(result['ス'], WordKeyboardState.hit);
-    expect(result['ト'], WordKeyboardState.notMatch);
+    expect(result['テ'], WordKeyboardInfo.none);
+    expect(result['ス'], WordKeyboardInfo.hit);
+    expect(result['ト'], WordKeyboardInfo.notMatch);
 
     // inputWordが長い場合
     final result2 = checkKeyboard(inputWords2, wordState);
-    expect(result2['テ'], WordKeyboardState.none);
-    expect(result2['ス'], WordKeyboardState.hit);
-    expect(result2['ト'], WordKeyboardState.notMatch);
-    expect(result2['あ'], WordKeyboardState.notMatch);
+    expect(result2['テ'], WordKeyboardInfo.none);
+    expect(result2['ス'], WordKeyboardInfo.hit);
+    expect(result2['ト'], WordKeyboardInfo.notMatch);
+    expect(result2['あ'], WordKeyboardInfo.notMatch);
   });
 }

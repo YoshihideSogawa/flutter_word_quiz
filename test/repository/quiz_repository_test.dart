@@ -71,9 +71,9 @@ void main() {
         [WordNameState.notMatch, WordNameState.hit, WordNameState.match]
       ],
       keyResultList: {
-        'テ': WordKeyboardState.notMatch,
-        'ス': WordKeyboardState.hit,
-        'ト': WordKeyboardState.match,
+        'テ': WordKeyboardInfo.notMatch,
+        'ス': WordKeyboardInfo.hit,
+        'ト': WordKeyboardInfo.match,
       },
       inputIndex: 1,
       isWordChecking: true,

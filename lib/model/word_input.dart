@@ -12,8 +12,8 @@ class WordInput with _$WordInput {
   const factory WordInput({
     @Default(<InputWords?>[]) List<InputWords?> wordsList,
     @Default(<WordResults?>[]) List<WordResults?> wordsResultList,
-    @Default(<String, WordKeyboardState>{})
-        Map<String, WordKeyboardState> keyResultList,
+    @Default(<String, WordKeyboardInfo>{})
+        Map<String, WordKeyboardInfo> keyResultList,
     @Default(0) int inputIndex,
     @Default(false) bool isWordChecking,
   }) = _WordInput;
