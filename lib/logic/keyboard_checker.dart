@@ -3,11 +3,11 @@ import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 
 /// キーボードの状態をチェックします。
-Map<String, WordKeyboardState> checkKeyboard(
+Map<String, WordKeyboardInfo> checkKeyboard(
   List<InputWords?> inputWords,
   List<WordResults?> wordState,
 ) {
-  final result = <String, WordKeyboardState>{};
+  final result = <String, WordKeyboardInfo>{};
   for (var i = 0; i < wordState.length; i++) {
     for (var j = 0; j < (wordState[i] ?? []).length; j++) {
       // 想定外のデータの場合
@@ -23,24 +23,24 @@ Map<String, WordKeyboardState> checkKeyboard(
       }
 
       // matchの場合はいずれでも上書きしない
-      if (result[inputWord] == WordKeyboardState.match) {
+      if (result[inputWord] == WordKeyboardInfo.match) {
         continue;
       }
 
       switch (targetWord) {
         case WordNameState.none:
-          result[inputWord] = WordKeyboardState.none;
+          result[inputWord] = WordKeyboardInfo.none;
           break;
         case WordNameState.hit:
-          result[inputWord] = WordKeyboardState.hit;
+          result[inputWord] = WordKeyboardInfo.hit;
           break;
         case WordNameState.match:
-          result[inputWord] = WordKeyboardState.match;
+          result[inputWord] = WordKeyboardInfo.match;
           break;
         case WordNameState.notMatch:
           // hitの場合はnotMatchで上書きしない
-          if (result[inputWord] != WordKeyboardState.hit) {
-            result[inputWord] = WordKeyboardState.notMatch;
+          if (result[inputWord] != WordKeyboardInfo.hit) {
+            result[inputWord] = WordKeyboardInfo.notMatch;
           }
           break;
       }

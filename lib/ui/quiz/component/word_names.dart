@@ -13,10 +13,10 @@ class WordNames extends ConsumerStatefulWidget {
   const WordNames({super.key}); // coverage:ignore-line
 
   @override
-  _WordNamesState createState() => _WordNamesState();
+  WordNamesState createState() => WordNamesState();
 }
 
-class _WordNamesState extends ConsumerState<WordNames> {
+class WordNamesState extends ConsumerState<WordNames> {
   /// 文字数
   static const _wordLength = 5;
 

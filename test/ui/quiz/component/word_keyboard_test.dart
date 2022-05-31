@@ -103,8 +103,8 @@ void main() {
     );
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
-        keyResultList: <String, WordKeyboardState>{
-          'ア': WordKeyboardState.notMatch,
+        keyResultList: <String, WordKeyboardInfo>{
+          'ア': WordKeyboardInfo.notMatch,
         },
       ),
     );

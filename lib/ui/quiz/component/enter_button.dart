@@ -57,6 +57,7 @@ class EnterButton extends ConsumerWidget {
     WidgetRef ref,
     QuizTypes quizType,
   ) async {
+    final state = ScaffoldMessenger.of(context);
     // 問題が開始していない場合は無視
     final quizInfo = ref.read(quizInfoProvider(quizType)).value;
     if (quizInfo?.quizProcess != QuizProcessType.started) {
@@ -67,28 +68,37 @@ class EnterButton extends ConsumerWidget {
         await ref.watch(wordInputNotifierProvider(quizType).notifier).submit();
 
     if (result == SubmitResult.noInput) {
-      _showSnackBar(context, 'ポケモンの なまえをいれてね');
+      _showSnackBar(state, 'ポケモンの なまえをいれてね');
     } else if (result == SubmitResult.unknownMonster) {
-      _showSnackBar(context, 'そのポケモンはいません');
+      _showSnackBar(state, 'そのポケモンはいません');
     } else if (result == SubmitResult.success) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (!state.mounted) {
+        return;
+      }
+
+      state.hideCurrentSnackBar();
       // QuizInfoの更新
       await ref.watch(quizInfoProvider(quizType).notifier).updateQuiz();
     }
   }
 
   /// SnackBarを表示します。
-  void _showSnackBar(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        key: const Key('snack_bar'),
-        content: Text(text),
-        action: SnackBarAction(
-          label: 'OK',
-          onPressed: () {},
+  void _showSnackBar(ScaffoldMessengerState state, String text) {
+    if (!state.mounted) {
+      return;
+    }
+
+    state
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          key: const Key('snack_bar'),
+          content: Text(text),
+          action: SnackBarAction(
+            label: 'OK',
+            onPressed: () {},
+          ),
         ),
-      ),
-    );
+      );
   }
 }

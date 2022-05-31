@@ -19,9 +19,9 @@ _$_WordInput _$$_WordInputFromJson(Map<String, dynamic> json) => _$_WordInput(
               .toList() ??
           const <WordResults?>[],
       keyResultList: (json['keyResultList'] as Map<String, dynamic>?)?.map(
-            (k, e) => MapEntry(k, $enumDecode(_$WordKeyboardStateEnumMap, e)),
+            (k, e) => MapEntry(k, $enumDecode(_$WordKeyboardInfoEnumMap, e)),
           ) ??
-          const <String, WordKeyboardState>{},
+          const <String, WordKeyboardInfo>{},
       inputIndex: json['inputIndex'] as int? ?? 0,
       isWordChecking: json['isWordChecking'] as bool? ?? false,
     );
@@ -33,7 +33,7 @@ Map<String, dynamic> _$$_WordInputToJson(_$_WordInput instance) =>
           .map((e) => e?.map((e) => _$WordNameStateEnumMap[e]).toList())
           .toList(),
       'keyResultList': instance.keyResultList
-          .map((k, e) => MapEntry(k, _$WordKeyboardStateEnumMap[e])),
+          .map((k, e) => MapEntry(k, _$WordKeyboardInfoEnumMap[e])),
       'inputIndex': instance.inputIndex,
       'isWordChecking': instance.isWordChecking,
     };
@@ -45,9 +45,9 @@ const _$WordNameStateEnumMap = {
   WordNameState.notMatch: 'notMatch',
 };
 
-const _$WordKeyboardStateEnumMap = {
-  WordKeyboardState.none: 'none',
-  WordKeyboardState.hit: 'hit',
-  WordKeyboardState.match: 'match',
-  WordKeyboardState.notMatch: 'notMatch',
+const _$WordKeyboardInfoEnumMap = {
+  WordKeyboardInfo.none: 'none',
+  WordKeyboardInfo.hit: 'hit',
+  WordKeyboardInfo.match: 'match',
+  WordKeyboardInfo.notMatch: 'notMatch',
 };

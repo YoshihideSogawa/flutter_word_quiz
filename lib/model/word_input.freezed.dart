@@ -23,7 +23,7 @@ mixin _$WordInput {
   List<List<String>?> get wordsList => throw _privateConstructorUsedError;
   List<List<WordNameState>?> get wordsResultList =>
       throw _privateConstructorUsedError;
-  Map<String, WordKeyboardState> get keyResultList =>
+  Map<String, WordKeyboardInfo> get keyResultList =>
       throw _privateConstructorUsedError;
   int get inputIndex => throw _privateConstructorUsedError;
   bool get isWordChecking => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $WordInputCopyWith<$Res> {
   $Res call(
       {List<List<String>?> wordsList,
       List<List<WordNameState>?> wordsResultList,
-      Map<String, WordKeyboardState> keyResultList,
+      Map<String, WordKeyboardInfo> keyResultList,
       int inputIndex,
       bool isWordChecking});
 }
@@ -74,7 +74,7 @@ class _$WordInputCopyWithImpl<$Res> implements $WordInputCopyWith<$Res> {
       keyResultList: keyResultList == freezed
           ? _value.keyResultList
           : keyResultList // ignore: cast_nullable_to_non_nullable
-              as Map<String, WordKeyboardState>,
+              as Map<String, WordKeyboardInfo>,
       inputIndex: inputIndex == freezed
           ? _value.inputIndex
           : inputIndex // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$_WordInputCopyWith<$Res> implements $WordInputCopyWith<$Res> {
   $Res call(
       {List<List<String>?> wordsList,
       List<List<WordNameState>?> wordsResultList,
-      Map<String, WordKeyboardState> keyResultList,
+      Map<String, WordKeyboardInfo> keyResultList,
       int inputIndex,
       bool isWordChecking});
 }
@@ -131,7 +131,7 @@ class __$$_WordInputCopyWithImpl<$Res> extends _$WordInputCopyWithImpl<$Res>
       keyResultList: keyResultList == freezed
           ? _value._keyResultList
           : keyResultList // ignore: cast_nullable_to_non_nullable
-              as Map<String, WordKeyboardState>,
+              as Map<String, WordKeyboardInfo>,
       inputIndex: inputIndex == freezed
           ? _value.inputIndex
           : inputIndex // ignore: cast_nullable_to_non_nullable
@@ -150,8 +150,8 @@ class _$_WordInput with DiagnosticableTreeMixin implements _WordInput {
   const _$_WordInput(
       {final List<List<String>?> wordsList = const <InputWords?>[],
       final List<List<WordNameState>?> wordsResultList = const <WordResults?>[],
-      final Map<String, WordKeyboardState> keyResultList =
-          const <String, WordKeyboardState>{},
+      final Map<String, WordKeyboardInfo> keyResultList =
+          const <String, WordKeyboardInfo>{},
       this.inputIndex = 0,
       this.isWordChecking = false})
       : _wordsList = wordsList,
@@ -177,10 +177,10 @@ class _$_WordInput with DiagnosticableTreeMixin implements _WordInput {
     return EqualUnmodifiableListView(_wordsResultList);
   }
 
-  final Map<String, WordKeyboardState> _keyResultList;
+  final Map<String, WordKeyboardInfo> _keyResultList;
   @override
   @JsonKey()
-  Map<String, WordKeyboardState> get keyResultList {
+  Map<String, WordKeyboardInfo> get keyResultList {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_keyResultList);
   }
@@ -251,7 +251,7 @@ abstract class _WordInput implements WordInput {
   const factory _WordInput(
       {final List<List<String>?> wordsList,
       final List<List<WordNameState>?> wordsResultList,
-      final Map<String, WordKeyboardState> keyResultList,
+      final Map<String, WordKeyboardInfo> keyResultList,
       final int inputIndex,
       final bool isWordChecking}) = _$_WordInput;
 
@@ -264,7 +264,7 @@ abstract class _WordInput implements WordInput {
   List<List<WordNameState>?> get wordsResultList =>
       throw _privateConstructorUsedError;
   @override
-  Map<String, WordKeyboardState> get keyResultList =>
+  Map<String, WordKeyboardInfo> get keyResultList =>
       throw _privateConstructorUsedError;
   @override
   int get inputIndex => throw _privateConstructorUsedError;

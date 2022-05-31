@@ -1,5 +1,5 @@
 /// 入力キーの状態を表します。
-enum WordKeyboardState {
+enum WordKeyboardInfo {
   /// 不明(未使用)
   none,
 
