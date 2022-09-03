@@ -26,7 +26,7 @@ void main() {
               body: InputKey(
                 width: 100,
                 height: 100,
-                keyboardState: WordKeyboardInfo.none,
+                keyboardInfo: WordKeyboardInfo.none,
                 text: '',
               ),
             ),
@@ -48,7 +48,7 @@ void main() {
               body: InputKey(
                 width: 100,
                 height: 100,
-                keyboardState: WordKeyboardInfo.none,
+                keyboardInfo: WordKeyboardInfo.none,
                 text: 'ア',
               ),
             ),
@@ -82,7 +82,7 @@ void main() {
               body: InputKey(
                 width: 100,
                 height: 100,
-                keyboardState: WordKeyboardInfo.hit,
+                keyboardInfo: WordKeyboardInfo.hit,
                 text: 'ア',
               ),
             ),
@@ -114,7 +114,7 @@ void main() {
               body: InputKey(
                 width: 100,
                 height: 100,
-                keyboardState: WordKeyboardInfo.match,
+                keyboardInfo: WordKeyboardInfo.match,
                 text: 'ア',
               ),
             ),
@@ -146,7 +146,7 @@ void main() {
               body: InputKey(
                 width: 100,
                 height: 100,
-                keyboardState: WordKeyboardInfo.notMatch,
+                keyboardInfo: WordKeyboardInfo.notMatch,
                 text: 'ア',
               ),
             ),
@@ -194,7 +194,7 @@ void main() {
               body: InputKey(
                 width: 100,
                 height: 100,
-                keyboardState: WordKeyboardInfo.match,
+                keyboardInfo: WordKeyboardInfo.match,
                 text: 'ア',
               ),
             ),

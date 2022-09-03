@@ -15,7 +15,7 @@ class InputKey extends ConsumerWidget {
     super.key,
     required this.width,
     required this.height,
-    required this.keyboardState,
+    required this.keyboardInfo,
     required this.text,
   }); // coverage:ignore-line
 
@@ -26,7 +26,7 @@ class InputKey extends ConsumerWidget {
   final double height;
 
   /// キーボードの表示状態
-  final WordKeyboardInfo keyboardState;
+  final WordKeyboardInfo keyboardInfo;
 
   /// 表示テキスト
   final String text;
@@ -84,7 +84,7 @@ class InputKey extends ConsumerWidget {
 
   /// テキストの色を取得します。
   Color? _textColor() {
-    switch (keyboardState) {
+    switch (keyboardInfo) {
       case WordKeyboardInfo.none:
         return Colors.black;
       case WordKeyboardInfo.hit:
@@ -98,7 +98,7 @@ class InputKey extends ConsumerWidget {
 
   /// ボックスの色を取得します。
   Color? _boxColor() {
-    switch (keyboardState) {
+    switch (keyboardInfo) {
       case WordKeyboardInfo.none:
         return unusedKeyColor;
       case WordKeyboardInfo.hit:

@@ -89,7 +89,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
               text: keyMap[index * 5 + i],
               width: _keySize.width,
               height: _keySize.height,
-              keyboardState: resultList.containsKey(keyMap[index * 5 + i])
+              keyboardInfo: resultList.containsKey(keyMap[index * 5 + i])
                   ? resultList[keyMap[index * 5 + i]] ?? WordKeyboardInfo.none
                   : WordKeyboardInfo.none,
             ),
