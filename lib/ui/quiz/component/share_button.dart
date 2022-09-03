@@ -19,7 +19,7 @@ class ShareButton extends ConsumerWidget {
     return ElevatedButton.icon(
       key: const Key('share_button'),
       style: ElevatedButton.styleFrom(
-        primary: Colors.grey,
+        backgroundColor: Colors.grey,
       ),
       onPressed: () {
         // ペアレンタルコントロールがオンの場合
