@@ -20,7 +20,7 @@ class TweetButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        primary: Colors.blue,
+        backgroundColor: Colors.blue,
       ),
       onPressed: () async {
         if (ref.read(parentalControlProvider).isParentalControl()) {

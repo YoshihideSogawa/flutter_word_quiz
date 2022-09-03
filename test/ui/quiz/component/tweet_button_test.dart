@@ -94,7 +94,7 @@ void main() {
     await tester.tap(find.text('ツイート'));
     await tester.pumpAndSettle();
     expect(
-      urlLauncher.launchUrl,
+      urlLauncher.launchedUrl,
       'https://twitter.com/intent/tweet?text=https%3A%2F%2Fexample.com',
     );
     expect(urlLauncher.launchCalled, isTrue);
