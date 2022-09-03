@@ -11,7 +11,7 @@ FakeUrlLauncher setUpUrlLauncher() {
 class FakeUrlLauncher extends Fake
     with MockPlatformInterfaceMixin
     implements UrlLauncherPlatform {
-  String? launchUrl;
+  String? launchedUrl;
 
   bool canLaunchCalled = false;
 
@@ -24,17 +24,8 @@ class FakeUrlLauncher extends Fake
   }
 
   @override
-  Future<bool> launch(
-    String url, {
-    required bool useSafariVC,
-    required bool useWebView,
-    required bool enableJavaScript,
-    required bool enableDomStorage,
-    required bool universalLinksOnly,
-    required Map<String, String> headers,
-    String? webOnlyWindowName,
-  }) async {
-    launchUrl = url;
+  Future<bool> launchUrl(String url, LaunchOptions options) async {
+    launchedUrl = url;
     launchCalled = true;
     return true;
   }

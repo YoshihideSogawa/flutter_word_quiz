@@ -65,7 +65,7 @@ void main() {
 
     expect(urlLauncher.launchCalled, isTrue);
     expect(
-      urlLauncher.launchUrl,
+      urlLauncher.launchedUrl,
       'https://github.com/YoshihideSogawa/flutter_word_quiz',
     );
   });
