@@ -8,23 +8,23 @@ import 'package:word_quiz/repository/settings_repository.dart';
 /// クイズの出題範囲のProviderです。
 final settingsQuizRangeProvider =
     StateNotifierProvider<SettingsQuizRangeNotifier, QuizRange>(
-  (ref) => SettingsQuizRangeNotifier(ref.read),
+  SettingsQuizRangeNotifier.new,
 );
 
 class SettingsQuizRangeNotifier extends StateNotifier<QuizRange> {
   SettingsQuizRangeNotifier(
-    this._reader,
+    this._ref,
   ) : super(diamondPearl) {
     init();
   }
 
-  /// [Reader]
-  final Reader _reader;
+  /// [Ref]
+  final Ref _ref;
 
   /// 初期化を行います。
   @visibleForTesting
   void init() {
-    final id = _reader(settingsRepositoryProvider).quizRangeId();
+    final id = _ref.read(settingsRepositoryProvider).quizRangeId();
     final quizRange =
         quizRangeList.firstWhereOrNull((element) => element.id == id);
     state = quizRange ?? diamondPearl;
@@ -32,7 +32,7 @@ class SettingsQuizRangeNotifier extends StateNotifier<QuizRange> {
 
   /// 出題範囲を更新します。
   void updateQuizRange(QuizRange quizRange) {
-    _reader(settingsRepositoryProvider).saveQuizRangeId(quizRange.id);
+    _ref.read(settingsRepositoryProvider).saveQuizRangeId(quizRange.id);
     state = quizRange;
   }
 }

@@ -6,15 +6,14 @@ import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/provider/monster_list_provider.dart';
 
 /// モンスター選択のProviderです。
-final monsterPickerProvider =
-    Provider<MonsterPicker>((ref) => MonsterPicker(ref.read));
+final monsterPickerProvider = Provider<MonsterPicker>(MonsterPicker.new);
 
 /// モンスターを選択を行います。
 class MonsterPicker {
-  MonsterPicker(this._reader);
+  MonsterPicker(this._ref);
 
-  /// [Reader]
-  final Reader _reader;
+  /// [Ref]
+  final Ref _ref;
 
   // TODO(sogawa): 同じモンスターが連続で選出される可能性がある
   /// 回答用のモンスターをピックアップします。
@@ -22,7 +21,7 @@ class MonsterPicker {
     QuizRange? range,
     int? seed,
   }) async {
-    final monsterList = await _reader(monsterListProvider.future);
+    final monsterList = await _ref.read(monsterListProvider.future);
 
     // NOTE:デバッグコード
     // return monsterList.firstWhere((element) => element.id == 120);

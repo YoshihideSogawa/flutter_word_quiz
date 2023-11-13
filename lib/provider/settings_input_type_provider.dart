@@ -6,28 +6,28 @@ import 'package:word_quiz/repository/settings_repository.dart';
 /// 入力タイプの設定
 final settingsInputTypeProvider =
     StateNotifierProvider<SettingsInputTypeNotifier, int>(
-  (ref) => SettingsInputTypeNotifier(ref.read),
+  SettingsInputTypeNotifier.new,
 );
 
 class SettingsInputTypeNotifier extends StateNotifier<int> {
   SettingsInputTypeNotifier(
-    this._reader,
+    this._ref,
   ) : super(inputTypeSwitching) {
     init();
   }
 
-  /// [Reader]
-  final Reader _reader;
+  /// [Ref]
+  final Ref _ref;
 
   @visibleForTesting
   void init() {
-    final inputType = _reader(settingsRepositoryProvider).inputType();
+    final inputType = _ref.read(settingsRepositoryProvider).inputType();
     state = inputType ?? inputTypeSwitching;
   }
 
   /// 入力タイプを更新します。
   void updateInputType(int value) {
-    _reader(settingsRepositoryProvider).saveInputType(value);
+    _ref.read(settingsRepositoryProvider).saveInputType(value);
     state = value;
   }
 }

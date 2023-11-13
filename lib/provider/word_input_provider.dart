@@ -105,7 +105,10 @@ class WordInputNotifier extends StateNotifier<WordInput> {
       return SubmitResult.skip;
     }
 
-    final quizInfo = await _ref.read(quizInfoProvider(_quizType).future);
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    // ignore: invalid_use_of_visible_for_testing_member
+    await _ref.read(quizInfoProvider(_quizType).notifier).init();
+    final quizInfo = _ref.read(quizInfoProvider(_quizType)).value!;
 
     // 回答が終了している場合
     if (quizInfo.quizProcess != QuizProcessType.started) {

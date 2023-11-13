@@ -2,16 +2,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 
 // ペアレンタルコントロールのProviderです。
-final parentalControlProvider =
-    Provider<ParentalControl>((ref) => ParentalControl(ref.read));
+final parentalControlProvider = Provider<ParentalControl>(ParentalControl.new);
 
 class ParentalControl {
-  ParentalControl(this._reader);
+  ParentalControl(this._ref);
 
-  /// [Reader]
-  final Reader _reader;
+  /// [Ref]
+  final Ref _ref;
 
   /// ペアレンタルコントロールをチェックします。
   bool isParentalControl() =>
-      _reader(appPropertyRepositoryProvider).parentalControl() ?? true;
+      _ref.read(appPropertyRepositoryProvider).parentalControl() ?? true;
 }
