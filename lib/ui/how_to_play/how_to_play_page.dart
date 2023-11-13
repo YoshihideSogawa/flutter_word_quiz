@@ -344,7 +344,7 @@ class HowToPlayPage extends ConsumerWidget {
                 'https://github.com/YoshihideSogawa/flutter_word_quiz',
               ),
               const TextSpan(
-                text: 'として公開おりますので、Flutter開発者・'
+                text: 'として公開しておりますので、Flutter開発者・'
                     'これからFlutterを始める方にはぜひレビューいただければ幸いです。\n',
               ),
               const TextSpan(
