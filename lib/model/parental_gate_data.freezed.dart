@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'parental_gate_data.dart';
 
@@ -29,19 +29,22 @@ mixin _$ParentalGateData {
 abstract class $ParentalGateDataCopyWith<$Res> {
   factory $ParentalGateDataCopyWith(
           ParentalGateData value, $Res Function(ParentalGateData) then) =
-      _$ParentalGateDataCopyWithImpl<$Res>;
+      _$ParentalGateDataCopyWithImpl<$Res, ParentalGateData>;
+  @useResult
   $Res call({String? question, String? correct, List<String>? answerList});
 }
 
 /// @nodoc
-class _$ParentalGateDataCopyWithImpl<$Res>
+class _$ParentalGateDataCopyWithImpl<$Res, $Val extends ParentalGateData>
     implements $ParentalGateDataCopyWith<$Res> {
   _$ParentalGateDataCopyWithImpl(this._value, this._then);
 
-  final ParentalGateData _value;
   // ignore: unused_field
-  final $Res Function(ParentalGateData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? question = freezed,
@@ -49,59 +52,58 @@ class _$ParentalGateDataCopyWithImpl<$Res>
     Object? answerList = freezed,
   }) {
     return _then(_value.copyWith(
-      question: question == freezed
+      question: freezed == question
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as String?,
-      correct: correct == freezed
+      correct: freezed == correct
           ? _value.correct
           : correct // ignore: cast_nullable_to_non_nullable
               as String?,
-      answerList: answerList == freezed
+      answerList: freezed == answerList
           ? _value.answerList
           : answerList // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ParentalGateDataCopyWith<$Res>
+abstract class _$$ParentalGateDataImplCopyWith<$Res>
     implements $ParentalGateDataCopyWith<$Res> {
-  factory _$$_ParentalGateDataCopyWith(
-          _$_ParentalGateData value, $Res Function(_$_ParentalGateData) then) =
-      __$$_ParentalGateDataCopyWithImpl<$Res>;
+  factory _$$ParentalGateDataImplCopyWith(_$ParentalGateDataImpl value,
+          $Res Function(_$ParentalGateDataImpl) then) =
+      __$$ParentalGateDataImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? question, String? correct, List<String>? answerList});
 }
 
 /// @nodoc
-class __$$_ParentalGateDataCopyWithImpl<$Res>
-    extends _$ParentalGateDataCopyWithImpl<$Res>
-    implements _$$_ParentalGateDataCopyWith<$Res> {
-  __$$_ParentalGateDataCopyWithImpl(
-      _$_ParentalGateData _value, $Res Function(_$_ParentalGateData) _then)
-      : super(_value, (v) => _then(v as _$_ParentalGateData));
+class __$$ParentalGateDataImplCopyWithImpl<$Res>
+    extends _$ParentalGateDataCopyWithImpl<$Res, _$ParentalGateDataImpl>
+    implements _$$ParentalGateDataImplCopyWith<$Res> {
+  __$$ParentalGateDataImplCopyWithImpl(_$ParentalGateDataImpl _value,
+      $Res Function(_$ParentalGateDataImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_ParentalGateData get _value => super._value as _$_ParentalGateData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? question = freezed,
     Object? correct = freezed,
     Object? answerList = freezed,
   }) {
-    return _then(_$_ParentalGateData(
-      question: question == freezed
+    return _then(_$ParentalGateDataImpl(
+      question: freezed == question
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as String?,
-      correct: correct == freezed
+      correct: freezed == correct
           ? _value.correct
           : correct // ignore: cast_nullable_to_non_nullable
               as String?,
-      answerList: answerList == freezed
+      answerList: freezed == answerList
           ? _value._answerList
           : answerList // ignore: cast_nullable_to_non_nullable
               as List<String>?,
@@ -111,10 +113,10 @@ class __$$_ParentalGateDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ParentalGateData
+class _$ParentalGateDataImpl
     with DiagnosticableTreeMixin
     implements _ParentalGateData {
-  const _$_ParentalGateData(
+  const _$ParentalGateDataImpl(
       {this.question, this.correct, final List<String>? answerList})
       : _answerList = answerList;
 
@@ -127,6 +129,7 @@ class _$_ParentalGateData
   List<String>? get answerList {
     final value = _answerList;
     if (value == null) return null;
+    if (_answerList is EqualUnmodifiableListView) return _answerList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -150,40 +153,40 @@ class _$_ParentalGateData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ParentalGateData &&
-            const DeepCollectionEquality().equals(other.question, question) &&
-            const DeepCollectionEquality().equals(other.correct, correct) &&
+            other is _$ParentalGateDataImpl &&
+            (identical(other.question, question) ||
+                other.question == question) &&
+            (identical(other.correct, correct) || other.correct == correct) &&
             const DeepCollectionEquality()
                 .equals(other._answerList, _answerList));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(question),
-      const DeepCollectionEquality().hash(correct),
+  int get hashCode => Object.hash(runtimeType, question, correct,
       const DeepCollectionEquality().hash(_answerList));
 
   @JsonKey(ignore: true)
   @override
-  _$$_ParentalGateDataCopyWith<_$_ParentalGateData> get copyWith =>
-      __$$_ParentalGateDataCopyWithImpl<_$_ParentalGateData>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ParentalGateDataImplCopyWith<_$ParentalGateDataImpl> get copyWith =>
+      __$$ParentalGateDataImplCopyWithImpl<_$ParentalGateDataImpl>(
+          this, _$identity);
 }
 
 abstract class _ParentalGateData implements ParentalGateData {
   const factory _ParentalGateData(
       {final String? question,
       final String? correct,
-      final List<String>? answerList}) = _$_ParentalGateData;
+      final List<String>? answerList}) = _$ParentalGateDataImpl;
 
   @override
-  String? get question => throw _privateConstructorUsedError;
+  String? get question;
   @override
-  String? get correct => throw _privateConstructorUsedError;
+  String? get correct;
   @override
-  List<String>? get answerList => throw _privateConstructorUsedError;
+  List<String>? get answerList;
   @override
   @JsonKey(ignore: true)
-  _$$_ParentalGateDataCopyWith<_$_ParentalGateData> get copyWith =>
+  _$$ParentalGateDataImplCopyWith<_$ParentalGateDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

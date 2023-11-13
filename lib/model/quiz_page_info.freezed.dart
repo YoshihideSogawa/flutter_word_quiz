@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz_page_info.dart';
 
@@ -37,7 +37,8 @@ mixin _$QuizPageInfo {
 abstract class $QuizPageInfoCopyWith<$Res> {
   factory $QuizPageInfoCopyWith(
           QuizPageInfo value, $Res Function(QuizPageInfo) then) =
-      _$QuizPageInfoCopyWithImpl<$Res>;
+      _$QuizPageInfoCopyWithImpl<$Res, QuizPageInfo>;
+  @useResult
   $Res call(
       {bool showAnswer,
       bool showStatistics,
@@ -48,58 +49,62 @@ abstract class $QuizPageInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$QuizPageInfoCopyWithImpl<$Res> implements $QuizPageInfoCopyWith<$Res> {
+class _$QuizPageInfoCopyWithImpl<$Res, $Val extends QuizPageInfo>
+    implements $QuizPageInfoCopyWith<$Res> {
   _$QuizPageInfoCopyWithImpl(this._value, this._then);
 
-  final QuizPageInfo _value;
   // ignore: unused_field
-  final $Res Function(QuizPageInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? showAnswer = freezed,
-    Object? showStatistics = freezed,
-    Object? normalKeyboard = freezed,
-    Object? showQuizSelection = freezed,
-    Object? showResult = freezed,
-    Object? showQuizChanged = freezed,
+    Object? showAnswer = null,
+    Object? showStatistics = null,
+    Object? normalKeyboard = null,
+    Object? showQuizSelection = null,
+    Object? showResult = null,
+    Object? showQuizChanged = null,
   }) {
     return _then(_value.copyWith(
-      showAnswer: showAnswer == freezed
+      showAnswer: null == showAnswer
           ? _value.showAnswer
           : showAnswer // ignore: cast_nullable_to_non_nullable
               as bool,
-      showStatistics: showStatistics == freezed
+      showStatistics: null == showStatistics
           ? _value.showStatistics
           : showStatistics // ignore: cast_nullable_to_non_nullable
               as bool,
-      normalKeyboard: normalKeyboard == freezed
+      normalKeyboard: null == normalKeyboard
           ? _value.normalKeyboard
           : normalKeyboard // ignore: cast_nullable_to_non_nullable
               as bool,
-      showQuizSelection: showQuizSelection == freezed
+      showQuizSelection: null == showQuizSelection
           ? _value.showQuizSelection
           : showQuizSelection // ignore: cast_nullable_to_non_nullable
               as bool,
-      showResult: showResult == freezed
+      showResult: null == showResult
           ? _value.showResult
           : showResult // ignore: cast_nullable_to_non_nullable
               as bool,
-      showQuizChanged: showQuizChanged == freezed
+      showQuizChanged: null == showQuizChanged
           ? _value.showQuizChanged
           : showQuizChanged // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_QuizPageInfoCopyWith<$Res>
+abstract class _$$QuizPageInfoImplCopyWith<$Res>
     implements $QuizPageInfoCopyWith<$Res> {
-  factory _$$_QuizPageInfoCopyWith(
-          _$_QuizPageInfo value, $Res Function(_$_QuizPageInfo) then) =
-      __$$_QuizPageInfoCopyWithImpl<$Res>;
+  factory _$$QuizPageInfoImplCopyWith(
+          _$QuizPageInfoImpl value, $Res Function(_$QuizPageInfoImpl) then) =
+      __$$QuizPageInfoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool showAnswer,
       bool showStatistics,
@@ -110,47 +115,45 @@ abstract class _$$_QuizPageInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_QuizPageInfoCopyWithImpl<$Res>
-    extends _$QuizPageInfoCopyWithImpl<$Res>
-    implements _$$_QuizPageInfoCopyWith<$Res> {
-  __$$_QuizPageInfoCopyWithImpl(
-      _$_QuizPageInfo _value, $Res Function(_$_QuizPageInfo) _then)
-      : super(_value, (v) => _then(v as _$_QuizPageInfo));
+class __$$QuizPageInfoImplCopyWithImpl<$Res>
+    extends _$QuizPageInfoCopyWithImpl<$Res, _$QuizPageInfoImpl>
+    implements _$$QuizPageInfoImplCopyWith<$Res> {
+  __$$QuizPageInfoImplCopyWithImpl(
+      _$QuizPageInfoImpl _value, $Res Function(_$QuizPageInfoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_QuizPageInfo get _value => super._value as _$_QuizPageInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? showAnswer = freezed,
-    Object? showStatistics = freezed,
-    Object? normalKeyboard = freezed,
-    Object? showQuizSelection = freezed,
-    Object? showResult = freezed,
-    Object? showQuizChanged = freezed,
+    Object? showAnswer = null,
+    Object? showStatistics = null,
+    Object? normalKeyboard = null,
+    Object? showQuizSelection = null,
+    Object? showResult = null,
+    Object? showQuizChanged = null,
   }) {
-    return _then(_$_QuizPageInfo(
-      showAnswer: showAnswer == freezed
+    return _then(_$QuizPageInfoImpl(
+      showAnswer: null == showAnswer
           ? _value.showAnswer
           : showAnswer // ignore: cast_nullable_to_non_nullable
               as bool,
-      showStatistics: showStatistics == freezed
+      showStatistics: null == showStatistics
           ? _value.showStatistics
           : showStatistics // ignore: cast_nullable_to_non_nullable
               as bool,
-      normalKeyboard: normalKeyboard == freezed
+      normalKeyboard: null == normalKeyboard
           ? _value.normalKeyboard
           : normalKeyboard // ignore: cast_nullable_to_non_nullable
               as bool,
-      showQuizSelection: showQuizSelection == freezed
+      showQuizSelection: null == showQuizSelection
           ? _value.showQuizSelection
           : showQuizSelection // ignore: cast_nullable_to_non_nullable
               as bool,
-      showResult: showResult == freezed
+      showResult: null == showResult
           ? _value.showResult
           : showResult // ignore: cast_nullable_to_non_nullable
               as bool,
-      showQuizChanged: showQuizChanged == freezed
+      showQuizChanged: null == showQuizChanged
           ? _value.showQuizChanged
           : showQuizChanged // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -160,8 +163,8 @@ class __$$_QuizPageInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
-  const _$_QuizPageInfo(
+class _$QuizPageInfoImpl with DiagnosticableTreeMixin implements _QuizPageInfo {
+  const _$QuizPageInfoImpl(
       {this.showAnswer = false,
       this.showStatistics = false,
       this.normalKeyboard = true,
@@ -169,8 +172,8 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
       this.showResult = false,
       this.showQuizChanged = false});
 
-  factory _$_QuizPageInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_QuizPageInfoFromJson(json);
+  factory _$QuizPageInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$QuizPageInfoImplFromJson(json);
 
   @override
   @JsonKey()
@@ -213,40 +216,37 @@ class _$_QuizPageInfo with DiagnosticableTreeMixin implements _QuizPageInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuizPageInfo &&
-            const DeepCollectionEquality()
-                .equals(other.showAnswer, showAnswer) &&
-            const DeepCollectionEquality()
-                .equals(other.showStatistics, showStatistics) &&
-            const DeepCollectionEquality()
-                .equals(other.normalKeyboard, normalKeyboard) &&
-            const DeepCollectionEquality()
-                .equals(other.showQuizSelection, showQuizSelection) &&
-            const DeepCollectionEquality()
-                .equals(other.showResult, showResult) &&
-            const DeepCollectionEquality()
-                .equals(other.showQuizChanged, showQuizChanged));
+            other is _$QuizPageInfoImpl &&
+            (identical(other.showAnswer, showAnswer) ||
+                other.showAnswer == showAnswer) &&
+            (identical(other.showStatistics, showStatistics) ||
+                other.showStatistics == showStatistics) &&
+            (identical(other.normalKeyboard, normalKeyboard) ||
+                other.normalKeyboard == normalKeyboard) &&
+            (identical(other.showQuizSelection, showQuizSelection) ||
+                other.showQuizSelection == showQuizSelection) &&
+            (identical(other.showResult, showResult) ||
+                other.showResult == showResult) &&
+            (identical(other.showQuizChanged, showQuizChanged) ||
+                other.showQuizChanged == showQuizChanged));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(showAnswer),
-      const DeepCollectionEquality().hash(showStatistics),
-      const DeepCollectionEquality().hash(normalKeyboard),
-      const DeepCollectionEquality().hash(showQuizSelection),
-      const DeepCollectionEquality().hash(showResult),
-      const DeepCollectionEquality().hash(showQuizChanged));
+  int get hashCode => Object.hash(runtimeType, showAnswer, showStatistics,
+      normalKeyboard, showQuizSelection, showResult, showQuizChanged);
 
   @JsonKey(ignore: true)
   @override
-  _$$_QuizPageInfoCopyWith<_$_QuizPageInfo> get copyWith =>
-      __$$_QuizPageInfoCopyWithImpl<_$_QuizPageInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$QuizPageInfoImplCopyWith<_$QuizPageInfoImpl> get copyWith =>
+      __$$QuizPageInfoImplCopyWithImpl<_$QuizPageInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_QuizPageInfoToJson(this);
+    return _$$QuizPageInfoImplToJson(
+      this,
+    );
   }
 }
 
@@ -257,25 +257,25 @@ abstract class _QuizPageInfo implements QuizPageInfo {
       final bool normalKeyboard,
       final bool showQuizSelection,
       final bool showResult,
-      final bool showQuizChanged}) = _$_QuizPageInfo;
+      final bool showQuizChanged}) = _$QuizPageInfoImpl;
 
   factory _QuizPageInfo.fromJson(Map<String, dynamic> json) =
-      _$_QuizPageInfo.fromJson;
+      _$QuizPageInfoImpl.fromJson;
 
   @override
-  bool get showAnswer => throw _privateConstructorUsedError;
+  bool get showAnswer;
   @override
-  bool get showStatistics => throw _privateConstructorUsedError;
+  bool get showStatistics;
   @override
-  bool get normalKeyboard => throw _privateConstructorUsedError;
+  bool get normalKeyboard;
   @override
-  bool get showQuizSelection => throw _privateConstructorUsedError;
+  bool get showQuizSelection;
   @override
-  bool get showResult => throw _privateConstructorUsedError;
+  bool get showResult;
   @override
-  bool get showQuizChanged => throw _privateConstructorUsedError;
+  bool get showQuizChanged;
   @override
   @JsonKey(ignore: true)
-  _$$_QuizPageInfoCopyWith<_$_QuizPageInfo> get copyWith =>
+  _$$QuizPageInfoImplCopyWith<_$QuizPageInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

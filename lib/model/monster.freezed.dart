@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'monster.dart';
 
@@ -31,65 +31,70 @@ mixin _$Monster {
 /// @nodoc
 abstract class $MonsterCopyWith<$Res> {
   factory $MonsterCopyWith(Monster value, $Res Function(Monster) then) =
-      _$MonsterCopyWithImpl<$Res>;
+      _$MonsterCopyWithImpl<$Res, Monster>;
+  @useResult
   $Res call({int id, String name});
 }
 
 /// @nodoc
-class _$MonsterCopyWithImpl<$Res> implements $MonsterCopyWith<$Res> {
+class _$MonsterCopyWithImpl<$Res, $Val extends Monster>
+    implements $MonsterCopyWith<$Res> {
   _$MonsterCopyWithImpl(this._value, this._then);
 
-  final Monster _value;
   // ignore: unused_field
-  final $Res Function(Monster) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_MonsterCopyWith<$Res> implements $MonsterCopyWith<$Res> {
-  factory _$$_MonsterCopyWith(
-          _$_Monster value, $Res Function(_$_Monster) then) =
-      __$$_MonsterCopyWithImpl<$Res>;
+abstract class _$$MonsterImplCopyWith<$Res> implements $MonsterCopyWith<$Res> {
+  factory _$$MonsterImplCopyWith(
+          _$MonsterImpl value, $Res Function(_$MonsterImpl) then) =
+      __$$MonsterImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, String name});
 }
 
 /// @nodoc
-class __$$_MonsterCopyWithImpl<$Res> extends _$MonsterCopyWithImpl<$Res>
-    implements _$$_MonsterCopyWith<$Res> {
-  __$$_MonsterCopyWithImpl(_$_Monster _value, $Res Function(_$_Monster) _then)
-      : super(_value, (v) => _then(v as _$_Monster));
+class __$$MonsterImplCopyWithImpl<$Res>
+    extends _$MonsterCopyWithImpl<$Res, _$MonsterImpl>
+    implements _$$MonsterImplCopyWith<$Res> {
+  __$$MonsterImplCopyWithImpl(
+      _$MonsterImpl _value, $Res Function(_$MonsterImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Monster get _value => super._value as _$_Monster;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
   }) {
-    return _then(_$_Monster(
-      id: id == freezed
+    return _then(_$MonsterImpl(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -99,11 +104,11 @@ class __$$_MonsterCopyWithImpl<$Res> extends _$MonsterCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Monster with DiagnosticableTreeMixin implements _Monster {
-  const _$_Monster({required this.id, required this.name});
+class _$MonsterImpl with DiagnosticableTreeMixin implements _Monster {
+  const _$MonsterImpl({required this.id, required this.name});
 
-  factory _$_Monster.fromJson(Map<String, dynamic> json) =>
-      _$$_MonsterFromJson(json);
+  factory _$MonsterImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MonsterImplFromJson(json);
 
   @override
   final int id;
@@ -128,41 +133,41 @@ class _$_Monster with DiagnosticableTreeMixin implements _Monster {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Monster &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            other is _$MonsterImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
-  _$$_MonsterCopyWith<_$_Monster> get copyWith =>
-      __$$_MonsterCopyWithImpl<_$_Monster>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$MonsterImplCopyWith<_$MonsterImpl> get copyWith =>
+      __$$MonsterImplCopyWithImpl<_$MonsterImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MonsterToJson(this);
+    return _$$MonsterImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _Monster implements Monster {
   const factory _Monster({required final int id, required final String name}) =
-      _$_Monster;
+      _$MonsterImpl;
 
-  factory _Monster.fromJson(Map<String, dynamic> json) = _$_Monster.fromJson;
+  factory _Monster.fromJson(Map<String, dynamic> json) = _$MonsterImpl.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_MonsterCopyWith<_$_Monster> get copyWith =>
+  _$$MonsterImplCopyWith<_$MonsterImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

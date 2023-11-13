@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'parental_gate_page_info.dart';
 
@@ -29,62 +29,68 @@ mixin _$ParentalGatePageInfo {
 abstract class $ParentalGatePageInfoCopyWith<$Res> {
   factory $ParentalGatePageInfoCopyWith(ParentalGatePageInfo value,
           $Res Function(ParentalGatePageInfo) then) =
-      _$ParentalGatePageInfoCopyWithImpl<$Res>;
+      _$ParentalGatePageInfoCopyWithImpl<$Res, ParentalGatePageInfo>;
+  @useResult
   $Res call({int answerNum, int maxAnswerNum, ParentalGateData? targetData});
 
   $ParentalGateDataCopyWith<$Res>? get targetData;
 }
 
 /// @nodoc
-class _$ParentalGatePageInfoCopyWithImpl<$Res>
+class _$ParentalGatePageInfoCopyWithImpl<$Res,
+        $Val extends ParentalGatePageInfo>
     implements $ParentalGatePageInfoCopyWith<$Res> {
   _$ParentalGatePageInfoCopyWithImpl(this._value, this._then);
 
-  final ParentalGatePageInfo _value;
   // ignore: unused_field
-  final $Res Function(ParentalGatePageInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? answerNum = freezed,
-    Object? maxAnswerNum = freezed,
+    Object? answerNum = null,
+    Object? maxAnswerNum = null,
     Object? targetData = freezed,
   }) {
     return _then(_value.copyWith(
-      answerNum: answerNum == freezed
+      answerNum: null == answerNum
           ? _value.answerNum
           : answerNum // ignore: cast_nullable_to_non_nullable
               as int,
-      maxAnswerNum: maxAnswerNum == freezed
+      maxAnswerNum: null == maxAnswerNum
           ? _value.maxAnswerNum
           : maxAnswerNum // ignore: cast_nullable_to_non_nullable
               as int,
-      targetData: targetData == freezed
+      targetData: freezed == targetData
           ? _value.targetData
           : targetData // ignore: cast_nullable_to_non_nullable
               as ParentalGateData?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ParentalGateDataCopyWith<$Res>? get targetData {
     if (_value.targetData == null) {
       return null;
     }
 
     return $ParentalGateDataCopyWith<$Res>(_value.targetData!, (value) {
-      return _then(_value.copyWith(targetData: value));
+      return _then(_value.copyWith(targetData: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_ParentalGatePageInfoCopyWith<$Res>
+abstract class _$$ParentalGatePageInfoImplCopyWith<$Res>
     implements $ParentalGatePageInfoCopyWith<$Res> {
-  factory _$$_ParentalGatePageInfoCopyWith(_$_ParentalGatePageInfo value,
-          $Res Function(_$_ParentalGatePageInfo) then) =
-      __$$_ParentalGatePageInfoCopyWithImpl<$Res>;
+  factory _$$ParentalGatePageInfoImplCopyWith(_$ParentalGatePageInfoImpl value,
+          $Res Function(_$ParentalGatePageInfoImpl) then) =
+      __$$ParentalGatePageInfoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int answerNum, int maxAnswerNum, ParentalGateData? targetData});
 
   @override
@@ -92,32 +98,30 @@ abstract class _$$_ParentalGatePageInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ParentalGatePageInfoCopyWithImpl<$Res>
-    extends _$ParentalGatePageInfoCopyWithImpl<$Res>
-    implements _$$_ParentalGatePageInfoCopyWith<$Res> {
-  __$$_ParentalGatePageInfoCopyWithImpl(_$_ParentalGatePageInfo _value,
-      $Res Function(_$_ParentalGatePageInfo) _then)
-      : super(_value, (v) => _then(v as _$_ParentalGatePageInfo));
+class __$$ParentalGatePageInfoImplCopyWithImpl<$Res>
+    extends _$ParentalGatePageInfoCopyWithImpl<$Res, _$ParentalGatePageInfoImpl>
+    implements _$$ParentalGatePageInfoImplCopyWith<$Res> {
+  __$$ParentalGatePageInfoImplCopyWithImpl(_$ParentalGatePageInfoImpl _value,
+      $Res Function(_$ParentalGatePageInfoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_ParentalGatePageInfo get _value => super._value as _$_ParentalGatePageInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? answerNum = freezed,
-    Object? maxAnswerNum = freezed,
+    Object? answerNum = null,
+    Object? maxAnswerNum = null,
     Object? targetData = freezed,
   }) {
-    return _then(_$_ParentalGatePageInfo(
-      answerNum: answerNum == freezed
+    return _then(_$ParentalGatePageInfoImpl(
+      answerNum: null == answerNum
           ? _value.answerNum
           : answerNum // ignore: cast_nullable_to_non_nullable
               as int,
-      maxAnswerNum: maxAnswerNum == freezed
+      maxAnswerNum: null == maxAnswerNum
           ? _value.maxAnswerNum
           : maxAnswerNum // ignore: cast_nullable_to_non_nullable
               as int,
-      targetData: targetData == freezed
+      targetData: freezed == targetData
           ? _value.targetData
           : targetData // ignore: cast_nullable_to_non_nullable
               as ParentalGateData?,
@@ -127,10 +131,10 @@ class __$$_ParentalGatePageInfoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ParentalGatePageInfo
+class _$ParentalGatePageInfoImpl
     with DiagnosticableTreeMixin
     implements _ParentalGatePageInfo {
-  const _$_ParentalGatePageInfo(
+  const _$ParentalGatePageInfoImpl(
       {this.answerNum = 0, this.maxAnswerNum = 0, this.targetData});
 
   @override
@@ -161,42 +165,42 @@ class _$_ParentalGatePageInfo
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ParentalGatePageInfo &&
-            const DeepCollectionEquality().equals(other.answerNum, answerNum) &&
-            const DeepCollectionEquality()
-                .equals(other.maxAnswerNum, maxAnswerNum) &&
-            const DeepCollectionEquality()
-                .equals(other.targetData, targetData));
+            other is _$ParentalGatePageInfoImpl &&
+            (identical(other.answerNum, answerNum) ||
+                other.answerNum == answerNum) &&
+            (identical(other.maxAnswerNum, maxAnswerNum) ||
+                other.maxAnswerNum == maxAnswerNum) &&
+            (identical(other.targetData, targetData) ||
+                other.targetData == targetData));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(answerNum),
-      const DeepCollectionEquality().hash(maxAnswerNum),
-      const DeepCollectionEquality().hash(targetData));
+  int get hashCode =>
+      Object.hash(runtimeType, answerNum, maxAnswerNum, targetData);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ParentalGatePageInfoCopyWith<_$_ParentalGatePageInfo> get copyWith =>
-      __$$_ParentalGatePageInfoCopyWithImpl<_$_ParentalGatePageInfo>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ParentalGatePageInfoImplCopyWith<_$ParentalGatePageInfoImpl>
+      get copyWith =>
+          __$$ParentalGatePageInfoImplCopyWithImpl<_$ParentalGatePageInfoImpl>(
+              this, _$identity);
 }
 
 abstract class _ParentalGatePageInfo implements ParentalGatePageInfo {
   const factory _ParentalGatePageInfo(
       {final int answerNum,
       final int maxAnswerNum,
-      final ParentalGateData? targetData}) = _$_ParentalGatePageInfo;
+      final ParentalGateData? targetData}) = _$ParentalGatePageInfoImpl;
 
   @override
-  int get answerNum => throw _privateConstructorUsedError;
+  int get answerNum;
   @override
-  int get maxAnswerNum => throw _privateConstructorUsedError;
+  int get maxAnswerNum;
   @override
-  ParentalGateData? get targetData => throw _privateConstructorUsedError;
+  ParentalGateData? get targetData;
   @override
   @JsonKey(ignore: true)
-  _$$_ParentalGatePageInfoCopyWith<_$_ParentalGatePageInfo> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ParentalGatePageInfoImplCopyWith<_$ParentalGatePageInfoImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
