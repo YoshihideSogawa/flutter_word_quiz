@@ -1,5 +1,5 @@
-import 'dart:math';
-
+import 'package:flutter/foundation.dart';
+import 'package:mockito/mockito.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/model/parental_gate_list.dart';
 import 'package:word_quiz/model/parental_gate_page_info.dart';
@@ -29,3 +29,9 @@ class ParentalGatePageNotifier extends _$ParentalGatePageNotifier {
 
 /// 最大回答数
 const _maxAnswerNum = 3;
+
+/// テスト用のMock
+@visibleForTesting
+class MockParentalGatePageNotifier extends _$ParentalGatePageNotifier
+    with Mock
+    implements ParentalGatePageNotifier {}

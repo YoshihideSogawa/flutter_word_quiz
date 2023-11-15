@@ -22,16 +22,4 @@ void main() {
     await appPropertyRepository.saveLaunched();
     expect(appPropertyRepository.alreadyLaunched(), isTrue);
   });
-
-  test('parentalControl/saveParentalControl', () async {
-    final container = ProviderContainer();
-    final appPropertyRepository = container.read(appPropertyRepositoryProvider);
-    expect(appPropertyRepository.parentalControl(), isNull);
-
-    await appPropertyRepository.saveParentalControl(parentalControl: true);
-    expect(appPropertyRepository.parentalControl(), isTrue);
-
-    await appPropertyRepository.saveParentalControl(parentalControl: false);
-    expect(appPropertyRepository.parentalControl(), isFalse);
-  });
 }

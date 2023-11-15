@@ -21,6 +21,7 @@ dependencies:
   hooks_riverpod: ^2.4.6
   intl: ^0.18.1
   json_annotation: ^4.8.1
+  mockito: ^5.4.0
   riverpod_annotation: ^2.3.1
   share_plus: ^7.2.1
   url_launcher: ^6.2.1
@@ -33,7 +34,6 @@ dev_dependencies:
   freezed: ^2.3.3
   hive_generator: ^2.0.1
   json_serializable: ^6.6.1
-  mockito: ^5.4.0
   pedantic_mono: any
   plugin_platform_interface: ^2.1.5
   riverpod_generator: ^2.3.6

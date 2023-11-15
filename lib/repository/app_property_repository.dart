@@ -39,6 +39,3 @@ class _LocalAppPropertyRepository implements AppPropertyRepository {
 
 /// 初回起動の保存キー
 const _launchFirstTimeKey = 'launch_first_time';
-
-/// ペアレンタルコントロールのキー
-const _parentalControlKey = 'parental_control';

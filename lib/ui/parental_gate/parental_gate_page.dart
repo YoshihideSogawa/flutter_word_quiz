@@ -36,7 +36,7 @@ class ParentalGatePage extends HookConsumerWidget {
       }
     }
 
-    final targetData = parentalGate.parentGateDataList[answerNum.value];
+    final targetData = parentalGate.parentGateDataList[answerNum.value - 1];
     return Scaffold(
       appBar: AppBar(
         title: const Text('ねんれいかくにん'),

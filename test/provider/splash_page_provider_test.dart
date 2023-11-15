@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/provider/splash_page_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 
 import '../mock/generate_mocks.mocks.dart';
@@ -15,12 +16,12 @@ void main() {
   test('showFirstRule(初回起動)', () async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final container = ProviderContainer(
       overrides: [
         appPropertyRepositoryProvider
             .overrideWithValue(mockAppPropertyRepository),
+        isParentalControlProvider.overrideWith((ref) => false),
       ],
     );
 
@@ -34,12 +35,12 @@ void main() {
   test('showFirstRule(起動済み)', () async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final container = ProviderContainer(
       overrides: [
         appPropertyRepositoryProvider
             .overrideWithValue(mockAppPropertyRepository),
+        isParentalControlProvider.overrideWith((ref) => false),
       ],
     );
 
@@ -53,12 +54,12 @@ void main() {
   test('初回起動', () async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(null);
 
     final container = ProviderContainer(
       overrides: [
         appPropertyRepositoryProvider
             .overrideWithValue(mockAppPropertyRepository),
+        isParentalControlProvider.overrideWith((ref) => null),
       ],
     );
 

@@ -8,6 +8,7 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 import 'package:word_quiz/ui/word_quiz.dart';
@@ -21,7 +22,6 @@ void main() {
   testWidgets('WordQuiz', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -47,6 +47,7 @@ void main() {
               .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWith((ref) => fakeWordInputNotifier),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const WordQuiz(),
       ),

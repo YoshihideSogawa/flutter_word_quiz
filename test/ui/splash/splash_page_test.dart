@@ -11,6 +11,7 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/splash_page_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
@@ -30,7 +31,6 @@ void main() {
   testWidgets('SplashPage>QuizPage', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -71,7 +71,6 @@ void main() {
   testWidgets('SplashPage>HowToPlayPage', (tester) async {
     final mockAppPropertyRepository = MockAppPropertyRepository();
     when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -97,6 +96,7 @@ void main() {
               .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWith((ref) => fakeWordInputNotifier),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: SplashPage(),
