@@ -183,9 +183,9 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier),
+              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

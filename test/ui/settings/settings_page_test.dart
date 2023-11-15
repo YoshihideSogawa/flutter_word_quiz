@@ -30,9 +30,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -58,9 +58,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -82,9 +82,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -125,9 +125,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -170,9 +170,9 @@ void main() {
           dataSettingsProvider(QuizTypes.daily)
               .overrideWithValue(mockDataSettings),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -218,9 +218,9 @@ void main() {
           dataSettingsProvider(QuizTypes.endless)
               .overrideWithValue(mockDataSettings),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),

@@ -34,7 +34,7 @@ void main() {
       ProviderScope(
         overrides: [
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

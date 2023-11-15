@@ -32,8 +32,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalGatePageProvider.overrideWithValue(
-            FakeParentalGatePageNotifier(
+          parentalGatePageProvider.overrideWith(
+            (ref) => FakeParentalGatePageNotifier(
               parentalGatePageInfo,
             ),
           ),
@@ -72,8 +72,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalGatePageProvider.overrideWithValue(
-            FakeParentalGatePageNotifier(
+          parentalGatePageProvider.overrideWith(
+            (ref) => FakeParentalGatePageNotifier(
               parentalGatePageInfo,
             ),
           ),
@@ -81,15 +81,15 @@ void main() {
           appPropertyRepositoryProvider
               .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -142,7 +142,7 @@ void main() {
       ProviderScope(
         overrides: [
           parentalGatePageProvider
-              .overrideWithValue(fakeParentalGatePageNotifier),
+              .overrideWith((ref) => fakeParentalGatePageNotifier),
         ],
         child: const MaterialApp(
           home: ParentalGatePage(),
@@ -179,20 +179,20 @@ void main() {
       ProviderScope(
         overrides: [
           parentalGatePageProvider
-              .overrideWithValue(fakeParentalGatePageNotifier),
+              .overrideWith((ref) => fakeParentalGatePageNotifier),
           // 以下Splash
           appPropertyRepositoryProvider
               .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: MaterialApp(
           home: Scaffold(

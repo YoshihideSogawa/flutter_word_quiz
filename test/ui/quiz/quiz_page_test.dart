@@ -28,17 +28,17 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           // endless
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizPage(),
@@ -64,17 +64,17 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           // endless
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizPage(),

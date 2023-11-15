@@ -45,17 +45,17 @@ void main() {
           appPropertyRepositoryProvider
               .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           // endless
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: SplashPage(),
@@ -86,17 +86,17 @@ void main() {
           appPropertyRepositoryProvider
               .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           // endless
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: SplashPage(),
@@ -111,7 +111,7 @@ void main() {
 
   testWidgets('SplashPage>error', (tester) async {
     final fakeSplashPageNotifier =
-        FakeSplashPageNotifier(const AsyncValue.error(''));
+        FakeSplashPageNotifier(const AsyncValue.error('', StackTrace.empty));
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizInfoNotifier =
@@ -122,19 +122,19 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          splashPageProvider.overrideWithValue(fakeSplashPageNotifier),
+          splashPageProvider.overrideWith((ref) => fakeSplashPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           // endless
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: SplashPage(),

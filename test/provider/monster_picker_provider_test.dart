@@ -10,7 +10,7 @@ void main() {
   test('pickMonster', () async {
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWithValue(AsyncValue.data(monsterTestList)),
+        monsterListProvider.overrideWith((ref) => monsterTestList),
       ],
     );
 
@@ -23,7 +23,7 @@ void main() {
   test('pickRandom', () async {
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWithValue(AsyncValue.data(monsterTestList)),
+        monsterListProvider.overrideWith((ref) => monsterTestList),
       ],
     );
 

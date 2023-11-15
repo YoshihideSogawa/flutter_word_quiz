@@ -15,8 +15,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizPageProvider(quizType).overrideWithValue(
-            FakeQuizPageNotifier(
+          quizPageProvider(quizType).overrideWith(
+            (ref) => FakeQuizPageNotifier(
               const QuizPageInfo(
                 showStatistics: false,
                 showQuizSelection: false,
@@ -53,7 +53,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

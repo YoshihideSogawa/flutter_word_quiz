@@ -35,11 +35,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -71,11 +72,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -112,11 +114,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

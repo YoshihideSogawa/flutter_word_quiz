@@ -53,9 +53,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: Scaffold(

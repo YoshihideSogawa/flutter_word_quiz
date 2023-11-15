@@ -80,12 +80,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -148,12 +150,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -216,12 +220,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -284,12 +290,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -352,12 +360,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -423,14 +433,16 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -496,14 +508,16 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -569,14 +583,16 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -642,14 +658,16 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -723,14 +741,16 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
           parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
         child: const MaterialApp(

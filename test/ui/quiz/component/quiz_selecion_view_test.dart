@@ -32,7 +32,7 @@ void main() {
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -74,9 +74,9 @@ void main() {
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
           quizPageProvider(QuizTypes.daily)
-              .overrideWithValue(mockQuizPageNotifier),
+              .overrideWith((ref) => mockQuizPageNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -114,11 +114,11 @@ void main() {
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
           quizPageProvider(QuizTypes.daily)
-              .overrideWithValue(mockQuizPageNotifier),
+              .overrideWith((ref) => mockQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(mockQuizInfoNotifier),
+              .overrideWith((ref) => mockQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -160,11 +160,11 @@ void main() {
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
           settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
           quizPageProvider(QuizTypes.daily)
-              .overrideWithValue(mockQuizPageNotifier),
+              .overrideWith((ref) => mockQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(mockQuizInfoNotifier),
+              .overrideWith((ref) => mockQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

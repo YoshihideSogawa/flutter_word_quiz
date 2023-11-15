@@ -47,11 +47,11 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           quizRepositoryProvider(QuizTypes.daily)
               .overrideWithValue(MockQuizRepository()),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier)
+              .overrideWith((ref) => mockWordInputNotifier)
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -87,11 +87,11 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           quizRepositoryProvider(QuizTypes.daily)
               .overrideWithValue(MockQuizRepository()),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier)
+              .overrideWith((ref) => mockWordInputNotifier)
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -131,11 +131,11 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           quizRepositoryProvider(QuizTypes.daily)
               .overrideWithValue(MockQuizRepository()),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier)
+              .overrideWith((ref) => mockWordInputNotifier)
         ],
         child: const MaterialApp(
           home: QuizType(

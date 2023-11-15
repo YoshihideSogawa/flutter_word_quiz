@@ -34,11 +34,11 @@ void main() {
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
+              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
+              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: DailyQuizPage(),
@@ -65,7 +65,7 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: DailyQuizPage(),
@@ -78,13 +78,13 @@ void main() {
 
   testWidgets('DailyQuizPage(Error)', (tester) async {
     final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.error(''));
+        FakeQuizInfoNotifier(const AsyncValue.error('', StackTrace.empty));
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: DailyQuizPage(),

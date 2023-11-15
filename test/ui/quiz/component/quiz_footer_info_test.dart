@@ -29,7 +29,7 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -68,9 +68,9 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           statisticsProvider(QuizTypes.endless)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -107,9 +107,9 @@ void main() {
       ProviderScope(
         overrides: [
           quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
+              .overrideWith((ref) => fakeQuizInfoNotifier),
           statisticsProvider(QuizTypes.endless)
-              .overrideWithValue(fakeStatisticsNotifier),
+              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

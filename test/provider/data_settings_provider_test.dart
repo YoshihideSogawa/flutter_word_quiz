@@ -36,13 +36,13 @@ void main() {
         quizRepositoryProvider(QuizTypes.daily)
             .overrideWithValue(mockQuizRepository),
         quizInfoProvider(QuizTypes.daily)
-            .overrideWithValue(fakeQuizInfoNotifier),
+            .overrideWith((ref) => fakeQuizInfoNotifier),
         quizPageProvider(QuizTypes.daily)
-            .overrideWithValue(fakeQuizPageNotifier),
+            .overrideWith((ref) => fakeQuizPageNotifier),
         statisticsProvider(QuizTypes.daily)
-            .overrideWithValue(fakeQuizStatisticsNotifier),
+            .overrideWith((ref) => fakeQuizStatisticsNotifier),
         wordInputNotifierProvider(QuizTypes.daily)
-            .overrideWithValue(fakeWordInputNotifier),
+            .overrideWith((ref) => fakeWordInputNotifier),
       ],
     );
 

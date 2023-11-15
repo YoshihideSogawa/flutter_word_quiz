@@ -204,7 +204,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoProvider),
+        quizInfoProvider(quizType)..overrideWith((ref) => fakeQuizInfoProvider),
         monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
       ],
     );
@@ -237,7 +237,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoProvider),
+        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
         monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
       ],
     );
@@ -270,7 +270,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoProvider),
+        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
         monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
       ],
     );
@@ -304,7 +304,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoProvider),
+        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
         monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
       ],
     );
@@ -338,7 +338,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoProvider),
+        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
         monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
       ],
     );

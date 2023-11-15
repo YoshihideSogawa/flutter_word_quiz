@@ -29,7 +29,7 @@ void main() {
       ProviderScope(
         overrides: [
           quizPageProvider(QuizTypes.daily)
-              .overrideWithValue(mockQuizPageNotifier),
+              .overrideWith((ref) => mockQuizPageNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

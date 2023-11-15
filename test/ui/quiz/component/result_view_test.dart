@@ -25,8 +25,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(
-            FakeQuizInfoNotifier(
+          quizInfoProvider(quizType).overrideWith(
+            (ref) => FakeQuizInfoNotifier(
               const AsyncValue.data(
                 QuizInfo(
                   quizProcess: QuizProcessType.success,
@@ -36,9 +36,10 @@ void main() {
               ),
             ),
           ),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
+          quizPageProvider(quizType)
+              .overrideWith((ref) => mockQuizPageNotifier),
+          statisticsProvider(quizType).overrideWith(
+            (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
                 currentChain: 3,
                 lastChain: 2,
@@ -81,8 +82,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(
-            FakeQuizInfoNotifier(
+          quizInfoProvider(quizType).overrideWith(
+            (ref) => FakeQuizInfoNotifier(
               const AsyncValue.data(
                 QuizInfo(
                   quizProcess: QuizProcessType.failure,
@@ -92,9 +93,10 @@ void main() {
               ),
             ),
           ),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
+          quizPageProvider(quizType)
+              .overrideWith((ref) => mockQuizPageNotifier),
+          statisticsProvider(quizType).overrideWith(
+            (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
                 currentChain: 3,
                 lastChain: 2,
@@ -135,8 +137,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(
-            FakeQuizInfoNotifier(
+          quizInfoProvider(quizType).overrideWith(
+            (ref) => FakeQuizInfoNotifier(
               const AsyncValue.data(
                 QuizInfo(
                   quizProcess: QuizProcessType.quit,
@@ -146,9 +148,10 @@ void main() {
               ),
             ),
           ),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
+          quizPageProvider(quizType)
+              .overrideWith((ref) => mockQuizPageNotifier),
+          statisticsProvider(quizType).overrideWith(
+            (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
                 currentChain: 3,
                 lastChain: 2,
@@ -195,9 +198,10 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          statisticsProvider(quizType).overrideWith(
+            (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
                 currentChain: 3,
                 lastChain: 2,
@@ -240,10 +244,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => mockQuizPageNotifier),
+          statisticsProvider(quizType).overrideWith(
+            (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
                 currentChain: 3,
                 lastChain: 2,
@@ -288,10 +294,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizPageProvider(quizType)
+              .overrideWith((ref) => mockQuizPageNotifier),
+          statisticsProvider(quizType).overrideWith(
+            (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
                 currentChain: 3,
                 lastChain: 2,

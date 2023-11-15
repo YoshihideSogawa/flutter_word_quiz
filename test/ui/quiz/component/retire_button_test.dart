@@ -37,14 +37,15 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(
+          wordInputNotifierProvider(quizType).overrideWith(
+            (ref) => FakeWordInputNotifier(
               const WordInput(
                 isWordChecking: false,
               ),
             ),
           ),
-          quizInfoProvider(quizType).overrideWithValue(mockQuizInfoNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => mockQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
