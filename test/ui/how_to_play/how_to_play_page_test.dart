@@ -2,11 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 
-import '../../mock/generate_mocks.mocks.dart';
 import '../../mock/url_launcher_tester.dart';
 
 void main() {
@@ -31,13 +29,10 @@ void main() {
   });
 
   testWidgets('リンクタップ', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -71,13 +66,10 @@ void main() {
   });
 
   testWidgets('リンクタップ(ペアレンタルコントロール)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(true);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => true),
         ],
         child: const MaterialApp(
           home: Scaffold(

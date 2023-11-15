@@ -9,11 +9,11 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
@@ -25,9 +25,6 @@ import '../../../mock/generate_mocks.mocks.dart';
 
 void main() {
   testWidgets('StatisticsView(Daily)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -60,7 +57,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -96,9 +93,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Endless)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.endless;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -131,7 +125,7 @@ void main() {
               ),
             ),
           ),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -165,9 +159,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -200,7 +191,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -220,9 +211,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -255,7 +243,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -272,9 +260,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily failure)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
@@ -307,7 +292,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -324,9 +309,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily none)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -360,7 +342,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -377,9 +359,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily quit)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -413,7 +392,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -433,9 +412,6 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily null)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -465,7 +441,7 @@ void main() {
           ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(

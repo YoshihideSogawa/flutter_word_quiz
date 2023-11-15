@@ -1,12 +1,11 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:word_quiz/model/word_input.dart';
-import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
-import 'package:word_quiz/ui/quiz/component/name_text.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
+import 'package:word_quiz/ui/how_to_play/component/advanced_rule.dart';
+import 'package:word_quiz/ui/how_to_play/component/for_developers_info.dart';
+import 'package:word_quiz/ui/how_to_play/component/link_span.dart';
+import 'package:word_quiz/ui/how_to_play/component/rule_content.dart';
+import 'package:word_quiz/ui/how_to_play/component/rule_same_word_content.dart';
 
 /// 遊び方のページです。
 class HowToPlayPage extends ConsumerWidget {
@@ -16,6 +15,8 @@ class HowToPlayPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isParentalControl =
+        ref.watch(isParentalControlProvider).value ?? true;
     return Scaffold(
       appBar: AppBar(
         title: const Text('あそびかた'),
@@ -26,9 +27,9 @@ class HowToPlayPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     Icons.catching_pokemon,
                     color: Colors.redAccent,
@@ -56,18 +57,18 @@ class HowToPlayPage extends ConsumerWidget {
                           ' なまえあて'
                           ' ゲームであそべます🎉\n',
                     ),
-                    _buildLinkSpan(
+                    buildLinkSpan(
                       context,
-                      ref,
-                      'Wordle',
-                      'https://www.nytimes.com/games/wordle/',
+                      text: 'Wordle',
+                      link: 'https://www.nytimes.com/games/wordle/',
+                      isParentalControl: isParentalControl,
                     ),
                     const TextSpan(text: 'と'),
-                    _buildLinkSpan(
+                    buildLinkSpan(
                       context,
-                      ref,
-                      'ポケモンWordle',
-                      'https://wordle.mega-yadoran.jp/',
+                      text: 'ポケモンWordle',
+                      link: 'https://wordle.mega-yadoran.jp/',
+                      isParentalControl: isParentalControl,
                     ),
                     const TextSpan(
                       text: 'をさんこうにして つくっています😍\n'
@@ -77,284 +78,17 @@ class HowToPlayPage extends ConsumerWidget {
                 ),
               ),
               const Divider(),
-              _buildRuleContent(),
+              const RuleContent(),
               const Divider(),
-              _buildAdvancedRule(),
+              const AdvancedRule(),
               const Divider(),
-              _buildRuleSameWordContent(),
+              const RuleSameWordContent(),
               const Divider(),
-              _buildOtherInfo(context, ref),
+              const ForDevelopersInfo(),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  /// リンク表示を構築します。
-  TextSpan _buildLinkSpan(
-    BuildContext context,
-    WidgetRef ref,
-    String text,
-    String link,
-  ) {
-    return TextSpan(
-      text: text,
-      style: const TextStyle(
-        color: Colors.blue,
-        decoration: TextDecoration.underline,
-      ),
-      recognizer: TapGestureRecognizer()
-        ..onTap = () {
-          if (ref.read(parentalControlProvider).isParentalControl()) {
-            // ペアレンタルコントロールがオンならペアレンタルゲートに遷移
-            Navigator.of(context).push<void>(
-              MaterialPageRoute(
-                builder: (context) => const ParentalGatePage(),
-                fullscreenDialog: true,
-              ),
-            );
-          } else {
-            // ペアレンタルコントロールがオフならURLに遷移
-            launchUrl(Uri.parse(link));
-          }
-        },
-    );
-  }
-
-  /// ルールの説明を構築します。
-  Widget _buildRuleContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Center(
-          child: Text(
-            '🟩いろについて🟩',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        _buildWordLine(
-          labelList: ['コ', 'イ', 'キ', 'ン', 'グ'],
-          nameStateList: [
-            WordNameState.none,
-            WordNameState.match,
-            WordNameState.none,
-            WordNameState.none,
-            WordNameState.none,
-          ],
-        ),
-        const Text('このばあいは、「イ」がこたえにふくまれていて、ばしょもあっています。'),
-        const SizedBox(height: 12),
-        _buildWordLine(
-          labelList: ['ギ', 'ャ', 'ラ', 'ド', 'ス'],
-          nameStateList: [
-            WordNameState.none,
-            WordNameState.none,
-            WordNameState.none,
-            WordNameState.none,
-            WordNameState.hit,
-          ],
-        ),
-        const Text('このばあいは、「ス」がこたえにふくまれていますが、ばしょがちがいます。'),
-        const SizedBox(height: 12),
-        _buildWordLine(
-          labelList: ['マ', 'リ', 'ル'],
-          nameStateList: [
-            WordNameState.none,
-            WordNameState.none,
-            WordNameState.notMatch,
-          ],
-        ),
-        const Text('このばあいは、「ル」がこたえにふくまれていません。'),
-      ],
-    );
-  }
-
-  /// ワード1列を構築します。
-  Widget _buildWordLine({
-    required InputWords labelList,
-    required WordResults nameStateList,
-  }) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 2),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (var i = 0; i < labelList.length; i++)
-              Padding(
-                padding:
-                    i == 0 ? EdgeInsets.zero : const EdgeInsets.only(left: 2),
-                child: NameText(
-                  text: labelList[i],
-                  nameState: nameStateList[i],
-                  width: 36,
-                  height: 32,
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// その他のルールを構築します。
-  Widget _buildAdvancedRule() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Center(
-          child: Text(
-            '🎓そのほかのルール🎓',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 8),
-        Text('・「きょうのもんだい」には ダイヤモンド・パールまでの ポケモンしかでません'),
-        SizedBox(height: 8),
-        Text('・「いっぱいやる」では もんだいのはんいを えらぶことができます'),
-        SizedBox(height: 8),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: '・こたえのポケモンは かならず',
-              ),
-              TextSpan(
-                text: ' 5もじ ',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(text: 'です')
-            ],
-          ),
-        ),
-        SizedBox(height: 8),
-        Text('・こたえには ビリリダマ のようにおなじもじをつかうポケモンになることもあります（すこしむずかしいよ😨）'),
-        SizedBox(height: 8),
-        Text('・かいとうには なんもじのポケモンでも つかえます'),
-      ],
-    );
-  }
-
-  /// 同じ文字を使う場合のルールの説明を構築します。
-  Widget _buildRuleSameWordContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Center(
-          child: Text(
-            '💫おなじもじを つかうばあい💫',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        const Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(text: '「フ'),
-              TextSpan(text: 'リ'),
-              TextSpan(
-                text: 'ー',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(text: 'ザ'),
-              TextSpan(
-                text: 'ー',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(text: '」のようにおなじもじを かいとうにつかったばあいです。'),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text('👉こたえが「ブーバーン」のばあいは、「ー」が2つあるので'),
-        const SizedBox(height: 8),
-        _buildWordLine(
-          labelList: ['フ', 'リ', 'ー', 'ザ', 'ー'],
-          nameStateList: [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.notMatch,
-            WordNameState.hit,
-          ],
-        ),
-        const Text('このように2つとも きいろかみどりになります'),
-        const SizedBox(height: 16),
-        const Text('👉こたえが「カイリュー」のばあいは、「ー」が1つしかないので'),
-        _buildWordLine(
-          labelList: ['フ', 'リ', 'ー', 'ザ', 'ー'],
-          nameStateList: [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-          ],
-        ),
-        const Text('このようにかたほうだけきいろかみどりになります'),
-        const SizedBox(height: 16),
-        const Text('さいしょは すこしむずかしいので やりながらおぼえていきましょう'),
-        const SizedBox(height: 12),
-      ],
-    );
-  }
-
-  /// その他の情報を構築します。
-  Widget _buildOtherInfo(BuildContext context, WidgetRef ref) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Center(
-          child: Text(
-            '🖥アプリ開発者にむけて🖥',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text.rich(
-          TextSpan(
-            children: [
-              const TextSpan(
-                text: 'このアプリはYoshihideSogawaがFlutterの学習のために作成したアプリです。'
-                    '\nソースコードはすべて',
-              ),
-              _buildLinkSpan(
-                context,
-                ref,
-                'オープンソース',
-                'https://github.com/YoshihideSogawa/flutter_word_quiz',
-              ),
-              const TextSpan(
-                text: 'として公開しておりますので、Flutter開発者・'
-                    'これからFlutterを始める方にはぜひレビューいただければ幸いです。\n',
-              ),
-              const TextSpan(
-                text: '不具合報告・修正などはアプリストアだけでなく、プルリクやissueを通して受け付けております。',
-              ),
-            ],
-          ),
-          key: const Key('for_developer'),
-        ),
-      ],
     );
   }
 }

@@ -16,6 +16,7 @@ abstract class AppPropertyRepository {
   Future<void> saveLaunched();
 
   /// ペアレンタルコントロール状態を取得します。
+  @Deprecated('Use isParentalControlProvider')
   bool? parentalControl();
 
   /// ペアレンタルコントロールを保存します。

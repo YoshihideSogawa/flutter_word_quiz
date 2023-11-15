@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 /// ツイートボタンです。
@@ -18,12 +18,14 @@ class TweetButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isParentalControl =
+        ref.watch(isParentalControlProvider).value ?? true;
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.blue,
       ),
       onPressed: () async {
-        if (ref.read(parentalControlProvider).isParentalControl()) {
+        if (isParentalControl) {
           unawaited(
             Navigator.of(context).push<void>(
               MaterialPageRoute(

@@ -10,12 +10,12 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/delete_button.dart';
@@ -694,9 +694,6 @@ void main() {
   });
 
   testWidgets('全ダイアログ表示', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.endless;
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -751,7 +748,7 @@ void main() {
               .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          isParentalControlProvider.overrideWith((ref) => false),
         ],
         child: const MaterialApp(
           home: QuizType(
