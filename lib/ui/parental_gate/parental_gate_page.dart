@@ -28,7 +28,7 @@ class ParentalGatePage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              for (var answer in parentalGate.targetData!.answerList!)
+              for (final answer in parentalGate.targetData!.answerList!)
                 SizedBox(
                   width: 120,
                   child: ElevatedButton(

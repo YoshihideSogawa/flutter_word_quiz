@@ -16,11 +16,7 @@ void main() {
   testWidgets('RefreshQuizButton', (tester) async {
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
-        showQuizChanged: false,
-        showResult: false,
-        showQuizSelection: false,
-        showAnswer: false,
-        showStatistics: false,
+
       ),
     );
 
@@ -47,11 +43,7 @@ void main() {
   testWidgets('RefreshQuizButtonのタップ', (tester) async {
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
-        showQuizChanged: false,
-        showResult: false,
-        showQuizSelection: false,
-        showAnswer: false,
-        showStatistics: false,
+
       ),
     );
 

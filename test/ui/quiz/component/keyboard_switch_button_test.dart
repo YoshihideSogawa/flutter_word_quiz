@@ -13,9 +13,7 @@ import '../../../mock/fake_quiz_page_notifier.dart';
 void main() {
   testWidgets('KeyboardSwitchButton(normalKeyboard)', (tester) async {
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-        normalKeyboard: true,
-      ),
+      const QuizPageInfo(),
     );
 
     await tester.pumpWidget(
@@ -85,9 +83,7 @@ void main() {
 
   testWidgets('KeyboardSwitchButton(normalKeyboardのタップ)', (tester) async {
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-        normalKeyboard: true,
-      ),
+      const QuizPageInfo(),
     );
 
     await tester.pumpWidget(

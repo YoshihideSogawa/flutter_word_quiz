@@ -37,9 +37,7 @@ class SplashPageNotifier extends StateNotifier<AsyncValue<SplashPageInfo>> {
     // すでに起動済みの場合はルールを表示しない
     if (appPropertyRepository.alreadyLaunched()) {
       state = const AsyncValue.data(
-        SplashPageInfo(
-          showRule: false,
-        ),
+        SplashPageInfo(),
       );
       return;
     }

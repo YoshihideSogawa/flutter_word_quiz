@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/repository/app_property/is_parental_control.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';

@@ -40,7 +40,7 @@ void main() {
           wordInputNotifierProvider(quizType).overrideWith(
             (ref) => FakeWordInputNotifier(
               const WordInput(
-                isWordChecking: false,
+
               ),
             ),
           ),

@@ -25,9 +25,9 @@ class DataSettings {
     await _ref.watch(quizRepositoryProvider(_quizType)).deleteAll();
     // キャッシュされているデータを削除
     _ref
-      ..refresh(quizInfoProvider(_quizType))
-      ..refresh(quizPageProvider(_quizType))
-      ..refresh(statisticsProvider(_quizType))
-      ..refresh(wordInputNotifierProvider(_quizType));
+      ..invalidate(quizInfoProvider(_quizType))
+      ..invalidate(quizPageProvider(_quizType))
+      ..invalidate(statisticsProvider(_quizType))
+      ..invalidate(wordInputNotifierProvider(_quizType));
   }
 }

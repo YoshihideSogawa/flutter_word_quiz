@@ -18,10 +18,7 @@ void main() {
           quizPageProvider(quizType).overrideWith(
             (ref) => FakeQuizPageNotifier(
               const QuizPageInfo(
-                showStatistics: false,
-                showQuizSelection: false,
-                showResult: false,
-                showQuizChanged: false,
+
               ),
             ),
           ),
@@ -44,10 +41,7 @@ void main() {
     const quizType = QuizTypes.daily;
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
-        showStatistics: false,
-        showQuizSelection: false,
-        showResult: false,
-        showQuizChanged: false,
+
       ),
     );
     await tester.pumpWidget(

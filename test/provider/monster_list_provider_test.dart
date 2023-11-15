@@ -13,7 +13,7 @@ void main() {
     when(mockMonsterRepository.load()).thenAnswer((_) async => monsterTestList);
     final container = ProviderContainer(
       overrides: [
-        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository)
+        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
       ],
     );
     final monsterList = await container.read(monsterListProvider.future);

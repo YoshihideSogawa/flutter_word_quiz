@@ -51,7 +51,7 @@ void main() {
           quizRepositoryProvider(QuizTypes.daily)
               .overrideWithValue(MockQuizRepository()),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockWordInputNotifier)
+              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -91,7 +91,7 @@ void main() {
           quizRepositoryProvider(QuizTypes.daily)
               .overrideWithValue(MockQuizRepository()),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockWordInputNotifier)
+              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -135,7 +135,7 @@ void main() {
           quizRepositoryProvider(QuizTypes.daily)
               .overrideWithValue(MockQuizRepository()),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockWordInputNotifier)
+              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

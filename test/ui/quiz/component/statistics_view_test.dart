@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -21,7 +20,6 @@ import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
 
 void main() {
   testWidgets('StatisticsView(Daily)', (tester) async {
@@ -314,7 +312,7 @@ void main() {
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
-          quizProcess: QuizProcessType.none,
+
         ),
       ),
     );
@@ -635,7 +633,6 @@ void main() {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.daily,
-        quizProcess: QuizProcessType.none,
         maxAnswer: 10,
         playDate: 20220202,
       ),
@@ -730,13 +727,11 @@ void main() {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.endless,
-        quizProcess: QuizProcessType.none,
         maxAnswer: 10,
         playDate: 20220202,
       ),
       const WordInput(
         inputIndex: 3,
-        wordsResultList: [],
       ),
       const QuizStatistics(
         playCount: 5,

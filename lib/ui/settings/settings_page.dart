@@ -129,7 +129,7 @@ class SettingsPage extends ConsumerWidget {
                       Navigator.pop(context);
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -165,7 +165,7 @@ class SettingsPage extends ConsumerWidget {
               navigator.pop();
             },
             child: const Text('データをけす'),
-          )
+          ),
         ],
       ),
     );
@@ -200,7 +200,7 @@ class SettingsPage extends ConsumerWidget {
               navigator.pop();
             },
             child: const Text('データをけす'),
-          )
+          ),
         ],
       ),
     );

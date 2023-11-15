@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -40,7 +39,6 @@ import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_settings_input_type_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
 
 void main() {
   testWidgets('切り替えモード/Daily/started', (tester) async {
@@ -64,7 +62,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -134,7 +132,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -204,7 +202,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -274,7 +272,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -336,7 +334,6 @@ void main() {
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
-          quizProcess: QuizProcessType.none,
         ),
       ),
     );
@@ -344,7 +341,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -417,7 +414,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -492,7 +489,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -567,7 +564,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -642,7 +639,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [
@@ -722,7 +719,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [

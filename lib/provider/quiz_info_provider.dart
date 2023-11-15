@@ -60,14 +60,13 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
             playDate: playDate,
           );
           _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
-          break;
         case QuizTypes.endless:
           // いっぱいやるモードは未開始状態にする
           quizInfo = QuizInfo(
             quizType: _quizType,
             maxAnswer: 10,
-            quizProcess: QuizProcessType.none,
           );
+          // ignore: unnecessary_breaks
           break;
       }
       await quizRepository.saveQuizInfo(quizInfo);
@@ -79,7 +78,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
           if (_playDateChanged(quizInfo)) {
             quizInfo = await _refreshDailyQuiz(quizInfo);
           }
-          break;
         case QuizTypes.endless:
           // 特に何もしない
           break;
@@ -280,10 +278,8 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     switch (_quizType) {
       case QuizTypes.daily:
         _ref.watch(quizPageProvider(_quizType).notifier).showStatistics();
-        break;
       case QuizTypes.endless:
         _ref.watch(quizPageProvider(_quizType).notifier).showResult();
-        break;
     }
   }
 
@@ -312,11 +308,9 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
       case QuizTypes.daily:
         // 統計を表示
         _ref.watch(quizPageProvider(_quizType).notifier).showStatistics();
-        break;
       case QuizTypes.endless:
         // 結果を表示
         _ref.watch(quizPageProvider(_quizType).notifier).showResult();
-        break;
     }
   }
 

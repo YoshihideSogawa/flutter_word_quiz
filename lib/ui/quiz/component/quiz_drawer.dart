@@ -13,10 +13,10 @@ class QuizDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          ListTile(
+          const ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon(
                   Icons.catching_pokemon,
                   color: Colors.redAccent,

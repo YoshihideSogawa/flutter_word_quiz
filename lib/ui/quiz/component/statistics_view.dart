@@ -82,7 +82,7 @@ class StatisticsView extends ConsumerWidget {
                           shareText: shareText(quizInfo, wordInput, statistics),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
                 TextButton(
@@ -131,8 +131,8 @@ class StatisticsView extends ConsumerWidget {
 
   /// 時刻のレイアウトを構築します。
   Widget _buildClockLayout() {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         Text(
           'もんだいが かわるまで',
           style: TextStyle(fontSize: 10.5),
@@ -183,22 +183,16 @@ class _ResultText extends ConsumerWidget {
     switch (quizProcess) {
       case QuizProcessType.started:
         color = Colors.redAccent;
-        break;
       case QuizProcessType.success:
         color = Colors.redAccent;
-        break;
       case QuizProcessType.failure:
         color = Colors.grey;
-        break;
       case QuizProcessType.quit:
         color = Colors.redAccent;
-        break;
       case QuizProcessType.none:
         color = Colors.grey;
-        break;
       case null:
         color = Colors.redAccent;
-        break;
     }
 
     return Padding(
@@ -362,16 +356,12 @@ List<String> _resultsText(WordInput wordInput) {
       switch (resultList[j]) {
         case WordNameState.none:
           resultText[i] += '⬜';
-          break;
         case WordNameState.hit:
           resultText[i] += '🟨';
-          break;
         case WordNameState.match:
           resultText[i] += '🟩';
-          break;
         case WordNameState.notMatch:
           resultText[i] += '⬛';
-          break;
       }
     }
   }

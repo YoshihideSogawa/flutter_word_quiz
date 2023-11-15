@@ -24,9 +24,7 @@ void main() {
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-        normalKeyboard: true,
-      ),
+      const QuizPageInfo(),
     );
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(),
@@ -95,7 +93,7 @@ void main() {
 
   testWidgets('WordKeyboard(全表示タイプ)', (tester) async {
     const quizType = QuizTypes.daily;
-    tester.binding.window.physicalSizeTestValue = const Size(1000, 1000);
+    await tester.binding.setSurfaceSize(const Size(1000, 1000));
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeAll);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(

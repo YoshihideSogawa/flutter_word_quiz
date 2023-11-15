@@ -6,7 +6,7 @@ import 'package:word_quiz/model/word_name_state.dart';
 void main() {
   test('checkKeyboard(文字の重複なし)', () {
     final inputWords = [
-      ['ポ', 'ッ', 'チ', 'ャ', 'マ']
+      ['ポ', 'ッ', 'チ', 'ャ', 'マ'],
     ];
 
     final wordState = [
@@ -29,7 +29,7 @@ void main() {
 
   test('checkKeyboard(matchがnotMatchで上書きされない)', () {
     final inputWords = [
-      ['マ', 'リ', 'ル', 'リ']
+      ['マ', 'リ', 'ル', 'リ'],
     ];
 
     final wordState = [
@@ -49,7 +49,7 @@ void main() {
 
   test('checkKeyboard(hitがnotMatchで上書きされない)', () {
     final inputWords = [
-      ['ル', 'リ', 'リ']
+      ['ル', 'リ', 'リ'],
     ];
 
     final wordState = [
@@ -67,7 +67,7 @@ void main() {
 
   test('checkKeyboard(通常入力では発生しないケース[WordNameState.none])', () {
     final inputWords = [
-      ['テ', 'ス', 'ト']
+      ['テ', 'ス', 'ト'],
     ];
 
     final wordState = [
@@ -86,11 +86,11 @@ void main() {
 
   test('checkKeyboard(リストの長さが異なる場合)', () {
     final inputWords = [
-      ['テ', 'ス', 'ト']
+      ['テ', 'ス', 'ト'],
     ];
 
     final inputWords2 = [
-      ['テ', 'ス', 'ト', 'あ', 'い']
+      ['テ', 'ス', 'ト', 'あ', 'い'],
     ];
 
     final wordState = [

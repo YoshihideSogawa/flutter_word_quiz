@@ -13,7 +13,7 @@ class WordInput with _$WordInput {
     @Default(<InputWords?>[]) List<InputWords?> wordsList,
     @Default(<WordResults?>[]) List<WordResults?> wordsResultList,
     @Default(<String, WordKeyboardInfo>{})
-        Map<String, WordKeyboardInfo> keyResultList,
+    Map<String, WordKeyboardInfo> keyResultList,
     @Default(0) int inputIndex,
     @Default(false) bool isWordChecking,
   }) = _WordInput;

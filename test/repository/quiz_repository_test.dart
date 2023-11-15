@@ -65,10 +65,10 @@ void main() {
 
     const wordInput = WordInput(
       wordsList: [
-        ['テ', 'ス', 'ト']
+        ['テ', 'ス', 'ト'],
       ],
       wordsResultList: [
-        [WordNameState.notMatch, WordNameState.hit, WordNameState.match]
+        [WordNameState.notMatch, WordNameState.hit, WordNameState.match],
       ],
       keyResultList: {
         'テ': WordKeyboardInfo.notMatch,

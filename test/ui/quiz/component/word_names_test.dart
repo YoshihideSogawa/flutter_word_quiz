@@ -17,7 +17,7 @@ void main() {
     final fakeWordInputNotifier = FakeWordInputNotifier(
       const WordInput(
         wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
+          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
         ],
         wordsResultList: [
           [

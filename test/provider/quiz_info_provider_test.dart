@@ -299,7 +299,8 @@ void main() {
         monsterListProvider.overrideWith((ref) => monsterTestList),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType).overrideWith(
-            (ref) => FakeStatisticsNotifier(const QuizStatistics())),
+          (ref) => FakeStatisticsNotifier(const QuizStatistics()),
+        ),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => mockWordInputNotifier),
       ],

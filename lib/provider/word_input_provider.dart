@@ -23,7 +23,6 @@ class WordInputNotifier extends StateNotifier<WordInput> {
   ) : super(
           const WordInput(
             wordsList: [[]],
-            wordsResultList: [],
           ),
         ) {
     _init();
@@ -41,7 +40,6 @@ class WordInputNotifier extends StateNotifier<WordInput> {
     final wordInput = quizRepository.loadWordInput() ??
         const WordInput(
           wordsList: [[]],
-          wordsResultList: [],
         );
 
     state = wordInput;
@@ -143,13 +141,13 @@ class WordInputNotifier extends StateNotifier<WordInput> {
     // アニメーション用の入力結果リスト
     final animationWordResultList = [
       ...state.wordsResultList,
-      <WordNameState>[]
+      <WordNameState>[],
     ];
 
     // 最終状態の入力結果リスト
     final nextWordsResultList = [
       ...state.wordsResultList,
-      result.sublist(0, currentInputWords.length)
+      result.sublist(0, currentInputWords.length),
     ];
 
     // アニメーションよりも前に結果を保存する
@@ -184,7 +182,6 @@ class WordInputNotifier extends StateNotifier<WordInput> {
   void reset() {
     state = const WordInput(
       wordsList: [[]],
-      wordsResultList: [],
     );
     // WorInputの保存
     _ref.watch(quizRepositoryProvider(_quizType)).saveWordInput(state);

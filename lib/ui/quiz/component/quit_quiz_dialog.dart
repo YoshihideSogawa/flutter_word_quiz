@@ -18,7 +18,7 @@ Future<bool> showQuitQuizDialog({
         TextButton(
           onPressed: () => Navigator.pop(context, true),
           child: const Text('はい'),
-        )
+        ),
       ],
     ),
   );

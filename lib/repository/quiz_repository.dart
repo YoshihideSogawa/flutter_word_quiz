@@ -43,10 +43,8 @@ class _LocalQuizRepository extends QuizRepository {
     switch (quizType) {
       case QuizTypes.daily:
         _settingBox = Hive.box<dynamic>(dailyBoxName);
-        break;
       case QuizTypes.endless:
         _settingBox = Hive.box<dynamic>(endlessBoxName);
-        break;
     }
   }
 

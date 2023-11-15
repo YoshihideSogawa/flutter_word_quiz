@@ -201,7 +201,7 @@ void main() {
                 lastChain: 2,
               ),
             ),
-          )
+          ),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -249,7 +249,7 @@ void main() {
                 lastChain: 2,
               ),
             ),
-          )
+          ),
         ],
         child: const MaterialApp(
           home: QuizType(

@@ -30,19 +30,15 @@ Map<String, WordKeyboardInfo> checkKeyboard(
       switch (targetWord) {
         case WordNameState.none:
           result[inputWord] = WordKeyboardInfo.none;
-          break;
         case WordNameState.hit:
           result[inputWord] = WordKeyboardInfo.hit;
-          break;
         case WordNameState.match:
           result[inputWord] = WordKeyboardInfo.match;
-          break;
         case WordNameState.notMatch:
           // hitの場合はnotMatchで上書きしない
           if (result[inputWord] != WordKeyboardInfo.hit) {
             result[inputWord] = WordKeyboardInfo.notMatch;
           }
-          break;
       }
     }
   }

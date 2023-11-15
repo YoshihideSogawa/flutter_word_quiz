@@ -35,7 +35,6 @@ void main() {
       const QuizStatistics(
         clearCount: 5,
         currentChain: 5,
-        lastChain: 0,
         maxChain: 6,
         playCount: 10,
       ),
@@ -62,7 +61,6 @@ void main() {
       const QuizStatistics(
         clearCount: 5,
         currentChain: 5,
-        lastChain: 0,
         maxChain: 6,
         playCount: 10,
       ),
@@ -90,7 +88,6 @@ void main() {
       const QuizStatistics(
         clearCount: 1,
         currentChain: 5,
-        lastChain: 0,
         maxChain: 5,
         playCount: 10,
       ),
@@ -118,7 +115,6 @@ void main() {
       const QuizStatistics(
         clearCount: 1,
         currentChain: 5,
-        lastChain: 0,
         maxChain: 5,
         playCount: 10,
       ),
@@ -146,7 +142,6 @@ void main() {
       const QuizStatistics(
         clearCount: 1,
         currentChain: 5,
-        lastChain: 0,
         maxChain: 5,
         playCount: 10,
       ),

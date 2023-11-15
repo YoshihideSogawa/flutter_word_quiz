@@ -120,5 +120,5 @@ final parentalGateList = [
   kairiki,
   daiMonji,
   ishiAtama,
-  mizuDeppou
+  mizuDeppou,
 ];

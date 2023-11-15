@@ -413,7 +413,6 @@ const _wordInputTest2 = WordInput(
     'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
-  isWordChecking: false,
 );
 
 // 2文字入力
@@ -431,7 +430,6 @@ final _wordInputTest3 = WordInput(
     'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
-  isWordChecking: false,
 );
 
 // 入力なし
@@ -449,7 +447,6 @@ const _wordInputTest4 = WordInput(
     'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
-  isWordChecking: false,
 );
 
 // submitが成功するパターン
@@ -466,5 +463,4 @@ final _wordInputTest5 = WordInput(
     'リ': WordKeyboardInfo.notMatch,
   },
   inputIndex: 1,
-  isWordChecking: false,
 );
