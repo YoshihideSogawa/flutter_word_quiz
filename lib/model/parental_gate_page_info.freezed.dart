@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ParentalGatePageInfo {
-  int get answerNum => throw _privateConstructorUsedError;
   int get maxAnswerNum => throw _privateConstructorUsedError;
-  ParentalGateData? get targetData => throw _privateConstructorUsedError;
+  List<ParentalGateData> get parentGateDataList =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ParentalGatePageInfoCopyWith<ParentalGatePageInfo> get copyWith =>
@@ -31,9 +31,7 @@ abstract class $ParentalGatePageInfoCopyWith<$Res> {
           $Res Function(ParentalGatePageInfo) then) =
       _$ParentalGatePageInfoCopyWithImpl<$Res, ParentalGatePageInfo>;
   @useResult
-  $Res call({int answerNum, int maxAnswerNum, ParentalGateData? targetData});
-
-  $ParentalGateDataCopyWith<$Res>? get targetData;
+  $Res call({int maxAnswerNum, List<ParentalGateData> parentGateDataList});
 }
 
 /// @nodoc
@@ -50,36 +48,19 @@ class _$ParentalGatePageInfoCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? answerNum = null,
     Object? maxAnswerNum = null,
-    Object? targetData = freezed,
+    Object? parentGateDataList = null,
   }) {
     return _then(_value.copyWith(
-      answerNum: null == answerNum
-          ? _value.answerNum
-          : answerNum // ignore: cast_nullable_to_non_nullable
-              as int,
       maxAnswerNum: null == maxAnswerNum
           ? _value.maxAnswerNum
           : maxAnswerNum // ignore: cast_nullable_to_non_nullable
               as int,
-      targetData: freezed == targetData
-          ? _value.targetData
-          : targetData // ignore: cast_nullable_to_non_nullable
-              as ParentalGateData?,
+      parentGateDataList: null == parentGateDataList
+          ? _value.parentGateDataList
+          : parentGateDataList // ignore: cast_nullable_to_non_nullable
+              as List<ParentalGateData>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ParentalGateDataCopyWith<$Res>? get targetData {
-    if (_value.targetData == null) {
-      return null;
-    }
-
-    return $ParentalGateDataCopyWith<$Res>(_value.targetData!, (value) {
-      return _then(_value.copyWith(targetData: value) as $Val);
-    });
   }
 }
 
@@ -91,10 +72,7 @@ abstract class _$$ParentalGatePageInfoImplCopyWith<$Res>
       __$$ParentalGatePageInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int answerNum, int maxAnswerNum, ParentalGateData? targetData});
-
-  @override
-  $ParentalGateDataCopyWith<$Res>? get targetData;
+  $Res call({int maxAnswerNum, List<ParentalGateData> parentGateDataList});
 }
 
 /// @nodoc
@@ -108,23 +86,18 @@ class __$$ParentalGatePageInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? answerNum = null,
     Object? maxAnswerNum = null,
-    Object? targetData = freezed,
+    Object? parentGateDataList = null,
   }) {
     return _then(_$ParentalGatePageInfoImpl(
-      answerNum: null == answerNum
-          ? _value.answerNum
-          : answerNum // ignore: cast_nullable_to_non_nullable
-              as int,
       maxAnswerNum: null == maxAnswerNum
           ? _value.maxAnswerNum
           : maxAnswerNum // ignore: cast_nullable_to_non_nullable
               as int,
-      targetData: freezed == targetData
-          ? _value.targetData
-          : targetData // ignore: cast_nullable_to_non_nullable
-              as ParentalGateData?,
+      parentGateDataList: null == parentGateDataList
+          ? _value._parentGateDataList
+          : parentGateDataList // ignore: cast_nullable_to_non_nullable
+              as List<ParentalGateData>,
     ));
   }
 }
@@ -135,20 +108,26 @@ class _$ParentalGatePageInfoImpl
     with DiagnosticableTreeMixin
     implements _ParentalGatePageInfo {
   const _$ParentalGatePageInfoImpl(
-      {this.answerNum = 0, this.maxAnswerNum = 0, this.targetData});
+      {this.maxAnswerNum = 0,
+      final List<ParentalGateData> parentGateDataList = const []})
+      : _parentGateDataList = parentGateDataList;
 
-  @override
-  @JsonKey()
-  final int answerNum;
   @override
   @JsonKey()
   final int maxAnswerNum;
+  final List<ParentalGateData> _parentGateDataList;
   @override
-  final ParentalGateData? targetData;
+  @JsonKey()
+  List<ParentalGateData> get parentGateDataList {
+    if (_parentGateDataList is EqualUnmodifiableListView)
+      return _parentGateDataList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_parentGateDataList);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ParentalGatePageInfo(answerNum: $answerNum, maxAnswerNum: $maxAnswerNum, targetData: $targetData)';
+    return 'ParentalGatePageInfo(maxAnswerNum: $maxAnswerNum, parentGateDataList: $parentGateDataList)';
   }
 
   @override
@@ -156,9 +135,8 @@ class _$ParentalGatePageInfoImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ParentalGatePageInfo'))
-      ..add(DiagnosticsProperty('answerNum', answerNum))
       ..add(DiagnosticsProperty('maxAnswerNum', maxAnswerNum))
-      ..add(DiagnosticsProperty('targetData', targetData));
+      ..add(DiagnosticsProperty('parentGateDataList', parentGateDataList));
   }
 
   @override
@@ -166,17 +144,15 @@ class _$ParentalGatePageInfoImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ParentalGatePageInfoImpl &&
-            (identical(other.answerNum, answerNum) ||
-                other.answerNum == answerNum) &&
             (identical(other.maxAnswerNum, maxAnswerNum) ||
                 other.maxAnswerNum == maxAnswerNum) &&
-            (identical(other.targetData, targetData) ||
-                other.targetData == targetData));
+            const DeepCollectionEquality()
+                .equals(other._parentGateDataList, _parentGateDataList));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, answerNum, maxAnswerNum, targetData);
+  int get hashCode => Object.hash(runtimeType, maxAnswerNum,
+      const DeepCollectionEquality().hash(_parentGateDataList));
 
   @JsonKey(ignore: true)
   @override
@@ -189,16 +165,14 @@ class _$ParentalGatePageInfoImpl
 
 abstract class _ParentalGatePageInfo implements ParentalGatePageInfo {
   const factory _ParentalGatePageInfo(
-      {final int answerNum,
-      final int maxAnswerNum,
-      final ParentalGateData? targetData}) = _$ParentalGatePageInfoImpl;
+          {final int maxAnswerNum,
+          final List<ParentalGateData> parentGateDataList}) =
+      _$ParentalGatePageInfoImpl;
 
-  @override
-  int get answerNum;
   @override
   int get maxAnswerNum;
   @override
-  ParentalGateData? get targetData;
+  List<ParentalGateData> get parentGateDataList;
   @override
   @JsonKey(ignore: true)
   _$$ParentalGatePageInfoImplCopyWith<_$ParentalGatePageInfoImpl>

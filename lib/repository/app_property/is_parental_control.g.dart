@@ -6,13 +6,13 @@ part of 'is_parental_control.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$isParentalControlHash() => r'8c5108d3f75b395e8c2f2f64bdecbb7c1b446e30';
+String _$isParentalControlHash() => r'8a427f618bd8e61d299c7f12248c70cef3252b3e';
 
 /// ペアレンタルコントロールをチェックします。
 ///
 /// Copied from [isParentalControl].
 @ProviderFor(isParentalControl)
-final isParentalControlProvider = AutoDisposeFutureProvider<bool>.internal(
+final isParentalControlProvider = AutoDisposeFutureProvider<bool?>.internal(
   isParentalControl,
   name: r'isParentalControlProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final isParentalControlProvider = AutoDisposeFutureProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef IsParentalControlRef = AutoDisposeFutureProviderRef<bool>;
+typedef IsParentalControlRef = AutoDisposeFutureProviderRef<bool?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

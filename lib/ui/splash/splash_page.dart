@@ -55,7 +55,7 @@ class SplashPage extends ConsumerWidget {
     );
 
     // あそびかた画面を表示
-    if (!splashPageInfo.showRule) {
+    if (splashPageInfo.showRule) {
       unawaited(
         Navigator.of(context).push<void>(
           MaterialPageRoute(

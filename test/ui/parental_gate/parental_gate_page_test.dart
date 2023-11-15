@@ -15,7 +15,6 @@ import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
-import '../../mock/fake_parental_gate_page_notifier.dart';
 import '../../mock/fake_quiz_info_notifier.dart';
 import '../../mock/fake_settings_input_type_notifier.dart';
 import '../../mock/fake_word_input_notifier.dart';

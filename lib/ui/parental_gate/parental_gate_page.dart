@@ -1,16 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/provider/parental_gate_provider.dart';
+import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
 
 /// ペアレンタルゲートページです。(Apple用)
-class ParentalGatePage extends ConsumerWidget {
+class ParentalGatePage extends HookConsumerWidget {
   const ParentalGatePage({
     super.key,
   }); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final parentalGate = ref.watch(parentalGatePageProvider);
+    final answerNum = useState(1);
+    final parentalGate = ref.watch(parentalGatePageNotifierProvider);
+
+    /// 回答ボタンをタップした時の処理を行います。
+    void onTapAnswerButton({required bool isCorrect}) {
+      if (isCorrect) {
+        // 回答上限数を超えていたら終了
+        if (answerNum.value >= parentalGate.maxAnswerNum) {
+          // ペアレンタルコントロールのオフ
+          ref
+              .read(parentalGatePageNotifierProvider.notifier)
+              .updateParentalControl(parentalControl: false);
+          _showSuccessDialog(context);
+        } else {
+          answerNum.value++;
+        }
+      } else {
+        // ペアレンタルコントロールのオン
+        ref
+            .read(parentalGatePageNotifierProvider.notifier)
+            .updateParentalControl(parentalControl: true);
+        _showFailedDialog(context);
+      }
+    }
+
+    final targetData = parentalGate.parentGateDataList[answerNum.value];
     return Scaffold(
       appBar: AppBar(
         title: const Text('ねんれいかくにん'),
@@ -21,21 +47,19 @@ class ParentalGatePage extends ConsumerWidget {
           child: Column(
             children: [
               Text(
-                '${parentalGate.targetData?.question}を選んでください'
-                '(${parentalGate.answerNum}/${parentalGate.maxAnswerNum})',
+                '${targetData.question}を選んでください'
+                '(${answerNum.value}/${parentalGate.maxAnswerNum})',
                 style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
               const SizedBox(height: 12),
-              for (final answer in parentalGate.targetData!.answerList!)
+              for (final answer in targetData.answerList!)
                 SizedBox(
                   width: 120,
                   child: ElevatedButton(
-                    onPressed: () => _onTapAnswerButton(
-                      context,
-                      ref,
-                      answer == parentalGate.targetData!.correct,
+                    onPressed: () => onTapAnswerButton(
+                      isCorrect: answer == targetData.correct,
                     ),
                     child: Text(answer),
                   ),
@@ -82,29 +106,6 @@ class ParentalGatePage extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  /// 回答ボタンをタップした時の処理を行います。
-  void _onTapAnswerButton(BuildContext context, WidgetRef ref, bool isCorrect) {
-    if (isCorrect) {
-      final parentalGate = ref.read(parentalGatePageProvider);
-      // 回答上限数を超えていたら終了
-      if (parentalGate.answerNum >= parentalGate.maxAnswerNum) {
-        // ペアレンタルコントロールのオフ
-        ref
-            .read(parentalGatePageProvider.notifier)
-            .updateParentalControl(parentalControl: false);
-        _showSuccessDialog(context);
-      } else {
-        ref.read(parentalGatePageProvider.notifier).pick();
-      }
-    } else {
-      // ペアレンタルコントロールのオン
-      ref
-          .read(parentalGatePageProvider.notifier)
-          .updateParentalControl(parentalControl: true);
-      _showFailedDialog(context);
-    }
   }
 
   /// もとのページに遷移します。

@@ -7,8 +7,7 @@ part 'parental_gate_page_info.freezed.dart';
 @freezed
 class ParentalGatePageInfo with _$ParentalGatePageInfo {
   const factory ParentalGatePageInfo({
-    @Default(0) int answerNum,
     @Default(0) int maxAnswerNum,
-    ParentalGateData? targetData,
+    @Default([]) List<ParentalGateData> parentGateDataList,
   }) = _ParentalGatePageInfo;
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
+import 'package:word_quiz/repository/app_property/is_parental_control.dart';
+import 'package:word_quiz/repository/app_property/save_parental_control.dart';
 import 'package:word_quiz/repository/app_property_repository.dart';
 
 /// スプラッシュページの処理を行うProviderです。
@@ -27,10 +29,11 @@ class SplashPageNotifier extends StateNotifier<AsyncValue<SplashPageInfo>> {
     final appPropertyRepository = _ref.read(appPropertyRepositoryProvider);
 
     // ペアレンタルコントロールが設定されていない場合
-    if (appPropertyRepository.parentalControl() == null) {
+    if (await _ref.read(isParentalControlProvider.future) == null) {
       // iOS以外はペアレンタルコントロールをオフ
       if (!AppPlatform.isIOS) {
-        await appPropertyRepository.saveParentalControl(parentalControl: false);
+        await _ref
+            .read(saveParentalControlProvider(parentalControl: false).future);
       }
     }
 
