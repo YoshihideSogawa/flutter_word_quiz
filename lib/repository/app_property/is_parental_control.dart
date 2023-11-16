@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/repository/app_property/app_property_box.dart';
-import 'package:word_quiz/repository/app_property/app_propery_keys.dart';
+import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 
 part 'is_parental_control.g.dart';
 

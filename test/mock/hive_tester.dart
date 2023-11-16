@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// テスト用のパス
@@ -22,4 +23,24 @@ void setUpHive() {
 /// Hiveのテスト用の削除を行います。
 Future<void> tearDownHive() async {
   await Hive.deleteFromDisk();
+}
+
+extension HiveTestExtension on WidgetTester {
+  Future<void> setHiveMockInitialValues(
+    String boxName,
+    Map<String, dynamic> values,
+  ) async {
+    await runAsync(() async {
+      final Box<dynamic> box;
+      if (Hive.isBoxOpen(boxName)) {
+        box = Hive.box<dynamic>(boxName);
+      } else {
+        box = await Hive.openBox<dynamic>(boxName);
+      }
+
+      for (final entry in values.entries) {
+        await box.put(entry.key, entry.value);
+      }
+    });
+  }
 }
