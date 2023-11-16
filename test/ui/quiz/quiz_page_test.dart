@@ -30,15 +30,15 @@ void main() {
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.daily).overrideWith(
+              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.endless).overrideWith(
+              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],
         child: const MaterialApp(
           home: QuizPage(),
@@ -55,10 +55,6 @@ void main() {
   testWidgets('いっぱいやるのタップ', (tester) async {
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
 
     await tester.pumpWidget(
       ProviderScope(
@@ -66,15 +62,15 @@ void main() {
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.daily).overrideWith(
+              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.endless).overrideWith(
+              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],
         child: const MaterialApp(
           home: QuizPage(),
