@@ -4,7 +4,7 @@ import 'package:word_quiz/provider/statistics_provider.dart';
 
 class FakeStatisticsNotifier extends StateNotifier<QuizStatistics>
     implements StatisticsNotifier {
-  FakeStatisticsNotifier(super.state);
+  FakeStatisticsNotifier(super._state);
 
   bool? nextQuizCalled = false;
 

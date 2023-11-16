@@ -4,7 +4,7 @@ import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 
 class FakeSettingsQuizRangeNotifier extends StateNotifier<QuizRange>
     implements SettingsQuizRangeNotifier {
-  FakeSettingsQuizRangeNotifier(super.state);
+  FakeSettingsQuizRangeNotifier(super._state);
 
   QuizRange? quizRange;
 

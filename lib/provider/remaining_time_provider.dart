@@ -11,7 +11,7 @@ final remainingTimeProvider =
 });
 
 class RemainingTimerNotifier extends StateNotifier<String> {
-  RemainingTimerNotifier(super.state) {
+  RemainingTimerNotifier(super._state) {
     init();
   }
 
