@@ -38,7 +38,7 @@ void main() {
 
     // 文字の色
     final text = tester.widget<Text>(find.byKey(const Key('name_character')));
-    expect(text.style?.color, Theme.of(context).textTheme.subtitle1?.color);
+    expect(text.style?.color, Theme.of(context).textTheme.titleMedium?.color);
   });
 
   testWidgets('NameText(hit)', (tester) async {
