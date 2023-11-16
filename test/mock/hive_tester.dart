@@ -25,10 +25,10 @@ Future<void> tearDownHive() async {
   await Hive.deleteFromDisk();
 }
 
-Future<void> putHiveValues(
-  String boxName,
+Future<Box<dynamic>> putHiveValues(
+  String boxName, [
   Map<String, dynamic>? values,
-) async {
+]) async {
   final Box<dynamic> box;
   if (Hive.isBoxOpen(boxName)) {
     box = Hive.box<dynamic>(boxName);
@@ -36,21 +36,22 @@ Future<void> putHiveValues(
     box = await Hive.openBox<dynamic>(boxName);
   }
 
-  if (values == null) {
-    return;
+  if (values != null) {
+    for (final entry in values.entries) {
+      await box.put(entry.key, entry.value);
+    }
   }
-  for (final entry in values.entries) {
-    await box.put(entry.key, entry.value);
-  }
+
+  return box;
 }
 
 extension HiveTestExtension on WidgetTester {
-  Future<void> setHiveMockInitialValues(
+  Future<Box<dynamic>?> setHiveMockInitialValues(
     String boxName, [
     Map<String, dynamic>? values,
   ]) async {
-    await runAsync(() async {
-      await putHiveValues(boxName, values);
+    return runAsync<Box<dynamic>>(() async {
+      return putHiveValues(boxName, values);
     });
   }
 }

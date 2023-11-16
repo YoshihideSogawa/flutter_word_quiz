@@ -39,4 +39,15 @@ void main() {
         await container.read(splashPageNotifierProvider.future);
     expect(splashPageInfo.showRule, isFalse);
   });
+
+  test('ペアレンタルコントロール(iOS)', () async {
+    final box = await putHiveValues(appPropertyBoxName, {
+      parentalControlKey: null,
+      alreadyLaunchedKey: false,
+    });
+
+    final container = ProviderContainer();
+    await container.read(splashPageNotifierProvider.future);
+    expect(box.get(parentalControlKey), isFalse);
+  });
 }
