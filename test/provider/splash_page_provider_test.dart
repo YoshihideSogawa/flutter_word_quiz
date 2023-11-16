@@ -1,13 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/constant/box_names.dart';
-import 'package:word_quiz/provider/splash_page_provider.dart';
+import 'package:word_quiz/provider/splash_page_notifier.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/app_property_repository.dart';
 
-import '../mock/generate_mocks.mocks.dart';
 import '../mock/hive_tester.dart';
 
 void main() {
@@ -19,74 +16,27 @@ void main() {
   tearDown(tearDownHive);
 
   test('showFirstRule(初回起動)', () async {
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-
     await putHiveValues(appPropertyBoxName, {
       parentalControlKey: false,
+      alreadyLaunchedKey: false,
     });
 
-    final container = ProviderContainer(
-      overrides: [
-        appPropertyRepositoryProvider
-            .overrideWithValue(mockAppPropertyRepository),
-      ],
-    );
+    final container = ProviderContainer();
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    // ignore: invalid_use_of_visible_for_testing_member
-    // await container.read(splashPageProvider.notifier).init();
-    // final splashPageInfo = container.read(splashPageProvider).value!;
-    // expect(splashPageInfo.showRule, isTrue);
+    final splashPageInfo =
+        await container.read(splashPageNotifierProvider.future);
+    expect(splashPageInfo.showRule, isTrue);
   });
 
   test('showFirstRule(起動済み)', () async {
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-
     await putHiveValues(appPropertyBoxName, {
       parentalControlKey: false,
+      alreadyLaunchedKey: true,
     });
 
-    final container = ProviderContainer(
-      overrides: [
-        appPropertyRepositoryProvider
-            .overrideWithValue(mockAppPropertyRepository),
-      ],
-    );
-
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    // ignore: invalid_use_of_visible_for_testing_member
-    // await container.read(splashPageProvider.notifier).init();
-    // final splashPageInfo = container.read(splashPageProvider).value!;
-    // expect(splashPageInfo.showRule, isFalse);
-  });
-
-  test('初回起動', () async {
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(false);
-
-    await putHiveValues(appPropertyBoxName, {
-      parentalControlKey: null,
-    });
-
-    final container = ProviderContainer(
-      overrides: [
-        appPropertyRepositoryProvider
-            .overrideWithValue(mockAppPropertyRepository),
-      ],
-    );
-
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    // ignore: invalid_use_of_visible_for_testing_member
-    await container.read(splashPageProvider.notifier).init();
-    final splashPageInfo = container.read(splashPageProvider).value!;
-    // expect(splashPageInfo.showRule, isTrue);
-    //
-    // verify(
-    //   mockAppPropertyRepository.saveParentalControl(
-    //     parentalControl: false,
-    //   ),
-    // ).called(1);
+    final container = ProviderContainer();
+    final splashPageInfo =
+        await container.read(splashPageNotifierProvider.future);
+    expect(splashPageInfo.showRule, isFalse);
   });
 }

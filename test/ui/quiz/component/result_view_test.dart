@@ -292,9 +292,12 @@ void main() {
 
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
+    await tester.setHiveMockInitialValues(
+      appPropertyBoxName,
+      {
+        parentalControlKey: false,
+      },
+    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: [

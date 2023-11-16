@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
@@ -10,14 +9,12 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/app_property_repository.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 import 'package:word_quiz/ui/word_quiz.dart';
 
 import '../mock/fake_quiz_info_notifier.dart';
 import '../mock/fake_settings_input_type_notifier.dart';
 import '../mock/fake_word_input_notifier.dart';
-import '../mock/generate_mocks.mocks.dart';
 import '../mock/hive_tester.dart';
 
 void main() {
@@ -28,35 +25,27 @@ void main() {
   testWidgets('WordQuiz', (tester) async {
     await tester.setHiveMockInitialValues(appPropertyBoxName, {
       parentalControlKey: false,
+      alreadyLaunchedKey: true,
     });
-
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyRepositoryProvider
-              .overrideWithValue(mockAppPropertyRepository),
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.daily).overrideWith(
+              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.endless).overrideWith(
+              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],
         child: const WordQuiz(),
       ),

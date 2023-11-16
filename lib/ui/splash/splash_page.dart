@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
-import 'package:word_quiz/provider/splash_page_provider.dart';
+import 'package:word_quiz/provider/splash_page_notifier.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 
@@ -15,13 +15,19 @@ class SplashPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final splashPage = ref.watch(splashPageProvider);
+    final splashPageNotifier = ref.watch(splashPageNotifierProvider);
 
     const emptyWidget = Scaffold(
       body: SizedBox.shrink(),
     );
 
-    return splashPage.when(
+    ref.listen(splashPageNotifierProvider, (previous, next) {
+      if (next.value != null) {
+        launchPage(context, next.value!);
+      }
+    });
+
+    return splashPageNotifier.when(
       loading: () => emptyWidget,
       error: (_, __) => const Scaffold(
         body: Center(
@@ -31,12 +37,7 @@ class SplashPage extends ConsumerWidget {
           ),
         ),
       ),
-      data: (value) {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-          await launchPage(context, value);
-        });
-        return emptyWidget;
-      },
+      data: (value) => emptyWidget,
     );
   }
 

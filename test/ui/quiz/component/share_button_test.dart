@@ -23,9 +23,12 @@ void main() {
 
   testWidgets('ShareButton', (tester) async {
     const quizType = QuizTypes.daily;
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
+    await tester.setHiveMockInitialValues(
+      appPropertyBoxName,
+      {
+        parentalControlKey: false,
+      },
+    );
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
@@ -45,9 +48,12 @@ void main() {
 
   testWidgets('ShareButton(ペアレンタルコントロール中のタップ)', (tester) async {
     const quizType = QuizTypes.daily;
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: true,
-    });
+    await tester.setHiveMockInitialValues(
+      appPropertyBoxName,
+      {
+        parentalControlKey: true,
+      },
+    );
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(

@@ -34,9 +34,12 @@ void main() {
   });
 
   testWidgets('リンクタップ', (tester) async {
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
+    await tester.setHiveMockInitialValues(
+      appPropertyBoxName,
+      {
+        parentalControlKey: false,
+      },
+    );
 
     await tester.pumpWidget(
       const ProviderScope(

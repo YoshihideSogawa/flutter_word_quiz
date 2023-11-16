@@ -2,7 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
-import 'package:word_quiz/repository/app_property_repository.dart';
+import 'package:word_quiz/repository/app_property/already_launched.dart';
+import 'package:word_quiz/repository/app_property/save_launched.dart';
 
 import '../mock/hive_tester.dart';
 
@@ -16,10 +17,15 @@ void main() {
 
   test('alreadyLaunched/saveLaunched', () async {
     final container = ProviderContainer();
-    final appPropertyRepository = container.read(appPropertyRepositoryProvider);
-    expect(appPropertyRepository.alreadyLaunched(), isFalse);
+    final alreadyLaunched =
+        await container.read(alreadyLaunchedProvider.future);
+    expect(alreadyLaunched, isNull);
 
-    await appPropertyRepository.saveLaunched();
-    expect(appPropertyRepository.alreadyLaunched(), isTrue);
+    await container.read(saveLaunchedProvider.future);
+    container.invalidate(alreadyLaunchedProvider);
+
+    final newAlreadyLaunched =
+        await container.read(alreadyLaunchedProvider.future);
+    expect(newAlreadyLaunched, isTrue);
   });
 }
