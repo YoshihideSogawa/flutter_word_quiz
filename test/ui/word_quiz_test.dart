@@ -38,12 +38,14 @@ void main() {
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.daily)
               .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
           quizInfoProvider(QuizTypes.endless).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],

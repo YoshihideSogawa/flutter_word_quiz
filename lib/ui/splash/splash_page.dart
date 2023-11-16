@@ -22,7 +22,7 @@ class SplashPage extends ConsumerWidget {
     );
 
     ref.listen(splashPageNotifierProvider, (previous, next) {
-      if (next.value != null) {
+      if (next.valueOrNull != null) {
         launchPage(context, next.value!);
       }
     });

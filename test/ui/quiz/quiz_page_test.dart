@@ -19,10 +19,6 @@ void main() {
   testWidgets('QuizPage', (tester) async {
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
 
     await tester.pumpWidget(
       ProviderScope(
@@ -31,12 +27,14 @@ void main() {
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.daily)
               .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
           quizInfoProvider(QuizTypes.endless).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],
@@ -63,12 +61,14 @@ void main() {
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
           quizInfoProvider(QuizTypes.daily).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.daily)
               .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
           quizInfoProvider(QuizTypes.endless).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.endless)
               .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],

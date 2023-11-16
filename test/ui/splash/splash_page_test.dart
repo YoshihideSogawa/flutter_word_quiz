@@ -9,14 +9,17 @@ import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
+import 'package:word_quiz/provider/splash_page_notifier.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
+import 'package:word_quiz/repository/app_property/save_launched.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 import 'package:word_quiz/ui/splash/splash_page.dart';
 
 import '../../mock/fake_quiz_info_notifier.dart';
 import '../../mock/fake_settings_input_type_notifier.dart';
+import '../../mock/fake_splash_page_notifier.dart';
 import '../../mock/fake_word_input_notifier.dart';
 import '../../mock/hive_tester.dart';
 
@@ -31,11 +34,6 @@ void main() {
   testWidgets('SplashPage>QuizPage', (tester) async {
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
-
     await tester.setHiveMockInitialValues(
       appPropertyBoxName,
       {
@@ -52,15 +50,17 @@ void main() {
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           //daily
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.daily).overrideWith(
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
           // endless
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizInfoProvider(QuizTypes.endless).overrideWith(
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
           wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeWordInputNotifier),
+              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
         ],
         child: const MaterialApp(
           home: SplashPage(),
@@ -74,69 +74,59 @@ void main() {
   });
 
   testWidgets('SplashPage>HowToPlayPage', (tester) async {
+    await tester.setHiveMockInitialValues(appPropertyBoxName, {
+      parentalControlKey: false,
+      alreadyLaunchedKey: false,
+    });
+    await tester.setHiveMockInitialValues(dailyBoxName);
+    await tester.setHiveMockInitialValues(endlessBoxName);
+
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-      alreadyLaunchedKey: true,
-    });
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
+          saveLaunchedProvider.overrideWith((ref) => true),
           //daily
           quizInfoProvider(QuizTypes.daily).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
+          wordInputNotifierProvider(QuizTypes.daily).overrideWith(
+            (ref) => FakeWordInputNotifier(const WordInput()),
+          ),
           // endless
           quizInfoProvider(QuizTypes.endless).overrideWith(
-              (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()))),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
+            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+          ),
+          wordInputNotifierProvider(QuizTypes.endless).overrideWith(
+            (ref) => FakeWordInputNotifier(const WordInput()),
+          ),
         ],
         child: const MaterialApp(
           home: SplashPage(),
         ),
       ),
     );
-
     await tester.pumpAndSettle();
-
+    await tester.pump();
     expect(find.byType(HowToPlayPage), findsOneWidget);
   });
 
   testWidgets('SplashPage>error', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
-
     await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: 'IllegalData',
+      parentalControlKey: false,
       alreadyLaunchedKey: true,
     });
+
+    final errorNotifier = FakeSplashPageNotifier(exception: Exception());
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
-          //daily
-          quizInfoProvider(QuizTypes.daily).overrideWith(
-            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
-          ),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
-          // endless
-          quizInfoProvider(QuizTypes.endless).overrideWith(
-            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
-          ),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => FakeWordInputNotifier(const WordInput())),
+          splashPageNotifierProvider.overrideWith(() => errorNotifier),
         ],
         child: const MaterialApp(
           home: SplashPage(),

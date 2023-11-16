@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:mockito/mockito.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
@@ -35,3 +37,9 @@ class SplashPageNotifier extends _$SplashPageNotifier {
     );
   }
 }
+
+/// テスト用のMock
+@visibleForTesting
+class SplashPageNotifierMock extends _$SplashPageNotifier
+    with Mock
+    implements SplashPageNotifier {}
