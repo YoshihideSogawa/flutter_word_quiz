@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:word_quiz/model/parental_gate_page_info.dart';
 import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
 
@@ -6,6 +7,7 @@ class FakeParentalGatePageNotifier extends MockParentalGatePageNotifier {
     this.parentalGatePageInfo,
   });
 
+  @visibleForTesting
   final ParentalGatePageInfo? parentalGatePageInfo;
 
   @override

@@ -12,7 +12,7 @@ import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/splash_page_notifier.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/app_property/save_launched.dart';
+import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 import 'package:word_quiz/ui/splash/splash_page.dart';
@@ -21,34 +21,31 @@ import '../../mock/fake_quiz_info_notifier.dart';
 import '../../mock/fake_settings_input_type_notifier.dart';
 import '../../mock/fake_splash_page_notifier.dart';
 import '../../mock/fake_word_input_notifier.dart';
-import '../../mock/hive_tester.dart';
+import '../../mock/mock_hive_box.dart';
 
 void main() {
   setUp(() {
     AppPlatform.overridePlatForm = null;
-    setUpHive();
   });
-
-  tearDown(tearDownHive);
 
   testWidgets('SplashPage>QuizPage', (tester) async {
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    await tester.setHiveMockInitialValues(
-      appPropertyBoxName,
-      {
+    final box = MockHiveBox<dynamic>(
+      initData: {
         parentalControlKey: false,
         alreadyLaunchedKey: true,
       },
     );
-    await tester.setHiveMockInitialValues(dailyBoxName);
-    await tester.setHiveMockInitialValues(endlessBoxName);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          hiveBoxProvider(dailyBoxName).overrideWith((ref) => MockHiveBox()),
+          hiveBoxProvider(endlessBoxName).overrideWith((ref) => MockHiveBox()),
           //daily
           quizInfoProvider(QuizTypes.daily).overrideWith(
             (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
@@ -74,12 +71,12 @@ void main() {
   });
 
   testWidgets('SplashPage>HowToPlayPage', (tester) async {
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-      alreadyLaunchedKey: false,
-    });
-    await tester.setHiveMockInitialValues(dailyBoxName);
-    await tester.setHiveMockInitialValues(endlessBoxName);
+    final box = MockHiveBox<dynamic>(
+      initData: {
+        parentalControlKey: false,
+        alreadyLaunchedKey: false,
+      },
+    );
 
     final fakeSettingsInputTypeNotifier =
         FakeSettingsInputTypeNotifier(inputTypeSwitching);
@@ -89,7 +86,9 @@ void main() {
         overrides: [
           settingsInputTypeProvider
               .overrideWith((ref) => fakeSettingsInputTypeNotifier),
-          saveLaunchedProvider.overrideWith((ref) => true),
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          hiveBoxProvider(dailyBoxName).overrideWith((ref) => MockHiveBox()),
+          hiveBoxProvider(endlessBoxName).overrideWith((ref) => MockHiveBox()),
           //daily
           quizInfoProvider(QuizTypes.daily).overrideWith(
             (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
@@ -116,11 +115,6 @@ void main() {
   });
 
   testWidgets('SplashPage>error', (tester) async {
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-      alreadyLaunchedKey: true,
-    });
-
     final errorNotifier = FakeSplashPageNotifier(exception: Exception());
 
     await tester.pumpWidget(

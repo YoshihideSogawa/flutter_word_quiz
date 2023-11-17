@@ -4,25 +4,27 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
+import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 
-import '../../mock/hive_tester.dart';
+import '../../mock/mock_hive_box.dart';
 import '../../mock/url_launcher_tester.dart';
 
 void main() {
   late FakeUrlLauncher urlLauncher;
 
   setUp(() async {
-    setUpHive();
     urlLauncher = setUpUrlLauncher();
   });
 
-  tearDown(() async => tearDownHive());
-
   testWidgets('HowToPlayPage', (tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => MockHiveBox()),
+        ],
+        child: const MaterialApp(
           home: Scaffold(
             body: HowToPlayPage(),
           ),
@@ -34,16 +36,18 @@ void main() {
   });
 
   testWidgets('リンクタップ', (tester) async {
-    await tester.setHiveMockInitialValues(
-      appPropertyBoxName,
-      {
+    final box = MockHiveBox<dynamic>(
+      initData: {
         parentalControlKey: false,
       },
     );
 
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+        ],
+        child: const MaterialApp(
           home: Scaffold(
             body: HowToPlayPage(),
           ),
@@ -77,12 +81,17 @@ void main() {
   });
 
   testWidgets('リンクタップ(ペアレンタルコントロール)', (tester) async {
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: true,
-    });
+    final box = MockHiveBox<dynamic>(
+      initData: {
+        parentalControlKey: true,
+      },
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+        ],
+        child: const MaterialApp(
           home: Scaffold(
             body: HowToPlayPage(),
           ),

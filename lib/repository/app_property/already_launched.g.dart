@@ -6,7 +6,7 @@ part of 'already_launched.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$alreadyLaunchedHash() => r'c7e887371f3802961944ff304568bf2ec5635a04';
+String _$alreadyLaunchedHash() => r'b87510332b59ccaaef2e2130bc1e8e03cd4b26b9';
 
 /// すでに起動済みか取得します。
 ///

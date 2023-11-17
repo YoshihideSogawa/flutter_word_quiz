@@ -13,19 +13,16 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
+import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 import '../../mock/fake_parental_gate_page_notifier.dart';
 import '../../mock/fake_quiz_info_notifier.dart';
 import '../../mock/fake_settings_input_type_notifier.dart';
 import '../../mock/fake_word_input_notifier.dart';
-import '../../mock/hive_tester.dart';
+import '../../mock/mock_hive_box.dart';
 
 void main() {
-  setUp(setUpHive);
-
-  tearDown(tearDownHive);
-
   testWidgets('表示の確認', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
@@ -58,9 +55,8 @@ void main() {
   });
 
   testWidgets('不正解のタップ', (tester) async {
-    await tester.setHiveMockInitialValues(
-      appPropertyBoxName,
-      {
+    final box = MockHiveBox<dynamic>(
+      initData: {
         parentalControlKey: false,
         alreadyLaunchedKey: true,
       },
@@ -85,6 +81,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
           // 以下Splash
           settingsInputTypeProvider
@@ -163,9 +160,8 @@ void main() {
   });
 
   testWidgets('正解のタップ(全問正解)', (tester) async {
-    await tester.setHiveMockInitialValues(
-      appPropertyBoxName,
-      {
+    final box = MockHiveBox<dynamic>(
+      initData: {
         parentalControlKey: false,
         alreadyLaunchedKey: true,
       },
@@ -190,6 +186,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
           // 以下Splash
           settingsInputTypeProvider

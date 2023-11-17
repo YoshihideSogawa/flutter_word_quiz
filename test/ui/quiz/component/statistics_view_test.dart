@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_info.dart';
@@ -14,6 +15,7 @@ import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
+import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
@@ -21,15 +23,9 @@ import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
-import '../../../mock/hive_tester.dart';
+import '../../../mock/mock_hive_box.dart';
 
 void main() {
-  setUp(() async {
-    setUpHive();
-  });
-
-  tearDown(tearDownHive);
-
   testWidgets('StatisticsView(Daily)', (tester) async {
     const quizType = QuizTypes.daily;
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
@@ -51,13 +47,16 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
+    final box = MockHiveBox<dynamic>(
+      initData: {
+        parentalControlKey: false,
+      },
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -114,13 +113,11 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -191,13 +188,11 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -246,13 +241,11 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -298,13 +291,11 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -349,13 +340,11 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -402,13 +391,11 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -454,13 +441,11 @@ void main() {
       ),
     );
 
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName)
+              .overrideWith((ref) => _defaultBox),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -780,3 +765,9 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 }
+
+Box<dynamic> get _defaultBox => MockHiveBox<dynamic>(
+      initData: {
+        parentalControlKey: false,
+      },
+    );

@@ -4,11 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
+import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/share_button.dart';
 
-import '../../../mock/hive_tester.dart';
+import '../../../mock/mock_hive_box.dart';
 import '../../../mock/share_plus_tester.dart';
 
 void main() {
@@ -16,22 +17,21 @@ void main() {
 
   setUp(() {
     sharePlus = setUpSharePlus();
-    setUpHive();
   });
-
-  tearDown(tearDownHive);
 
   testWidgets('ShareButton', (tester) async {
     const quizType = QuizTypes.daily;
-    await tester.setHiveMockInitialValues(
-      appPropertyBoxName,
-      {
+    final box = MockHiveBox<dynamic>(
+      initData: {
         parentalControlKey: false,
       },
     );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+        ],
+        child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
@@ -48,15 +48,17 @@ void main() {
 
   testWidgets('ShareButton(ペアレンタルコントロール中のタップ)', (tester) async {
     const quizType = QuizTypes.daily;
-    await tester.setHiveMockInitialValues(
-      appPropertyBoxName,
-      {
+    final box = MockHiveBox<dynamic>(
+      initData: {
         parentalControlKey: true,
       },
     );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+        ],
+        child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
@@ -77,12 +79,17 @@ void main() {
 
   testWidgets('ShareButton(Tap)', (tester) async {
     const quizType = QuizTypes.daily;
-    await tester.setHiveMockInitialValues(appPropertyBoxName, {
-      parentalControlKey: false,
-    });
+    final box = MockHiveBox<dynamic>(
+      initData: {
+        parentalControlKey: false,
+      },
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+        ],
+        child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(

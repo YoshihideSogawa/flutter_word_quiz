@@ -6,7 +6,7 @@ part of 'save_launched.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$saveLaunchedHash() => r'eac6fc9e7d73de4c7aaa3f88d4941d4b07af1718';
+String _$saveLaunchedHash() => r'797334b3dff856346a6b647a199bc52189f7ab89';
 
 /// 起動済みであることを保存します。
 ///
