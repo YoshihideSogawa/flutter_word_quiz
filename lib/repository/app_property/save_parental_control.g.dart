@@ -7,7 +7,7 @@ part of 'save_parental_control.dart';
 // **************************************************************************
 
 String _$saveParentalControlHash() =>
-    r'0591814129532a9719cdf2c7d2da30d62bd56439';
+    r'8eb2e4908d2171fa43966948ad0e46dcc2c2dbd6';
 
 /// Copied from Dart SDK
 class _SystemHash {

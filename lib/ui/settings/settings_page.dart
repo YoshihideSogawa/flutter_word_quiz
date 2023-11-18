@@ -5,8 +5,9 @@ import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
+import 'package:word_quiz/repository/settings/fetch_input_type.dart';
+import 'package:word_quiz/repository/settings/save_input_type.dart';
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
@@ -16,7 +17,7 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputType = ref.watch(settingsInputTypeProvider);
+    final inputType = ref.watch(fetchInputTypeProvider);
     final quizRange = ref.watch(settingsQuizRangeProvider);
     return Scaffold(
       appBar: AppBar(
@@ -27,8 +28,8 @@ class SettingsPage extends ConsumerWidget {
         children: [
           ListTile(
             title: const Text('にゅうりょくタイプ'),
-            subtitle: Text(_inputTypeTitle(inputType)),
-            onTap: () => _onTapInputType(context, ref),
+            subtitle: Text(_inputTypeTitle(inputType.valueOrNull)),
+            onTap: () => _onTapInputType(context, ref, inputType.valueOrNull),
           ),
           ListTile(
             title: const Text('もんだいのはんい'),
@@ -53,9 +54,12 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// 入力タイプの変更を行います。
-  void _onTapInputType(BuildContext context, WidgetRef ref) {
-    final inputType = ref.watch(settingsInputTypeProvider);
-    showDialog<int>(
+  void _onTapInputType(
+    BuildContext context,
+    WidgetRef ref,
+    InputTypes? inputTypes,
+  ) {
+    showDialog<InputTypes>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -63,28 +67,31 @@ class SettingsPage extends ConsumerWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile<int>(
-                value: inputTypeSwitching,
-                groupValue: inputType,
+              RadioListTile<InputTypes>(
+                value: InputTypes.switching,
+                groupValue: inputTypes,
                 toggleable: true,
                 title: const Text('きりかえタイプ'),
-                onChanged: (value) {
-                  ref
-                      .read(settingsInputTypeProvider.notifier)
-                      .updateInputType(inputTypeSwitching);
-                  Navigator.pop(context);
+                onChanged: (value) async {
+                  await ref
+                      .read(saveInputTypeProvider(InputTypes.switching).future);
+                  ref.invalidate(fetchInputTypeProvider);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 },
               ),
-              RadioListTile<int>(
-                value: inputTypeAll,
-                groupValue: inputType,
+              RadioListTile<InputTypes>(
+                value: InputTypes.all,
+                groupValue: inputTypes,
                 toggleable: true,
                 title: const Text('ぜんぶひょうじタイプ'),
-                onChanged: (value) {
-                  ref
-                      .read(settingsInputTypeProvider.notifier)
-                      .updateInputType(inputTypeAll);
-                  Navigator.pop(context);
+                onChanged: (value) async {
+                  await ref.read(saveInputTypeProvider(InputTypes.all).future);
+                  ref.invalidate(fetchInputTypeProvider);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 },
               ),
             ],
@@ -95,13 +102,12 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// 入力タイプのタイトルを取得します。
-  String _inputTypeTitle(int inputType) {
-    if (inputType == inputTypeSwitching) {
-      return 'きりかえタイプ';
-    } else if (inputType == inputTypeAll) {
-      return 'ぜんぶひょうじタイプ';
-    }
-    return '';
+  String _inputTypeTitle(InputTypes? inputType) {
+    return switch (inputType) {
+      InputTypes.switching => 'きりかえタイプ',
+      InputTypes.all => 'ぜんぶひょうじタイプ',
+      _ => '',
+    };
   }
 
   /// 問題の範囲の変更を行います。

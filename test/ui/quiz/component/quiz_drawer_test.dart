@@ -4,15 +4,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
+import 'package:word_quiz/repository/settings/settings_keys.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_drawer.dart';
 import 'package:word_quiz/ui/settings/settings_page.dart';
 
-import '../../../mock/fake_settings_input_type_notifier.dart';
 import '../../../mock/fake_settings_quiz_range_notifier.dart';
 import '../../../mock/mock_hive_box.dart';
 
@@ -58,17 +57,18 @@ void main() {
   });
 
   testWidgets('せっていのタップ', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-
+    final settingsBox = MockHiveBox<dynamic>(
+      initData: {
+        inputTypeKey: InputTypes.switching.index,
+      },
+    );
     final fakeSettingsQuizRangeNotifier =
         FakeSettingsQuizRangeNotifier(diamondPearl);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
+          hiveBoxProvider(settingsBoxName).overrideWith((ref) => settingsBox),
           settingsQuizRangeProvider
               .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],

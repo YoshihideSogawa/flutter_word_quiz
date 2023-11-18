@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
+import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -12,7 +13,7 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
+import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
@@ -38,16 +39,15 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
-import '../../../mock/fake_settings_input_type_notifier.dart';
+import '../../../mock/fake_settings_quiz_range_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
+import '../../../mock/mock_box_data.dart';
 import '../../../mock/mock_hive_box.dart';
 
 void main() {
   testWidgets('切り替えモード/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -81,12 +81,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -100,6 +101,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -116,8 +118,6 @@ void main() {
 
   testWidgets('全表示/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeAll);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -155,8 +155,8 @@ void main() {
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
+          hiveBoxProvider(settingsBoxName)
+              .overrideWith((ref) => settingsBox(inputType: InputTypes.all)),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -170,6 +170,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsNothing);
     expect(find.byType(AnswerButton), findsNothing);
@@ -186,8 +187,6 @@ void main() {
 
   testWidgets('切り替えモード/Daily/success', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -221,12 +220,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -240,6 +240,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -256,8 +257,6 @@ void main() {
 
   testWidgets('切り替えモード/Daily/failure', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -291,12 +290,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -310,6 +310,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsOneWidget);
@@ -326,8 +327,6 @@ void main() {
 
   testWidgets('切り替えモード/endless/none', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -360,12 +359,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -379,6 +379,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -395,8 +396,6 @@ void main() {
 
   testWidgets('切り替えモード/endless/started', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -433,12 +432,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
@@ -454,6 +454,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -470,8 +471,6 @@ void main() {
 
   testWidgets('切り替えモード/endless/success', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -508,12 +507,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
@@ -529,6 +529,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -545,8 +546,6 @@ void main() {
 
   testWidgets('切り替えモード/endless/failure', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -583,12 +582,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
@@ -604,6 +604,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsOneWidget);
@@ -620,8 +621,6 @@ void main() {
 
   testWidgets('切り替えモード/endless/quit', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -658,12 +657,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
@@ -679,6 +679,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -695,8 +696,6 @@ void main() {
 
   testWidgets('全ダイアログ表示', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
@@ -735,6 +734,9 @@ void main() {
       ),
     );
 
+    final fakeSettingsQuizRangeNotifier =
+        FakeSettingsQuizRangeNotifier(diamondPearl);
+
     final box = MockHiveBox<dynamic>(
       initData: {
         parentalControlKey: false,
@@ -744,17 +746,20 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          hiveBoxProvider(appPropertyBoxName).overrideWith((provider) => box),
+          hiveBoxProvider(settingsBoxName).overrideWith(
+            (ref) => settingsBox(inputType: InputTypes.switching),
+          ),
+          settingsQuizRangeProvider
+              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWith((ref) => fakeSettingsInputTypeNotifier),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
-          hiveBoxProvider(appPropertyBoxName).overrideWith((provider) => box),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -766,6 +771,7 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(AnswerView), findsOneWidget);
     expect(find.byType(StatisticsView), findsOneWidget);

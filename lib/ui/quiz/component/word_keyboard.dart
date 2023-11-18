@@ -6,8 +6,8 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/settings/fetch_input_type.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
 import 'package:word_quiz/ui/quiz/component/keyboard_map.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -39,9 +39,15 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
   @override
   Widget build(BuildContext context) {
     final quizType = QuizType.of(context).quizType;
-    final settings = ref.watch(settingsInputTypeProvider);
+    final inputType = ref.watch(fetchInputTypeProvider);
     final quizPage = ref.watch(quizPageProvider(quizType));
-    if (settings == inputTypeSwitching) {
+
+    // キーボードタイプ取得を待つ
+    if (!inputType.hasValue) {
+      return const SizedBox.shrink();
+    }
+
+    if (inputType.valueOrNull == InputTypes.switching) {
       return Stack(
         children: [
           if (quizPage.normalKeyboard)

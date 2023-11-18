@@ -18,13 +18,12 @@ import 'package:word_quiz/provider/data_settings_provider.dart' as _i8;
 import 'package:word_quiz/provider/monster_picker_provider.dart' as _i10;
 import 'package:word_quiz/provider/quiz_info_provider.dart' as _i12;
 import 'package:word_quiz/provider/quiz_page_provider.dart' as _i15;
-import 'package:word_quiz/provider/settings_input_type_provider.dart' as _i17;
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart' as _i18;
-import 'package:word_quiz/provider/statistics_provider.dart' as _i20;
-import 'package:word_quiz/provider/word_input_provider.dart' as _i21;
+import 'package:word_quiz/provider/settings_quiz_range_provider.dart' as _i17;
+import 'package:word_quiz/provider/statistics_provider.dart' as _i19;
+import 'package:word_quiz/provider/word_input_provider.dart' as _i20;
 import 'package:word_quiz/repository/monster_repository.dart' as _i11;
 import 'package:word_quiz/repository/quiz_repository.dart' as _i16;
-import 'package:word_quiz/repository/settings_repository.dart' as _i19;
+import 'package:word_quiz/repository/settings_repository.dart' as _i18;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -612,126 +611,11 @@ class MockQuizRepository extends _i1.Mock implements _i16.QuizRepository {
       ) as _i9.Future<int>);
 }
 
-/// A class which mocks [SettingsInputTypeNotifier].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockSettingsInputTypeNotifier extends _i1.Mock
-    implements _i17.SettingsInputTypeNotifier {
-  MockSettingsInputTypeNotifier() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
-        Invocation.setter(
-          #onError,
-          _onError,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  bool get mounted => (super.noSuchMethod(
-        Invocation.getter(#mounted),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  _i9.Stream<int> get stream => (super.noSuchMethod(
-        Invocation.getter(#stream),
-        returnValue: _i9.Stream<int>.empty(),
-      ) as _i9.Stream<int>);
-
-  @override
-  int get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: 0,
-      ) as int);
-
-  @override
-  set state(int? value) => super.noSuchMethod(
-        Invocation.setter(
-          #state,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  int get debugState => (super.noSuchMethod(
-        Invocation.getter(#debugState),
-        returnValue: 0,
-      ) as int);
-
-  @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  void init() => super.noSuchMethod(
-        Invocation.method(
-          #init,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void updateInputType(int? value) => super.noSuchMethod(
-        Invocation.method(
-          #updateInputType,
-          [value],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  bool updateShouldNotify(
-    int? old,
-    int? current,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateShouldNotify,
-          [
-            old,
-            current,
-          ],
-        ),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  _i3.RemoveListener addListener(
-    _i14.Listener<int>? listener, {
-    bool? fireImmediately = true,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-          {#fireImmediately: fireImmediately},
-        ),
-        returnValue: () {},
-      ) as _i3.RemoveListener);
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-}
-
 /// A class which mocks [SettingsQuizRangeNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSettingsQuizRangeNotifier extends _i1.Mock
-    implements _i18.SettingsQuizRangeNotifier {
+    implements _i17.SettingsQuizRangeNotifier {
   MockSettingsQuizRangeNotifier() {
     _i1.throwOnMissingStub(this);
   }
@@ -852,20 +736,10 @@ class MockSettingsQuizRangeNotifier extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSettingsRepository extends _i1.Mock
-    implements _i19.SettingsRepository {
+    implements _i18.SettingsRepository {
   MockSettingsRepository() {
     _i1.throwOnMissingStub(this);
   }
-
-  @override
-  _i9.Future<void> saveInputType(int? inputType) => (super.noSuchMethod(
-        Invocation.method(
-          #saveInputType,
-          [inputType],
-        ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
 
   @override
   _i9.Future<void> saveQuizRangeId(int? quizRangeId) => (super.noSuchMethod(
@@ -882,7 +756,7 @@ class MockSettingsRepository extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStatisticsNotifier extends _i1.Mock
-    implements _i20.StatisticsNotifier {
+    implements _i19.StatisticsNotifier {
   MockStatisticsNotifier() {
     _i1.throwOnMissingStub(this);
   }
@@ -1029,7 +903,7 @@ class MockStatisticsNotifier extends _i1.Mock
 /// A class which mocks [WordInputNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWordInputNotifier extends _i1.Mock implements _i21.WordInputNotifier {
+class MockWordInputNotifier extends _i1.Mock implements _i20.WordInputNotifier {
   MockWordInputNotifier() {
     _i1.throwOnMissingStub(this);
   }
@@ -1107,14 +981,14 @@ class MockWordInputNotifier extends _i1.Mock implements _i21.WordInputNotifier {
       );
 
   @override
-  _i9.Future<_i21.SubmitResult> submit() => (super.noSuchMethod(
+  _i9.Future<_i20.SubmitResult> submit() => (super.noSuchMethod(
         Invocation.method(
           #submit,
           [],
         ),
         returnValue:
-            _i9.Future<_i21.SubmitResult>.value(_i21.SubmitResult.success),
-      ) as _i9.Future<_i21.SubmitResult>);
+            _i9.Future<_i20.SubmitResult>.value(_i20.SubmitResult.success),
+      ) as _i9.Future<_i20.SubmitResult>);
 
   @override
   void reset() => super.noSuchMethod(

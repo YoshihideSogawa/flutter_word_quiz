@@ -3,7 +3,6 @@ import 'package:word_quiz/provider/data_settings_provider.dart';
 import 'package:word_quiz/provider/monster_picker_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
 import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
@@ -18,7 +17,6 @@ import 'package:word_quiz/repository/settings_repository.dart';
   QuizInfoNotifier,
   QuizPageNotifier,
   QuizRepository,
-  SettingsInputTypeNotifier,
   SettingsQuizRangeNotifier,
   SettingsRepository,
   StatisticsNotifier,

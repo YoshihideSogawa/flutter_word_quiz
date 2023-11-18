@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_info.dart';
@@ -23,6 +22,7 @@ import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
+import '../../../mock/mock_box_data.dart';
 import '../../../mock/mock_hive_box.dart';
 
 void main() {
@@ -117,7 +117,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -192,7 +192,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -245,7 +245,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -295,7 +295,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -344,7 +344,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -395,7 +395,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -445,7 +445,7 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => _defaultBox),
+              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -765,9 +765,3 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 }
-
-Box<dynamic> get _defaultBox => MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );

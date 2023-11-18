@@ -9,12 +9,6 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
 
 /// 設定のリポジトリです。
 abstract class SettingsRepository {
-  /// 入力タイプを取得します。
-  int? inputType();
-
-  /// 入力タイプを保存します。
-  Future<void> saveInputType(int inputType);
-
   /// 問題の出題範囲を取得します。
   int? quizRangeId();
 
@@ -32,14 +26,6 @@ class _LocalSettingsRepository extends SettingsRepository {
   late final Box<dynamic> _settingBox;
 
   @override
-  int? inputType() => _settingBox.get(_inputTypeKey) as int?;
-
-  @override
-  Future<void> saveInputType(int inputType) async {
-    await _settingBox.put(_inputTypeKey, inputType);
-  }
-
-  @override
   int? quizRangeId() => _settingBox.get(_quizRangeKey) as int?;
 
   @override
@@ -47,9 +33,6 @@ class _LocalSettingsRepository extends SettingsRepository {
     await _settingBox.put(_quizRangeKey, quizRangeId);
   }
 }
-
-/// 入力タイプの保存キー
-const _inputTypeKey = 'input_type';
 
 /// キーボードレイアウトの保存キー
 const _quizRangeKey = 'quiz_range';
