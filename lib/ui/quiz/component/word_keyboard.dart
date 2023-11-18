@@ -42,7 +42,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
     final inputType = ref.watch(inputTypeRepositoryProvider);
     final quizPage = ref.watch(quizPageProvider(quizType));
 
-    // キーボードタイプ取得を待つ
+    // 入力タイプの取得を待つ
     if (!inputType.hasValue) {
       return const SizedBox.shrink();
     }

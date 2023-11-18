@@ -16,7 +16,7 @@ class HowToPlayPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).value ?? true;
+        ref.watch(parentalControlRepositoryProvider).valueOrNull;
     return Scaffold(
       appBar: AppBar(
         title: const Text('あそびかた'),

@@ -10,7 +10,7 @@ class ForDevelopersInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).value ?? true;
+        ref.watch(parentalControlRepositoryProvider).valueOrNull;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

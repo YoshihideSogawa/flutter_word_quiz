@@ -17,7 +17,7 @@ class ShareButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).value ?? true;
+        ref.watch(parentalControlRepositoryProvider).valueOrNull;
 
     return ElevatedButton.icon(
       key: const Key('share_button'),
@@ -25,6 +25,10 @@ class ShareButton extends ConsumerWidget {
         backgroundColor: Colors.grey,
       ),
       onPressed: () {
+        if (isParentalControl == null) {
+          return;
+        }
+
         // ペアレンタルコントロールがオンの場合
         if (isParentalControl) {
           Navigator.of(context).push<void>(

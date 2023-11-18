@@ -7,7 +7,7 @@ part of 'parental_gate_page_notifier.dart';
 // **************************************************************************
 
 String _$parentalGatePageNotifierHash() =>
-    r'b459acc3ca3c969ee27af5ea4716650bee096096';
+    r'4086eeedfc2220bdc951a5a0c5b74afc612b5025';
 
 /// ペアレンタルゲートのProviderです。
 ///

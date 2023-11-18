@@ -19,12 +19,16 @@ class TweetButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).value ?? true;
+        ref.watch(parentalControlRepositoryProvider).valueOrNull;
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.blue,
       ),
       onPressed: () async {
+        if (isParentalControl == null) {
+          return;
+        }
+
         if (isParentalControl) {
           unawaited(
             Navigator.of(context).push<void>(

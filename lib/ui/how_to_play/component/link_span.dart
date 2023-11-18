@@ -8,7 +8,7 @@ TextSpan buildLinkSpan(
   BuildContext context, {
   required String text,
   required String link,
-  required bool isParentalControl,
+  required bool? isParentalControl,
 }) {
   return TextSpan(
     text: text,
@@ -18,6 +18,11 @@ TextSpan buildLinkSpan(
     ),
     recognizer: TapGestureRecognizer()
       ..onTap = () {
+        // ペアレンタルコントロール状態が不明（読み込み中/エラー）なら何もしない
+        if (isParentalControl == null) {
+          return;
+        }
+
         if (isParentalControl) {
           // ペアレンタルコントロールがオンならペアレンタルゲートに遷移
           Navigator.of(context).push<void>(

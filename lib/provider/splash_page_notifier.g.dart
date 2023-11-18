@@ -7,7 +7,7 @@ part of 'splash_page_notifier.dart';
 // **************************************************************************
 
 String _$splashPageNotifierHash() =>
-    r'a20ab4953c7231a6ce2767dea15507464763e6d3';
+    r'd7e5c21eb46377303835fc0242bf05fb8d4ad954';
 
 /// スプラッシュページの処理を行います。
 ///
