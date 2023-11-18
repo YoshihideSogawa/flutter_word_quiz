@@ -6,8 +6,7 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
 import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
-import 'package:word_quiz/repository/settings/fetch_input_type.dart';
-import 'package:word_quiz/repository/settings/save_input_type.dart';
+import 'package:word_quiz/repository/settings/input_type_repository.dart';
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
@@ -17,7 +16,7 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputType = ref.watch(fetchInputTypeProvider);
+    final inputType = ref.watch(inputTypeRepositoryProvider);
     final quizRange = ref.watch(settingsQuizRangeProvider);
     return Scaffold(
       appBar: AppBar(
@@ -74,8 +73,8 @@ class SettingsPage extends ConsumerWidget {
                 title: const Text('きりかえタイプ'),
                 onChanged: (value) async {
                   await ref
-                      .read(saveInputTypeProvider(InputTypes.switching).future);
-                  ref.invalidate(fetchInputTypeProvider);
+                      .read(inputTypeRepositoryProvider.notifier)
+                      .updateInputType(InputTypes.switching);
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
@@ -87,8 +86,9 @@ class SettingsPage extends ConsumerWidget {
                 toggleable: true,
                 title: const Text('ぜんぶひょうじタイプ'),
                 onChanged: (value) async {
-                  await ref.read(saveInputTypeProvider(InputTypes.all).future);
-                  ref.invalidate(fetchInputTypeProvider);
+                  await ref
+                      .read(inputTypeRepositoryProvider.notifier)
+                      .updateInputType(InputTypes.all);
                   if (context.mounted) {
                     Navigator.pop(context);
                   }

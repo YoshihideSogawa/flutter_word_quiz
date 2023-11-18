@@ -3,8 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/model/parental_gate_list.dart';
 import 'package:word_quiz/model/parental_gate_page_info.dart';
-import 'package:word_quiz/repository/app_property/is_parental_control.dart';
-import 'package:word_quiz/repository/app_property/save_parental_control.dart';
+import 'package:word_quiz/repository/app_property/parental_control_repository.dart';
 
 part 'parental_gate_page_notifier.g.dart';
 
@@ -13,17 +12,27 @@ part 'parental_gate_page_notifier.g.dart';
 class ParentalGatePageNotifier extends _$ParentalGatePageNotifier {
   @override
   ParentalGatePageInfo build() {
+    // 元のデータを並べかえ
+    final parentGateDataList = [...parentalGateList]..shuffle();
+    // さらに個別のanswerListをシャッフルする
+    final parentalGateDataList = parentGateDataList.map((parentalGateData) {
+      final newAnswerList = [...?parentalGateData.answerList]..shuffle();
+      return parentalGateData.copyWith(
+        answerList: newAnswerList,
+      );
+    }).toList();
+
     return ParentalGatePageInfo(
       maxAnswerNum: _maxAnswerNum,
-      parentGateDataList: [...parentalGateList]..shuffle(),
+      parentalGateDataList: parentalGateDataList,
     );
   }
 
   /// ペアレンタルコントロールを設定します。
   Future<void> updateParentalControl({required bool parentalControl}) async {
-    ref
-      ..read(saveParentalControlProvider(parentalControl: parentalControl))
-      ..invalidate(isParentalControlProvider);
+    await ref
+        .read(parentalControlRepositoryProvider.notifier)
+        .saveParentalControl(parentalControl: parentalControl);
   }
 }
 

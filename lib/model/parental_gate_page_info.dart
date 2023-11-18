@@ -8,6 +8,6 @@ part 'parental_gate_page_info.freezed.dart';
 class ParentalGatePageInfo with _$ParentalGatePageInfo {
   const factory ParentalGatePageInfo({
     @Default(0) int maxAnswerNum,
-    @Default([]) List<ParentalGateData> parentGateDataList,
+    @Default([]) List<ParentalGateData> parentalGateDataList,
   }) = _ParentalGatePageInfo;
 }

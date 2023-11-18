@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/repository/app_property/is_parental_control.dart';
+import 'package:word_quiz/repository/app_property/parental_control_repository.dart';
 import 'package:word_quiz/ui/how_to_play/component/link_span.dart';
 
 /// アプリ開発者に向けての情報です。
@@ -10,7 +10,7 @@ class ForDevelopersInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isParentalControl =
-        ref.watch(isParentalControlProvider).value ?? true;
+        ref.watch(parentalControlRepositoryProvider).value ?? true;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

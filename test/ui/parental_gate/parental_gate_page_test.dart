@@ -25,7 +25,7 @@ void main() {
   testWidgets('表示の確認', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
-      parentGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
     final notifier = FakeParentalGatePageNotifier(
@@ -69,7 +69,7 @@ void main() {
 
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
-      parentGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
     final notifier = FakeParentalGatePageNotifier(
@@ -138,7 +138,7 @@ void main() {
   testWidgets('正解のタップ', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
-      parentGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
     final notifier = FakeParentalGatePageNotifier(
@@ -177,7 +177,7 @@ void main() {
 
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 1,
-      parentGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
     final notifier = FakeParentalGatePageNotifier(

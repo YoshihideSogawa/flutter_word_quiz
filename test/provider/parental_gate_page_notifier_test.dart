@@ -21,6 +21,6 @@ void main() {
         .read(parentalGatePageNotifierProvider.notifier)
         .updateParentalControl(parentalControl: true);
 
-    expect(box.get(parentalControlKey), isTrue);
+    expect(box.data[parentalControlKey], isTrue);
   });
 }

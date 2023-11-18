@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
-import 'package:word_quiz/repository/settings/fetch_input_type.dart';
+import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/repository/settings/settings_keys.dart';
 
 import '../../mock/mock_hive_box.dart';
@@ -22,7 +22,7 @@ void main() {
       ],
     );
 
-    final inputType = await container.read(fetchInputTypeProvider.future);
+    final inputType = await container.read(inputTypeRepositoryProvider.future);
     expect(inputType, InputTypes.switching);
   });
 
@@ -39,7 +39,24 @@ void main() {
       ],
     );
 
-    final inputType = await container.read(fetchInputTypeProvider.future);
+    final inputType = await container.read(inputTypeRepositoryProvider.future);
     expect(inputType, InputTypes.all);
+  });
+
+  test('入力タイプの更新', () async {
+    final box = MockHiveBox(
+      initData: {inputTypeKey: InputTypes.all.typeId},
+    );
+
+    final container = ProviderContainer(
+      overrides: [
+        hiveBoxProvider(settingsBoxName).overrideWith((ref) => box),
+      ],
+    );
+
+    await container
+        .read(inputTypeRepositoryProvider.notifier)
+        .updateInputType(InputTypes.switching);
+    expect(box.data[inputTypeKey], InputTypes.switching.typeId);
   });
 }

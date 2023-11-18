@@ -6,7 +6,7 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/repository/settings/fetch_input_type.dart';
+import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/delete_button.dart';
@@ -35,7 +35,7 @@ class WordQuizLayout extends ConsumerWidget {
     final quizType = QuizType.of(context).quizType;
     final quizInfo = ref.read(quizInfoProvider(quizType)).value;
     final quizPage = ref.watch(quizPageProvider(quizType));
-    final inputType = ref.watch(fetchInputTypeProvider);
+    final inputType = ref.watch(inputTypeRepositoryProvider);
     // debugPrint('$quizType >>> ${quizInfo?.answer?.name}');
     return Stack(
       children: [

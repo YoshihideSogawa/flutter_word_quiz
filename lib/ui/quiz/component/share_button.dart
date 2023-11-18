@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:word_quiz/repository/app_property/is_parental_control.dart';
+import 'package:word_quiz/repository/app_property/parental_control_repository.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 /// シェアボタンです。
@@ -17,7 +17,7 @@ class ShareButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isParentalControl =
-        ref.watch(isParentalControlProvider).value ?? true;
+        ref.watch(parentalControlRepositoryProvider).value ?? true;
 
     return ElevatedButton.icon(
       key: const Key('share_button'),
