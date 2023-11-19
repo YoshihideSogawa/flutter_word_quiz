@@ -18,7 +18,7 @@ class ParentalControlRepository extends _$ParentalControlRepository {
 
     // iOSのみペアレンタルコントロールを取得
     final appPropertyBox =
-        await ref.read(hiveBoxProvider(appPropertyBoxName).future);
+        await ref.watch(hiveBoxProvider(appPropertyBoxName).future);
     return appPropertyBox.get(parentalControlKey) as bool? ?? true;
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -11,7 +10,6 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/result_view.dart';
 
@@ -81,8 +79,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType).overrideWith(
             (ref) => FakeQuizInfoNotifier(
               const AsyncValue.data(
@@ -134,8 +131,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType).overrideWith(
             (ref) => FakeQuizInfoNotifier(
               const AsyncValue.data(
@@ -289,8 +285,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)

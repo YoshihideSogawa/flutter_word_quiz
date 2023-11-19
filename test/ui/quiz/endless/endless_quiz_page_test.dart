@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_drawer.dart';
 import 'package:word_quiz/ui/quiz/component/refresh_quiz_button.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_button.dart';
@@ -32,9 +30,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(QuizTypes.endless)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
@@ -66,9 +62,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(QuizTypes.endless)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)
@@ -92,9 +86,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(QuizTypes.endless)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.endless)

@@ -2,12 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
-import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 
-import '../../mock/mock_hive_box.dart';
+import '../../mock/mock_box_data.dart';
 import '../../mock/url_launcher_tester.dart';
 
 void main() {
@@ -17,12 +15,13 @@ void main() {
     urlLauncher = setUpUrlLauncher();
   });
 
+  tearDown(() => AppPlatform.overridePlatForm = null);
+
   testWidgets('HowToPlayPage', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => MockHiveBox()),
+          appPropertyOverride(),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -36,16 +35,10 @@ void main() {
   });
 
   testWidgets('リンクタップ', (tester) async {
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          appPropertyOverride(parentalControl: false),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -81,15 +74,11 @@ void main() {
   });
 
   testWidgets('リンクタップ(ペアレンタルコントロール)', (tester) async {
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: true,
-      },
-    );
+    AppPlatform.overridePlatForm = Platforms.iOS;
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          appPropertyOverride(parentalControl: true),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -98,6 +87,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.byKey(const Key('for_developer')));
     final textRich =

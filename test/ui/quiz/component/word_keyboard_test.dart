@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
@@ -9,7 +8,6 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
 import 'package:word_quiz/ui/quiz/component/keyboard_map.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -34,9 +32,7 @@ void main() {
         overrides: [
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -71,9 +67,7 @@ void main() {
         overrides: [
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -113,8 +107,7 @@ void main() {
         overrides: [
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          hiveBoxProvider(settingsBoxName)
-              .overrideWith((ref) => settingsBox(inputType: InputTypes.all)),
+          settingsOverride(inputType: InputTypes.all),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],

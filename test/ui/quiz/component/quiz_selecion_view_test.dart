@@ -8,12 +8,11 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/monster_picker_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_selection_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/fake_settings_quiz_range_notifier.dart';
 import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('QuizSelectionView', (tester) async {
@@ -25,14 +24,11 @@ void main() {
       ),
     );
 
-    final fakeSettingsQuizRangeNotifier = FakeSettingsQuizRangeNotifier(xy);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          settingsOverride(quizRange: xy),
           monsterPickerProvider.overrideWithValue(monsterPicker),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -65,16 +61,13 @@ void main() {
       ),
     );
 
-    final fakeSettingsQuizRangeNotifier = FakeSettingsQuizRangeNotifier(xy);
-
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
+          settingsOverride(quizRange: xy),
           quizPageProvider(QuizTypes.daily)
               .overrideWith((ref) => mockQuizPageNotifier),
         ],
@@ -105,7 +98,6 @@ void main() {
       ),
     );
 
-    final fakeSettingsQuizRangeNotifier = FakeSettingsQuizRangeNotifier(xy);
     final mockQuizPageNotifier = MockQuizPageNotifier();
     final mockQuizInfoNotifier = MockQuizInfoNotifier();
 
@@ -113,8 +105,7 @@ void main() {
       ProviderScope(
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
+          settingsOverride(quizRange: xy),
           quizPageProvider(QuizTypes.daily)
               .overrideWith((ref) => mockQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)
@@ -151,7 +142,6 @@ void main() {
       ),
     );
 
-    final fakeSettingsQuizRangeNotifier = FakeSettingsQuizRangeNotifier(xy);
     final mockQuizPageNotifier = MockQuizPageNotifier();
     final mockQuizInfoNotifier = MockQuizInfoNotifier();
 
@@ -159,8 +149,7 @@ void main() {
       ProviderScope(
         overrides: [
           monsterPickerProvider.overrideWithValue(monsterPicker),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
+          settingsOverride(quizRange: xy),
           quizPageProvider(QuizTypes.daily)
               .overrideWith((ref) => mockQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)

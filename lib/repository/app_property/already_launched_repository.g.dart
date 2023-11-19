@@ -7,7 +7,7 @@ part of 'already_launched_repository.dart';
 // **************************************************************************
 
 String _$alreadyLaunchedRepositoryHash() =>
-    r'f79916ccadc42caf07cef5fd88f5de26336c4c1e';
+    r'37ef6500ec00be7b10a8d336cb152bb369233725';
 
 /// アプリが1度でも起動済みか取得します。
 ///

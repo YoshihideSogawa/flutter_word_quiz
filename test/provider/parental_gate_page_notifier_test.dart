@@ -1,19 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 
-import '../mock/mock_hive_box.dart';
+import '../mock/mock_box_data.dart';
 
 void main() {
+  setUp(
+    () => AppPlatform.overridePlatForm = Platforms.iOS,
+  );
+
+  tearDown(() => AppPlatform.overridePlatForm = null);
+
   test('updateParentalControl', () async {
-    final box = MockHiveBox<dynamic>();
+    final appProperty = appPropertyOverrideAndBox();
 
     final container = ProviderContainer(
       overrides: [
-        hiveBoxProvider(appPropertyBoxName).overrideWith((provider) => box),
+        appProperty.override,
       ],
     );
 
@@ -21,6 +26,6 @@ void main() {
         .read(parentalGatePageNotifierProvider.notifier)
         .updateParentalControl(parentalControl: true);
 
-    expect(box.data[parentalControlKey], isTrue);
+    expect(appProperty.box.data[parentalControlKey], isTrue);
   });
 }

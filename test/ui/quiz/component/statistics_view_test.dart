@@ -116,8 +116,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -191,8 +190,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -244,8 +242,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -294,8 +291,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -343,8 +339,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -394,8 +389,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -444,8 +438,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox(parentalControl: false)),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)

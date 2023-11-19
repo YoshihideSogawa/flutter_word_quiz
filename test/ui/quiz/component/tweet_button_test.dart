@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
@@ -9,6 +10,7 @@ import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
+import '../../../mock/mock_box_data.dart';
 import '../../../mock/mock_hive_box.dart';
 import '../../../mock/url_launcher_tester.dart';
 
@@ -16,20 +18,20 @@ void main() {
   late FakeUrlLauncher urlLauncher;
 
   setUp(() {
+    AppPlatform.overridePlatForm = Platforms.iOS;
     urlLauncher = setUpUrlLauncher();
+  });
+
+  tearDown(() {
+    AppPlatform.overridePlatForm = null;
   });
 
   testWidgets('TweetButton', (tester) async {
     const quizType = QuizTypes.daily;
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          appPropertyOverride(parentalControl: false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -41,6 +43,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ツイート'), findsOneWidget);
     expect(find.byIcon(Icons.send), findsOneWidget);
@@ -48,15 +52,11 @@ void main() {
 
   testWidgets('TweetButton(ペアレンタルコントロール中のタップ)', (tester) async {
     const quizType = QuizTypes.daily;
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          appPropertyOverrideAndBox(parentalControl: true).override,
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -68,6 +68,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('ツイート'));
     await tester.pumpAndSettle();

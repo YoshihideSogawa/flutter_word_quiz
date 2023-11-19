@@ -3,17 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:word_quiz/constant/app_platform.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/repository/settings/settings_keys.dart';
 import 'package:word_quiz/ui/settings/settings_page.dart';
 
-import '../../mock/fake_settings_quiz_range_notifier.dart';
 import '../../mock/generate_mocks.mocks.dart';
 import '../../mock/mock_box_data.dart';
 
@@ -23,17 +19,13 @@ void main() {
   });
 
   testWidgets('SettingsPage(きりかえタイプ)', (tester) async {
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: blackWhite,
           ),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -51,17 +43,13 @@ void main() {
   });
 
   testWidgets('SettingsPage(ぜんぶひょうじタイプ)', (tester) async {
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.all),
+          settingsOverride(
+            inputType: InputTypes.all,
+            quizRange: blackWhite,
           ),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -75,18 +63,15 @@ void main() {
   });
 
   testWidgets('にゅうりょくタイプのタップ', (tester) async {
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
-    final settingsBoxData = settingsBox(inputType: InputTypes.switching);
+    final settings = settingsOverrideAndBox(
+      inputType: InputTypes.switching,
+      quizRange: blackWhite,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName)
-              .overrideWith((ref) => settingsBoxData),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
+          settings.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -106,7 +91,7 @@ void main() {
     // ぜんぶひょうじタイプを選択
     await tester.tap(find.text('ぜんぶひょうじタイプ'));
     await tester.pumpAndSettle();
-    expect(settingsBoxData.data[inputTypeKey], InputTypes.all.typeId);
+    expect(settings.box.data[inputTypeKey], InputTypes.all.typeId);
 
     // ダイアログ表示(2回目)
     await tester.tap(find.text('にゅうりょくタイプ'));
@@ -115,21 +100,18 @@ void main() {
     // きりかえタイプを選択
     await tester.tap(find.text('きりかえタイプ').last);
     await tester.pumpAndSettle();
-    expect(settingsBoxData.data[inputTypeKey], InputTypes.switching.typeId);
+    expect(settings.box.data[inputTypeKey], InputTypes.switching.typeId);
   });
 
   testWidgets('もんだいのはんいのタップ', (tester) async {
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
+    final settings = settingsOverrideAndBox(
+      inputType: InputTypes.switching,
+      quizRange: blackWhite,
+    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
+          settings.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -157,24 +139,21 @@ void main() {
     await tester.tap(find.text('ソード・シールド'));
     await tester.pumpAndSettle();
 
-    expect(fakeSettingsQuizRangeNotifier.quizRange, swordShield);
+    expect(settings.box.data[quizRangeKey], swordShield.id);
   });
 
   testWidgets('きょうのもんだいのデータ削除のタップ', (tester) async {
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
     final mockDataSettings = MockDataSettings();
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: blackWhite,
           ),
           dataSettingsProvider(QuizTypes.daily)
               .overrideWithValue(mockDataSettings),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -209,20 +188,17 @@ void main() {
   });
 
   testWidgets('いっぱいやるのデータ削除のタップ', (tester) async {
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
     final mockDataSettings = MockDataSettings();
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: blackWhite,
+          ),
           dataSettingsProvider(QuizTypes.endless)
               .overrideWithValue(mockDataSettings),
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
         ],
         child: const MaterialApp(
           home: SettingsPage(),

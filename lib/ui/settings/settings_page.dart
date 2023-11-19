@@ -5,8 +5,8 @@ import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
+import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
@@ -16,8 +16,10 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputType = ref.watch(inputTypeRepositoryProvider);
-    final quizRange = ref.watch(settingsQuizRangeProvider);
+    final inputTypeNotifier = ref.watch(inputTypeRepositoryProvider);
+    final quizRangeNotifier = ref.watch(quizRangeRepositoryProvider);
+    final inputType = inputTypeNotifier.valueOrNull;
+    final quizRange = quizRangeNotifier.valueOrNull;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black38,
@@ -27,13 +29,13 @@ class SettingsPage extends ConsumerWidget {
         children: [
           ListTile(
             title: const Text('にゅうりょくタイプ'),
-            subtitle: Text(_inputTypeTitle(inputType.valueOrNull)),
-            onTap: () => _onTapInputType(context, ref, inputType.valueOrNull),
+            subtitle: Text(_inputTypeTitle(inputType)),
+            onTap: () => _onTapInputType(context, ref, inputType),
           ),
           ListTile(
             title: const Text('もんだいのはんい'),
-            subtitle: Text(quizRange.displayName ?? ''),
-            onTap: () => _onTapQuizRange(context, ref),
+            subtitle: Text(quizRange?.displayName ?? ''),
+            onTap: () => _onTapQuizRange(context, ref, quizRange),
           ),
           ListTile(
             title: const Text(
@@ -111,8 +113,11 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// 問題の範囲の変更を行います。
-  void _onTapQuizRange(BuildContext context, WidgetRef ref) {
-    final quizRange = ref.watch(settingsQuizRangeProvider);
+  void _onTapQuizRange(
+    BuildContext context,
+    WidgetRef ref,
+    QuizRange? quizRange,
+  ) {
     showDialog<int>(
       context: context,
       builder: (context) {
@@ -130,7 +135,7 @@ class SettingsPage extends ConsumerWidget {
                     toggleable: true,
                     onChanged: (value) {
                       ref
-                          .read(settingsQuizRangeProvider.notifier)
+                          .read(quizRangeRepositoryProvider.notifier)
                           .updateQuizRange(e);
                       Navigator.pop(context);
                     },

@@ -10,7 +10,6 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/splash_page_notifier.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
@@ -28,20 +27,14 @@ void main() {
   });
 
   testWidgets('SplashPage>QuizPage', (tester) async {
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-        alreadyLaunchedKey: true,
-      },
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
+          appPropertyOverride(
+            parentalControl: false,
+            alreadyLaunched: true,
           ),
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          settingsOverride(inputType: InputTypes.switching),
           hiveBoxProvider(dailyBoxName).overrideWith((ref) => MockHiveBox()),
           hiveBoxProvider(endlessBoxName).overrideWith((ref) => MockHiveBox()),
           //daily
@@ -69,20 +62,14 @@ void main() {
   });
 
   testWidgets('SplashPage>HowToPlayPage', (tester) async {
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-        alreadyLaunchedKey: false,
-      },
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
+          settingsOverride(inputType: InputTypes.switching),
+          appPropertyOverride(
+            parentalControl: false,
+            alreadyLaunched: false,
           ),
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
           hiveBoxProvider(dailyBoxName).overrideWith((ref) => MockHiveBox()),
           hiveBoxProvider(endlessBoxName).overrideWith((ref) => MockHiveBox()),
           //daily

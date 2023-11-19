@@ -7,7 +7,7 @@ import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/provider/monster_picker_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
+import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -19,6 +19,8 @@ class QuizSelectionView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quizType = QuizType.of(context).quizType;
+    // 初期入力はランダムにモンスターを選択
     final randomPickFuture = useMemoized<Future<Monster?>>(
       () => ref.watch(monsterPickerProvider).pick(),
     );
@@ -26,13 +28,16 @@ class QuizSelectionView extends HookConsumerWidget {
     if (!snapshot.hasData) {
       return const SizedBox.shrink();
     }
-
-    // 初期入力はランダムにモンスターを選択
     final seedController =
         useTextEditingController(text: snapshot.data?.name ?? '');
-    final quizType = QuizType.of(context).quizType;
-    final defaultQuizRange = ref.watch(settingsQuizRangeProvider);
-    final dropdownValue = useState<QuizRange>(defaultQuizRange);
+
+    // 問題の範囲を取得して、ドロップダウンに反映
+    final quizRangeNotifier = ref.watch(quizRangeRepositoryProvider);
+    if (!quizRangeNotifier.hasValue) {
+      return const SizedBox.shrink();
+    }
+    final dropdownValue = useState<QuizRange>(quizRangeNotifier.value!);
+
     return QuizDialog(
       onTap: () {
         ref.read(quizPageProvider(quizType).notifier).dismissQuizSelection();

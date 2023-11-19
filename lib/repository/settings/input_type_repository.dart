@@ -12,7 +12,8 @@ part 'input_type_repository.g.dart';
 class InputTypeRepository extends _$InputTypeRepository {
   @override
   Future<InputTypes> build() async {
-    final settingsBox = await ref.read(hiveBoxProvider(settingsBoxName).future);
+    final settingsBox =
+        await ref.watch(hiveBoxProvider(settingsBoxName).future);
     final inputTypeId = settingsBox.get(inputTypeKey) as int?;
     return InputTypes.values
             .firstWhereOrNull((element) => element.typeId == inputTypeId) ??

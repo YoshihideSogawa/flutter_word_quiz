@@ -7,7 +7,7 @@ part of 'input_type_repository.dart';
 // **************************************************************************
 
 String _$inputTypeRepositoryHash() =>
-    r'c6111a045c7cc34d5c8fb16bd1091e02a3c3f35c';
+    r'6fc9ed44a984f7cffc862a62739f35ce3a01c7bb';
 
 /// 入力タイプの設定です。
 ///

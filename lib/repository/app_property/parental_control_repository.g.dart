@@ -7,7 +7,7 @@ part of 'parental_control_repository.dart';
 // **************************************************************************
 
 String _$parentalControlRepositoryHash() =>
-    r'e52cfee895d2c2c57136fc326fd8d2751631eb4a';
+    r'c4665f286a0c180e83d0a9461abb4ae7e2b37c14';
 
 /// ペアレンタルコントロールを更新します。
 ///

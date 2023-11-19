@@ -11,7 +11,7 @@ class AlreadyLaunchedRepository extends _$AlreadyLaunchedRepository {
   @override
   Future<bool?> build() async {
     final appPropertyBox =
-        await ref.read(hiveBoxProvider(appPropertyBoxName).future);
+        await ref.watch(hiveBoxProvider(appPropertyBoxName).future);
     return appPropertyBox.get(alreadyLaunchedKey) as bool?;
   }
 
@@ -20,6 +20,5 @@ class AlreadyLaunchedRepository extends _$AlreadyLaunchedRepository {
     final appPropertyBox =
         await ref.read(hiveBoxProvider(appPropertyBoxName).future);
     await appPropertyBox.put(alreadyLaunchedKey, true);
-    ref.invalidateSelf();
   }
 }

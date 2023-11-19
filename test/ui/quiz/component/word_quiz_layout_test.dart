@@ -13,7 +13,6 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
@@ -39,7 +38,6 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
-import '../../../mock/fake_settings_quiz_range_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/fake_word_input_notifier.dart';
 import '../../../mock/mock_box_data.dart';
@@ -81,9 +79,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -155,8 +151,7 @@ void main() {
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          hiveBoxProvider(settingsBoxName)
-              .overrideWith((ref) => settingsBox(inputType: InputTypes.all)),
+          settingsOverride(inputType: InputTypes.all),
           wordInputNotifierProvider(quizType)
               .overrideWith((ref) => fakeWordInputNotifier),
         ],
@@ -220,9 +215,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -290,9 +283,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -359,9 +350,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -432,9 +421,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -507,9 +494,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -582,9 +567,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -657,9 +640,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
@@ -734,9 +715,6 @@ void main() {
       ),
     );
 
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(diamondPearl);
-
     final box = MockHiveBox<dynamic>(
       initData: {
         parentalControlKey: false,
@@ -747,11 +725,10 @@ void main() {
       ProviderScope(
         overrides: [
           hiveBoxProvider(appPropertyBoxName).overrideWith((provider) => box),
-          hiveBoxProvider(settingsBoxName).overrideWith(
-            (ref) => settingsBox(inputType: InputTypes.switching),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: diamondPearl,
           ),
-          settingsQuizRangeProvider
-              .overrideWith((ref) => fakeSettingsQuizRangeNotifier),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)

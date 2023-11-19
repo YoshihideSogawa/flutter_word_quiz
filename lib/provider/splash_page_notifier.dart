@@ -12,12 +12,14 @@ class SplashPageNotifier extends _$SplashPageNotifier {
   @override
   Future<SplashPageInfo> build() async {
     // すでに起動済みの場合はルールを表示しない
-    if (await ref.read(alreadyLaunchedRepositoryProvider.future) ?? false) {
+    if (await ref.watch(alreadyLaunchedRepositoryProvider.future) ?? false) {
       return const SplashPageInfo();
     }
 
     // 起動済みとする
-    await ref.read(alreadyLaunchedRepositoryProvider.notifier).markAsLaunched();
+    await ref
+        .watch(alreadyLaunchedRepositoryProvider.notifier)
+        .markAsLaunched();
 
     return const SplashPageInfo(
       showRule: true,

@@ -19,6 +19,7 @@ import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import '../../mock/fake_parental_gate_page_notifier.dart';
 import '../../mock/fake_quiz_info_notifier.dart';
 import '../../mock/fake_word_input_notifier.dart';
+import '../../mock/mock_box_data.dart';
 import '../../mock/mock_hive_box.dart';
 
 void main() {
@@ -54,19 +55,6 @@ void main() {
   });
 
   testWidgets('不正解のタップ', (tester) async {
-    final appPropertyBox = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-        alreadyLaunchedKey: true,
-      },
-    );
-
-    final settingsBox = MockHiveBox<dynamic>(
-      initData: {
-        inputTypeKey: InputTypes.switching.typeId,
-      },
-    );
-
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
       parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
@@ -84,11 +72,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox),
+          appPropertyOverride(
+            parentalControl: false,
+            alreadyLaunched: true,
+          ),
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
           // 以下Splash
-          hiveBoxProvider(settingsBoxName).overrideWith((ref) => settingsBox),
+          settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(QuizTypes.daily)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           wordInputNotifierProvider(QuizTypes.daily)
