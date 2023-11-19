@@ -10,17 +10,17 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/monster_list_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz_repository.dart';
 
+import '../mock/fake_monster_list_repository.dart';
 import '../mock/fake_statistics_notifier.dart';
 import '../mock/fake_word_input_notifier.dart';
 import '../mock/generate_mocks.mocks.dart';
-import '../mock/monster_test_list.dart';
 
 void main() {
   test('初期化(daily)', () async {
@@ -30,7 +30,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => MockStatisticsNotifier()),
@@ -58,7 +59,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider..overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => MockStatisticsNotifier()),
@@ -93,7 +95,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => MockStatisticsNotifier()),
@@ -122,7 +125,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => MockStatisticsNotifier()),
@@ -155,7 +159,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => MockStatisticsNotifier()),
@@ -186,7 +191,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => MockStatisticsNotifier()),
@@ -216,7 +222,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => mockStatisticsNotifier),
@@ -257,7 +264,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => mockStatisticsNotifier),
@@ -296,7 +304,8 @@ void main() {
     final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType).overrideWith(
           (ref) => FakeStatisticsNotifier(const QuizStatistics()),
@@ -331,7 +340,8 @@ void main() {
     final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),
@@ -368,7 +378,8 @@ void main() {
     final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),
@@ -403,7 +414,8 @@ void main() {
     final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),
@@ -434,7 +446,8 @@ void main() {
     final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),
@@ -482,7 +495,8 @@ void main() {
     );
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),
@@ -530,7 +544,8 @@ void main() {
     );
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),
@@ -579,7 +594,8 @@ void main() {
 
     final container = ProviderContainer(
       overrides: [
-        monsterListProvider.overrideWith((ref) => monsterTestList),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         statisticsProvider(quizType)
             .overrideWith((ref) => fakeStatisticsNotifier),

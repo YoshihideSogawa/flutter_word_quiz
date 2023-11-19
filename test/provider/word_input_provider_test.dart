@@ -9,9 +9,10 @@ import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/monster_repository.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz_repository.dart';
 
+import '../mock/fake_monster_list_repository.dart';
 import '../mock/fake_quiz_info_notifier.dart';
 import '../mock/generate_mocks.mocks.dart';
 import '../mock/monster_test_list.dart';
@@ -198,14 +199,12 @@ void main() {
       ),
     );
 
-    final mockMonsterRepository = MockMonsterRepository();
-    when(mockMonsterRepository.load()).thenAnswer((_) async => monsterTestList);
-
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         quizInfoProvider(quizType)..overrideWith((ref) => fakeQuizInfoProvider),
-        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
@@ -231,14 +230,12 @@ void main() {
       ),
     );
 
-    final mockMonsterRepository = MockMonsterRepository();
-    when(mockMonsterRepository.load()).thenAnswer((_) async => monsterTestList);
-
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
-        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
@@ -264,14 +261,12 @@ void main() {
       ),
     );
 
-    final mockMonsterRepository = MockMonsterRepository();
-    when(mockMonsterRepository.load()).thenAnswer((_) async => monsterTestList);
-
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
-        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
@@ -298,14 +293,12 @@ void main() {
       ),
     );
 
-    final mockMonsterRepository = MockMonsterRepository();
-    when(mockMonsterRepository.load()).thenAnswer((_) async => monsterTestList);
-
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
-        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
@@ -332,14 +325,12 @@ void main() {
       ),
     );
 
-    final mockMonsterRepository = MockMonsterRepository();
-    when(mockMonsterRepository.load()).thenAnswer((_) async => monsterTestList);
-
     final container = ProviderContainer(
       overrides: [
         quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
         quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
-        monsterRepositoryProvider.overrideWithValue(mockMonsterRepository),
+        monsterListRepositoryProvider
+            .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 

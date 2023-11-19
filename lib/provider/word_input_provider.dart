@@ -5,8 +5,8 @@ import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/monster_list_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz_repository.dart';
 
 /// 文字入力のProvider
@@ -127,7 +127,7 @@ class WordInputNotifier extends StateNotifier<WordInput> {
       return SubmitResult.noInput;
     }
 
-    final monsterList = await _ref.read(monsterListProvider.future);
+    final monsterList = await _ref.read(monsterListRepositoryProvider.future);
     // 入力のチェック
     final result = checkWord(monsterList, quizInfo, currentInputWords);
     // 存在しない場合

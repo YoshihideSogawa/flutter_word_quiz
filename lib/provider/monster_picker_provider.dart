@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/quiz_range.dart';
-import 'package:word_quiz/provider/monster_list_provider.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 
 /// モンスター選択のProviderです。
 final monsterPickerProvider = Provider<MonsterPicker>(MonsterPicker.new);
@@ -21,7 +21,7 @@ class MonsterPicker {
     QuizRange? range,
     int? seed,
   }) async {
-    final monsterList = await _ref.read(monsterListProvider.future);
+    final monsterList = await _ref.read(monsterListRepositoryProvider.future);
 
     // NOTE:デバッグコード
     // return monsterList.firstWhere((element) => element.id == 120);
