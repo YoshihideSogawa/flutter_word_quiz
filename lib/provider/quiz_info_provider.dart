@@ -66,8 +66,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
             quizType: _quizType,
             maxAnswer: 10,
           );
-          // ignore: unnecessary_breaks
-          break;
       }
       await quizRepository.saveQuizInfo(quizInfo);
     } else {
