@@ -7,6 +7,7 @@ import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/data_settings_provider.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
+import 'package:word_quiz/ui/settings/component/data_delete_confirm_dialog.dart';
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
@@ -150,70 +151,38 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// きょうのもんだいのデータを削除します。
-  void _onTapDeleteDailyData(BuildContext context, WidgetRef ref) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: const Text(
-          '「きょうのもんだい」のデータをけすと もとにもどせません\nいいですか？',
-          style: TextStyle(
-            color: Colors.redAccent,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('とじる'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await ref.read(dataSettingsProvider(QuizTypes.daily)).deleteAll();
-              if (!navigator.mounted) {
-                return;
-              }
-
-              navigator.pop();
-            },
-            child: const Text('データをけす'),
-          ),
-        ],
-      ),
+  Future<void> _onTapDeleteDailyData(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final result = await showDataDeleteDialog(
+      context,
+      '「きょうのもんだい」のデータをけすと もとにもどせません\nいいですか？',
     );
+
+    if (result != true) {
+      return;
+    }
+
+    // データの削除
+    await ref.read(dataSettingsProvider(QuizTypes.daily)).deleteAll();
   }
 
   /// いっぱいやるのデータを削除します。
-  void _onTapDeleteEndlessData(BuildContext context, WidgetRef ref) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: const Text(
-          '「いっぱいやる」のデータをけすと もとにもどせません\nいいですか？',
-          style: TextStyle(
-            color: Colors.redAccent,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('とじる'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await ref
-                  .read(dataSettingsProvider(QuizTypes.endless))
-                  .deleteAll();
-              if (!navigator.mounted) {
-                return;
-              }
-
-              navigator.pop();
-            },
-            child: const Text('データをけす'),
-          ),
-        ],
-      ),
+  Future<void> _onTapDeleteEndlessData(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final result = await showDataDeleteDialog(
+      context,
+      '「いっぱいやる」のデータをけすと もとにもどせません\nいいですか？',
     );
+
+    if (result != true) {
+      return;
+    }
+
+    // データの削除
+    await ref.read(dataSettingsProvider(QuizTypes.endless)).deleteAll();
   }
 }
