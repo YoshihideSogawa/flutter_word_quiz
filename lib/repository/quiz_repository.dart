@@ -7,6 +7,7 @@ import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
+import 'package:word_quiz/repository/quiz/quiz_keys.dart';
 
 /// 問題データ全体に関するProviderです。
 final quizRepositoryProvider = Provider.family<QuizRepository, QuizTypes>(
@@ -32,9 +33,6 @@ abstract class QuizRepository {
 
   /// [QuizStatistics]を保存します。
   Future<void> saveStatistics(QuizStatistics? statistics);
-
-  // 全データを削除します。
-  Future<int> deleteAll();
 }
 
 /// 問題データのリポジトリ(ローカル)です。
@@ -53,7 +51,7 @@ class _LocalQuizRepository extends QuizRepository {
 
   @override
   QuizInfo? loadQuizInfo() {
-    final quizInfoJson = _settingBox.get(keyQuizInfo) as String?;
+    final quizInfoJson = _settingBox.get(quizInfoKey) as String?;
     if (quizInfoJson == null) {
       return null;
     }
@@ -68,12 +66,12 @@ class _LocalQuizRepository extends QuizRepository {
       return;
     }
 
-    await _settingBox.put(keyQuizInfo, jsonEncode(quizInfo));
+    await _settingBox.put(quizInfoKey, jsonEncode(quizInfo));
   }
 
   @override
   WordInput? loadWordInput() {
-    final wordInputJson = _settingBox.get(keyWordInput) as String?;
+    final wordInputJson = _settingBox.get(wordInputKey) as String?;
     if (wordInputJson == null) {
       return null;
     }
@@ -89,12 +87,12 @@ class _LocalQuizRepository extends QuizRepository {
       return;
     }
 
-    await _settingBox.put(keyWordInput, jsonEncode(wordInput));
+    await _settingBox.put(wordInputKey, jsonEncode(wordInput));
   }
 
   @override
   QuizStatistics? loadStatistics() {
-    final statisticsJson = _settingBox.get(keyStatistics) as String?;
+    final statisticsJson = _settingBox.get(statisticsKey) as String?;
     if (statisticsJson == null) {
       return null;
     }
@@ -110,20 +108,6 @@ class _LocalQuizRepository extends QuizRepository {
       return;
     }
 
-    await _settingBox.put(keyStatistics, jsonEncode(statistics));
-  }
-
-  @override
-  Future<int> deleteAll() async {
-    return _settingBox.clear();
+    await _settingBox.put(statisticsKey, jsonEncode(statistics));
   }
 }
-
-/// [QuizInfo]の保存キー
-const String keyQuizInfo = 'quiz_info';
-
-/// [WordInput]の保存キー
-const String keyWordInput = 'wordInput';
-
-/// [QuizStatistics]の保存キー
-const String keyStatistics = 'statistics';

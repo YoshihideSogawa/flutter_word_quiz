@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_range.dart';
+import 'package:word_quiz/model/quiz_statistics.dart';
+import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
+import 'package:word_quiz/repository/quiz/quiz_keys.dart';
 import 'package:word_quiz/repository/settings/settings_keys.dart';
 
 import 'mock_hive_box.dart';
@@ -52,6 +57,28 @@ OverrideAndBox settingsOverrideAndBox({
     },
   );
   final override = hiveBoxProvider(settingsBoxName).overrideWith((ref) => box);
+  return (override: override, box: box);
+}
+
+Override quizOverride({
+  required QuizTypes quizType,
+  QuizStatistics? statistics,
+}) =>
+    quizOverrideAndBox(
+      quizType: quizType,
+      statistics: statistics,
+    ).override;
+
+OverrideAndBox quizOverrideAndBox({
+  required QuizTypes quizType,
+  QuizStatistics? statistics,
+}) {
+  final box = MockHiveBox<dynamic>(
+    initData: {
+      if (statistics != null) statisticsKey: jsonEncode(statistics),
+    },
+  );
+  final override = hiveBoxProvider(quizType.boxName).overrideWith((ref) => box);
   return (override: override, box: box);
 }
 

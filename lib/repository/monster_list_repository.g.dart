@@ -9,7 +9,9 @@ part of 'monster_list_repository.dart';
 String _$monsterListRepositoryHash() =>
     r'b5db2c18b2a8385b91f427495bc42b35c317aa4e';
 
-/// See also [MonsterListRepository].
+/// [Monster]データに関するRepositoryです。
+///
+/// Copied from [MonsterListRepository].
 @ProviderFor(MonsterListRepository)
 final monsterListRepositoryProvider =
     AsyncNotifierProvider<MonsterListRepository, List<Monster>>.internal(

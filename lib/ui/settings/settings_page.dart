@@ -4,7 +4,7 @@ import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/data_settings_provider.dart';
+import 'package:word_quiz/repository/quiz/quiz_data_repository.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 import 'package:word_quiz/ui/settings/component/data_delete_confirm_dialog.dart';
@@ -165,7 +165,9 @@ class SettingsPage extends ConsumerWidget {
     }
 
     // データの削除
-    await ref.read(dataSettingsProvider(QuizTypes.daily)).deleteAll();
+    await ref
+        .read(quizDataRepositoryProvider(QuizTypes.daily).notifier)
+        .deleteAll();
   }
 
   /// いっぱいやるのデータを削除します。
@@ -183,6 +185,8 @@ class SettingsPage extends ConsumerWidget {
     }
 
     // データの削除
-    await ref.read(dataSettingsProvider(QuizTypes.endless)).deleteAll();
+    await ref
+        .read(quizDataRepositoryProvider(QuizTypes.endless).notifier)
+        .deleteAll();
   }
 }

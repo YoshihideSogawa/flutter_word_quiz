@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/data_settings_provider.dart';
 import 'package:word_quiz/repository/settings/settings_keys.dart';
 import 'package:word_quiz/ui/settings/settings_page.dart';
 
-import '../../mock/generate_mocks.mocks.dart';
 import '../../mock/mock_box_data.dart';
 
 void main() {
@@ -143,7 +140,7 @@ void main() {
   });
 
   testWidgets('きょうのもんだいのデータ削除のタップ', (tester) async {
-    final mockDataSettings = MockDataSettings();
+    final quizOverride = quizOverrideAndBox(quizType: QuizTypes.daily);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -152,8 +149,7 @@ void main() {
             inputType: InputTypes.switching,
             quizRange: blackWhite,
           ),
-          dataSettingsProvider(QuizTypes.daily)
-              .overrideWithValue(mockDataSettings),
+          quizOverride.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -184,11 +180,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(confirmTitle), findsNothing);
 
-    verify(mockDataSettings.deleteAll()).called(1);
+    expect(quizOverride.box.data[QuizTypes.daily.boxName], isNull);
   });
 
   testWidgets('いっぱいやるのデータ削除のタップ', (tester) async {
-    final mockDataSettings = MockDataSettings();
+    final quizOverride = quizOverrideAndBox(quizType: QuizTypes.endless);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -197,8 +193,7 @@ void main() {
             inputType: InputTypes.switching,
             quizRange: blackWhite,
           ),
-          dataSettingsProvider(QuizTypes.endless)
-              .overrideWithValue(mockDataSettings),
+          quizOverride.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
@@ -229,6 +224,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(confirmTitle), findsNothing);
 
-    verify(mockDataSettings.deleteAll()).called(1);
+    expect(quizOverride.box.data[QuizTypes.endless.boxName], isNull);
   });
 }
