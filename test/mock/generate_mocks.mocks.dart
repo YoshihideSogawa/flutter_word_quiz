@@ -3,23 +3,21 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
+import 'dart:async' as _i7;
 
-import 'package:hooks_riverpod/hooks_riverpod.dart' as _i3;
+import 'package:hooks_riverpod/hooks_riverpod.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:state_notifier/state_notifier.dart' as _i12;
-import 'package:word_quiz/model/monster.dart' as _i2;
-import 'package:word_quiz/model/quiz_info.dart' as _i11;
-import 'package:word_quiz/model/quiz_page_info.dart' as _i4;
+import 'package:state_notifier/state_notifier.dart' as _i10;
+import 'package:word_quiz/model/quiz_info.dart' as _i8;
+import 'package:word_quiz/model/quiz_page_info.dart' as _i3;
 import 'package:word_quiz/model/quiz_range.dart' as _i9;
-import 'package:word_quiz/model/quiz_statistics.dart' as _i5;
-import 'package:word_quiz/model/word_input.dart' as _i6;
-import 'package:word_quiz/provider/monster_picker_provider.dart' as _i7;
-import 'package:word_quiz/provider/quiz_info_provider.dart' as _i10;
-import 'package:word_quiz/provider/quiz_page_provider.dart' as _i13;
-import 'package:word_quiz/provider/statistics_provider.dart' as _i15;
-import 'package:word_quiz/provider/word_input_provider.dart' as _i16;
-import 'package:word_quiz/repository/quiz_repository.dart' as _i14;
+import 'package:word_quiz/model/quiz_statistics.dart' as _i4;
+import 'package:word_quiz/model/word_input.dart' as _i5;
+import 'package:word_quiz/provider/quiz_info_provider.dart' as _i6;
+import 'package:word_quiz/provider/quiz_page_provider.dart' as _i11;
+import 'package:word_quiz/provider/statistics_provider.dart' as _i13;
+import 'package:word_quiz/provider/word_input_provider.dart' as _i14;
+import 'package:word_quiz/repository/quiz_repository.dart' as _i12;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -34,8 +32,8 @@ import 'package:word_quiz/repository/quiz_repository.dart' as _i14;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeMonster_0 extends _i1.SmartFake implements _i2.Monster {
-  _FakeMonster_0(
+class _FakeAsyncValue_0<T> extends _i1.SmartFake implements _i2.AsyncValue<T> {
+  _FakeAsyncValue_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -44,8 +42,8 @@ class _FakeMonster_0 extends _i1.SmartFake implements _i2.Monster {
         );
 }
 
-class _FakeAsyncValue_1<T> extends _i1.SmartFake implements _i3.AsyncValue<T> {
-  _FakeAsyncValue_1(
+class _FakeQuizPageInfo_1 extends _i1.SmartFake implements _i3.QuizPageInfo {
+  _FakeQuizPageInfo_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -54,8 +52,9 @@ class _FakeAsyncValue_1<T> extends _i1.SmartFake implements _i3.AsyncValue<T> {
         );
 }
 
-class _FakeQuizPageInfo_2 extends _i1.SmartFake implements _i4.QuizPageInfo {
-  _FakeQuizPageInfo_2(
+class _FakeQuizStatistics_2 extends _i1.SmartFake
+    implements _i4.QuizStatistics {
+  _FakeQuizStatistics_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -64,73 +63,26 @@ class _FakeQuizPageInfo_2 extends _i1.SmartFake implements _i4.QuizPageInfo {
         );
 }
 
-class _FakeQuizStatistics_3 extends _i1.SmartFake
-    implements _i5.QuizStatistics {
-  _FakeQuizStatistics_3(
+class _FakeWordInput_3 extends _i1.SmartFake implements _i5.WordInput {
+  _FakeWordInput_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
           parent,
           parentInvocation,
         );
-}
-
-class _FakeWordInput_4 extends _i1.SmartFake implements _i6.WordInput {
-  _FakeWordInput_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-/// A class which mocks [MonsterPicker].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockMonsterPicker extends _i1.Mock implements _i7.MonsterPicker {
-  MockMonsterPicker() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i8.Future<_i2.Monster> pick({
-    _i9.QuizRange? range,
-    int? seed,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #pick,
-          [],
-          {
-            #range: range,
-            #seed: seed,
-          },
-        ),
-        returnValue: _i8.Future<_i2.Monster>.value(_FakeMonster_0(
-          this,
-          Invocation.method(
-            #pick,
-            [],
-            {
-              #range: range,
-              #seed: seed,
-            },
-          ),
-        )),
-      ) as _i8.Future<_i2.Monster>);
 }
 
 /// A class which mocks [QuizInfoNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
+class MockQuizInfoNotifier extends _i1.Mock implements _i6.QuizInfoNotifier {
   MockQuizInfoNotifier() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
+  set onError(_i2.ErrorListener? _onError) => super.noSuchMethod(
         Invocation.setter(
           #onError,
           _onError,
@@ -145,22 +97,22 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
       ) as bool);
 
   @override
-  _i8.Stream<_i3.AsyncValue<_i11.QuizInfo>> get stream => (super.noSuchMethod(
+  _i7.Stream<_i2.AsyncValue<_i8.QuizInfo>> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i3.AsyncValue<_i11.QuizInfo>>.empty(),
-      ) as _i8.Stream<_i3.AsyncValue<_i11.QuizInfo>>);
+        returnValue: _i7.Stream<_i2.AsyncValue<_i8.QuizInfo>>.empty(),
+      ) as _i7.Stream<_i2.AsyncValue<_i8.QuizInfo>>);
 
   @override
-  _i3.AsyncValue<_i11.QuizInfo> get state => (super.noSuchMethod(
+  _i2.AsyncValue<_i8.QuizInfo> get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeAsyncValue_1<_i11.QuizInfo>(
+        returnValue: _FakeAsyncValue_0<_i8.QuizInfo>(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i3.AsyncValue<_i11.QuizInfo>);
+      ) as _i2.AsyncValue<_i8.QuizInfo>);
 
   @override
-  set state(_i3.AsyncValue<_i11.QuizInfo>? value) => super.noSuchMethod(
+  set state(_i2.AsyncValue<_i8.QuizInfo>? value) => super.noSuchMethod(
         Invocation.setter(
           #state,
           value,
@@ -169,13 +121,13 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
       );
 
   @override
-  _i3.AsyncValue<_i11.QuizInfo> get debugState => (super.noSuchMethod(
+  _i2.AsyncValue<_i8.QuizInfo> get debugState => (super.noSuchMethod(
         Invocation.getter(#debugState),
-        returnValue: _FakeAsyncValue_1<_i11.QuizInfo>(
+        returnValue: _FakeAsyncValue_0<_i8.QuizInfo>(
           this,
           Invocation.getter(#debugState),
         ),
-      ) as _i3.AsyncValue<_i11.QuizInfo>);
+      ) as _i2.AsyncValue<_i8.QuizInfo>);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -184,26 +136,26 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
       ) as bool);
 
   @override
-  _i8.Future<void> init() => (super.noSuchMethod(
+  _i7.Future<void> init() => (super.noSuchMethod(
         Invocation.method(
           #init,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<bool> refreshDailyQuiz() => (super.noSuchMethod(
+  _i7.Future<bool> refreshDailyQuiz() => (super.noSuchMethod(
         Invocation.method(
           #refreshDailyQuiz,
           [],
         ),
-        returnValue: _i8.Future<bool>.value(false),
-      ) as _i8.Future<bool>);
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
 
   @override
-  _i8.Future<void> startQuiz(
+  _i7.Future<void> startQuiz(
     String? seedText,
     _i9.QuizRange? quizRange,
   ) =>
@@ -215,52 +167,52 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
             quizRange,
           ],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<void> nextQuiz() => (super.noSuchMethod(
+  _i7.Future<void> nextQuiz() => (super.noSuchMethod(
         Invocation.method(
           #nextQuiz,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<void> quitQuiz() => (super.noSuchMethod(
+  _i7.Future<void> quitQuiz() => (super.noSuchMethod(
         Invocation.method(
           #quitQuiz,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<void> retireQuiz() => (super.noSuchMethod(
+  _i7.Future<void> retireQuiz() => (super.noSuchMethod(
         Invocation.method(
           #retireQuiz,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<void> updateQuiz() => (super.noSuchMethod(
+  _i7.Future<void> updateQuiz() => (super.noSuchMethod(
         Invocation.method(
           #updateQuiz,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  void updateQuizInfo(_i11.QuizInfo? quizInfo) => super.noSuchMethod(
+  void updateQuizInfo(_i8.QuizInfo? quizInfo) => super.noSuchMethod(
         Invocation.method(
           #updateQuizInfo,
           [quizInfo],
@@ -270,8 +222,8 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
 
   @override
   bool updateShouldNotify(
-    _i3.AsyncValue<_i11.QuizInfo>? old,
-    _i3.AsyncValue<_i11.QuizInfo>? current,
+    _i2.AsyncValue<_i8.QuizInfo>? old,
+    _i2.AsyncValue<_i8.QuizInfo>? current,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -285,8 +237,8 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
       ) as bool);
 
   @override
-  _i3.RemoveListener addListener(
-    _i12.Listener<_i3.AsyncValue<_i11.QuizInfo>>? listener, {
+  _i2.RemoveListener addListener(
+    _i10.Listener<_i2.AsyncValue<_i8.QuizInfo>>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(
@@ -296,7 +248,7 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
           {#fireImmediately: fireImmediately},
         ),
         returnValue: () {},
-      ) as _i3.RemoveListener);
+      ) as _i2.RemoveListener);
 
   @override
   void dispose() => super.noSuchMethod(
@@ -311,13 +263,13 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i10.QuizInfoNotifier {
 /// A class which mocks [QuizPageNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
+class MockQuizPageNotifier extends _i1.Mock implements _i11.QuizPageNotifier {
   MockQuizPageNotifier() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
+  set onError(_i2.ErrorListener? _onError) => super.noSuchMethod(
         Invocation.setter(
           #onError,
           _onError,
@@ -332,22 +284,22 @@ class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
       ) as bool);
 
   @override
-  _i8.Stream<_i4.QuizPageInfo> get stream => (super.noSuchMethod(
+  _i7.Stream<_i3.QuizPageInfo> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i4.QuizPageInfo>.empty(),
-      ) as _i8.Stream<_i4.QuizPageInfo>);
+        returnValue: _i7.Stream<_i3.QuizPageInfo>.empty(),
+      ) as _i7.Stream<_i3.QuizPageInfo>);
 
   @override
-  _i4.QuizPageInfo get state => (super.noSuchMethod(
+  _i3.QuizPageInfo get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeQuizPageInfo_2(
+        returnValue: _FakeQuizPageInfo_1(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i4.QuizPageInfo);
+      ) as _i3.QuizPageInfo);
 
   @override
-  set state(_i4.QuizPageInfo? value) => super.noSuchMethod(
+  set state(_i3.QuizPageInfo? value) => super.noSuchMethod(
         Invocation.setter(
           #state,
           value,
@@ -356,13 +308,13 @@ class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
       );
 
   @override
-  _i4.QuizPageInfo get debugState => (super.noSuchMethod(
+  _i3.QuizPageInfo get debugState => (super.noSuchMethod(
         Invocation.getter(#debugState),
-        returnValue: _FakeQuizPageInfo_2(
+        returnValue: _FakeQuizPageInfo_1(
           this,
           Invocation.getter(#debugState),
         ),
-      ) as _i4.QuizPageInfo);
+      ) as _i3.QuizPageInfo);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -472,8 +424,8 @@ class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
 
   @override
   bool updateShouldNotify(
-    _i4.QuizPageInfo? old,
-    _i4.QuizPageInfo? current,
+    _i3.QuizPageInfo? old,
+    _i3.QuizPageInfo? current,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -487,8 +439,8 @@ class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
       ) as bool);
 
   @override
-  _i3.RemoveListener addListener(
-    _i12.Listener<_i4.QuizPageInfo>? listener, {
+  _i2.RemoveListener addListener(
+    _i10.Listener<_i3.QuizPageInfo>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(
@@ -498,7 +450,7 @@ class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
           {#fireImmediately: fireImmediately},
         ),
         returnValue: () {},
-      ) as _i3.RemoveListener);
+      ) as _i2.RemoveListener);
 
   @override
   void dispose() => super.noSuchMethod(
@@ -513,55 +465,55 @@ class MockQuizPageNotifier extends _i1.Mock implements _i13.QuizPageNotifier {
 /// A class which mocks [QuizRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockQuizRepository extends _i1.Mock implements _i14.QuizRepository {
+class MockQuizRepository extends _i1.Mock implements _i12.QuizRepository {
   MockQuizRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i8.Future<void> saveQuizInfo(_i11.QuizInfo? quizInfo) => (super.noSuchMethod(
+  _i7.Future<void> saveQuizInfo(_i8.QuizInfo? quizInfo) => (super.noSuchMethod(
         Invocation.method(
           #saveQuizInfo,
           [quizInfo],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<void> saveWordInput(_i6.WordInput? wordInput) =>
+  _i7.Future<void> saveWordInput(_i5.WordInput? wordInput) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveWordInput,
           [wordInput],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i8.Future<void> saveStatistics(_i5.QuizStatistics? statistics) =>
+  _i7.Future<void> saveStatistics(_i4.QuizStatistics? statistics) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveStatistics,
           [statistics],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }
 
 /// A class which mocks [StatisticsNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStatisticsNotifier extends _i1.Mock
-    implements _i15.StatisticsNotifier {
+    implements _i13.StatisticsNotifier {
   MockStatisticsNotifier() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
+  set onError(_i2.ErrorListener? _onError) => super.noSuchMethod(
         Invocation.setter(
           #onError,
           _onError,
@@ -576,22 +528,22 @@ class MockStatisticsNotifier extends _i1.Mock
       ) as bool);
 
   @override
-  _i8.Stream<_i5.QuizStatistics> get stream => (super.noSuchMethod(
+  _i7.Stream<_i4.QuizStatistics> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i5.QuizStatistics>.empty(),
-      ) as _i8.Stream<_i5.QuizStatistics>);
+        returnValue: _i7.Stream<_i4.QuizStatistics>.empty(),
+      ) as _i7.Stream<_i4.QuizStatistics>);
 
   @override
-  _i5.QuizStatistics get state => (super.noSuchMethod(
+  _i4.QuizStatistics get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeQuizStatistics_3(
+        returnValue: _FakeQuizStatistics_2(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i5.QuizStatistics);
+      ) as _i4.QuizStatistics);
 
   @override
-  set state(_i5.QuizStatistics? value) => super.noSuchMethod(
+  set state(_i4.QuizStatistics? value) => super.noSuchMethod(
         Invocation.setter(
           #state,
           value,
@@ -600,13 +552,13 @@ class MockStatisticsNotifier extends _i1.Mock
       );
 
   @override
-  _i5.QuizStatistics get debugState => (super.noSuchMethod(
+  _i4.QuizStatistics get debugState => (super.noSuchMethod(
         Invocation.getter(#debugState),
-        returnValue: _FakeQuizStatistics_3(
+        returnValue: _FakeQuizStatistics_2(
           this,
           Invocation.getter(#debugState),
         ),
-      ) as _i5.QuizStatistics);
+      ) as _i4.QuizStatistics);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -661,8 +613,8 @@ class MockStatisticsNotifier extends _i1.Mock
 
   @override
   bool updateShouldNotify(
-    _i5.QuizStatistics? old,
-    _i5.QuizStatistics? current,
+    _i4.QuizStatistics? old,
+    _i4.QuizStatistics? current,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -676,8 +628,8 @@ class MockStatisticsNotifier extends _i1.Mock
       ) as bool);
 
   @override
-  _i3.RemoveListener addListener(
-    _i12.Listener<_i5.QuizStatistics>? listener, {
+  _i2.RemoveListener addListener(
+    _i10.Listener<_i4.QuizStatistics>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(
@@ -687,7 +639,7 @@ class MockStatisticsNotifier extends _i1.Mock
           {#fireImmediately: fireImmediately},
         ),
         returnValue: () {},
-      ) as _i3.RemoveListener);
+      ) as _i2.RemoveListener);
 
   @override
   void dispose() => super.noSuchMethod(
@@ -702,13 +654,13 @@ class MockStatisticsNotifier extends _i1.Mock
 /// A class which mocks [WordInputNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
+class MockWordInputNotifier extends _i1.Mock implements _i14.WordInputNotifier {
   MockWordInputNotifier() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
+  set onError(_i2.ErrorListener? _onError) => super.noSuchMethod(
         Invocation.setter(
           #onError,
           _onError,
@@ -723,22 +675,22 @@ class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
       ) as bool);
 
   @override
-  _i8.Stream<_i6.WordInput> get stream => (super.noSuchMethod(
+  _i7.Stream<_i5.WordInput> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i6.WordInput>.empty(),
-      ) as _i8.Stream<_i6.WordInput>);
+        returnValue: _i7.Stream<_i5.WordInput>.empty(),
+      ) as _i7.Stream<_i5.WordInput>);
 
   @override
-  _i6.WordInput get state => (super.noSuchMethod(
+  _i5.WordInput get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeWordInput_4(
+        returnValue: _FakeWordInput_3(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i6.WordInput);
+      ) as _i5.WordInput);
 
   @override
-  set state(_i6.WordInput? value) => super.noSuchMethod(
+  set state(_i5.WordInput? value) => super.noSuchMethod(
         Invocation.setter(
           #state,
           value,
@@ -747,13 +699,13 @@ class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
       );
 
   @override
-  _i6.WordInput get debugState => (super.noSuchMethod(
+  _i5.WordInput get debugState => (super.noSuchMethod(
         Invocation.getter(#debugState),
-        returnValue: _FakeWordInput_4(
+        returnValue: _FakeWordInput_3(
           this,
           Invocation.getter(#debugState),
         ),
-      ) as _i6.WordInput);
+      ) as _i5.WordInput);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -780,14 +732,14 @@ class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
       );
 
   @override
-  _i8.Future<_i16.SubmitResult> submit() => (super.noSuchMethod(
+  _i7.Future<_i14.SubmitResult> submit() => (super.noSuchMethod(
         Invocation.method(
           #submit,
           [],
         ),
         returnValue:
-            _i8.Future<_i16.SubmitResult>.value(_i16.SubmitResult.success),
-      ) as _i8.Future<_i16.SubmitResult>);
+            _i7.Future<_i14.SubmitResult>.value(_i14.SubmitResult.success),
+      ) as _i7.Future<_i14.SubmitResult>);
 
   @override
   void reset() => super.noSuchMethod(
@@ -800,8 +752,8 @@ class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
 
   @override
   bool updateShouldNotify(
-    _i6.WordInput? old,
-    _i6.WordInput? current,
+    _i5.WordInput? old,
+    _i5.WordInput? current,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -815,8 +767,8 @@ class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
       ) as bool);
 
   @override
-  _i3.RemoveListener addListener(
-    _i12.Listener<_i6.WordInput>? listener, {
+  _i2.RemoveListener addListener(
+    _i10.Listener<_i5.WordInput>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(
@@ -826,7 +778,7 @@ class MockWordInputNotifier extends _i1.Mock implements _i16.WordInputNotifier {
           {#fireImmediately: fireImmediately},
         ),
         returnValue: () {},
-      ) as _i3.RemoveListener);
+      ) as _i2.RemoveListener);
 
   @override
   void dispose() => super.noSuchMethod(

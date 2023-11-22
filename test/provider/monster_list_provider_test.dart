@@ -1,20 +1,36 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
-
-import '../mock/fake_monster_list_repository.dart';
 
 void main() {
   test('monsterListProvider', () async {
-    final container = ProviderContainer(
-      overrides: [
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
-      ],
-    );
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    final container = ProviderContainer();
     final monsterList =
         await container.read(monsterListRepositoryProvider.future);
 
-    expect(monsterList.length, 50);
+    expect(monsterList.length, 905);
+  });
+
+  test('pickMonster', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final container = ProviderContainer();
+
+    final monster = await container
+        .read(monsterListRepositoryProvider.notifier)
+        .pick(range: const QuizRange(maxNo: 40), seed: 20220313);
+    expect(monster.id, 9);
+  });
+
+  test('pickRandom', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final container = ProviderContainer();
+
+    final monster =
+        await container.read(monsterListRepositoryProvider.notifier).pick();
+    expect(monster.id, isNotNull);
+    expect(monster.name, isNotNull);
   });
 }

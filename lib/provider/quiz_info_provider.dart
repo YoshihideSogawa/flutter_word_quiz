@@ -8,10 +8,10 @@ import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/monster_picker_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz_repository.dart';
 
 /// クイズ情報のProvider
@@ -53,7 +53,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
             quizType: _quizType,
             maxAnswer: 10,
             answer: await _ref
-                .read(monsterPickerProvider)
+                .read(monsterListRepositoryProvider.notifier)
                 .pick(range: defaultQuizRange, seed: playDate),
             quizProcess: QuizProcessType.started,
             quizRange: defaultQuizRange,
@@ -132,7 +132,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     final today = generateDate();
     newQuizInfo = quizInfo.copyWith(
       answer: await _ref
-          .read(monsterPickerProvider)
+          .read(monsterListRepositoryProvider.notifier)
           .pick(range: defaultQuizRange, seed: today),
       quizProcess: QuizProcessType.started,
       playDate: today,
@@ -196,7 +196,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     state = AsyncValue.data(
       state.value!.copyWith(
         answer: await _ref
-            .read(monsterPickerProvider)
+            .read(monsterListRepositoryProvider.notifier)
             .pick(range: quizRange, seed: seed),
         quizRange: quizRange,
         seedText: seedText,

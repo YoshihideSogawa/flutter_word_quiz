@@ -4,9 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_range.dart';
-import 'package:word_quiz/provider/monster_picker_provider.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -22,7 +22,7 @@ class QuizSelectionView extends HookConsumerWidget {
     final quizType = QuizType.of(context).quizType;
     // 初期入力はランダムにモンスターを選択
     final randomPickFuture = useMemoized<Future<Monster?>>(
-      () => ref.watch(monsterPickerProvider).pick(),
+      () => ref.watch(monsterListRepositoryProvider.notifier).pick(),
     );
     final snapshot = useFuture(randomPickFuture);
     if (!snapshot.hasData) {
