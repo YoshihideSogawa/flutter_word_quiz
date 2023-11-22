@@ -12,7 +12,7 @@ import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
-import 'package:word_quiz/repository/quiz_repository.dart';
+import 'package:word_quiz/repository/quiz/quiz_info_repository.dart';
 
 /// クイズ情報のProvider
 final quizInfoProvider = StateNotifierProvider.family<QuizInfoNotifier,
@@ -40,8 +40,8 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// 初期化を行います。
   @visibleForTesting
   Future<void> init() async {
-    final quizRepository = _ref.read(quizRepositoryProvider(_quizType));
-    var quizInfo = quizRepository.loadQuizInfo();
+    var quizInfo =
+        await _ref.read(quizInfoRepositoryProvider(_quizType).future);
 
     // データが保存されていない場合
     if (quizInfo == null) {
@@ -67,7 +67,9 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
             maxAnswer: 10,
           );
       }
-      await quizRepository.saveQuizInfo(quizInfo);
+      await _ref
+          .read(quizInfoRepositoryProvider(_quizType).notifier)
+          .saveQuizInfo(quizInfo);
     } else {
       // データが保存されている場合
       switch (_quizType) {
@@ -146,7 +148,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
       _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
     }
     await _ref
-        .watch(quizRepositoryProvider(_quizType))
+        .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(newQuizInfo);
     // 新着問題への切り替え通知
     _ref.watch(quizPageProvider(_quizType).notifier).showQuizChanged();
@@ -206,7 +208,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
 
     // QuizInfoの保存
     await _ref
-        .watch(quizRepositoryProvider(_quizType))
+        .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
   }
 
@@ -223,7 +225,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
 
     // QuizInfoの保存
     await _ref
-        .watch(quizRepositoryProvider(_quizType))
+        .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
 
     // 結果を表示
@@ -269,7 +271,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
 
     // QuizInfoの保存
     await _ref
-        .watch(quizRepositoryProvider(_quizType))
+        .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
 
     // 正解のケース
@@ -294,7 +296,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
 
     // QuizInfoの保存
     await _ref
-        .watch(quizRepositoryProvider(_quizType))
+        .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
 
     // 回答>2秒待ち>結果を表示

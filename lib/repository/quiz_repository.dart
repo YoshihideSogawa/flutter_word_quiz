@@ -16,12 +16,6 @@ final quizRepositoryProvider = Provider.family<QuizRepository, QuizTypes>(
 
 /// 問題データのリポジトリです。
 abstract class QuizRepository {
-  /// [QuizInfo]を読み込みます。
-  QuizInfo? loadQuizInfo();
-
-  /// [QuizInfo]を保存します。
-  Future<void> saveQuizInfo(QuizInfo? quizInfo);
-
   /// [WordInput]を読み込みます。
   WordInput? loadWordInput();
 
@@ -48,26 +42,6 @@ class _LocalQuizRepository extends QuizRepository {
 
   /// [Box]
   late final Box<dynamic> _settingBox;
-
-  @override
-  QuizInfo? loadQuizInfo() {
-    final quizInfoJson = _settingBox.get(quizInfoKey) as String?;
-    if (quizInfoJson == null) {
-      return null;
-    }
-
-    // NOTE: QuizInfoの形式が変わったらマイグレーションコードを書く
-    return QuizInfo.fromJson(jsonDecode(quizInfoJson) as Map<String, dynamic>);
-  }
-
-  @override
-  Future<void> saveQuizInfo(QuizInfo? quizInfo) async {
-    if (quizInfo == null) {
-      return;
-    }
-
-    await _settingBox.put(quizInfoKey, jsonEncode(quizInfo));
-  }
 
   @override
   WordInput? loadWordInput() {

@@ -7,7 +7,7 @@ part of 'monster_list_repository.dart';
 // **************************************************************************
 
 String _$monsterListRepositoryHash() =>
-    r'f5c96ff19e7027dc7cc6544cd0081a350b85213d';
+    r'647cbb36ed90ccd4c288f2e051b080a86e6e0c84';
 
 /// [Monster]データに関するRepositoryです。
 ///

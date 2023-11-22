@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
+import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
@@ -63,19 +64,23 @@ OverrideAndBox settingsOverrideAndBox({
 Override quizOverride({
   required QuizTypes quizType,
   QuizStatistics? statistics,
+  QuizInfo? quizInfo,
 }) =>
     quizOverrideAndBox(
       quizType: quizType,
       statistics: statistics,
+      quizInfo: quizInfo,
     ).override;
 
 OverrideAndBox quizOverrideAndBox({
   required QuizTypes quizType,
   QuizStatistics? statistics,
+  QuizInfo? quizInfo,
 }) {
   final box = MockHiveBox<dynamic>(
     initData: {
       if (statistics != null) statisticsKey: jsonEncode(statistics),
+      if (quizInfo != null) quizInfoKey: jsonEncode(quizInfo),
     },
   );
   final override = hiveBoxProvider(quizType.boxName).overrideWith((ref) => box);

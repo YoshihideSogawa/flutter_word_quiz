@@ -18,6 +18,7 @@ class QuizDataRepository extends _$QuizDataRepository {
     // do nothing
   }
 
+  // TODO(sogawa): おそらく最終的に別々のdeleteを呼ぶことになる。
   /// [QuizTypes]にひもづく全データを削除します。
   Future<void> deleteAll() async {
     final box = await ref.read(hiveBoxProvider(quizType.boxName).future);

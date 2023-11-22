@@ -24,40 +24,6 @@ void main() {
 
   tearDown(tearDownHive);
 
-  test('QuizInfo(save/load)', () async {
-    final container = ProviderContainer();
-    final quizRepository =
-        container.read(quizRepositoryProvider(QuizTypes.daily));
-
-    const quizInfo = QuizInfo(
-      answer: Monster(id: 100, name: 'テスト'),
-      maxAnswer: 5,
-      quizType: QuizTypes.daily,
-      quizProcess: QuizProcessType.started,
-      quizRange: QuizRange(
-        id: 10,
-        maxNo: 100,
-        displayName: 'QuizRange',
-      ),
-      seedText: 'seedText',
-      playDate: 12345678,
-    );
-
-    // 保存
-    await quizRepository.saveQuizInfo(quizInfo);
-
-    // 読み込み
-    final targetQuizInfo = quizRepository.loadQuizInfo();
-
-    expect(targetQuizInfo!.answer!.id, quizInfo.answer!.id);
-    expect(targetQuizInfo.maxAnswer, quizInfo.maxAnswer);
-    expect(targetQuizInfo.quizType, quizInfo.quizType);
-    expect(targetQuizInfo.quizProcess, quizInfo.quizProcess);
-    expect(targetQuizInfo.quizRange!.id, quizInfo.quizRange!.id);
-    expect(targetQuizInfo.seedText, quizInfo.seedText);
-    expect(targetQuizInfo.playDate, quizInfo.playDate);
-  });
-
   test('WordInput(save/load)', () async {
     final container = ProviderContainer();
     final quizRepository =
