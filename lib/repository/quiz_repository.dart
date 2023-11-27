@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
-import 'package:word_quiz/model/quiz_info.dart';
-import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/repository/quiz/quiz_keys.dart';
@@ -21,12 +19,6 @@ abstract class QuizRepository {
 
   /// [WordInput]を保存します。
   Future<void> saveWordInput(WordInput? wordInput);
-
-  /// [QuizStatistics]を読み込みます。
-  QuizStatistics? loadStatistics();
-
-  /// [QuizStatistics]を保存します。
-  Future<void> saveStatistics(QuizStatistics? statistics);
 }
 
 /// 問題データのリポジトリ(ローカル)です。
@@ -62,26 +54,5 @@ class _LocalQuizRepository extends QuizRepository {
     }
 
     await _settingBox.put(wordInputKey, jsonEncode(wordInput));
-  }
-
-  @override
-  QuizStatistics? loadStatistics() {
-    final statisticsJson = _settingBox.get(statisticsKey) as String?;
-    if (statisticsJson == null) {
-      return null;
-    }
-
-    return QuizStatistics.fromJson(
-      jsonDecode(statisticsJson) as Map<String, dynamic>,
-    );
-  }
-
-  @override
-  Future<void> saveStatistics(QuizStatistics? statistics) async {
-    if (statistics == null) {
-      return;
-    }
-
-    await _settingBox.put(statisticsKey, jsonEncode(statistics));
   }
 }

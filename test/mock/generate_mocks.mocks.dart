@@ -471,16 +471,6 @@ class MockQuizRepository extends _i1.Mock implements _i12.QuizRepository {
   }
 
   @override
-  _i7.Future<void> saveQuizInfo(_i8.QuizInfo? quizInfo) => (super.noSuchMethod(
-        Invocation.method(
-          #saveQuizInfo,
-          [quizInfo],
-        ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
-
-  @override
   _i7.Future<void> saveWordInput(_i5.WordInput? wordInput) =>
       (super.noSuchMethod(
         Invocation.method(

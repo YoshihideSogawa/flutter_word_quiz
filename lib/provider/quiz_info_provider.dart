@@ -59,7 +59,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
             quizRange: defaultQuizRange,
             playDate: playDate,
           );
-          _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
+          await _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
         case QuizTypes.endless:
           // いっぱいやるモードは未開始状態にする
           quizInfo = QuizInfo(
@@ -143,9 +143,9 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
     // 解答に成功していたら連鎖を維持
     if (quizInfo.quizProcess == QuizProcessType.success) {
-      _ref.watch(statisticsProvider(_quizType).notifier).nextQuiz();
+      await _ref.watch(statisticsProvider(_quizType).notifier).nextQuiz();
     } else {
-      _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
+      await _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
     }
     await _ref
         .read(quizInfoRepositoryProvider(_quizType).notifier)
@@ -164,7 +164,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// クイズを開始します。(いっぱいやるモードのみ使用)
   Future<void> startQuiz(String seedText, QuizRange quizRange) async {
     // 履歴情報の設定
-    _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
+    await _ref.watch(statisticsProvider(_quizType).notifier).startQuiz();
     // 新しい答えを設定
     await _updateAnswer(quizRange, seedText);
     // 入力をリセット
@@ -178,7 +178,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     }
 
     // 次の問題への進行を記録
-    _ref.watch(statisticsProvider(_quizType).notifier).nextQuiz();
+    await _ref.watch(statisticsProvider(_quizType).notifier).nextQuiz();
 
     // 新しい答えを設定
     await _updateAnswer(
@@ -215,7 +215,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// 問題を終了します。
   Future<void> quitQuiz() async {
     // 失敗を記録
-    _ref.watch(statisticsProvider(_quizType).notifier).finishQuiz();
+    await _ref.watch(statisticsProvider(_quizType).notifier).finishQuiz();
 
     state = AsyncValue.data(
       state.value!.copyWith(
@@ -261,7 +261,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// 正解時の処理を行います。
   Future<void> _successProcess() async {
     // 成功を記録
-    _ref.watch(statisticsProvider(_quizType).notifier).successQuiz();
+    await _ref.watch(statisticsProvider(_quizType).notifier).successQuiz();
 
     state = AsyncValue.data(
       state.value!.copyWith(
@@ -286,7 +286,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// 失敗時の処理を行います。
   Future<void> _failureProcess() async {
     // 終了を記録
-    _ref.watch(statisticsProvider(_quizType).notifier).finishQuiz();
+    await _ref.watch(statisticsProvider(_quizType).notifier).finishQuiz();
 
     state = AsyncValue.data(
       state.value!.copyWith(

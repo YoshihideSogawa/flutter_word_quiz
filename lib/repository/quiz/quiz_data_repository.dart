@@ -24,8 +24,6 @@ class QuizDataRepository extends _$QuizDataRepository {
     final box = await ref.read(hiveBoxProvider(quizType.boxName).future);
     await box.clear();
     ref
-      ..invalidateSelf()
-
       // TODO(sogawa): 一時的にこの処理を行う、全移行したら不要になる
       // キャッシュされているデータを削除
       ..invalidate(quizInfoProvider(quizType))

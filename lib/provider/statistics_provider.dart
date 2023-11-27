@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/repository/quiz_repository.dart';
+import 'package:word_quiz/repository/quiz/statistics_repository.dart';
 
 /// クイズの成績などを扱います。
 final statisticsProvider =
@@ -28,35 +28,40 @@ class StatisticsNotifier extends StateNotifier<QuizStatistics> {
 
   /// 初期化を行います。
   @visibleForTesting
-  void init() {
-    final quizRepository = _ref.read(quizRepositoryProvider(_quizType));
-    final wordInput = quizRepository.loadStatistics() ?? const QuizStatistics();
+  Future<void> init() async {
+    final wordInput =
+        await _ref.read(statisticsRepositoryProvider(_quizType).future) ??
+            const QuizStatistics();
     state = wordInput;
   }
 
   /// クイズ開始の情報を設定します。
-  void startQuiz() {
+  Future<void> startQuiz() async {
     state = state.copyWith(
       playCount: state.playCount + 1,
       currentChain: 0,
     );
 
     // Statisticsの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveStatistics(state);
+    await _ref
+        .read(statisticsRepositoryProvider(_quizType).notifier)
+        .saveStatistics(state);
   }
 
   /// つぎのクイズ開始の情報を設定します。
-  void nextQuiz() {
+  Future<void> nextQuiz() async {
     state = state.copyWith(
       playCount: state.playCount + 1,
     );
 
     // Statisticsの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveStatistics(state);
+    await _ref
+        .read(statisticsRepositoryProvider(_quizType).notifier)
+        .saveStatistics(state);
   }
 
   /// クイズの成功を記録します。
-  void successQuiz() {
+  Future<void> successQuiz() async {
     final nextChain = state.currentChain + 1;
     state = state.copyWith(
       currentChain: nextChain,
@@ -65,17 +70,21 @@ class StatisticsNotifier extends StateNotifier<QuizStatistics> {
     );
 
     // Statisticsの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveStatistics(state);
+    await _ref
+        .read(statisticsRepositoryProvider(_quizType).notifier)
+        .saveStatistics(state);
   }
 
   /// クイズの終了を記録します。(失敗とおわりにするケース)
-  void finishQuiz() {
+  Future<void> finishQuiz() async {
     state = state.copyWith(
       currentChain: 0,
       lastChain: state.currentChain,
     );
 
     // Statisticsの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveStatistics(state);
+    await _ref
+        .read(statisticsRepositoryProvider(_quizType).notifier)
+        .saveStatistics(state);
   }
 }

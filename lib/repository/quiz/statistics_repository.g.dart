@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'quiz_info_repository.dart';
+part of 'statistics_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizInfoRepositoryHash() =>
-    r'e1cf345cf378fc7cb4f2eaa079786ddaf5529baa';
+String _$statisticsRepositoryHash() =>
+    r'1658f11d22bf5ffbcad45808b3e4a6ee08d921e6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,36 +30,44 @@ class _SystemHash {
   }
 }
 
-abstract class _$QuizInfoRepository
-    extends BuildlessAutoDisposeAsyncNotifier<QuizInfo?> {
+abstract class _$StatisticsRepository
+    extends BuildlessAutoDisposeAsyncNotifier<QuizStatistics?> {
   late final QuizTypes quizType;
 
-  FutureOr<QuizInfo?> build(
+  FutureOr<QuizStatistics?> build(
     QuizTypes quizType,
   );
 }
 
-/// See also [QuizInfoRepository].
-@ProviderFor(QuizInfoRepository)
-const quizInfoRepositoryProvider = QuizInfoRepositoryFamily();
+/// 問題の成績などを扱います。
+///
+/// Copied from [StatisticsRepository].
+@ProviderFor(StatisticsRepository)
+const statisticsRepositoryProvider = StatisticsRepositoryFamily();
 
-/// See also [QuizInfoRepository].
-class QuizInfoRepositoryFamily extends Family<AsyncValue<QuizInfo?>> {
-  /// See also [QuizInfoRepository].
-  const QuizInfoRepositoryFamily();
+/// 問題の成績などを扱います。
+///
+/// Copied from [StatisticsRepository].
+class StatisticsRepositoryFamily extends Family<AsyncValue<QuizStatistics?>> {
+  /// 問題の成績などを扱います。
+  ///
+  /// Copied from [StatisticsRepository].
+  const StatisticsRepositoryFamily();
 
-  /// See also [QuizInfoRepository].
-  QuizInfoRepositoryProvider call(
+  /// 問題の成績などを扱います。
+  ///
+  /// Copied from [StatisticsRepository].
+  StatisticsRepositoryProvider call(
     QuizTypes quizType,
   ) {
-    return QuizInfoRepositoryProvider(
+    return StatisticsRepositoryProvider(
       quizType,
     );
   }
 
   @override
-  QuizInfoRepositoryProvider getProviderOverride(
-    covariant QuizInfoRepositoryProvider provider,
+  StatisticsRepositoryProvider getProviderOverride(
+    covariant StatisticsRepositoryProvider provider,
   ) {
     return call(
       provider.quizType,
@@ -78,30 +86,34 @@ class QuizInfoRepositoryFamily extends Family<AsyncValue<QuizInfo?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'quizInfoRepositoryProvider';
+  String? get name => r'statisticsRepositoryProvider';
 }
 
-/// See also [QuizInfoRepository].
-class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    QuizInfoRepository, QuizInfo?> {
-  /// See also [QuizInfoRepository].
-  QuizInfoRepositoryProvider(
+/// 問題の成績などを扱います。
+///
+/// Copied from [StatisticsRepository].
+class StatisticsRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    StatisticsRepository, QuizStatistics?> {
+  /// 問題の成績などを扱います。
+  ///
+  /// Copied from [StatisticsRepository].
+  StatisticsRepositoryProvider(
     QuizTypes quizType,
   ) : this._internal(
-          () => QuizInfoRepository()..quizType = quizType,
-          from: quizInfoRepositoryProvider,
-          name: r'quizInfoRepositoryProvider',
+          () => StatisticsRepository()..quizType = quizType,
+          from: statisticsRepositoryProvider,
+          name: r'statisticsRepositoryProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$quizInfoRepositoryHash,
-          dependencies: QuizInfoRepositoryFamily._dependencies,
+                  : _$statisticsRepositoryHash,
+          dependencies: StatisticsRepositoryFamily._dependencies,
           allTransitiveDependencies:
-              QuizInfoRepositoryFamily._allTransitiveDependencies,
+              StatisticsRepositoryFamily._allTransitiveDependencies,
           quizType: quizType,
         );
 
-  QuizInfoRepositoryProvider._internal(
+  StatisticsRepositoryProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -114,8 +126,8 @@ class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final QuizTypes quizType;
 
   @override
-  FutureOr<QuizInfo?> runNotifierBuild(
-    covariant QuizInfoRepository notifier,
+  FutureOr<QuizStatistics?> runNotifierBuild(
+    covariant StatisticsRepository notifier,
   ) {
     return notifier.build(
       quizType,
@@ -123,10 +135,10 @@ class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(QuizInfoRepository Function() create) {
+  Override overrideWith(StatisticsRepository Function() create) {
     return ProviderOverride(
       origin: this,
-      override: QuizInfoRepositoryProvider._internal(
+      override: StatisticsRepositoryProvider._internal(
         () => create()..quizType = quizType,
         from: from,
         name: null,
@@ -139,14 +151,14 @@ class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<QuizInfoRepository, QuizInfo?>
+  AutoDisposeAsyncNotifierProviderElement<StatisticsRepository, QuizStatistics?>
       createElement() {
-    return _QuizInfoRepositoryProviderElement(this);
+    return _StatisticsRepositoryProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is QuizInfoRepositoryProvider && other.quizType == quizType;
+    return other is StatisticsRepositoryProvider && other.quizType == quizType;
   }
 
   @override
@@ -158,18 +170,19 @@ class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin QuizInfoRepositoryRef on AutoDisposeAsyncNotifierProviderRef<QuizInfo?> {
+mixin StatisticsRepositoryRef
+    on AutoDisposeAsyncNotifierProviderRef<QuizStatistics?> {
   /// The parameter `quizType` of this provider.
   QuizTypes get quizType;
 }
 
-class _QuizInfoRepositoryProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<QuizInfoRepository,
-        QuizInfo?> with QuizInfoRepositoryRef {
-  _QuizInfoRepositoryProviderElement(super.provider);
+class _StatisticsRepositoryProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<StatisticsRepository,
+        QuizStatistics?> with StatisticsRepositoryRef {
+  _StatisticsRepositoryProviderElement(super.provider);
 
   @override
-  QuizTypes get quizType => (origin as QuizInfoRepositoryProvider).quizType;
+  QuizTypes get quizType => (origin as StatisticsRepositoryProvider).quizType;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

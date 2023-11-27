@@ -2,18 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/box_names.dart';
-import 'package:word_quiz/model/monster.dart';
-import 'package:word_quiz/model/quiz_info.dart';
-import 'package:word_quiz/model/quiz_process_type.dart';
-import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
+import 'package:word_quiz/repository/quiz/quiz_data_repository.dart';
+import 'package:word_quiz/repository/quiz/statistics_repository.dart';
 import 'package:word_quiz/repository/quiz_repository.dart';
 
 import '../mock/hive_tester.dart';
+import '../mock/mock_box_data.dart';
 
 void main() {
   setUp(() async {
@@ -59,9 +58,15 @@ void main() {
   });
 
   test('QuizStatistics(save/load)', () async {
-    final container = ProviderContainer();
-    final quizRepository =
-        container.read(quizRepositoryProvider(QuizTypes.endless));
+    const quizType = QuizTypes.endless;
+    final container = ProviderContainer(
+      overrides: [
+        quizOverride(quizType: quizType),
+      ],
+    );
+
+    final statisticsRepositoryNotifier =
+        container.read(statisticsRepositoryProvider(quizType).notifier);
 
     const statistics = QuizStatistics(
       clearCount: 10,
@@ -72,11 +77,11 @@ void main() {
     );
 
     // 保存
-    await quizRepository.saveStatistics(statistics);
+    await statisticsRepositoryNotifier.saveStatistics(statistics);
 
     // 読み込み
-    final targetStatistics = quizRepository.loadStatistics();
-
+    final targetStatistics =
+        await container.read(statisticsRepositoryProvider(quizType).future);
     expect(targetStatistics!.clearCount, statistics.clearCount);
     expect(targetStatistics.currentChain, statistics.currentChain);
     expect(targetStatistics.lastChain, statistics.lastChain);
@@ -85,9 +90,14 @@ void main() {
   });
 
   test('deleteAll', () async {
-    final container = ProviderContainer();
-    final quizRepository =
-        container.read(quizRepositoryProvider(QuizTypes.endless));
+    const quizType = QuizTypes.endless;
+    final container = ProviderContainer(
+      overrides: [
+        quizOverride(quizType: quizType),
+      ],
+    );
+    final statisticsRepositoryNotifier =
+        container.read(statisticsRepositoryProvider(quizType).notifier);
 
     const statistics = QuizStatistics(
       clearCount: 10,
@@ -98,12 +108,16 @@ void main() {
     );
 
     // 保存
-    await quizRepository.saveStatistics(statistics);
+    await statisticsRepositoryNotifier.saveStatistics(statistics);
+
+    // 全削除
+    await container
+        .read(quizDataRepositoryProvider(quizType).notifier)
+        .deleteAll();
 
     // 読み込み
-    final targetStatistics = quizRepository.loadStatistics();
-
-    // TODO(sogawa): 移行中の仮修正
-    // expect(targetStatistics, isNull);
+    final targetStatistics =
+        await container.read(statisticsRepositoryProvider(quizType).future);
+    expect(targetStatistics, isNull);
   });
 }

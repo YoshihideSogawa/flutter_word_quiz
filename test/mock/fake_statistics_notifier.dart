@@ -11,21 +11,21 @@ class FakeStatisticsNotifier extends StateNotifier<QuizStatistics>
   bool finishQuizCalled = false;
 
   @override
-  void init() {}
+  Future<void> init() async {}
 
   @override
-  void finishQuiz() {
+  Future<void> finishQuiz() async {
     finishQuizCalled = true;
   }
 
   @override
-  void nextQuiz() {
+  Future<void> nextQuiz() async {
     nextQuizCalled = true;
   }
 
   @override
-  void startQuiz() {}
+  Future<void> startQuiz() async {}
 
   @override
-  void successQuiz() {}
+  Future<void> successQuiz() async {}
 }
