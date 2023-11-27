@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
+import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/quiz_repository.dart';
 import 'package:word_quiz/ui/quiz/component/enter_button.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('EnterButton', (tester) async {
@@ -31,38 +32,36 @@ void main() {
   });
 
   testWidgets('EnterButtonのタップ(入力なし)', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
     );
 
-    final mockWordInputNotifier = MockWordInputNotifier();
-    when(mockWordInputNotifier.submit())
-        .thenAnswer((_) async => SubmitResult.noInput);
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
+    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+      AsyncValue.data(quizInfo),
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
+          quizOverride(quizType: quizType, quizInfo: quizInfo),
+          quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizRepositoryProvider(QuizTypes.daily)
-              .overrideWithValue(MockQuizRepository()),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: Scaffold(
             body: QuizType(
-              quizType: QuizTypes.daily,
+              quizType: quizType,
               child: EnterButton(),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('enter_button_ink_well')));
     await tester.pumpAndSettle();
@@ -71,12 +70,15 @@ void main() {
   });
 
   testWidgets('EnterButtonのタップ(不明なモンスター)', (tester) async {
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
+    );
+
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+      AsyncValue.data(quizInfo),
     );
 
     final mockWordInputNotifier = MockWordInputNotifier();
@@ -86,23 +88,27 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+          ),
+          quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizRepositoryProvider(QuizTypes.daily)
-              .overrideWithValue(MockQuizRepository()),
-          wordInputNotifierProvider(QuizTypes.daily)
+          wordInputNotifierProvider(quizType)
               .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: Scaffold(
             body: QuizType(
-              quizType: QuizTypes.daily,
+              quizType: quizType,
               child: EnterButton(),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('enter_button_ink_well')));
     await tester.pumpAndSettle();
@@ -115,12 +121,15 @@ void main() {
   });
 
   testWidgets('EnterButtonのタップ(成功)', (tester) async {
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
+    );
+
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+      AsyncValue.data(quizInfo),
     );
 
     final mockWordInputNotifier = MockWordInputNotifier();
@@ -130,16 +139,15 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizRepositoryProvider(QuizTypes.daily)
-              .overrideWithValue(MockQuizRepository()),
-          wordInputNotifierProvider(QuizTypes.daily)
+          quizOverride(quizType: quizType, quizInfo: quizInfo),
+          wordInputNotifierProvider(quizType)
               .overrideWith((ref) => mockWordInputNotifier),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: EnterButton(),
             ),
@@ -147,6 +155,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('enter_button_ink_well')));
     await tester.pumpAndSettle();

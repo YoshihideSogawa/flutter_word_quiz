@@ -3,14 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/retire_button.dart';
 
-import '../../../mock/fake_word_input_notifier.dart';
 import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('RetireButton', (tester) async {
@@ -37,13 +35,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(
-              const WordInput(
-
-              ),
-            ),
-          ),
+          quizOverride(quizType: quizType),
           quizInfoProvider(quizType)
               .overrideWith((ref) => mockQuizInfoNotifier),
         ],

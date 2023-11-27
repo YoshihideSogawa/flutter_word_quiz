@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/parental_gate_list.dart';
 import 'package:word_quiz/model/parental_gate_page_info.dart';
 import 'package:word_quiz/model/quiz_info.dart';
@@ -9,18 +8,10 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
-import 'package:word_quiz/repository/settings/settings_keys.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 import '../../mock/fake_parental_gate_page_notifier.dart';
-import '../../mock/fake_quiz_info_notifier.dart';
-import '../../mock/fake_word_input_notifier.dart';
 import '../../mock/mock_box_data.dart';
-import '../../mock/mock_hive_box.dart';
 
 void main() {
   testWidgets('表示の確認', (tester) async {
@@ -64,11 +55,6 @@ void main() {
       parentalGatePageInfo: parentalGatePageInfo,
     );
 
-    // Splash
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -76,17 +62,18 @@ void main() {
             parentalControl: false,
             alreadyLaunched: true,
           ),
+          quizOverride(
+            quizType: QuizTypes.daily,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
+          quizOverride(
+            quizType: QuizTypes.endless,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
-          // 以下Splash
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeWordInputNotifier),
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -153,18 +140,6 @@ void main() {
   });
 
   testWidgets('正解のタップ(全問正解)', (tester) async {
-    final appPropertyBox = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-        alreadyLaunchedKey: true,
-      },
-    );
-    final settingsBox = MockHiveBox<dynamic>(
-      initData: {
-        inputTypeKey: InputTypes.switching.typeId,
-      },
-    );
-
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 1,
       parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
@@ -174,27 +149,27 @@ void main() {
       parentalGatePageInfo: parentalGatePageInfo,
     );
 
-    // Splash
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName)
-              .overrideWith((ref) => appPropertyBox),
+          appPropertyOverride(
+            parentalControl: false,
+            alreadyLaunched: true,
+          ),
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
-          // 以下Splash
-          hiveBoxProvider(settingsBoxName).overrideWith((ref) => settingsBox),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeWordInputNotifier),
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeWordInputNotifier),
+          settingsOverride(
+            inputType: InputTypes.switching,
+          ),
+          quizOverride(
+            quizType: QuizTypes.daily,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
+          quizOverride(
+            quizType: QuizTypes.endless,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
         ],
         child: MaterialApp(
           home: Scaffold(

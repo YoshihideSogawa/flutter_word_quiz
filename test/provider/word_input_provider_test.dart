@@ -1,31 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
-import 'package:word_quiz/repository/quiz_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
-import '../mock/fake_quiz_info_notifier.dart';
-import '../mock/generate_mocks.mocks.dart';
+import '../mock/mock_box_data.dart';
 import '../mock/monster_test_list.dart';
 
 void main() {
   test('初期値が保存されていない場合', () {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(null);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType),
       ],
     );
 
@@ -37,51 +31,52 @@ void main() {
     expect(wordInput.isWordChecking, isFalse);
   });
 
-  test('初期値が保存されている場合', () {
+  test('初期値が保存されている場合', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest);
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest),
       ],
     );
 
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput, _wordInputTest);
   });
 
-  test('inputWord(文字入力チェック中)', () {
+  test('inputWord(文字入力チェック中)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest);
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).inputWord('ア');
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .inputWord('ア');
     final wordInput = container.read(wordInputNotifierProvider(quizType));
 
     // 変わらない
     expect(wordInput, _wordInputTest);
   });
 
-  test('inputWord(複数文字入力)', () {
+  test('inputWord(複数文字入力)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest),
       ],
     );
 
-    container
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .inputWord('アイ');
     final wordInput = container.read(wordInputNotifierProvider(quizType));
@@ -90,124 +85,122 @@ void main() {
     expect(wordInput, _wordInputTest);
   });
 
-  test('inputWord(すでに5文字入力)', () {
+  test('inputWord(すでに5文字入力)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest2);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest2),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).inputWord('ア');
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .inputWord('ア');
     final wordInput = container.read(wordInputNotifierProvider(quizType));
 
     // 変わらない
     expect(wordInput, _wordInputTest2);
   });
 
-  test('inputWord(入力可能状態)', () {
+  test('inputWord(入力可能状態)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest3);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest3),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).inputWord('ア');
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .inputWord('ア');
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput.wordsList.last, ['テ', 'ス', 'ア']);
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
     expect(wordInput.inputIndex, _wordInputTest3.inputIndex);
     expect(wordInput.isWordChecking, _wordInputTest3.isWordChecking);
-
-    // データ保存のチェック
-    verify(mockQuizRepository.saveWordInput(any)).called(1);
   });
 
-  test('deleteWord(isWordChecking)', () {
+  test('deleteWord(isWordChecking)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).deleteWord();
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .deleteWord();
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput, _wordInputTest);
   });
 
-  test('deleteWord(文字入力なし)', () {
+  test('deleteWord(文字入力なし)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest4);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest4),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).deleteWord();
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .deleteWord();
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput, _wordInputTest4);
   });
 
-  test('deleteWord(文字入力なし)', () {
+  test('deleteWord(文字入力なし)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest3);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(quizType: quizType, wordInput: _wordInputTest3),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).deleteWord();
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .deleteWord();
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput.wordsList.last, ['テ']);
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
     expect(wordInput.inputIndex, _wordInputTest3.inputIndex);
     expect(wordInput.isWordChecking, _wordInputTest3.isWordChecking);
-
-    // データ保存のチェック
-    verify(mockQuizRepository.saveWordInput(any)).called(1);
   });
 
   test('submit(isWordChecking)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest);
-    final fakeQuizInfoProvider = FakeQuizInfoNotifier(
-      AsyncValue.data(
-        QuizInfo(
-          answer: monsterTestList[0],
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizProcess: QuizProcessType.started,
     );
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType)..overrideWith((ref) => fakeQuizInfoProvider),
+        quizOverride(
+          quizType: quizType,
+          wordInput: _wordInputTest,
+          quizInfo: quizInfo,
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
@@ -219,26 +212,26 @@ void main() {
 
   test('submit(終了している)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest5);
-    final fakeQuizInfoProvider = FakeQuizInfoNotifier(
-      AsyncValue.data(
-        QuizInfo(
-          answer: monsterTestList[0],
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizProcess: QuizProcessType.failure,
+      playDate: generateDate(),
     );
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
+        quizOverride(
+          quizType: quizType,
+          wordInput: _wordInputTest5,
+          quizInfo: quizInfo,
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
@@ -250,26 +243,26 @@ void main() {
 
   test('submit(入力なし)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest4);
-    final fakeQuizInfoProvider = FakeQuizInfoNotifier(
-      AsyncValue.data(
-        QuizInfo(
-          answer: monsterTestList[0],
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
     );
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
+        quizOverride(
+          quizType: quizType,
+          quizInfo: quizInfo,
+          wordInput: _wordInputTest4,
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
@@ -282,26 +275,26 @@ void main() {
 
   test('submit(存在しない)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest3);
-    final fakeQuizInfoProvider = FakeQuizInfoNotifier(
-      AsyncValue.data(
-        QuizInfo(
-          answer: monsterTestList[0],
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
     );
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
+        quizOverride(
+          quizType: quizType,
+          quizInfo: quizInfo,
+          wordInput: _wordInputTest3,
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
@@ -314,26 +307,26 @@ void main() {
 
   test('submit(成功)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest5);
-    final fakeQuizInfoProvider = FakeQuizInfoNotifier(
-      AsyncValue.data(
-        QuizInfo(
-          answer: monsterTestList[0],
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
     );
 
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
-        quizInfoProvider(quizType).overrideWith((ref) => fakeQuizInfoProvider),
+        quizOverride(
+          quizType: quizType,
+          quizInfo: quizInfo,
+          wordInput: _wordInputTest5,
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
       ],
     );
 
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
@@ -349,16 +342,18 @@ void main() {
 
   test('reset()', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizRepository = MockQuizRepository();
-    when(mockQuizRepository.loadWordInput()).thenReturn(_wordInputTest5);
-
     final container = ProviderContainer(
       overrides: [
-        quizRepositoryProvider(quizType).overrideWithValue(mockQuizRepository),
+        quizOverride(
+          quizType: quizType,
+          wordInput: _wordInputTest5,
+        ),
       ],
     );
 
-    container.read(wordInputNotifierProvider(quizType).notifier).reset();
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    await container.read(wordInputNotifierProvider(quizType).notifier).reset();
 
     final wordInput = container.read(wordInputNotifierProvider(quizType));
     expect(wordInput.wordsList, <List<String?>>[[]]);
@@ -366,8 +361,6 @@ void main() {
     expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
     expect(wordInput.inputIndex, 0);
     expect(wordInput.isWordChecking, isFalse);
-
-    verify(mockQuizRepository.saveWordInput(any)).called(1);
   });
 }
 

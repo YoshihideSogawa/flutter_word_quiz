@@ -15,9 +15,8 @@ import 'package:word_quiz/model/quiz_statistics.dart' as _i4;
 import 'package:word_quiz/model/word_input.dart' as _i5;
 import 'package:word_quiz/provider/quiz_info_provider.dart' as _i6;
 import 'package:word_quiz/provider/quiz_page_provider.dart' as _i11;
-import 'package:word_quiz/provider/statistics_provider.dart' as _i13;
-import 'package:word_quiz/provider/word_input_provider.dart' as _i14;
-import 'package:word_quiz/repository/quiz_repository.dart' as _i12;
+import 'package:word_quiz/provider/statistics_provider.dart' as _i12;
+import 'package:word_quiz/provider/word_input_provider.dart' as _i13;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -462,31 +461,11 @@ class MockQuizPageNotifier extends _i1.Mock implements _i11.QuizPageNotifier {
       );
 }
 
-/// A class which mocks [QuizRepository].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockQuizRepository extends _i1.Mock implements _i12.QuizRepository {
-  MockQuizRepository() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i7.Future<void> saveWordInput(_i5.WordInput? wordInput) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #saveWordInput,
-          [wordInput],
-        ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
-}
-
 /// A class which mocks [StatisticsNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStatisticsNotifier extends _i1.Mock
-    implements _i13.StatisticsNotifier {
+    implements _i12.StatisticsNotifier {
   MockStatisticsNotifier() {
     _i1.throwOnMissingStub(this);
   }
@@ -638,7 +617,7 @@ class MockStatisticsNotifier extends _i1.Mock
 /// A class which mocks [WordInputNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWordInputNotifier extends _i1.Mock implements _i14.WordInputNotifier {
+class MockWordInputNotifier extends _i1.Mock implements _i13.WordInputNotifier {
   MockWordInputNotifier() {
     _i1.throwOnMissingStub(this);
   }
@@ -698,41 +677,54 @@ class MockWordInputNotifier extends _i1.Mock implements _i14.WordInputNotifier {
       ) as bool);
 
   @override
-  void inputWord(String? text) => super.noSuchMethod(
+  _i7.Future<void> init() => (super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> inputWord(String? text) => (super.noSuchMethod(
         Invocation.method(
           #inputWord,
           [text],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  void deleteWord() => super.noSuchMethod(
+  _i7.Future<void> deleteWord() => (super.noSuchMethod(
         Invocation.method(
           #deleteWord,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  _i7.Future<_i14.SubmitResult> submit() => (super.noSuchMethod(
+  _i7.Future<_i13.SubmitResult> submit() => (super.noSuchMethod(
         Invocation.method(
           #submit,
           [],
         ),
         returnValue:
-            _i7.Future<_i14.SubmitResult>.value(_i14.SubmitResult.success),
-      ) as _i7.Future<_i14.SubmitResult>);
+            _i7.Future<_i13.SubmitResult>.value(_i13.SubmitResult.success),
+      ) as _i7.Future<_i13.SubmitResult>);
 
   @override
-  void reset() => super.noSuchMethod(
+  _i7.Future<void> reset() => (super.noSuchMethod(
         Invocation.method(
           #reset,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
   bool updateShouldNotify(

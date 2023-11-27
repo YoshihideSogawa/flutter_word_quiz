@@ -7,14 +7,12 @@ import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
 import 'package:word_quiz/ui/quiz/component/keyboard_map.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/word_keyboard.dart';
 
 import '../../../mock/fake_quiz_page_notifier.dart';
-import '../../../mock/fake_word_input_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -23,18 +21,14 @@ void main() {
     final fakeQuizPageNotifier = FakeQuizPageNotifier(
       const QuizPageInfo(),
     );
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(),
-    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.switching),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -58,18 +52,14 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(),
-    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.switching),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -94,22 +84,19 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        keyResultList: <String, WordKeyboardInfo>{
-          'ア': WordKeyboardInfo.notMatch,
-        },
-      ),
+    const wordInput = WordInput(
+      keyResultList: <String, WordKeyboardInfo>{
+        'ア': WordKeyboardInfo.notMatch,
+      },
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.all),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

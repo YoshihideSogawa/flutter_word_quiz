@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/logic/keyboard_checker.dart';
 import 'package:word_quiz/logic/word_checker.dart';
@@ -7,7 +8,7 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
-import 'package:word_quiz/repository/quiz_repository.dart';
+import 'package:word_quiz/repository/quiz/word_input_repository.dart';
 
 /// 文字入力のProvider
 final wordInputNotifierProvider =
@@ -25,7 +26,7 @@ class WordInputNotifier extends StateNotifier<WordInput> {
             wordsList: [[]],
           ),
         ) {
-    _init();
+    init();
   }
 
   /// [Ref]
@@ -35,18 +36,19 @@ class WordInputNotifier extends StateNotifier<WordInput> {
   final QuizTypes _quizType;
 
   /// 初期化を行います。
-  void _init() {
-    final quizRepository = _ref.read(quizRepositoryProvider(_quizType));
-    final wordInput = quizRepository.loadWordInput() ??
+  @visibleForTesting
+  Future<void> init() async {
+    final wordInput =
+        await _ref.read(wordInputRepositoryProvider(_quizType).future);
+
+    state = wordInput ??
         const WordInput(
           wordsList: [[]],
         );
-
-    state = wordInput;
   }
 
   /// 1文字入力します。
-  void inputWord(String text) {
+  Future<void> inputWord(String text) async {
     if (state.isWordChecking) {
       return;
     }
@@ -71,11 +73,13 @@ class WordInputNotifier extends StateNotifier<WordInput> {
     );
 
     // WorInputの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveWordInput(state);
+    await _ref
+        .read(wordInputRepositoryProvider(_quizType).notifier)
+        .saveWordInput(state);
   }
 
   /// 1文字削除します。
-  void deleteWord() {
+  Future<void> deleteWord() async {
     if (state.isWordChecking) {
       return;
     }
@@ -93,7 +97,9 @@ class WordInputNotifier extends StateNotifier<WordInput> {
     );
 
     // WorInputの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveWordInput(state);
+    await _ref
+        .read(wordInputRepositoryProvider(_quizType).notifier)
+        .saveWordInput(state);
   }
 
   /// 確定を行います。
@@ -159,7 +165,7 @@ class WordInputNotifier extends StateNotifier<WordInput> {
       keyResultList: checkKeyboard(state.wordsList, nextWordsResultList),
     );
     await _ref
-        .watch(quizRepositoryProvider(_quizType))
+        .read(wordInputRepositoryProvider(_quizType).notifier)
         .saveWordInput(nextState);
 
     // アニメーション用に徐々に更新する
@@ -179,12 +185,14 @@ class WordInputNotifier extends StateNotifier<WordInput> {
   }
 
   /// 入力のリセットを行います。
-  void reset() {
+  Future<void> reset() async {
     state = const WordInput(
       wordsList: [[]],
     );
     // WorInputの保存
-    _ref.watch(quizRepositoryProvider(_quizType)).saveWordInput(state);
+    await _ref
+        .read(wordInputRepositoryProvider(_quizType).notifier)
+        .saveWordInput(state);
   }
 }
 

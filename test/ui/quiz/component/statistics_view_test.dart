@@ -12,7 +12,6 @@ import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -21,7 +20,6 @@ import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
-import '../../../mock/fake_word_input_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 import '../../../mock/mock_hive_box.dart';
 
@@ -56,14 +54,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType),
           hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -116,14 +112,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType),
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType).overrideWith(
             (ref) => FakeStatisticsNotifier(
               const QuizStatistics(
@@ -190,14 +184,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType),
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -243,13 +235,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -292,13 +282,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -340,13 +328,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -390,13 +376,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -439,13 +423,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWith(
-            (ref) => FakeWordInputNotifier(const WordInput()),
-          ),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],

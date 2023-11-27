@@ -4,37 +4,33 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/name_text.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/word_names.dart';
 
-import '../../../mock/fake_word_input_notifier.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('WordNames', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
+          quizOverride(quizType: quizType, wordInput: wordInput),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -46,6 +42,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.byType(NameText), findsNWidgets(50));
     expect(find.text('フ'), findsOneWidget);

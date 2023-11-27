@@ -60,7 +60,7 @@ class InputKey extends ConsumerWidget {
               return;
             }
 
-            ref
+            await ref
                 .read(wordInputNotifierProvider(quizType).notifier)
                 .inputWord(text);
           },

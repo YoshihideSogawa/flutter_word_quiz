@@ -79,8 +79,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
             quizInfo = await _refreshDailyQuiz(quizInfo);
           }
         case QuizTypes.endless:
-          // 特に何もしない
-          break;
+        // 特に何もしない
       }
     }
 
@@ -140,7 +139,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
       playDate: today,
     );
     // 入力のリセット・クイズの開始・最新データに保存
-    _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
+    await _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
     // 解答に成功していたら連鎖を維持
     if (quizInfo.quizProcess == QuizProcessType.success) {
       await _ref.watch(statisticsProvider(_quizType).notifier).nextQuiz();
@@ -168,7 +167,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     // 新しい答えを設定
     await _updateAnswer(quizRange, seedText);
     // 入力をリセット
-    _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
+    await _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
   }
 
   /// つぎのクイズを開始します。(いっぱいやるモードのみ使用)
@@ -187,7 +186,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // 入力をリセット
-    _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
+    await _ref.watch(wordInputNotifierProvider(_quizType).notifier).reset();
   }
 
   /// 答えを設定します。(いっぱいやるモードのみ使用)

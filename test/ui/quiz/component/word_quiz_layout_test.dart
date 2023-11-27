@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
@@ -14,9 +13,6 @@ import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/delete_button.dart';
@@ -39,9 +35,7 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/fake_statistics_notifier.dart';
-import '../../../mock/fake_word_input_notifier.dart';
 import '../../../mock/mock_box_data.dart';
-import '../../../mock/mock_hive_box.dart';
 
 void main() {
   testWidgets('切り替えモード/Daily/started', (tester) async {
@@ -60,32 +54,29 @@ void main() {
       ),
     );
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -128,32 +119,29 @@ void main() {
       ),
     );
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.all),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -196,32 +184,29 @@ void main() {
       ),
     );
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -264,32 +249,29 @@ void main() {
       ),
     );
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -331,32 +313,29 @@ void main() {
       ),
     );
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -402,32 +381,29 @@ void main() {
     final fakeStatisticsNotifier =
         FakeStatisticsNotifier(const QuizStatistics());
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -475,32 +451,29 @@ void main() {
     final fakeStatisticsNotifier =
         FakeStatisticsNotifier(const QuizStatistics());
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -548,32 +521,29 @@ void main() {
     final fakeStatisticsNotifier =
         FakeStatisticsNotifier(const QuizStatistics());
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -621,32 +591,29 @@ void main() {
     final fakeStatisticsNotifier =
         FakeStatisticsNotifier(const QuizStatistics());
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],
@@ -699,32 +666,25 @@ void main() {
     final fakeStatisticsNotifier =
         FakeStatisticsNotifier(const QuizStatistics());
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
-    );
-
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          hiveBoxProvider(appPropertyBoxName).overrideWith((provider) => box),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType, wordInput: wordInput),
           settingsOverride(
             inputType: InputTypes.switching,
             quizRange: diamondPearl,
@@ -733,8 +693,6 @@ void main() {
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => fakeWordInputNotifier),
           statisticsProvider(quizType)
               .overrideWith((ref) => fakeStatisticsNotifier),
         ],

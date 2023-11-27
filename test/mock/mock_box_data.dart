@@ -7,6 +7,7 @@ import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
+import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/repository/quiz/quiz_keys.dart';
@@ -65,22 +66,26 @@ Override quizOverride({
   required QuizTypes quizType,
   QuizStatistics? statistics,
   QuizInfo? quizInfo,
+  WordInput? wordInput,
 }) =>
     quizOverrideAndBox(
       quizType: quizType,
       statistics: statistics,
       quizInfo: quizInfo,
+      wordInput: wordInput,
     ).override;
 
 OverrideAndBox quizOverrideAndBox({
   required QuizTypes quizType,
   QuizStatistics? statistics,
   QuizInfo? quizInfo,
+  WordInput? wordInput,
 }) {
   final box = MockHiveBox<dynamic>(
     initData: {
       if (statistics != null) statisticsKey: jsonEncode(statistics),
       if (quizInfo != null) quizInfoKey: jsonEncode(quizInfo),
+      if (wordInput != null) wordInputKey: jsonEncode(wordInput),
     },
   );
   final override = hiveBoxProvider(quizType.boxName).overrideWith((ref) => box);

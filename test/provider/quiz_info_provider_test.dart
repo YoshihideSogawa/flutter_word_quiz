@@ -18,7 +18,6 @@ import 'package:word_quiz/repository/monster_list_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
 import '../mock/fake_statistics_notifier.dart';
-import '../mock/fake_word_input_notifier.dart';
 import '../mock/generate_mocks.mocks.dart';
 import '../mock/mock_box_data.dart';
 
@@ -109,7 +108,7 @@ void main() {
 
   test('保存データあり(daily/日付変化あり)', () async {
     const quizType = QuizTypes.daily;
-    final initQuizInfo = _quizInfoTest(quizType);
+    final initQuizInfo = _quizInfoTest2(quizType);
 
     final container = ProviderContainer(
       overrides: [
@@ -441,41 +440,36 @@ void main() {
 
   test('updateQuiz(success/daily)', () async {
     const quizType = QuizTypes.daily;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
-    // 正答状態を作る
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        inputIndex: 1,
-        wordsResultList: [
-          [
-            WordNameState.match,
-            WordNameState.match,
-            WordNameState.match,
-            WordNameState.match,
-            WordNameState.match,
-          ],
+    const wordInput = WordInput(
+      inputIndex: 1,
+      wordsResultList: [
+        [
+          WordNameState.match,
+          WordNameState.match,
+          WordNameState.match,
+          WordNameState.match,
+          WordNameState.match,
         ],
-      ),
+      ],
     );
+
     final container = ProviderContainer(
       overrides: [
-        quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
+        quizOverride(
+          quizType: quizType,
+          quizInfo: _quizInfoTest(quizType),
+          wordInput: wordInput,
+          statistics: const QuizStatistics(),
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => fakeWordInputNotifier),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
     // ignore: invalid_use_of_visible_for_testing_member
     await container.read(quizInfoProvider(quizType).notifier).init();
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(quizInfoProvider(quizType).notifier).updateQuiz();
 
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;
@@ -484,40 +478,35 @@ void main() {
 
   test('updateQuiz(success/endless)', () async {
     const quizType = QuizTypes.endless;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
-    // 正答状態を作る
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        inputIndex: 1,
-        wordsResultList: [
-          [
-            WordNameState.match,
-            WordNameState.match,
-            WordNameState.match,
-            WordNameState.match,
-            WordNameState.match,
-          ],
+    const wordInput = WordInput(
+      inputIndex: 1,
+      wordsResultList: [
+        [
+          WordNameState.match,
+          WordNameState.match,
+          WordNameState.match,
+          WordNameState.match,
+          WordNameState.match,
         ],
-      ),
+      ],
     );
+
     final container = ProviderContainer(
       overrides: [
-        quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
+        quizOverride(
+          quizType: quizType,
+          quizInfo: _quizInfoTest(quizType),
+          wordInput: wordInput,
+          statistics: const QuizStatistics(),
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => fakeWordInputNotifier),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
     await container.read(quizInfoProvider(quizType).notifier).init();
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(quizInfoProvider(quizType).notifier).updateQuiz();
 
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;
@@ -526,8 +515,6 @@ void main() {
 
   test('updateQuiz(回答数オーバー)', () async {
     const quizType = QuizTypes.daily;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
     final resultList = <List<WordNameState>?>[];
@@ -539,22 +526,21 @@ void main() {
     }
 
     // 失敗状態を作る（回答数オーバー）
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      WordInput(
-        inputIndex: 10,
-        wordsResultList: resultList,
-      ),
+    final wordInput = WordInput(
+      inputIndex: 10,
+      wordsResultList: resultList,
     );
 
     final container = ProviderContainer(
       overrides: [
-        quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
+        quizOverride(
+          quizType: quizType,
+          quizInfo: _quizInfoTest(quizType),
+          wordInput: wordInput,
+          statistics: const QuizStatistics(),
+        ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => fakeWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
@@ -562,6 +548,7 @@ void main() {
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
     // ignore: invalid_use_of_visible_for_testing_member
     await container.read(quizInfoProvider(quizType).notifier).init();
+    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(quizInfoProvider(quizType).notifier).updateQuiz();
 
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;
