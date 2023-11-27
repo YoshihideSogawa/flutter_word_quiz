@@ -480,17 +480,6 @@ class MockQuizRepository extends _i1.Mock implements _i12.QuizRepository {
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
-
-  @override
-  _i7.Future<void> saveStatistics(_i4.QuizStatistics? statistics) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #saveStatistics,
-          [statistics],
-        ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
 }
 
 /// A class which mocks [StatisticsNotifier].
@@ -557,49 +546,54 @@ class MockStatisticsNotifier extends _i1.Mock
       ) as bool);
 
   @override
-  void init() => super.noSuchMethod(
+  _i7.Future<void> init() => (super.noSuchMethod(
         Invocation.method(
           #init,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  void startQuiz() => super.noSuchMethod(
+  _i7.Future<void> startQuiz() => (super.noSuchMethod(
         Invocation.method(
           #startQuiz,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  void nextQuiz() => super.noSuchMethod(
+  _i7.Future<void> nextQuiz() => (super.noSuchMethod(
         Invocation.method(
           #nextQuiz,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  void successQuiz() => super.noSuchMethod(
+  _i7.Future<void> successQuiz() => (super.noSuchMethod(
         Invocation.method(
           #successQuiz,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
-  void finishQuiz() => super.noSuchMethod(
+  _i7.Future<void> finishQuiz() => (super.noSuchMethod(
         Invocation.method(
           #finishQuiz,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
   bool updateShouldNotify(

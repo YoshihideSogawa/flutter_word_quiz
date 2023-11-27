@@ -7,7 +7,7 @@ part of 'statistics_repository.dart';
 // **************************************************************************
 
 String _$statisticsRepositoryHash() =>
-    r'1658f11d22bf5ffbcad45808b3e4a6ee08d921e6';
+    r'ffd4ee4fef578701623f32bee1f1f6bac8ea5aea';
 
 /// Copied from Dart SDK
 class _SystemHash {
