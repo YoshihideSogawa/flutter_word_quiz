@@ -19,7 +19,7 @@ class QuizChangedView extends ConsumerWidget {
       },
       child: IntrinsicHeight(
         child: Container(
-          width: 300,
+          width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
             borderRadius: BorderRadius.circular(4),

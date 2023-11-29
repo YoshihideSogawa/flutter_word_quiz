@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -11,57 +10,45 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/repository/app_property/app_property_keys.dart';
-import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/fake_quiz_page_notifier.dart';
-import '../../../mock/fake_statistics_notifier.dart';
 import '../../../mock/mock_box_data.dart';
-import '../../../mock/mock_hive_box.dart';
 
 void main() {
   testWidgets('StatisticsView(Daily)', (tester) async {
     const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+    );
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+      const AsyncValue.data(quizInfo),
+    );
+
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
-    );
-
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType),
-          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            statistics: quizStatistics,
+          ),
+          appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -73,6 +60,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('きょうの もんだい'), findsOneWidget);
     expect(find.text('ちょうせんちゅう'), findsOneWidget);
@@ -107,27 +96,24 @@ void main() {
       ),
     );
 
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
+    );
+
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType).overrideWith(
-            (ref) => FakeStatisticsNotifier(
-              const QuizStatistics(
-                playCount: 5,
-                clearCount: 4,
-                currentChain: 2,
-                maxChain: 3,
-              ),
-            ),
-          ),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -139,6 +125,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('いっぱいやる モード'), findsOneWidget);
     expect(find.text('さいごにあそんだ あいことば'), findsOneWidget);
@@ -172,26 +160,22 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -222,26 +206,22 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -269,26 +249,22 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -315,26 +291,22 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -363,26 +335,22 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -410,26 +378,22 @@ void main() {
 
     final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
           quizPageProvider(quizType)
               .overrideWith((ref) => fakeQuizPageNotifier),
-          statisticsProvider(quizType)
-              .overrideWith((ref) => fakeStatisticsNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(

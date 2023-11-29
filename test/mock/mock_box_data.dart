@@ -92,4 +92,24 @@ OverrideAndBox quizOverrideAndBox({
   return (override: override, box: box);
 }
 
+QuizStatistics? parseQuizStatistics(MockHiveBox<dynamic> box) {
+  if (!box.data.containsKey(statisticsKey)) {
+    return null;
+  }
+
+  return QuizStatistics.fromJson(
+    jsonDecode(box.data[statisticsKey] as String) as Map<String, dynamic>,
+  );
+}
+
+QuizInfo? parseQuizInfo(MockHiveBox<dynamic> box) {
+  if (!box.data.containsKey(quizInfoKey)) {
+    return null;
+  }
+
+  return QuizInfo.fromJson(
+    jsonDecode(box.data[quizInfoKey] as String) as Map<String, dynamic>,
+  );
+}
+
 typedef OverrideAndBox = ({Override override, MockHiveBox<dynamic> box});

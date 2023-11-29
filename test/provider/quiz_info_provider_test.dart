@@ -12,12 +12,10 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
-import '../mock/fake_statistics_notifier.dart';
 import '../mock/generate_mocks.mocks.dart';
 import '../mock/mock_box_data.dart';
 
@@ -29,8 +27,6 @@ void main() {
         quizOverride(quizType: quizType),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => MockStatisticsNotifier()),
       ],
     );
 
@@ -55,8 +51,6 @@ void main() {
         quizOverride(quizType: quizType),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => MockStatisticsNotifier()),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
@@ -88,8 +82,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: initQuizInfo),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => MockStatisticsNotifier()),
       ],
     );
 
@@ -115,8 +107,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: initQuizInfo),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => MockStatisticsNotifier()),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => MockWordInputNotifier()),
       ],
@@ -146,8 +136,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: initQuizInfo),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => MockStatisticsNotifier()),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => MockWordInputNotifier()),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
@@ -174,8 +162,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: initQuizInfo),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => MockStatisticsNotifier()),
       ],
     );
 
@@ -195,15 +181,16 @@ void main() {
   test('refreshDailyQuiz(QuizProcess.started)', () async {
     const quizType = QuizTypes.daily;
     final quizInfoTest = _quizInfoTest2(quizType);
-    final mockStatisticsNotifier = MockStatisticsNotifier();
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: _quizInfoTest(quizType),
+    );
 
     final container = ProviderContainer(
       overrides: [
-        quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
+        quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => mockStatisticsNotifier),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => MockWordInputNotifier()),
       ],
@@ -227,21 +214,22 @@ void main() {
     expect(quizInfo.seedText, quizInfoTest.seedText);
 
     // 連鎖数の変動に関連する処理
-    verify(mockStatisticsNotifier.startQuiz()).called(1);
-    verifyNever(mockStatisticsNotifier.nextQuiz());
+    final quizStatistics = parseQuizStatistics(quizOverrideBox.box);
+    expect(quizStatistics?.playCount, 1);
   });
 
   test('refreshDailyQuiz(QuizProcess.success)', () async {
     const quizType = QuizTypes.daily;
-    final mockStatisticsNotifier = MockStatisticsNotifier();
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: _quizInfoTest(quizType),
+    );
 
     final container = ProviderContainer(
       overrides: [
-        quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
+        quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => mockStatisticsNotifier),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => MockWordInputNotifier()),
       ],
@@ -265,8 +253,8 @@ void main() {
     expect(quizInfo.seedText, quizInfoTest.seedText);
 
     // 連鎖数の変動に関連する処理
-    verifyNever(mockStatisticsNotifier.startQuiz());
-    verify(mockStatisticsNotifier.nextQuiz()).called(1);
+    final quizStatistics = parseQuizStatistics(quizOverrideBox.box);
+    expect(quizStatistics?.playCount, 1);
   });
 
   test('startQuiz()', () async {
@@ -280,9 +268,6 @@ void main() {
         ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType).overrideWith(
-          (ref) => FakeStatisticsNotifier(const QuizStatistics()),
-        ),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => mockWordInputNotifier),
       ],
@@ -306,20 +291,16 @@ void main() {
 
   test('nextQuiz()', () async {
     const quizType = QuizTypes.endless;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-
     final mockWordInputNotifier = MockWordInputNotifier();
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: _quizInfoTest(quizType),
+    );
     final container = ProviderContainer(
       overrides: [
-        quizOverride(
-          quizType: quizType,
-          quizInfo: _quizInfoTest(quizType),
-        ),
+        quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => mockWordInputNotifier),
       ],
@@ -336,27 +317,25 @@ void main() {
     expect(quizInfo.seedText, 'ヒトカゲ');
     expect(quizInfo.quizProcess, QuizProcessType.started);
 
-    expect(fakeStatisticsNotifier.nextQuizCalled, isTrue);
+    final quizStatistics = parseQuizStatistics(quizOverrideBox.box);
+    expect(quizStatistics?.playCount, 1);
     verify(mockWordInputNotifier.reset()).called(1);
   });
 
   test('quitQuiz()', () async {
     const quizType = QuizTypes.endless;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
     final mockWordInputNotifier = MockWordInputNotifier();
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: _quizInfoTest(quizType),
+    );
     final container = ProviderContainer(
       overrides: [
-        quizOverride(
-          quizType: quizType,
-          quizInfo: _quizInfoTest(quizType),
-        ),
+        quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => mockWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
@@ -371,16 +350,13 @@ void main() {
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;
     expect(quizInfo.quizProcess, QuizProcessType.quit);
 
-    expect(fakeStatisticsNotifier.finishQuizCalled, isTrue);
-    // TODO(sogawa): あとで直す
-    // verify(mockQuizRepository.saveQuizInfo(any)).called(1);
+    final quizInfoData = parseQuizInfo(quizOverrideBox.box);
+    expect(quizInfoData?.quizProcess, QuizProcessType.quit);
     verify(mockQuizPageNotifier.showResult()).called(1);
   });
 
   test('retireQuiz(endless)', () async {
     const quizType = QuizTypes.endless;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
     final mockWordInputNotifier = MockWordInputNotifier();
@@ -393,8 +369,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: const QuizInfo()),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => mockWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
@@ -412,8 +386,6 @@ void main() {
 
   test('retireQuiz(daily)', () async {
     const quizType = QuizTypes.daily;
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
     final mockWordInputNotifier = MockWordInputNotifier();
@@ -422,8 +394,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        statisticsProvider(quizType)
-            .overrideWith((ref) => fakeStatisticsNotifier),
         wordInputNotifierProvider(quizType)
             .overrideWith((ref) => mockWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),

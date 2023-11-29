@@ -7,33 +7,27 @@ import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_footer_info.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/fake_statistics_notifier.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('Daily', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizRange: diamondPearl,
-        ),
-      ),
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizRange: diamondPearl,
     );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(quizType: quizType, quizInfo: quizInfo),
+          // quizInfoProvider(quizType)
+          //     .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: QuizFooterInfo(),
             ),
@@ -41,6 +35,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     final formatMMdd = DateFormat('MM/dd');
     final dateLabel = formatMMdd.format(DateTime.now());
@@ -48,33 +44,29 @@ void main() {
     expect(find.text('ダイヤモンド・パール'), findsOneWidget);
   });
 
-  testWidgets('Endless', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizRange: diamondPearl,
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+  testWidgets('Endless(連鎖終了)', (tester) async {
+    const quizType = QuizTypes.endless;
+    const quizInfo = QuizInfo(
+      quizRange: diamondPearl,
+      quizProcess: QuizProcessType.failure,
     );
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        lastChain: 10,
-      ),
+    const quizStatistics = QuizStatistics(
+      lastChain: 10,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          statisticsProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeStatisticsNotifier),
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            statistics: quizStatistics,
+          ),
         ],
         child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.endless,
+            quizType: quizType,
             child: Scaffold(
               body: QuizFooterInfo(),
             ),
@@ -82,38 +74,36 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('10 れんさ'), findsOneWidget);
   });
 
-  testWidgets('Endless', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizRange: diamondPearl,
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
+  testWidgets('Endless(連鎖中)', (tester) async {
+    const quizType = QuizTypes.endless;
+    const quizInfo = QuizInfo(
+      quizRange: diamondPearl,
+      quizProcess: QuizProcessType.success,
     );
 
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        lastChain: 10,
-        currentChain: 7,
-      ),
+    const quizStatistics = QuizStatistics(
+      lastChain: 10,
+      currentChain: 7,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-          statisticsProvider(QuizTypes.endless)
-              .overrideWith((ref) => fakeStatisticsNotifier),
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            statistics: quizStatistics,
+          ),
         ],
         child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.endless,
+            quizType: quizType,
             child: Scaffold(
               body: QuizFooterInfo(),
             ),
@@ -121,6 +111,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('7 れんさちゅう'), findsOneWidget);
   });

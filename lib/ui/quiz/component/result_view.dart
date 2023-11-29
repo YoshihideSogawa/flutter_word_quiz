@@ -7,7 +7,7 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
+import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quit_quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -21,15 +21,15 @@ class ResultView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
-    final statistics = ref.watch(statisticsProvider(quizType));
+    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final statistics = ref.watch(statisticsNotifierProvider(quizType));
     return QuizDialog(
       onTap: () {
         ref.read(quizPageProvider(quizType).notifier).dismissResult();
       },
       child: IntrinsicHeight(
         child: Container(
-          width: 300,
+          width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
             borderRadius: BorderRadius.circular(4),
@@ -57,16 +57,17 @@ class ResultView extends ConsumerWidget {
                 const Divider(),
                 const _ResultDetail(),
                 const Divider(),
-                if (quizInfo?.quizProcess != QuizProcessType.success)
+                if (quizInfo?.quizProcess != QuizProcessType.success &&
+                    statistics.hasValue)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TweetButton(
-                        tweetText: shareText(quizInfo, statistics),
+                        tweetText: shareText(quizInfo, statistics.value!),
                       ),
                       const SizedBox(width: 12),
                       ShareButton(
-                        shareText: shareText(quizInfo, statistics),
+                        shareText: shareText(quizInfo, statistics.value!),
                       ),
                     ],
                   ),
@@ -106,7 +107,7 @@ class _ResultText extends ConsumerWidget {
 
   /// サブタイトルを取得します。
   String _subTitle(WidgetRef ref, QuizTypes quizType) {
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
     if (quizInfo?.quizProcess == QuizProcessType.success) {
       return 'れんさちゅう';
     }
@@ -121,11 +122,15 @@ class _ResultText extends ConsumerWidget {
 
   /// 連鎖テキストを構築します。
   Widget _buildChainText(WidgetRef ref, QuizTypes quizType) {
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
-    final statistics = ref.watch(statisticsProvider(quizType));
+    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final statistics = ref.watch(statisticsNotifierProvider(quizType));
+    if (!statistics.hasValue) {
+      return const SizedBox.shrink();
+    }
+
     final chainNum = quizInfo?.quizProcess == QuizProcessType.success
-        ? statistics.currentChain
-        : statistics.lastChain;
+        ? statistics.value!.currentChain
+        : statistics.value!.lastChain;
     return Text(
       '🎉 $chainNum れんさ 🎉',
       style: const TextStyle(
@@ -143,7 +148,7 @@ class _ResultDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -186,7 +191,7 @@ class _ActionButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
 
     // 成功時はつぎに進むボタンを用意する
     if (quizInfo?.quizProcess == QuizProcessType.success) {

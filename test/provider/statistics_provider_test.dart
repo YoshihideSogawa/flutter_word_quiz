@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
+import 'package:word_quiz/provider/statistics_notifier.dart';
 
 import '../mock/mock_box_data.dart';
 
@@ -16,8 +16,8 @@ void main() {
       ],
     );
 
-    await container.read(statisticsProvider(quizType).notifier).init();
-    final statistics = container.read(statisticsProvider(quizType));
+    final statistics =
+        await container.read(statisticsNotifierProvider(quizType).future);
     expect(statistics.clearCount, 0);
     expect(statistics.currentChain, 0);
     expect(statistics.lastChain, 0);
@@ -40,8 +40,8 @@ void main() {
       ],
     );
 
-    await container.read(statisticsProvider(quizType).notifier).init();
-    final statistics = container.read(statisticsProvider(quizType));
+    final statistics =
+        await container.read(statisticsNotifierProvider(quizType).future);
     expect(statistics.clearCount, 5);
     expect(statistics.currentChain, 5);
     expect(statistics.lastChain, 0);
@@ -64,9 +64,11 @@ void main() {
       ],
     );
 
-    await container.read(statisticsProvider(quizType).notifier).init();
-    await container.read(statisticsProvider(quizType).notifier).startQuiz();
-    final statistics = container.read(statisticsProvider(quizType));
+    await container
+        .read(statisticsNotifierProvider(quizType).notifier)
+        .startQuiz();
+    final statistics =
+        await container.read(statisticsNotifierProvider(quizType).future);
     expect(statistics.clearCount, 5);
     expect(statistics.currentChain, 0);
     expect(statistics.lastChain, 0);
@@ -89,9 +91,11 @@ void main() {
       ],
     );
 
-    await container.read(statisticsProvider(quizType).notifier).init();
-    await container.read(statisticsProvider(quizType).notifier).nextQuiz();
-    final statistics = container.read(statisticsProvider(quizType));
+    await container
+        .read(statisticsNotifierProvider(quizType).notifier)
+        .nextQuiz();
+    final statistics =
+        await container.read(statisticsNotifierProvider(quizType).future);
     expect(statistics.clearCount, 1);
     expect(statistics.currentChain, 5);
     expect(statistics.lastChain, 0);
@@ -114,9 +118,11 @@ void main() {
       ],
     );
 
-    await container.read(statisticsProvider(quizType).notifier).init();
-    await container.read(statisticsProvider(quizType).notifier).successQuiz();
-    final statistics = container.read(statisticsProvider(quizType));
+    await container
+        .read(statisticsNotifierProvider(quizType).notifier)
+        .successQuiz();
+    final statistics =
+        await container.read(statisticsNotifierProvider(quizType).future);
     expect(statistics.clearCount, 2);
     expect(statistics.currentChain, 6);
     expect(statistics.lastChain, 0);
@@ -139,9 +145,11 @@ void main() {
       ],
     );
 
-    await container.read(statisticsProvider(quizType).notifier).init();
-    await container.read(statisticsProvider(quizType).notifier).finishQuiz();
-    final statistics = container.read(statisticsProvider(quizType));
+    await container
+        .read(statisticsNotifierProvider(quizType).notifier)
+        .finishQuiz();
+    final statistics =
+        await container.read(statisticsNotifierProvider(quizType).future);
     expect(statistics.clearCount, 1);
     expect(statistics.currentChain, 0);
     expect(statistics.lastChain, 5);

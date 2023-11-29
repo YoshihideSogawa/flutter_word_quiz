@@ -13,7 +13,7 @@ import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/remaining_time_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
+import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -29,7 +29,7 @@ class StatisticsView extends ConsumerWidget {
     final quizType = QuizType.of(context).quizType;
     final quizInfo = ref.watch(quizInfoProvider(quizType)).value;
     final wordInput = ref.watch(wordInputNotifierProvider(quizType));
-    final statistics = ref.watch(statisticsProvider(quizType));
+    final statistics = ref.watch(statisticsNotifierProvider(quizType));
 
     return QuizDialog(
       onTap: () async {
@@ -37,7 +37,7 @@ class StatisticsView extends ConsumerWidget {
       },
       child: IntrinsicHeight(
         child: Container(
-          width: 300,
+          width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
             borderRadius: BorderRadius.circular(4),
@@ -72,17 +72,26 @@ class StatisticsView extends ConsumerWidget {
                     if (quizType == QuizTypes.daily) _buildClockLayout(),
                     if (quizType == QuizTypes.endless)
                       _buildSecretText(quizInfo),
-                    Column(
-                      children: [
-                        TweetButton(
-                          tweetText: shareText(quizInfo, wordInput, statistics),
-                        ),
-                        const SizedBox(height: 4),
-                        ShareButton(
-                          shareText: shareText(quizInfo, wordInput, statistics),
-                        ),
-                      ],
-                    ),
+                    if (statistics.hasValue)
+                      Column(
+                        children: [
+                          TweetButton(
+                            tweetText: shareText(
+                              quizInfo,
+                              wordInput,
+                              statistics.value!,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          ShareButton(
+                            shareText: shareText(
+                              quizInfo,
+                              wordInput,
+                              statistics.value!,
+                            ),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
                 TextButton(
@@ -157,7 +166,8 @@ class _ResultText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizProcess = ref.read(quizInfoProvider(quizType)).value?.quizProcess;
+    final quizProcess =
+        ref.watch(quizInfoProvider(quizType)).value?.quizProcess;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -230,14 +240,18 @@ class _ResultDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final statistics = ref.watch(statisticsProvider(quizType));
+    final statistics = ref.watch(statisticsNotifierProvider(quizType));
+    if (!statistics.hasValue) {
+      return const SizedBox.shrink();
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildDetailContent('プレイ\nかいすう', statistics.playCount),
-        _buildDetailContent('クリア\nかいすう', statistics.clearCount),
-        _buildDetailContent('れんさ\nかいすう', statistics.currentChain),
-        _buildDetailContent('さいだい\nれんさ', statistics.maxChain),
+        _buildDetailContent('プレイ\nかいすう', statistics.value!.playCount),
+        _buildDetailContent('クリア\nかいすう', statistics.value!.clearCount),
+        _buildDetailContent('れんさ\nかいすう', statistics.value!.currentChain),
+        _buildDetailContent('さいだい\nれんさ', statistics.value!.maxChain),
       ],
     );
   }

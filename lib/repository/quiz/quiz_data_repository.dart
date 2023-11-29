@@ -4,7 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
 
@@ -23,12 +22,13 @@ class QuizDataRepository extends _$QuizDataRepository {
   Future<void> deleteAll() async {
     final box = await ref.read(hiveBoxProvider(quizType.boxName).future);
     await box.clear();
+    // Hiveを使用しているProviderをすべてリフレッシュ
     ref
+      ..invalidate(hiveBoxProvider)
       // TODO(sogawa): 一時的にこの処理を行う、全移行したら不要になる
       // キャッシュされているデータを削除
       ..invalidate(quizInfoProvider(quizType))
       ..invalidate(quizPageProvider(quizType))
-      ..invalidate(statisticsProvider(quizType))
       ..invalidate(wordInputNotifierProvider(quizType));
   }
 }
