@@ -6,7 +6,7 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
 import 'package:word_quiz/ui/quiz/component/keyboard_map.dart';
@@ -14,7 +14,13 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// キーボードです。
 class WordKeyboard extends ConsumerStatefulWidget {
-  const WordKeyboard({super.key}); // coverage:ignore-line
+  const WordKeyboard({
+    super.key,
+    required this.enabled,
+  });
+
+  /// 有効かどうか
+  final bool enabled;
 
   @override
   WordKeyboardState createState() => WordKeyboardState();
@@ -84,20 +90,26 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
 
   /// キーの1行を構築します。
   Widget _buildKeyColumn(List<String> keyMap, int index, QuizTypes quizType) {
-    final resultList =
-        ref.watch(wordInputNotifierProvider(quizType)).keyResultList;
+    // TODO(sogawa): ここもアニメーション処理を入れる
+    final resultList = ref
+        .watch(wordInputNotifierProvider(quizType))
+        .valueOrNull
+        ?.keyResultList;
     return Column(
       children: [
         for (var i = 0; i < 5; i++)
           Padding(
             padding: const EdgeInsets.only(bottom: _keySpace),
             child: InputKey(
+              enabled: widget.enabled,
               text: keyMap[index * 5 + i],
               width: _keySize.width,
               height: _keySize.height,
-              keyboardInfo: resultList.containsKey(keyMap[index * 5 + i])
-                  ? resultList[keyMap[index * 5 + i]] ?? WordKeyboardInfo.none
-                  : WordKeyboardInfo.none,
+              keyboardInfo:
+                  (resultList?.containsKey(keyMap[index * 5 + i]) ?? false)
+                      ? (resultList?[keyMap[index * 5 + i]] ??
+                          WordKeyboardInfo.none)
+                      : WordKeyboardInfo.none,
             ),
           ),
       ],

@@ -15,7 +15,6 @@ class WordInput with _$WordInput {
     @Default(<String, WordKeyboardInfo>{})
     Map<String, WordKeyboardInfo> keyResultList,
     @Default(0) int inputIndex,
-    @Default(false) bool isWordChecking,
   }) = _WordInput;
 
   factory WordInput.fromJson(Map<String, dynamic> json) =>

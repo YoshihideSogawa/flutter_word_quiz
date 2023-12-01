@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -27,11 +28,12 @@ import 'package:word_quiz/ui/quiz/component/word_keyboard.dart';
 import 'package:word_quiz/ui/quiz/component/word_names.dart';
 
 /// 問題表示の共通レイアウトです。
-class WordQuizLayout extends ConsumerWidget {
+class WordQuizLayout extends HookConsumerWidget {
   const WordQuizLayout({super.key}); //coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controlEnabled = useState(true);
     final quizType = QuizType.of(context).quizType;
     final quizInfo = ref.read(quizInfoProvider(quizType)).value;
     final quizPage = ref.watch(quizPageProvider(quizType));
@@ -42,7 +44,14 @@ class WordQuizLayout extends ConsumerWidget {
         Column(
           children: [
             const SizedBox(height: 8),
-            const WordNames(),
+            WordNames(
+              onStartWordAnimation: () {
+                controlEnabled.value = false;
+              },
+              onEndWordAnimation: () {
+                controlEnabled.value = true;
+              },
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -60,21 +69,25 @@ class WordQuizLayout extends ConsumerWidget {
                               const KeyboardSwitchButton(),
                             const Spacer(flex: 2),
                             _buildAnswerButton(quizInfo, quizType),
-                            _buildRetireButton(quizInfo, quizType),
+                            _buildRetireButton(
+                              quizInfo,
+                              quizType,
+                              controlEnabled.value,
+                            ),
                             _buildGiveUpButton(quizInfo, quizType),
                             _buildNextQuizButton(quizInfo, quizType),
                             _buildRestartButton(quizInfo, quizType),
                             _buildResultButton(quizInfo, quizType),
                             const Spacer(),
-                            const DeleteButton(),
+                            DeleteButton(enabled: controlEnabled.value),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const WordKeyboard(),
+                    WordKeyboard(enabled: controlEnabled.value),
                     const SizedBox(height: 8),
-                    const EnterButton(),
+                    EnterButton(enabled: controlEnabled.value),
                     const SizedBox(height: 24),
                     const QuizFooterInfo(),
                   ],
@@ -124,12 +137,18 @@ class WordQuizLayout extends ConsumerWidget {
   }
 
   /// リタイアボタンを構築します。
-  Widget _buildRetireButton(QuizInfo? quizInfo, QuizTypes quizType) {
+  Widget _buildRetireButton(
+    QuizInfo? quizInfo,
+    QuizTypes quizType,
+    bool enabled,
+  ) {
     // 問題開始中は表示
     if (quizInfo?.quizProcess == QuizProcessType.started) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        child: RetireButton(),
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: RetireButton(
+          enabled: enabled,
+        ),
       );
     }
 

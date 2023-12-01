@@ -24,7 +24,6 @@ _$WordInputImpl _$$WordInputImplFromJson(Map<String, dynamic> json) =>
           ) ??
           const <String, WordKeyboardInfo>{},
       inputIndex: json['inputIndex'] as int? ?? 0,
-      isWordChecking: json['isWordChecking'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$WordInputImplToJson(_$WordInputImpl instance) =>
@@ -36,7 +35,6 @@ Map<String, dynamic> _$$WordInputImplToJson(_$WordInputImpl instance) =>
       'keyResultList': instance.keyResultList
           .map((k, e) => MapEntry(k, _$WordKeyboardInfoEnumMap[e]!)),
       'inputIndex': instance.inputIndex,
-      'isWordChecking': instance.isWordChecking,
     };
 
 const _$WordNameStateEnumMap = {

@@ -112,4 +112,14 @@ QuizInfo? parseQuizInfo(MockHiveBox<dynamic> box) {
   );
 }
 
+WordInput? parseWordInput(MockHiveBox<dynamic> box) {
+  if (!box.data.containsKey(wordInputKey)) {
+    return null;
+  }
+
+  return WordInput.fromJson(
+    jsonDecode(box.data[wordInputKey] as String) as Map<String, dynamic>,
+  );
+}
+
 typedef OverrideAndBox = ({Override override, MockHiveBox<dynamic> box});

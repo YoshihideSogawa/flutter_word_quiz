@@ -14,7 +14,7 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/remaining_time_provider.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/share_button.dart';
@@ -72,13 +72,13 @@ class StatisticsView extends ConsumerWidget {
                     if (quizType == QuizTypes.daily) _buildClockLayout(),
                     if (quizType == QuizTypes.endless)
                       _buildSecretText(quizInfo),
-                    if (statistics.hasValue)
+                    if (statistics.hasValue && wordInput.hasValue)
                       Column(
                         children: [
                           TweetButton(
                             tweetText: shareText(
                               quizInfo,
-                              wordInput,
+                              wordInput.value!,
                               statistics.value!,
                             ),
                           ),
@@ -86,7 +86,7 @@ class StatisticsView extends ConsumerWidget {
                           ShareButton(
                             shareText: shareText(
                               quizInfo,
-                              wordInput,
+                              wordInput.value!,
                               statistics.value!,
                             ),
                           ),

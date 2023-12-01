@@ -26,7 +26,6 @@ mixin _$WordInput {
   Map<String, WordKeyboardInfo> get keyResultList =>
       throw _privateConstructorUsedError;
   int get inputIndex => throw _privateConstructorUsedError;
-  bool get isWordChecking => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,8 +42,7 @@ abstract class $WordInputCopyWith<$Res> {
       {List<List<String>?> wordsList,
       List<List<WordNameState>?> wordsResultList,
       Map<String, WordKeyboardInfo> keyResultList,
-      int inputIndex,
-      bool isWordChecking});
+      int inputIndex});
 }
 
 /// @nodoc
@@ -64,7 +62,6 @@ class _$WordInputCopyWithImpl<$Res, $Val extends WordInput>
     Object? wordsResultList = null,
     Object? keyResultList = null,
     Object? inputIndex = null,
-    Object? isWordChecking = null,
   }) {
     return _then(_value.copyWith(
       wordsList: null == wordsList
@@ -83,10 +80,6 @@ class _$WordInputCopyWithImpl<$Res, $Val extends WordInput>
           ? _value.inputIndex
           : inputIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      isWordChecking: null == isWordChecking
-          ? _value.isWordChecking
-          : isWordChecking // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -103,8 +96,7 @@ abstract class _$$WordInputImplCopyWith<$Res>
       {List<List<String>?> wordsList,
       List<List<WordNameState>?> wordsResultList,
       Map<String, WordKeyboardInfo> keyResultList,
-      int inputIndex,
-      bool isWordChecking});
+      int inputIndex});
 }
 
 /// @nodoc
@@ -122,7 +114,6 @@ class __$$WordInputImplCopyWithImpl<$Res>
     Object? wordsResultList = null,
     Object? keyResultList = null,
     Object? inputIndex = null,
-    Object? isWordChecking = null,
   }) {
     return _then(_$WordInputImpl(
       wordsList: null == wordsList
@@ -141,10 +132,6 @@ class __$$WordInputImplCopyWithImpl<$Res>
           ? _value.inputIndex
           : inputIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      isWordChecking: null == isWordChecking
-          ? _value.isWordChecking
-          : isWordChecking // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -157,8 +144,7 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
       final List<List<WordNameState>?> wordsResultList = const <WordResults?>[],
       final Map<String, WordKeyboardInfo> keyResultList =
           const <String, WordKeyboardInfo>{},
-      this.inputIndex = 0,
-      this.isWordChecking = false})
+      this.inputIndex = 0})
       : _wordsList = wordsList,
         _wordsResultList = wordsResultList,
         _keyResultList = keyResultList;
@@ -196,13 +182,10 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
   @override
   @JsonKey()
   final int inputIndex;
-  @override
-  @JsonKey()
-  final bool isWordChecking;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WordInput(wordsList: $wordsList, wordsResultList: $wordsResultList, keyResultList: $keyResultList, inputIndex: $inputIndex, isWordChecking: $isWordChecking)';
+    return 'WordInput(wordsList: $wordsList, wordsResultList: $wordsResultList, keyResultList: $keyResultList, inputIndex: $inputIndex)';
   }
 
   @override
@@ -213,8 +196,7 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
       ..add(DiagnosticsProperty('wordsList', wordsList))
       ..add(DiagnosticsProperty('wordsResultList', wordsResultList))
       ..add(DiagnosticsProperty('keyResultList', keyResultList))
-      ..add(DiagnosticsProperty('inputIndex', inputIndex))
-      ..add(DiagnosticsProperty('isWordChecking', isWordChecking));
+      ..add(DiagnosticsProperty('inputIndex', inputIndex));
   }
 
   @override
@@ -229,9 +211,7 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
             const DeepCollectionEquality()
                 .equals(other._keyResultList, _keyResultList) &&
             (identical(other.inputIndex, inputIndex) ||
-                other.inputIndex == inputIndex) &&
-            (identical(other.isWordChecking, isWordChecking) ||
-                other.isWordChecking == isWordChecking));
+                other.inputIndex == inputIndex));
   }
 
   @JsonKey(ignore: true)
@@ -241,8 +221,7 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
       const DeepCollectionEquality().hash(_wordsList),
       const DeepCollectionEquality().hash(_wordsResultList),
       const DeepCollectionEquality().hash(_keyResultList),
-      inputIndex,
-      isWordChecking);
+      inputIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -263,8 +242,7 @@ abstract class _WordInput implements WordInput {
       {final List<List<String>?> wordsList,
       final List<List<WordNameState>?> wordsResultList,
       final Map<String, WordKeyboardInfo> keyResultList,
-      final int inputIndex,
-      final bool isWordChecking}) = _$WordInputImpl;
+      final int inputIndex}) = _$WordInputImpl;
 
   factory _WordInput.fromJson(Map<String, dynamic> json) =
       _$WordInputImpl.fromJson;
@@ -277,8 +255,6 @@ abstract class _WordInput implements WordInput {
   Map<String, WordKeyboardInfo> get keyResultList;
   @override
   int get inputIndex;
-  @override
-  bool get isWordChecking;
   @override
   @JsonKey(ignore: true)
   _$$WordInputImplCopyWith<_$WordInputImpl> get copyWith =>

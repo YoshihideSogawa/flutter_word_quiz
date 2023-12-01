@@ -50,6 +50,8 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byKey(const Key('retire_button')));
     await tester.pumpAndSettle();
     expect(find.text('あきらめますか？'), findsOneWidget);

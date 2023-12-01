@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -13,12 +13,17 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class EnterButton extends ConsumerWidget {
   const EnterButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.enabled,
+  });
+
+  /// 有効かどうか
+  final bool enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
     final size = MediaQuery.of(context).size;
+    final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
     return Material(
       child: IntrinsicWidth(
         child: Ink(
@@ -30,7 +35,9 @@ class EnterButton extends ConsumerWidget {
           ),
           child: InkWell(
             key: const Key('enter_button_ink_well'),
-            onTap: () async => _onTapEnter(context, ref, quizType),
+            onTap: wordInputNotifier.hasValue && enabled
+                ? () async => _onTapEnter(context, ref, quizType)
+                : null,
             borderRadius: BorderRadius.circular(4),
             child: Center(
               child: Padding(
@@ -65,7 +72,7 @@ class EnterButton extends ConsumerWidget {
     }
 
     final result =
-        await ref.watch(wordInputNotifierProvider(quizType).notifier).submit();
+        await ref.read(wordInputNotifierProvider(quizType).notifier).submit();
 
     if (result == SubmitResult.noInput) {
       _showSnackBar(state, 'ポケモンの なまえをいれてね');

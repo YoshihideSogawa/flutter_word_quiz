@@ -12,7 +12,7 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
@@ -107,8 +107,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: initQuizInfo),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => MockWordInputNotifier()),
       ],
     );
 
@@ -136,8 +134,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: initQuizInfo),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => MockWordInputNotifier()),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
@@ -191,8 +187,6 @@ void main() {
         quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => MockWordInputNotifier()),
       ],
     );
 
@@ -230,8 +224,6 @@ void main() {
         quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => MockWordInputNotifier()),
       ],
     );
 
@@ -259,17 +251,15 @@ void main() {
 
   test('startQuiz()', () async {
     const quizType = QuizTypes.endless;
-    final mockWordInputNotifier = MockWordInputNotifier();
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: _quizInfoTest(quizType),
+    );
     final container = ProviderContainer(
       overrides: [
-        quizOverride(
-          quizType: quizType,
-          quizInfo: _quizInfoTest(quizType),
-        ),
+        quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => mockWordInputNotifier),
       ],
     );
 
@@ -286,12 +276,12 @@ void main() {
     expect(quizInfo.seedText, 'ヒトカゲ');
     expect(quizInfo.quizProcess, QuizProcessType.started);
 
-    verify(mockWordInputNotifier.reset()).called(1);
+    final wordInput = parseWordInput(quizOverrideBox.box);
+    expect(wordInput, wordInputInitValue);
   });
 
   test('nextQuiz()', () async {
     const quizType = QuizTypes.endless;
-    final mockWordInputNotifier = MockWordInputNotifier();
     final quizOverrideBox = quizOverrideAndBox(
       quizType: quizType,
       quizInfo: _quizInfoTest(quizType),
@@ -301,8 +291,6 @@ void main() {
         quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => mockWordInputNotifier),
       ],
     );
 
@@ -319,14 +307,15 @@ void main() {
 
     final quizStatistics = parseQuizStatistics(quizOverrideBox.box);
     expect(quizStatistics?.playCount, 1);
-    verify(mockWordInputNotifier.reset()).called(1);
+
+    final wordInput = parseWordInput(quizOverrideBox.box);
+    expect(wordInput, wordInputInitValue);
   });
 
   test('quitQuiz()', () async {
     const quizType = QuizTypes.endless;
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
-    final mockWordInputNotifier = MockWordInputNotifier();
     final quizOverrideBox = quizOverrideAndBox(
       quizType: quizType,
       quizInfo: _quizInfoTest(quizType),
@@ -336,8 +325,6 @@ void main() {
         quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => mockWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
@@ -359,7 +346,6 @@ void main() {
     const quizType = QuizTypes.endless;
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
-    final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
         quizOverride(
@@ -369,8 +355,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: const QuizInfo()),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => mockWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
@@ -388,14 +372,11 @@ void main() {
     const quizType = QuizTypes.daily;
     final mockQuizPageNotifier = MockQuizPageNotifier();
 
-    final mockWordInputNotifier = MockWordInputNotifier();
     final container = ProviderContainer(
       overrides: [
         quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        wordInputNotifierProvider(quizType)
-            .overrideWith((ref) => mockWordInputNotifier),
         quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
@@ -439,7 +420,6 @@ void main() {
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
     // ignore: invalid_use_of_visible_for_testing_member
     await container.read(quizInfoProvider(quizType).notifier).init();
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(quizInfoProvider(quizType).notifier).updateQuiz();
 
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;
@@ -476,7 +456,6 @@ void main() {
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
     await container.read(quizInfoProvider(quizType).notifier).init();
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(quizInfoProvider(quizType).notifier).updateQuiz();
 
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;
@@ -518,7 +497,6 @@ void main() {
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
     // ignore: invalid_use_of_visible_for_testing_member
     await container.read(quizInfoProvider(quizType).notifier).init();
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(quizInfoProvider(quizType).notifier).updateQuiz();
 
     final quizInfo = container.read(quizInfoProvider(quizType)).value!;

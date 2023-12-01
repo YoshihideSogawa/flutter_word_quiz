@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'statistics_notifier.dart';
+part of 'word_input_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$statisticsNotifierHash() =>
-    r'28b8f73d8e01db611b788f2a9ad1a71eef82daa9';
+String _$wordInputNotifierHash() => r'fb6584229af6470fc92f1968d45f58dae35fa6a3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,44 +29,44 @@ class _SystemHash {
   }
 }
 
-abstract class _$StatisticsNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<QuizStatistics> {
+abstract class _$WordInputNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<WordInput> {
   late final QuizTypes quizType;
 
-  FutureOr<QuizStatistics> build(
+  FutureOr<WordInput> build(
     QuizTypes quizType,
   );
 }
 
-/// 統計情報の処理を行います。
+/// 文字入力に関する処理を行います。
 ///
-/// Copied from [StatisticsNotifier].
-@ProviderFor(StatisticsNotifier)
-const statisticsNotifierProvider = StatisticsNotifierFamily();
+/// Copied from [WordInputNotifier].
+@ProviderFor(WordInputNotifier)
+const wordInputNotifierProvider = WordInputNotifierFamily();
 
-/// 統計情報の処理を行います。
+/// 文字入力に関する処理を行います。
 ///
-/// Copied from [StatisticsNotifier].
-class StatisticsNotifierFamily extends Family<AsyncValue<QuizStatistics>> {
-  /// 統計情報の処理を行います。
+/// Copied from [WordInputNotifier].
+class WordInputNotifierFamily extends Family<AsyncValue<WordInput>> {
+  /// 文字入力に関する処理を行います。
   ///
-  /// Copied from [StatisticsNotifier].
-  const StatisticsNotifierFamily();
+  /// Copied from [WordInputNotifier].
+  const WordInputNotifierFamily();
 
-  /// 統計情報の処理を行います。
+  /// 文字入力に関する処理を行います。
   ///
-  /// Copied from [StatisticsNotifier].
-  StatisticsNotifierProvider call(
+  /// Copied from [WordInputNotifier].
+  WordInputNotifierProvider call(
     QuizTypes quizType,
   ) {
-    return StatisticsNotifierProvider(
+    return WordInputNotifierProvider(
       quizType,
     );
   }
 
   @override
-  StatisticsNotifierProvider getProviderOverride(
-    covariant StatisticsNotifierProvider provider,
+  WordInputNotifierProvider getProviderOverride(
+    covariant WordInputNotifierProvider provider,
   ) {
     return call(
       provider.quizType,
@@ -86,34 +85,34 @@ class StatisticsNotifierFamily extends Family<AsyncValue<QuizStatistics>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'statisticsNotifierProvider';
+  String? get name => r'wordInputNotifierProvider';
 }
 
-/// 統計情報の処理を行います。
+/// 文字入力に関する処理を行います。
 ///
-/// Copied from [StatisticsNotifier].
-class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    StatisticsNotifier, QuizStatistics> {
-  /// 統計情報の処理を行います。
+/// Copied from [WordInputNotifier].
+class WordInputNotifierProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<WordInputNotifier, WordInput> {
+  /// 文字入力に関する処理を行います。
   ///
-  /// Copied from [StatisticsNotifier].
-  StatisticsNotifierProvider(
+  /// Copied from [WordInputNotifier].
+  WordInputNotifierProvider(
     QuizTypes quizType,
   ) : this._internal(
-          () => StatisticsNotifier()..quizType = quizType,
-          from: statisticsNotifierProvider,
-          name: r'statisticsNotifierProvider',
+          () => WordInputNotifier()..quizType = quizType,
+          from: wordInputNotifierProvider,
+          name: r'wordInputNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$statisticsNotifierHash,
-          dependencies: StatisticsNotifierFamily._dependencies,
+                  : _$wordInputNotifierHash,
+          dependencies: WordInputNotifierFamily._dependencies,
           allTransitiveDependencies:
-              StatisticsNotifierFamily._allTransitiveDependencies,
+              WordInputNotifierFamily._allTransitiveDependencies,
           quizType: quizType,
         );
 
-  StatisticsNotifierProvider._internal(
+  WordInputNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -126,8 +125,8 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final QuizTypes quizType;
 
   @override
-  FutureOr<QuizStatistics> runNotifierBuild(
-    covariant StatisticsNotifier notifier,
+  FutureOr<WordInput> runNotifierBuild(
+    covariant WordInputNotifier notifier,
   ) {
     return notifier.build(
       quizType,
@@ -135,10 +134,10 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(StatisticsNotifier Function() create) {
+  Override overrideWith(WordInputNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: StatisticsNotifierProvider._internal(
+      override: WordInputNotifierProvider._internal(
         () => create()..quizType = quizType,
         from: from,
         name: null,
@@ -151,14 +150,14 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<StatisticsNotifier, QuizStatistics>
+  AutoDisposeAsyncNotifierProviderElement<WordInputNotifier, WordInput>
       createElement() {
-    return _StatisticsNotifierProviderElement(this);
+    return _WordInputNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is StatisticsNotifierProvider && other.quizType == quizType;
+    return other is WordInputNotifierProvider && other.quizType == quizType;
   }
 
   @override
@@ -170,19 +169,18 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin StatisticsNotifierRef
-    on AutoDisposeAsyncNotifierProviderRef<QuizStatistics> {
+mixin WordInputNotifierRef on AutoDisposeAsyncNotifierProviderRef<WordInput> {
   /// The parameter `quizType` of this provider.
   QuizTypes get quizType;
 }
 
-class _StatisticsNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<StatisticsNotifier,
-        QuizStatistics> with StatisticsNotifierRef {
-  _StatisticsNotifierProviderElement(super.provider);
+class _WordInputNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<WordInputNotifier,
+        WordInput> with WordInputNotifierRef {
+  _WordInputNotifierProviderElement(super.provider);
 
   @override
-  QuizTypes get quizType => (origin as StatisticsNotifierProvider).quizType;
+  QuizTypes get quizType => (origin as WordInputNotifierProvider).quizType;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -34,6 +34,7 @@ class WordInputRepository extends _$WordInputRepository {
 
     final quizBox = await ref.watch(hiveBoxProvider(quizType.boxName).future);
     await quizBox.put(wordInputKey, jsonEncode(wordInput));
+
     ref.invalidateSelf();
   }
 }

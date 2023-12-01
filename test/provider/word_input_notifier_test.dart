@@ -7,7 +7,7 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
@@ -15,7 +15,7 @@ import '../mock/mock_box_data.dart';
 import '../mock/monster_test_list.dart';
 
 void main() {
-  test('初期値が保存されていない場合', () {
+  test('初期値が保存されていない場合', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
       overrides: [
@@ -23,7 +23,8 @@ void main() {
       ],
     );
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.wordsList, <List<String?>>[[]]);
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
     expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
@@ -40,9 +41,8 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest);
   });
 
@@ -55,14 +55,13 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .inputWord('ア');
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
 
     // 変わらない
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest);
   });
 
@@ -74,14 +73,13 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .inputWord('アイ');
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
 
     // 変わらない
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest);
   });
 
@@ -93,14 +91,13 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .inputWord('ア');
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
 
     // 変わらない
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest2);
   });
 
@@ -112,12 +109,11 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .inputWord('ア');
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.wordsList.last, ['テ', 'ス', 'ア']);
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
@@ -133,12 +129,11 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .deleteWord();
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest);
   });
 
@@ -150,12 +145,11 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .deleteWord();
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest4);
   });
 
@@ -167,12 +161,11 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .deleteWord();
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.wordsList.last, ['テ']);
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
@@ -199,14 +192,17 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    // 初期化
+    await container.read(wordInputNotifierProvider(quizType).future);
+
+    // submit
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
     expect(result, SubmitResult.skip);
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest);
   });
 
@@ -230,14 +226,16 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    // 初期化
+    await container.read(wordInputNotifierProvider(quizType).future);
+
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
     expect(result, SubmitResult.skip);
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest5);
   });
 
@@ -261,14 +259,16 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    // 初期化
+    await container.read(wordInputNotifierProvider(quizType).future);
+
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
     expect(result, SubmitResult.noInput);
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.isWordChecking, isFalse);
     expect(wordInput, _wordInputTest4);
   });
@@ -293,14 +293,16 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    // 初期化
+    await container.read(wordInputNotifierProvider(quizType).future);
+
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
     expect(result, SubmitResult.unknownMonster);
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.isWordChecking, isFalse);
     expect(wordInput, _wordInputTest3);
   });
@@ -325,14 +327,16 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
+    // 初期化
+    await container.read(wordInputNotifierProvider(quizType).future);
+
     final result = await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .submit();
     expect(result, SubmitResult.success);
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.wordsList.last, <String>[]);
     expect(wordInput.wordsResultList.last?.length, 5);
     expect(wordInput.keyResultList.length, 7);
@@ -351,11 +355,10 @@ void main() {
       ],
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    await container.read(wordInputNotifierProvider(quizType).notifier).init();
     await container.read(wordInputNotifierProvider(quizType).notifier).reset();
 
-    final wordInput = container.read(wordInputNotifierProvider(quizType));
+    final wordInput =
+        await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput.wordsList, <List<String?>>[[]]);
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
     expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});

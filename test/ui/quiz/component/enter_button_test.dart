@@ -1,32 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
+import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/ui/quiz/component/enter_button.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
+import '../../../mock/fake_monster_list_repository.dart';
 import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
 import '../../../mock/mock_box_data.dart';
+import '../../../mock/monster_test_list.dart';
 
 void main() {
   testWidgets('EnterButton', (tester) async {
+    const quizType = QuizTypes.daily;
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          quizOverride(quizType: quizType),
+        ],
+        child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: EnterButton(),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('かくてい'), findsOneWidget);
   });
@@ -75,15 +82,16 @@ void main() {
       quizProcess: QuizProcessType.started,
       playDate: generateDate(),
     );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['テ', 'ス', 'ト'],
+      ].toList(growable: true),
+    );
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
     );
-
-    final mockWordInputNotifier = MockWordInputNotifier();
-    when(mockWordInputNotifier.submit())
-        .thenAnswer((_) async => SubmitResult.unknownMonster);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -91,11 +99,10 @@ void main() {
           quizOverride(
             quizType: quizType,
             quizInfo: quizInfo,
+            wordInput: wordInput,
           ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -124,7 +131,13 @@ void main() {
     const quizType = QuizTypes.daily;
     final quizInfo = QuizInfo(
       quizProcess: QuizProcessType.started,
+      answer: monsterTestList[0],
       playDate: generateDate(),
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ].toList(growable: true),
     );
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
@@ -132,18 +145,18 @@ void main() {
       AsyncValue.data(quizInfo),
     );
 
-    final mockWordInputNotifier = MockWordInputNotifier();
-    when(mockWordInputNotifier.submit())
-        .thenAnswer((_) async => SubmitResult.success);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, quizInfo: quizInfo),
-          wordInputNotifierProvider(quizType)
-              .overrideWith((ref) => mockWordInputNotifier),
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -159,7 +172,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('enter_button_ink_well')));
-    await tester.pumpAndSettle();
+    // NOTE: アニメーション待ち
+    await tester.pumpAndSettle(const Duration(minutes: 1));
 
     expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
   });

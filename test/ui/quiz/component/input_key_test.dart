@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('InputKey(empty)', (tester) async {
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+          ),
+        ],
+        child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: InputKey(
                 width: 100,
@@ -35,15 +43,27 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.byKey(const Key('empty_input_key')), findsOneWidget);
   });
 
   testWidgets('InputKey(none)', (tester) async {
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+          ),
+        ],
+        child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: InputKey(
                 width: 100,
@@ -56,6 +76,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ア'), findsOneWidget);
 
@@ -73,11 +95,21 @@ void main() {
   });
 
   testWidgets('InputKey(hit)', (tester) async {
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+          ),
+        ],
+        child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: InputKey(
                 width: 100,
@@ -90,6 +122,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ア'), findsOneWidget);
 
@@ -105,11 +139,21 @@ void main() {
   });
 
   testWidgets('InputKey(match)', (tester) async {
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+          ),
+        ],
+        child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: InputKey(
                 width: 100,
@@ -122,6 +166,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ア'), findsOneWidget);
 
@@ -137,11 +183,21 @@ void main() {
   });
 
   testWidgets('InputKey(notMatch)', (tester) async {
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+    );
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+          ),
+        ],
+        child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: InputKey(
                 width: 100,
@@ -154,6 +210,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ア'), findsOneWidget);
 
@@ -169,27 +227,28 @@ void main() {
   });
 
   testWidgets('InputKeyのタップ', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
     );
-
-    final mockWordInputNotifier = MockWordInputNotifier();
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: quizInfo,
+    );
+    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+      const AsyncValue.data(quizInfo),
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
+          quizOverrideBox.override,
+          quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockWordInputNotifier),
         ],
         child: const MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
               body: InputKey(
                 width: 100,
@@ -203,8 +262,12 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byKey(const Key('input_key_ink_well')));
+    await tester.pumpAndSettle();
 
-    verify(mockWordInputNotifier.inputWord(any)).called(1);
+    await tester.tap(find.byKey(const Key('input_key_ink_well')));
+    await tester.pumpAndSettle();
+
+    final wordInputData = parseWordInput(quizOverrideBox.box);
+    expect(wordInputData?.wordsList.first, ['ア']);
   });
 }
