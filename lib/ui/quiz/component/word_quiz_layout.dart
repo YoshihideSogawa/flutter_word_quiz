@@ -77,32 +77,18 @@ class WordQuizLayout extends HookConsumerWidget {
                             if (inputType.valueOrNull == InputTypes.switching)
                               const KeyboardSwitchButton(),
                             const Spacer(flex: 2),
-                            _buildAnswerButton(
-                              lazyQuizProcess.value,
-                              quizType,
-                            ),
-                            _buildRetireButton(
-                              lazyQuizProcess.value,
-                              quizType,
-                              controlEnabled,
-                            ),
-                            _buildGiveUpButton(
-                              lazyQuizProcess.value,
-                              quizType,
-                            ),
-                            _buildNextQuizButton(
-                              lazyQuizProcess.value,
-                              quizType,
-                            ),
-                            _buildRestartButton(
-                              lazyQuizProcess.value,
-                              quizType,
-                            ),
-                            _buildResultButton(
-                              lazyQuizProcess.value,
-                              quizType,
-                              controlEnabled,
-                            ),
+                            if (_showAnswer(lazyQuizProcess.value))
+                              const AnswerButton(),
+                            if (_showRetire(lazyQuizProcess.value))
+                              RetireButton(enabled: controlEnabled),
+                            if (_showGiveUp(lazyQuizProcess.value, quizType))
+                              const GiveUpButton(),
+                            if (_showNextQuiz(lazyQuizProcess.value, quizType))
+                              const NextQuizButton(),
+                            if (_showRestart(lazyQuizProcess.value, quizType))
+                              const RestartButton(),
+                            if (_showResult(lazyQuizProcess.value, quizType))
+                              const ResultButton(),
                             const Spacer(),
                             DeleteButton(enabled: controlEnabled),
                           ],
@@ -145,101 +131,32 @@ class WordQuizLayout extends HookConsumerWidget {
     );
   }
 
-  /// リスタートボタンを構築します。
-  Widget _buildRestartButton(QuizProcessType? quizProcess, QuizTypes quizType) {
-    // いっぱいやるモードで、問題開始前か失敗か終了時の場合のみ表示
-    if (quizType == QuizTypes.endless &&
-        (quizProcess == QuizProcessType.none ||
-            quizProcess == QuizProcessType.failure ||
-            quizProcess == QuizProcessType.quit)) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        child: RestartButton(),
-      );
-    }
+  /// 失敗時は答えの表示
+  bool _showAnswer(QuizProcessType? quizProcess) =>
+      quizProcess == QuizProcessType.failure;
 
-    return const SizedBox.shrink();
-  }
+  /// 問題開始中でなければリタイアを表示
+  bool _showRetire(QuizProcessType? quizProcess) =>
+      quizProcess == QuizProcessType.started;
 
-  /// リタイアボタンを構築します。
-  Widget _buildRetireButton(
-    QuizProcessType? quizProcess,
-    QuizTypes quizType,
-    bool enabled,
-  ) {
-    // 問題開始中、アニメーション中でなければ表示
-    if (quizProcess == QuizProcessType.started) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: RetireButton(
-          enabled: enabled,
-        ),
-      );
-    }
+  /// いっぱいやるモードで正解した場合にあきらめるを表示
+  bool _showGiveUp(QuizProcessType? quizProcess, QuizTypes quizType) =>
+      quizType == QuizTypes.endless && quizProcess == QuizProcessType.success;
 
-    return const SizedBox.shrink();
-  }
+  /// // いっぱいやるモードで正解している場合は「つぎのもんだい」を表示
+  bool _showNextQuiz(QuizProcessType? quizProcess, QuizTypes quizType) =>
+      quizType == QuizTypes.endless && quizProcess == QuizProcessType.success;
 
-  /// つぎの問題ボタンを構築します。
-  Widget _buildNextQuizButton(
-    QuizProcessType? quizProcess,
-    QuizTypes quizType,
-  ) {
-    // いっぱいやるモードで正解している場合
-    if (quizType == QuizTypes.endless &&
-        quizProcess == QuizProcessType.success) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        child: NextQuizButton(),
-      );
-    }
+  /// いっぱいやるモードで、問題開始前か失敗か終了時の場合のみ「はじめる」を表示
+  bool _showRestart(QuizProcessType? quizProcess, QuizTypes quizType) =>
+      quizType == QuizTypes.endless &&
+      (quizProcess == QuizProcessType.none ||
+          quizProcess == QuizProcessType.failure ||
+          quizProcess == QuizProcessType.quit);
 
-    return const SizedBox.shrink();
-  }
-
-  /// 答えの表示ボタンを構築します。
-  Widget _buildAnswerButton(QuizProcessType? quizProcess, QuizTypes quizType) {
-    // 失敗時のみ表示
-    if (quizProcess == QuizProcessType.failure) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        child: AnswerButton(),
-      );
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  /// おわりにするボタンを構築します。
-  Widget _buildGiveUpButton(QuizProcessType? quizProcess, QuizTypes quizType) {
-    /// いっぱいやるモードで正解した場合に表示
-    if (quizType == QuizTypes.endless &&
-        quizProcess == QuizProcessType.success) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        child: GiveUpButton(),
-      );
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  /// 結果ボタンを構築します。
-  Widget _buildResultButton(
-    QuizProcessType? quizProcess,
-    QuizTypes quizType,
-    bool enabled,
-  ) {
-    /// いっぱいやるモードで、失敗か終了した場合に表示
-    if (quizType == QuizTypes.endless &&
-        (quizProcess == QuizProcessType.failure ||
-            quizProcess == QuizProcessType.quit)) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        child: ResultButton(),
-      );
-    }
-
-    return const SizedBox.shrink();
-  }
+  /// いっぱいやるモードで、失敗か終了した場合に結果を表示
+  bool _showResult(QuizProcessType? quizProcess, QuizTypes quizType) =>
+      quizType == QuizTypes.endless &&
+      (quizProcess == QuizProcessType.failure ||
+          quizProcess == QuizProcessType.quit);
 }
