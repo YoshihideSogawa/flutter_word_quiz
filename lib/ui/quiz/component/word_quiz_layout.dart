@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
@@ -33,25 +32,35 @@ class WordQuizLayout extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controlEnabled = useState(true);
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
+    // アニメーションに連動してQuizProcessを同期するための変数
+    final lazyQuizProcess = useState<QuizProcessType?>(null);
+    final quizInfo = ref.watch(quizInfoProvider(quizType)).value;
     final quizPage = ref.watch(quizPageProvider(quizType));
     final inputType = ref.watch(inputTypeRepositoryProvider);
+    final wordAnimation = useState<bool>(false);
+    final controlEnabled = !wordAnimation.value;
+    void wordAnimationCallback() {
+      // アニメーション中はquizProcessを同期しない
+      if (wordAnimation.value) {
+        return;
+      }
+      lazyQuizProcess.value = quizInfo?.quizProcess;
+    }
+
+    // quizProcessの初期設定
+    if (lazyQuizProcess.value == null ||
+        lazyQuizProcess.value != quizInfo?.quizProcess) {
+      wordAnimationCallback();
+    }
+    wordAnimation.addListener(wordAnimationCallback);
     // debugPrint('$quizType >>> ${quizInfo?.answer?.name}');
     return Stack(
       children: [
         Column(
           children: [
             const SizedBox(height: 8),
-            WordNames(
-              onStartWordAnimation: () {
-                controlEnabled.value = false;
-              },
-              onEndWordAnimation: () {
-                controlEnabled.value = true;
-              },
-            ),
+            WordNames(wordAnimation: wordAnimation),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -68,26 +77,42 @@ class WordQuizLayout extends HookConsumerWidget {
                             if (inputType.valueOrNull == InputTypes.switching)
                               const KeyboardSwitchButton(),
                             const Spacer(flex: 2),
-                            _buildAnswerButton(quizInfo, quizType),
-                            _buildRetireButton(
-                              quizInfo,
+                            _buildAnswerButton(
+                              lazyQuizProcess.value,
                               quizType,
-                              controlEnabled.value,
                             ),
-                            _buildGiveUpButton(quizInfo, quizType),
-                            _buildNextQuizButton(quizInfo, quizType),
-                            _buildRestartButton(quizInfo, quizType),
-                            _buildResultButton(quizInfo, quizType),
+                            _buildRetireButton(
+                              lazyQuizProcess.value,
+                              quizType,
+                              controlEnabled,
+                            ),
+                            _buildGiveUpButton(
+                              lazyQuizProcess.value,
+                              quizType,
+                            ),
+                            _buildNextQuizButton(
+                              lazyQuizProcess.value,
+                              quizType,
+                            ),
+                            _buildRestartButton(
+                              lazyQuizProcess.value,
+                              quizType,
+                            ),
+                            _buildResultButton(
+                              lazyQuizProcess.value,
+                              quizType,
+                              controlEnabled,
+                            ),
                             const Spacer(),
-                            DeleteButton(enabled: controlEnabled.value),
+                            DeleteButton(enabled: controlEnabled),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    WordKeyboard(enabled: controlEnabled.value),
+                    WordKeyboard(wordAnimation: wordAnimation),
                     const SizedBox(height: 8),
-                    EnterButton(enabled: controlEnabled.value),
+                    EnterButton(enabled: controlEnabled),
                     const SizedBox(height: 24),
                     const QuizFooterInfo(),
                   ],
@@ -96,7 +121,7 @@ class WordQuizLayout extends HookConsumerWidget {
             ),
           ],
         ),
-        if (quizPage.showAnswer)
+        if (controlEnabled && quizPage.showAnswer)
           const Positioned.fill(
             child: AnswerView(),
           ),
@@ -108,7 +133,7 @@ class WordQuizLayout extends HookConsumerWidget {
           const Positioned.fill(
             child: QuizSelectionView(),
           ),
-        if (quizPage.showResult)
+        if (controlEnabled && quizPage.showResult)
           const Positioned.fill(
             child: ResultView(),
           ),
@@ -121,12 +146,12 @@ class WordQuizLayout extends HookConsumerWidget {
   }
 
   /// リスタートボタンを構築します。
-  Widget _buildRestartButton(QuizInfo? quizInfo, QuizTypes quizType) {
+  Widget _buildRestartButton(QuizProcessType? quizProcess, QuizTypes quizType) {
     // いっぱいやるモードで、問題開始前か失敗か終了時の場合のみ表示
     if (quizType == QuizTypes.endless &&
-        (quizInfo?.quizProcess == QuizProcessType.none ||
-            quizInfo?.quizProcess == QuizProcessType.failure ||
-            quizInfo?.quizProcess == QuizProcessType.quit)) {
+        (quizProcess == QuizProcessType.none ||
+            quizProcess == QuizProcessType.failure ||
+            quizProcess == QuizProcessType.quit)) {
       return const Padding(
         padding: EdgeInsets.symmetric(horizontal: 4),
         child: RestartButton(),
@@ -138,12 +163,12 @@ class WordQuizLayout extends HookConsumerWidget {
 
   /// リタイアボタンを構築します。
   Widget _buildRetireButton(
-    QuizInfo? quizInfo,
+    QuizProcessType? quizProcess,
     QuizTypes quizType,
     bool enabled,
   ) {
-    // 問題開始中は表示
-    if (quizInfo?.quizProcess == QuizProcessType.started) {
+    // 問題開始中、アニメーション中でなければ表示
+    if (quizProcess == QuizProcessType.started) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: RetireButton(
@@ -156,10 +181,13 @@ class WordQuizLayout extends HookConsumerWidget {
   }
 
   /// つぎの問題ボタンを構築します。
-  Widget _buildNextQuizButton(QuizInfo? quizInfo, QuizTypes quizType) {
+  Widget _buildNextQuizButton(
+    QuizProcessType? quizProcess,
+    QuizTypes quizType,
+  ) {
     // いっぱいやるモードで正解している場合
     if (quizType == QuizTypes.endless &&
-        quizInfo?.quizProcess == QuizProcessType.success) {
+        quizProcess == QuizProcessType.success) {
       return const Padding(
         padding: EdgeInsets.symmetric(horizontal: 4),
         child: NextQuizButton(),
@@ -170,9 +198,9 @@ class WordQuizLayout extends HookConsumerWidget {
   }
 
   /// 答えの表示ボタンを構築します。
-  Widget _buildAnswerButton(QuizInfo? quizInfo, QuizTypes quizType) {
+  Widget _buildAnswerButton(QuizProcessType? quizProcess, QuizTypes quizType) {
     // 失敗時のみ表示
-    if (quizInfo?.quizProcess == QuizProcessType.failure) {
+    if (quizProcess == QuizProcessType.failure) {
       return const Padding(
         padding: EdgeInsets.symmetric(horizontal: 4),
         child: AnswerButton(),
@@ -183,10 +211,10 @@ class WordQuizLayout extends HookConsumerWidget {
   }
 
   /// おわりにするボタンを構築します。
-  Widget _buildGiveUpButton(QuizInfo? quizInfo, QuizTypes quizType) {
+  Widget _buildGiveUpButton(QuizProcessType? quizProcess, QuizTypes quizType) {
     /// いっぱいやるモードで正解した場合に表示
-    if (quizInfo?.quizType == QuizTypes.endless &&
-        (quizInfo?.quizProcess == QuizProcessType.success)) {
+    if (quizType == QuizTypes.endless &&
+        quizProcess == QuizProcessType.success) {
       return const Padding(
         padding: EdgeInsets.symmetric(horizontal: 4),
         child: GiveUpButton(),
@@ -197,11 +225,15 @@ class WordQuizLayout extends HookConsumerWidget {
   }
 
   /// 結果ボタンを構築します。
-  Widget _buildResultButton(QuizInfo? quizInfo, QuizTypes quizType) {
+  Widget _buildResultButton(
+    QuizProcessType? quizProcess,
+    QuizTypes quizType,
+    bool enabled,
+  ) {
     /// いっぱいやるモードで、失敗か終了した場合に表示
-    if (quizInfo?.quizType == QuizTypes.endless &&
-        (quizInfo?.quizProcess == QuizProcessType.failure ||
-            quizInfo?.quizProcess == QuizProcessType.quit)) {
+    if (quizType == QuizTypes.endless &&
+        (quizProcess == QuizProcessType.failure ||
+            quizProcess == QuizProcessType.quit)) {
       return const Padding(
         padding: EdgeInsets.symmetric(horizontal: 4),
         child: ResultButton(),

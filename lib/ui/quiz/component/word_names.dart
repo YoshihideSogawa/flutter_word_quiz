@@ -14,15 +14,11 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class WordNames extends StatefulHookConsumerWidget {
   const WordNames({
     super.key,
-    required this.onStartWordAnimation,
-    required this.onEndWordAnimation,
+    required this.wordAnimation,
   });
 
-  /// アニメーション開始時のコールバック
-  final VoidCallback onStartWordAnimation;
-
-  /// アニメーション終了時のコールバック
-  final VoidCallback onEndWordAnimation;
+  /// 入力文字のアニメーション中かどうか
+  final ValueNotifier<bool> wordAnimation;
 
   @override
   WordNamesState createState() => WordNamesState();
@@ -47,6 +43,9 @@ class WordNamesState extends ConsumerState<WordNames> {
   /// 1文字のWidgetのサイズ
   late Size _wordNameSize;
 
+  /// 入力文字用のタイマー
+  Timer? _timer;
+
   @override
   void didChangeDependencies() {
     _wordNameSize = _calcWordNameSize(context);
@@ -56,9 +55,8 @@ class WordNamesState extends ConsumerState<WordNames> {
   @override
   Widget build(BuildContext context) {
     final quizType = QuizType.of(context).quizType;
-    final wordAnimation = useState<bool>(false);
     ref.listen(wordInputNotifierProvider(quizType), (previous, next) async {
-      if (wordAnimation.value) {
+      if (widget.wordAnimation.value) {
         return;
       }
       // データ取得完了後
@@ -67,8 +65,7 @@ class WordNamesState extends ConsumerState<WordNames> {
         final nextResultListLength = next.value!.wordsResultList.length;
         // 1つ前の状態から、判定結果が増えていた場合
         if (prevResultListLength < nextResultListLength) {
-          wordAnimation.value = true;
-          widget.onStartWordAnimation();
+          widget.wordAnimation.value = true;
         }
       }
     });
@@ -76,43 +73,31 @@ class WordNamesState extends ConsumerState<WordNames> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNameColumn(false, quizType, wordAnimation),
+        _buildNameColumn(false, quizType),
         const SizedBox(width: _wordRowSpace),
-        _buildNameColumn(true, quizType, wordAnimation),
+        _buildNameColumn(true, quizType),
       ],
     );
   }
 
   /// 名前を1行構築します。
-  Widget _buildNameColumn(
-    bool hasOffset,
-    QuizTypes quizType,
-    ValueNotifier<bool> wordAnimation,
-  ) {
+  Widget _buildNameColumn(bool hasOffset, QuizTypes quizType) {
     return Column(
       children: [
         for (var i = 0; i < rowNum; i++)
-          _buildNameLine(
-            i + (hasOffset ? rowNum : 0),
-            quizType,
-            wordAnimation,
-          ),
+          _buildNameLine(i + (hasOffset ? rowNum : 0), quizType),
       ],
     );
   }
 
   /// 名前を1つ構築します。
-  Widget _buildNameLine(
-    int rowIndex,
-    QuizTypes quizType,
-    ValueNotifier<bool> wordAnimation,
-  ) {
+  Widget _buildNameLine(int rowIndex, QuizTypes quizType) {
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
     if (!wordInputNotifier.hasValue) {
       return const SizedBox.shrink();
     }
 
-    final nameStatesValue = useState<List<WordNameState>>(<WordNameState>[]);
+    final nameStatesValue = useState(<WordNameState>[]);
     final wordInput = wordInputNotifier.value!;
     final inputIndex = wordInput.inputIndex;
     final wordsResultList = wordInput.wordsResultList;
@@ -124,31 +109,32 @@ class WordNamesState extends ConsumerState<WordNames> {
             : <WordNameState>[]) ??
         [];
 
-    // 入力最終行がアニメーション対象となった場合
-    if (isLastRow && wordAnimation.value) {
-      useEffect(
-        () {
-          // 1文字目は入れておく
-          nameStatesValue.value = nameStates.sublist(0, 1);
-          final timer =
-              Timer.periodic(const Duration(milliseconds: 300), (timer) {
-            // 1文字ずつ増やしていく
-            if (nameStatesValue.value.length < nameStates.length) {
-              nameStatesValue.value =
-                  nameStates.sublist(0, nameStatesValue.value.length + 1);
-            }
+    // 入力最終行がアニメーション対象の場合
+    if (isLastRow && widget.wordAnimation.value) {
+      // タイマーが実行中でない場合
+      if (!(_timer?.isActive ?? false)) {
+        void timerCallback(Timer timer) {
+          // 最後の文字まで到達していたら終了
+          // 1周待ってwait時間に充てる
+          if (nameStatesValue.value.length == nameStates.length) {
+            timer.cancel();
+            widget.wordAnimation.value = false;
+          }
 
-            // 最後の文字まで到達していたら終了
-            if (nameStatesValue.value.length == nameStates.length) {
-              timer.cancel();
-              widget.onEndWordAnimation();
-              wordAnimation.value = false;
-            }
-          });
-          return timer.cancel;
-        },
-        const [],
-      );
+          // 1文字ずつ増やしていく
+          if (nameStatesValue.value.length < nameStates.length) {
+            nameStatesValue.value =
+                nameStates.sublist(0, nameStatesValue.value.length + 1);
+          }
+        }
+
+        // タイマーの初期化
+        _timer?.cancel();
+        _timer =
+            Timer.periodic(const Duration(milliseconds: 300), timerCallback);
+        // 初回はノータイムでコール
+        timerCallback.call(_timer!);
+      }
     } else {
       nameStatesValue.value = nameStates;
     }
@@ -178,6 +164,12 @@ class WordNamesState extends ConsumerState<WordNames> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   /// 1文字のサイズを計算します。

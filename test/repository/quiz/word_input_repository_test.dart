@@ -30,7 +30,6 @@ void main() {
         'ト': WordKeyboardInfo.match,
       },
       inputIndex: 1,
-      isWordChecking: true,
     );
 
     // 保存
@@ -46,6 +45,5 @@ void main() {
     expect(targetWordInfo.wordsResultList, wordInput.wordsResultList);
     expect(targetWordInfo.keyResultList, wordInput.keyResultList);
     expect(targetWordInfo.inputIndex, wordInput.inputIndex);
-    expect(targetWordInfo.isWordChecking, wordInput.isWordChecking);
   });
 }

@@ -16,11 +16,11 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class WordKeyboard extends ConsumerStatefulWidget {
   const WordKeyboard({
     super.key,
-    required this.enabled,
+    required this.wordAnimation,
   });
 
-  /// 有効かどうか
-  final bool enabled;
+  /// 入力文字のアニメーション中かどうか
+  final ValueNotifier<bool> wordAnimation;
 
   @override
   WordKeyboardState createState() => WordKeyboardState();
@@ -101,7 +101,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
           Padding(
             padding: const EdgeInsets.only(bottom: _keySpace),
             child: InputKey(
-              enabled: widget.enabled,
+              enabled: !widget.wordAnimation.value,
               text: keyMap[index * 5 + i],
               width: _keySize.width,
               height: _keySize.height,

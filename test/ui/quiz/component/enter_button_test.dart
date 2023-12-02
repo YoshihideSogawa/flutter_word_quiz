@@ -27,7 +27,7 @@ void main() {
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: EnterButton(),
+            child: EnterButton(enabled: true),
           ),
         ),
       ),
@@ -61,7 +61,7 @@ void main() {
           home: Scaffold(
             body: QuizType(
               quizType: quizType,
-              child: EnterButton(),
+              child: EnterButton(enabled: true),
             ),
           ),
         ),
@@ -108,7 +108,7 @@ void main() {
           home: Scaffold(
             body: QuizType(
               quizType: quizType,
-              child: EnterButton(),
+              child: EnterButton(enabled: true),
             ),
           ),
         ),
@@ -162,7 +162,7 @@ void main() {
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: EnterButton(),
+              body: EnterButton(enabled: true),
             ),
           ),
         ),

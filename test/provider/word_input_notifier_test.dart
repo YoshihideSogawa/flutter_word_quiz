@@ -29,7 +29,6 @@ void main() {
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
     expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
     expect(wordInput.inputIndex, 0);
-    expect(wordInput.isWordChecking, isFalse);
   });
 
   test('初期値が保存されている場合', () async {
@@ -41,25 +40,6 @@ void main() {
       ],
     );
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
-    expect(wordInput, _wordInputTest);
-  });
-
-  test('inputWord(文字入力チェック中)', () async {
-    const quizType = QuizTypes.daily;
-
-    final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest),
-      ],
-    );
-
-    await container
-        .read(wordInputNotifierProvider(quizType).notifier)
-        .inputWord('ア');
-
-    // 変わらない
     final wordInput =
         await container.read(wordInputNotifierProvider(quizType).future);
     expect(wordInput, _wordInputTest);
@@ -118,23 +98,6 @@ void main() {
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
     expect(wordInput.inputIndex, _wordInputTest3.inputIndex);
-    expect(wordInput.isWordChecking, _wordInputTest3.isWordChecking);
-  });
-
-  test('deleteWord(isWordChecking)', () async {
-    const quizType = QuizTypes.daily;
-    final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest),
-      ],
-    );
-
-    await container
-        .read(wordInputNotifierProvider(quizType).notifier)
-        .deleteWord();
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
-    expect(wordInput, _wordInputTest);
   });
 
   test('deleteWord(文字入力なし)', () async {
@@ -170,40 +133,6 @@ void main() {
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
     expect(wordInput.inputIndex, _wordInputTest3.inputIndex);
-    expect(wordInput.isWordChecking, _wordInputTest3.isWordChecking);
-  });
-
-  test('submit(isWordChecking)', () async {
-    const quizType = QuizTypes.daily;
-    final quizInfo = QuizInfo(
-      answer: monsterTestList[0],
-      quizProcess: QuizProcessType.started,
-    );
-
-    final container = ProviderContainer(
-      overrides: [
-        quizOverride(
-          quizType: quizType,
-          wordInput: _wordInputTest,
-          quizInfo: quizInfo,
-        ),
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
-      ],
-    );
-
-    // 初期化
-    await container.read(wordInputNotifierProvider(quizType).future);
-
-    // submit
-    final result = await container
-        .read(wordInputNotifierProvider(quizType).notifier)
-        .submit();
-    expect(result, SubmitResult.skip);
-
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
-    expect(wordInput, _wordInputTest);
   });
 
   test('submit(終了している)', () async {
@@ -269,7 +198,6 @@ void main() {
 
     final wordInput =
         await container.read(wordInputNotifierProvider(quizType).future);
-    expect(wordInput.isWordChecking, isFalse);
     expect(wordInput, _wordInputTest4);
   });
 
@@ -303,7 +231,6 @@ void main() {
 
     final wordInput =
         await container.read(wordInputNotifierProvider(quizType).future);
-    expect(wordInput.isWordChecking, isFalse);
     expect(wordInput, _wordInputTest3);
   });
 
@@ -341,7 +268,6 @@ void main() {
     expect(wordInput.wordsResultList.last?.length, 5);
     expect(wordInput.keyResultList.length, 7);
     expect(wordInput.inputIndex, _wordInputTest5.inputIndex + 1);
-    expect(wordInput.isWordChecking, isFalse);
   });
 
   test('reset()', () async {
@@ -363,7 +289,6 @@ void main() {
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
     expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
     expect(wordInput.inputIndex, 0);
-    expect(wordInput.isWordChecking, isFalse);
   });
 }
 
@@ -382,7 +307,6 @@ const _wordInputTest = WordInput(
     'ト': WordKeyboardInfo.match,
   },
   inputIndex: 1,
-  isWordChecking: true,
 );
 
 // すでに5文字に入力

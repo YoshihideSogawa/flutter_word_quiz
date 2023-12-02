@@ -32,11 +32,13 @@ void main() {
         overrides: [
           quizOverride(quizType: quizType, wordInput: wordInput),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordNames(),
+              body: WordNames(
+                wordAnimation: ValueNotifier(true),
+              ),
             ),
           ),
         ),

@@ -15,7 +15,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: DeleteButton(),
+            child: DeleteButton(enabled: true),
           ),
         ),
       ),
@@ -43,7 +43,7 @@ void main() {
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: DeleteButton(),
+            child: DeleteButton(enabled: true),
           ),
         ),
       ),

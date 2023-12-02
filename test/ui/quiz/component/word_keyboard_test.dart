@@ -30,11 +30,13 @@ void main() {
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(),
+              body: WordKeyboard(
+                wordAnimation: ValueNotifier(true),
+              ),
             ),
           ),
         ),
@@ -61,11 +63,13 @@ void main() {
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(),
+              body: WordKeyboard(
+                wordAnimation: ValueNotifier(true),
+              ),
             ),
           ),
         ),
@@ -98,11 +102,13 @@ void main() {
               .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.all),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(),
+              body: WordKeyboard(
+                wordAnimation: ValueNotifier(true),
+              ),
             ),
           ),
         ),
