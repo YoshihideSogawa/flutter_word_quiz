@@ -119,13 +119,12 @@ class WordNamesState extends ConsumerState<WordNames> {
           if (nameStatesValue.value.length == nameStates.length) {
             timer.cancel();
             widget.wordAnimation.value = false;
+            return;
           }
 
           // 1文字ずつ増やしていく
-          if (nameStatesValue.value.length < nameStates.length) {
-            nameStatesValue.value =
-                nameStates.sublist(0, nameStatesValue.value.length + 1);
-          }
+          nameStatesValue.value =
+              nameStates.sublist(0, nameStatesValue.value.length + 1);
         }
 
         // タイマーの初期化
