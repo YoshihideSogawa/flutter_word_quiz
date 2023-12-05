@@ -12,9 +12,9 @@ import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/remaining_time_provider.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
+import 'package:word_quiz/ui/quiz/component/clock_text.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/share_button.dart';
@@ -147,7 +147,7 @@ class StatisticsView extends ConsumerWidget {
           style: TextStyle(fontSize: 10.5),
         ),
         SizedBox(height: 4),
-        _ClockText(),
+        ClockText(),
       ],
     );
   }
@@ -274,23 +274,6 @@ class _ResultDetail extends ConsumerWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// 問題が変わるまでの時間表示を行います。
-class _ClockText extends ConsumerWidget {
-  const _ClockText(); // coverage:ignore-line
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final remainingTime = ref.watch(remainingTimeProvider);
-    return Text(
-      remainingTime,
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
     );
   }
 }

@@ -7,6 +7,7 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  clock: ^1.1.1
   collection: ^1.17.2
   crypto: ^3.0.3
   cupertino_icons: ^1.0.6
