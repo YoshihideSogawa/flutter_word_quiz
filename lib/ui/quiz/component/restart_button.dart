@@ -2,19 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
-import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 最初から始めるボタンです。
 class RestartButton extends ConsumerWidget {
   const RestartButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizType = QuizType.of(context).quizType;
     final size = MediaQuery.of(context).size;
     return QuizControlFrame(
       child: Material(
@@ -28,7 +30,9 @@ class RestartButton extends ConsumerWidget {
           child: InkWell(
             key: const Key('restart_button_ink_well'),
             onTap: () {
-              ref.read(quizPageProvider(quizType).notifier).showQuizSelection();
+              quizPageInfo.value = quizPageInfo.value.copyWith(
+                showQuizSelection: true,
+              );
             },
             borderRadius: BorderRadius.circular(4),
             child: Center(

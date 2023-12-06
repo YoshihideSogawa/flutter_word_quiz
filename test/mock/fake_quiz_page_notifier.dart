@@ -10,25 +10,6 @@ class FakeQuizPageNotifier extends StateNotifier<QuizPageInfo>
 
   bool showStatisticsCalled = false;
 
-  bool dismissStatisticsCalled = false;
-
-  @override
-  void dismissAnswer() {}
-
-  @override
-  void dismissQuizChanged() {}
-
-  @override
-  void dismissQuizSelection() {}
-
-  @override
-  void dismissResult() {}
-
-  @override
-  void dismissStatistics() {
-    dismissStatisticsCalled = true;
-  }
-
   @override
   void showAnswer() {}
 
@@ -44,10 +25,5 @@ class FakeQuizPageNotifier extends StateNotifier<QuizPageInfo>
   @override
   void showStatistics() {
     showStatisticsCalled = true;
-  }
-
-  @override
-  void updateKeyboard({required bool isNormalKeyboard}) {
-    updateKeyboardCalled = true;
   }
 }

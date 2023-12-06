@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
@@ -28,7 +28,13 @@ import 'package:word_quiz/ui/quiz/component/word_names.dart';
 
 /// 問題表示の共通レイアウトです。
 class WordQuizLayout extends HookConsumerWidget {
-  const WordQuizLayout({super.key}); //coverage:ignore-line
+  const WordQuizLayout({
+    super.key,
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +42,6 @@ class WordQuizLayout extends HookConsumerWidget {
     // アニメーションに連動してQuizProcessを同期するための変数
     final lazyQuizProcess = useState<QuizProcessType?>(null);
     final quizInfo = ref.watch(quizInfoProvider(quizType)).value;
-    final quizPage = ref.watch(quizPageProvider(quizType));
     final inputType = ref.watch(inputTypeRepositoryProvider);
     final wordAnimation = useState<bool>(false);
     final controlEnabled = !wordAnimation.value;
@@ -75,10 +80,10 @@ class WordQuizLayout extends HookConsumerWidget {
                         child: Row(
                           children: [
                             if (inputType.valueOrNull == InputTypes.switching)
-                              const KeyboardSwitchButton(),
+                              KeyboardSwitchButton(quizPageInfo: quizPageInfo),
                             const Spacer(flex: 2),
                             if (_showAnswer(lazyQuizProcess.value))
-                              const AnswerButton(),
+                              AnswerButton(quizPageInfo: quizPageInfo),
                             if (_showRetire(lazyQuizProcess.value))
                               RetireButton(enabled: controlEnabled),
                             if (_showGiveUp(lazyQuizProcess.value, quizType))
@@ -86,9 +91,9 @@ class WordQuizLayout extends HookConsumerWidget {
                             if (_showNextQuiz(lazyQuizProcess.value, quizType))
                               const NextQuizButton(),
                             if (_showRestart(lazyQuizProcess.value, quizType))
-                              const RestartButton(),
+                              RestartButton(quizPageInfo: quizPageInfo),
                             if (_showResult(lazyQuizProcess.value, quizType))
-                              const ResultButton(),
+                              ResultButton(quizPageInfo: quizPageInfo),
                             const Spacer(),
                             DeleteButton(enabled: controlEnabled),
                           ],
@@ -107,25 +112,25 @@ class WordQuizLayout extends HookConsumerWidget {
             ),
           ],
         ),
-        if (controlEnabled && quizPage.showAnswer)
-          const Positioned.fill(
-            child: AnswerView(),
+        if (controlEnabled && quizPageInfo.value.showAnswer)
+          Positioned.fill(
+            child: AnswerView(quizPageInfo: quizPageInfo),
           ),
-        if (quizPage.showStatistics)
-          const Positioned.fill(
-            child: StatisticsView(),
+        if (quizPageInfo.value.showStatistics)
+          Positioned.fill(
+            child: StatisticsView(quizPageInfo: quizPageInfo),
           ),
-        if (quizPage.showQuizSelection)
-          const Positioned.fill(
-            child: QuizSelectionView(),
+        if (quizPageInfo.value.showQuizSelection)
+          Positioned.fill(
+            child: QuizSelectionView(quizPageInfo: quizPageInfo),
           ),
-        if (controlEnabled && quizPage.showResult)
-          const Positioned.fill(
-            child: ResultView(),
+        if (controlEnabled && quizPageInfo.value.showResult)
+          Positioned.fill(
+            child: ResultView(quizPageInfo: quizPageInfo),
           ),
-        if (quizPage.showQuizChanged)
-          const Positioned.fill(
-            child: QuizChangedView(),
+        if (quizPageInfo.value.showQuizChanged)
+          Positioned.fill(
+            child: QuizChangedView(quizPageInfo: quizPageInfo),
           ),
       ],
     );

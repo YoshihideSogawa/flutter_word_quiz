@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/monster_series.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_selection_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -16,6 +16,7 @@ import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('QuizSelectionView', (tester) async {
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -23,11 +24,11 @@ void main() {
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
-              body: QuizSelectionView(),
+              body: QuizSelectionView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -46,7 +47,7 @@ void main() {
   });
 
   testWidgets('外側の領域のタップ(キャンセル)', (tester) async {
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
@@ -54,14 +55,12 @@ void main() {
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
           settingsOverride(quizRange: xy),
-          quizPageProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
-              body: QuizSelectionView(),
+              body: QuizSelectionView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -72,11 +71,11 @@ void main() {
 
     await tester.tapAt(Offset.zero);
 
-    verify(mockQuizPageNotifier.dismissQuizSelection()).called(1);
+    expect(quizPageInfo.value.showQuizSelection, false);
   });
 
   testWidgets('ドロップダウンの選択', (tester) async {
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     final mockQuizInfoNotifier = MockQuizInfoNotifier();
 
     await tester.pumpWidget(
@@ -85,16 +84,14 @@ void main() {
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
           settingsOverride(quizRange: xy),
-          quizPageProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)
               .overrideWith((ref) => mockQuizInfoNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
-              body: QuizSelectionView(),
+              body: QuizSelectionView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -113,7 +110,7 @@ void main() {
   });
 
   testWidgets('スタートのタップ', (tester) async {
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     final mockQuizInfoNotifier = MockQuizInfoNotifier();
 
     await tester.pumpWidget(
@@ -122,16 +119,14 @@ void main() {
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
           settingsOverride(quizRange: xy),
-          quizPageProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)
               .overrideWith((ref) => mockQuizInfoNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
-              body: QuizSelectionView(),
+              body: QuizSelectionView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -143,6 +138,6 @@ void main() {
     await tester.tap(find.byKey(const Key('start_button')));
 
     verify(mockQuizInfoNotifier.startQuiz(any, any)).called(1);
-    verify(mockQuizPageNotifier.dismissQuizSelection()).called(1);
+    expect(quizPageInfo.value.showQuizSelection, false);
   });
 }

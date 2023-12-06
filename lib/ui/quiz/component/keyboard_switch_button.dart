@@ -2,20 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
-import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// キーボードの切り替えボタンです。
 class KeyboardSwitchButton extends ConsumerWidget {
   const KeyboardSwitchButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizType = QuizType.of(context).quizType;
-    final quizPage = ref.watch(quizPageProvider(quizType));
     final size = MediaQuery.of(context).size;
     return Row(
       children: [
@@ -25,11 +26,11 @@ class KeyboardSwitchButton extends ConsumerWidget {
             bottomLeft: Radius.circular(4),
             topLeft: Radius.circular(4),
           ),
-          selected: quizPage.normalKeyboard,
+          selected: quizPageInfo.value.normalKeyboard,
           onTap: () {
-            ref.read(quizPageProvider(quizType).notifier).updateKeyboard(
-                  isNormalKeyboard: true,
-                );
+            quizPageInfo.value = quizPageInfo.value.copyWith(
+              normalKeyboard: true,
+            );
           },
           size: size,
         ),
@@ -39,11 +40,11 @@ class KeyboardSwitchButton extends ConsumerWidget {
             bottomRight: Radius.circular(4),
             topRight: Radius.circular(4),
           ),
-          selected: !quizPage.normalKeyboard,
+          selected: !quizPageInfo.value.normalKeyboard,
           onTap: () {
-            ref.read(quizPageProvider(quizType).notifier).updateKeyboard(
-                  isNormalKeyboard: false,
-                );
+            quizPageInfo.value = quizPageInfo.value.copyWith(
+              normalKeyboard: false,
+            );
           },
           size: size,
         ),

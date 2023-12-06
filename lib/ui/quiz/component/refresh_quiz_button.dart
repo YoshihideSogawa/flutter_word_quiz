@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 問題を更新するボタンです。
 class RefreshQuizButton extends ConsumerWidget {
   const RefreshQuizButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizPage = ref.watch(quizPageProvider(quizType));
+    final quizPage = quizPageInfo.value;
     return Tooltip(
       message: 'きょうのもんだいを こうしんします',
       child: IconButton(

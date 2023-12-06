@@ -2,20 +2,22 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
-import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 答えを確認するボタンです。
 class AnswerButton extends ConsumerWidget {
   const AnswerButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizType = QuizType.of(context).quizType;
     final size = MediaQuery.of(context).size;
     return QuizControlFrame(
       child: Tooltip(
@@ -31,7 +33,9 @@ class AnswerButton extends ConsumerWidget {
             child: InkWell(
               key: const Key('answer_button_ink_well'),
               onTap: () {
-                ref.read(quizPageProvider(quizType).notifier).showAnswer();
+                quizPageInfo.value = quizPageInfo.value.copyWith(
+                  showAnswer: true,
+                );
               },
               borderRadius: BorderRadius.circular(4),
               child: Center(

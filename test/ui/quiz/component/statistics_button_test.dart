@@ -3,31 +3,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_button.dart';
-
-import '../../../mock/fake_quiz_page_notifier.dart';
 
 void main() {
   testWidgets('StatisticsButton', (tester) async {
     const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizPageProvider(quizType).overrideWith(
-            (ref) => FakeQuizPageNotifier(
-              const QuizPageInfo(
-
-              ),
-            ),
-          ),
-        ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsButton(),
+              body: StatisticsButton(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -39,22 +28,14 @@ void main() {
 
   testWidgets('StatisticsButton(Tap)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-
-      ),
-    );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
-        ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsButton(),
+              body: StatisticsButton(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -62,6 +43,6 @@ void main() {
     );
 
     await tester.tap(find.byIcon(Icons.leaderboard_outlined));
-    expect(fakeQuizPageNotifier.showStatisticsCalled, isTrue);
+    expect(quizPageInfo.value.showStatistics, isTrue);
   });
 }

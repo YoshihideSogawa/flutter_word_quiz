@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -9,14 +9,20 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class AnswerView extends ConsumerWidget {
   const AnswerView({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
     return QuizDialog(
       onTap: () {
-        ref.read(quizPageProvider(quizType).notifier).dismissAnswer();
+        quizPageInfo.value = quizPageInfo.value.copyWith(
+          showAnswer: false,
+        );
       },
       child: Container(
         width: 160,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -7,7 +8,11 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class StatisticsButton extends ConsumerWidget {
   const StatisticsButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +28,9 @@ class StatisticsButton extends ConsumerWidget {
                 !quizPage.showResult &&
                 !quizPage.showQuizChanged
             ? () {
-                ref.read(quizPageProvider(quizType).notifier).showStatistics();
+                quizPageInfo.value = quizPageInfo.value.copyWith(
+                  showStatistics: true,
+                );
               }
             : null,
       ),

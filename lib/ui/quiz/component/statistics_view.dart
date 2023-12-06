@@ -5,13 +5,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_properties.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/clock_text.dart';
@@ -22,7 +22,13 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 統計とシェアの表示です。
 class StatisticsView extends ConsumerWidget {
-  const StatisticsView({super.key}); // coverage:ignore-line
+  const StatisticsView({
+    super.key,
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -155,7 +161,9 @@ class StatisticsView extends ConsumerWidget {
   /// この画面を閉じます。(問題の更新があれば更新します。)
   Future<void> close(WidgetRef ref, QuizTypes quizType) async {
     await ref.read(quizInfoProvider(quizType).notifier).refreshDailyQuiz();
-    ref.read(quizPageProvider(quizType).notifier).dismissStatistics();
+    quizPageInfo.value = quizPageInfo.value.copyWith(
+      showStatistics: false,
+    );
   }
 }
 

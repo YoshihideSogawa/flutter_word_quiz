@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_properties.dart';
 import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quit_quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
@@ -16,7 +16,13 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 結果画面を表示します。（いっぱいやるモードのみ）
 class ResultView extends ConsumerWidget {
-  const ResultView({super.key}); // coverage:ignore-line
+  const ResultView({
+    super.key,
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +31,9 @@ class ResultView extends ConsumerWidget {
     final statistics = ref.watch(statisticsNotifierProvider(quizType));
     return QuizDialog(
       onTap: () {
-        ref.read(quizPageProvider(quizType).notifier).dismissResult();
+        quizPageInfo.value = quizPageInfo.value.copyWith(
+          showResult: false,
+        );
       },
       child: IntrinsicHeight(
         child: Container(
@@ -77,7 +85,7 @@ class ResultView extends ConsumerWidget {
                     'おわる をえらぶと れんさ がとまります',
                     style: TextStyle(fontSize: 10.5),
                   ),
-                const _ActionButtons(),
+                _ActionButtons(quizPageInfo: quizPageInfo),
               ],
             ),
           ),
@@ -186,7 +194,12 @@ String shareText(QuizInfo? info, QuizStatistics statistics) {
 
 /// 下部のボタンです。
 class _ActionButtons extends ConsumerWidget {
-  const _ActionButtons(); // coverage:ignore-line
+  const _ActionButtons({
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -214,7 +227,9 @@ class _ActionButtons extends ConsumerWidget {
           TextButton(
             onPressed: () {
               ref.read(quizInfoProvider(quizType).notifier).nextQuiz();
-              ref.read(quizPageProvider(quizType).notifier).dismissResult();
+              quizPageInfo.value = quizPageInfo.value.copyWith(
+                showResult: false,
+              );
             },
             child: const Text('つぎへ'),
           ),
@@ -224,7 +239,9 @@ class _ActionButtons extends ConsumerWidget {
 
     return TextButton(
       onPressed: () {
-        ref.read(quizPageProvider(quizType).notifier).dismissResult();
+        quizPageInfo.value = quizPageInfo.value.copyWith(
+          showResult: false,
+        );
       },
       child: const Text('とじる'),
     );

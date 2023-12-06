@@ -10,7 +10,6 @@ import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/delete_button.dart';
@@ -31,13 +30,12 @@ import 'package:word_quiz/ui/quiz/component/word_keyboard.dart';
 import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('切り替えモード/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -72,14 +70,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -102,7 +98,7 @@ void main() {
 
   testWidgets('全表示/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -136,15 +132,13 @@ void main() {
           quizOverride(quizType: quizType, wordInput: wordInput),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
           settingsOverride(inputType: InputTypes.all),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -167,7 +161,7 @@ void main() {
 
   testWidgets('切り替えモード/Daily/success', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -202,14 +196,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -232,7 +224,7 @@ void main() {
 
   testWidgets('切り替えモード/Daily/failure', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -267,14 +259,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -297,7 +287,7 @@ void main() {
 
   testWidgets('切り替えモード/endless/none', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -331,14 +321,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -361,7 +349,7 @@ void main() {
 
   testWidgets('切り替えモード/endless/started', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -396,14 +384,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -426,7 +412,7 @@ void main() {
 
   testWidgets('切り替えモード/endless/success', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -461,14 +447,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -491,7 +475,7 @@ void main() {
 
   testWidgets('切り替えモード/endless/failure', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
@@ -526,14 +510,12 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -556,11 +538,6 @@ void main() {
 
   testWidgets('切り替えモード/endless/quit', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
-    );
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
@@ -591,14 +568,18 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(
+                quizPageInfo: ValueNotifier(
+                  const QuizPageInfo(
+                    normalKeyboard: false,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -621,7 +602,7 @@ void main() {
 
   testWidgets('全ダイアログ表示', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
         showAnswer: true,
@@ -665,14 +646,12 @@ void main() {
           ),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),

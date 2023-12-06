@@ -5,48 +5,36 @@ import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/refresh_quiz_button.dart';
 
-import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/generate_mocks.mocks.dart';
 
 void main() {
   testWidgets('RefreshQuizButton', (tester) async {
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-
-      ),
-    );
-
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizPageProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizPageNotifier),
-        ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
-              body: RefreshQuizButton(),
+              body: RefreshQuizButton(
+                quizPageInfo: ValueNotifier<QuizPageInfo>(
+                  const QuizPageInfo(),
+                ),
+              ),
             ),
           ),
         ),
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.byType(Icon), findsOneWidget);
   });
 
   testWidgets('RefreshQuizButtonのタップ', (tester) async {
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-
-      ),
-    );
-
     final mockQuizInfoNotifier = MockQuizInfoNotifier();
     when(mockQuizInfoNotifier.refreshDailyQuiz())
         .thenAnswer((_) async => false);
@@ -54,16 +42,18 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizPageProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizPageNotifier),
           quizInfoProvider(QuizTypes.daily)
               .overrideWith((ref) => mockQuizInfoNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
-              body: RefreshQuizButton(),
+              body: RefreshQuizButton(
+                quizPageInfo: ValueNotifier<QuizPageInfo>(
+                  const QuizPageInfo(),
+                ),
+              ),
             ),
           ),
         ),

@@ -9,12 +9,10 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
 import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/fake_quiz_page_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -34,7 +32,7 @@ void main() {
       maxChain: 3,
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
@@ -47,14 +45,12 @@ void main() {
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -82,7 +78,7 @@ void main() {
     // とじるをタップ
     await tester.tap(find.text('とじる'));
     expect(fakeQuizInfoNotifier.refreshDailyQuizCalled, isTrue);
-    expect(fakeQuizPageNotifier.dismissStatisticsCalled, isTrue);
+    expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Endless)', (tester) async {
@@ -103,7 +99,7 @@ void main() {
       maxChain: 3,
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
@@ -112,14 +108,12 @@ void main() {
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -145,7 +139,8 @@ void main() {
 
     // とじるをタップ
     await tester.tap(find.text('とじる'));
-    expect(fakeQuizPageNotifier.dismissStatisticsCalled, isTrue);
+
+    expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
@@ -158,7 +153,7 @@ void main() {
       ),
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -174,14 +169,12 @@ void main() {
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -191,7 +184,7 @@ void main() {
     // とじるをタップ
     await tester.tapAt(Offset.zero);
     expect(fakeQuizInfoNotifier.refreshDailyQuizCalled, isTrue);
-    expect(fakeQuizPageNotifier.dismissStatisticsCalled, isTrue);
+    expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
@@ -204,7 +197,7 @@ void main() {
       ),
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -220,14 +213,12 @@ void main() {
           quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -247,7 +238,7 @@ void main() {
       ),
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -263,14 +254,12 @@ void main() {
           quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -289,7 +278,7 @@ void main() {
       ),
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -305,14 +294,12 @@ void main() {
           quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -333,7 +320,7 @@ void main() {
       ),
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -349,14 +336,12 @@ void main() {
           quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -376,7 +361,7 @@ void main() {
       const AsyncValue.loading(),
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -392,14 +377,12 @@ void main() {
           quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
-          quizPageProvider(quizType)
-              .overrideWith((ref) => fakeQuizPageNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),

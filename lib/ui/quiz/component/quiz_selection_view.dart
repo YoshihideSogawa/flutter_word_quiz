@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/monster_series.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
@@ -15,7 +15,11 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class QuizSelectionView extends HookConsumerWidget {
   const QuizSelectionView({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +44,9 @@ class QuizSelectionView extends HookConsumerWidget {
 
     return QuizDialog(
       onTap: () {
-        ref.read(quizPageProvider(quizType).notifier).dismissQuizSelection();
+        quizPageInfo.value = quizPageInfo.value.copyWith(
+          showQuizSelection: false,
+        );
       },
       child: IntrinsicHeight(
         child: Container(
@@ -110,9 +116,9 @@ class QuizSelectionView extends HookConsumerWidget {
                         .read(quizInfoProvider(quizType).notifier)
                         .startQuiz(seedController.text, dropdownValue.value);
                     // 画面を閉じる
-                    ref
-                        .read(quizPageProvider(quizType).notifier)
-                        .dismissQuizSelection();
+                    quizPageInfo.value = quizPageInfo.value.copyWith(
+                      showQuizSelection: false,
+                    );
                   },
                   child: const Text('スタート'),
                 ),

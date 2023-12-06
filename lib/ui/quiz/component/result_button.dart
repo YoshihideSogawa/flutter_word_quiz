@@ -2,19 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
-import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 結果ボタンです。
 class ResultButton extends ConsumerWidget {
   const ResultButton({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizType = QuizType.of(context).quizType;
     final size = MediaQuery.of(context).size;
     return QuizControlFrame(
       child: Material(
@@ -28,7 +30,9 @@ class ResultButton extends ConsumerWidget {
           child: InkWell(
             key: const Key('result_button'),
             onTap: () {
-              ref.read(quizPageProvider(quizType).notifier).showResult();
+              quizPageInfo.value = quizPageInfo.value.copyWith(
+                showResult: true,
+              );
             },
             borderRadius: BorderRadius.circular(4),
             child: Center(
