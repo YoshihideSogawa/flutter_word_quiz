@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/logic/keyboard_checker.dart';
 import 'package:word_quiz/logic/word_checker.dart';
@@ -19,7 +18,7 @@ class WordInputNotifier extends _$WordInputNotifier {
     final wordInput =
         await ref.watch(wordInputRepositoryProvider(quizType).future);
 
-    return wordInput ?? wordInputInitValue;
+    return wordInput ?? const WordInput(wordsList: [[]]);
   }
 
   /// 1文字入力します。
@@ -127,19 +126,11 @@ class WordInputNotifier extends _$WordInputNotifier {
 
   /// 入力のリセットを行います。
   Future<void> reset() async {
-    // WorInputの保存
     await ref
         .read(wordInputRepositoryProvider(quizType).notifier)
-        .saveWordInput(wordInputInitValue);
-    ref.invalidateSelf();
+        .deleteWordInput();
   }
 }
-
-/// 初期値を取得します。
-@visibleForTesting
-WordInput get wordInputInitValue => const WordInput(
-      wordsList: [[]],
-    );
 
 /// 確定を行った後の結果
 enum SubmitResult {

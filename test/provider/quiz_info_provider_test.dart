@@ -10,7 +10,6 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
@@ -245,7 +244,7 @@ void main() {
     expect(quizInfo.quizProcess, QuizProcessType.started);
 
     final wordInput = parseWordInput(quizOverrideBox.box);
-    expect(wordInput, wordInputInitValue);
+    expect(wordInput, isNull);
   });
 
   test('nextQuiz()', () async {
@@ -277,7 +276,7 @@ void main() {
     expect(quizStatistics?.playCount, 1);
 
     final wordInput = parseWordInput(quizOverrideBox.box);
-    expect(wordInput, wordInputInitValue);
+    expect(wordInput, isNull);
   });
 
   test('quitQuiz()', () async {

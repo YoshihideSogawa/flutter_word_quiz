@@ -37,6 +37,14 @@ class WordInputRepository extends _$WordInputRepository {
 
     ref.invalidateSelf();
   }
+
+  /// [WordInput]を削除します。
+  Future<void> deleteWordInput() async {
+    final quizBox = await ref.watch(hiveBoxProvider(quizType.boxName).future);
+    await quizBox.delete(wordInputKey);
+
+    ref.invalidateSelf();
+  }
 }
 
 @visibleForTesting

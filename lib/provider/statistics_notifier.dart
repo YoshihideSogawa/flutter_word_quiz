@@ -30,7 +30,6 @@ class StatisticsNotifier extends _$StatisticsNotifier {
     await ref
         .read(statisticsRepositoryProvider(quizType).notifier)
         .saveStatistics(quizStatistics);
-    ref.invalidateSelf();
   }
 
   /// つぎのクイズ開始の情報を設定します。
@@ -45,7 +44,6 @@ class StatisticsNotifier extends _$StatisticsNotifier {
     await ref
         .read(statisticsRepositoryProvider(quizType).notifier)
         .saveStatistics(quizStatistics);
-    ref.invalidateSelf();
   }
 
   /// クイズの成功を記録します。
@@ -64,7 +62,6 @@ class StatisticsNotifier extends _$StatisticsNotifier {
     await ref
         .read(statisticsRepositoryProvider(quizType).notifier)
         .saveStatistics(quizStatistics);
-    ref.invalidateSelf();
   }
 
   /// クイズの終了を記録します。(失敗とおわりにするケース)
@@ -80,6 +77,5 @@ class StatisticsNotifier extends _$StatisticsNotifier {
     await ref
         .read(statisticsRepositoryProvider(quizType).notifier)
         .saveStatistics(quizStatistics);
-    ref.invalidateSelf();
   }
 }
