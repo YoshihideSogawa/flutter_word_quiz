@@ -235,9 +235,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     await _ref
         .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
-
-    // 結果を表示
-    _ref.watch(quizPageProvider(_quizType).notifier).showResult();
   }
 
   /// クイズからリタイアします。
@@ -246,7 +243,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   }
 
   /// QuizInfoの更新を行います。
-  Future<void> updateQuiz() async {
+  Future<bool?> updateQuiz() async {
     final wordInput =
         await _ref.read(wordInputNotifierProvider(_quizType).future);
     final currentIndex = wordInput.inputIndex;
@@ -257,14 +254,17 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
       if (lastResultList != null &&
           lastResultList.every((element) => element == WordNameState.match)) {
         await _successProcess();
-        return;
+        return true;
       }
     }
 
     // 最大回答数を超えている場合
     if (state.value!.maxAnswer <= currentIndex) {
       await _failureProcess();
+      return false;
     }
+
+    return null;
   }
 
   /// 正解時の処理を行います。
@@ -284,14 +284,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     await _ref
         .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
-
-    // 正解のケース
-    switch (_quizType) {
-      case QuizTypes.daily:
-        _ref.watch(quizPageProvider(_quizType).notifier).showStatistics();
-      case QuizTypes.endless:
-        _ref.watch(quizPageProvider(_quizType).notifier).showResult();
-    }
   }
 
   /// 失敗時の処理を行います。
@@ -311,20 +303,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     await _ref
         .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(state.value);
-
-    // 回答>2秒待ち>結果を表示
-    _ref.watch(quizPageProvider(_quizType).notifier).showAnswer();
-    await Future<void>.delayed(const Duration(milliseconds: 2000));
-
-    // 事後処理
-    switch (_quizType) {
-      case QuizTypes.daily:
-        // 統計を表示
-        _ref.watch(quizPageProvider(_quizType).notifier).showStatistics();
-      case QuizTypes.endless:
-        // 結果を表示
-        _ref.watch(quizPageProvider(_quizType).notifier).showResult();
-    }
   }
 
   /// テスト用の[QuizInfo]を設定します。

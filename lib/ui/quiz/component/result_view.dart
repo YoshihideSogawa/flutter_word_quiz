@@ -219,6 +219,9 @@ class _ActionButtons extends ConsumerWidget {
               );
               if (result) {
                 await ref.read(quizInfoProvider(quizType).notifier).quitQuiz();
+                quizPageInfo.value = quizPageInfo.value.copyWith(
+                  showResult: true,
+                );
               }
             },
             child: const Text('おわる'),

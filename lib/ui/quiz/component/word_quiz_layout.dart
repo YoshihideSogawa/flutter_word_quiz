@@ -85,9 +85,12 @@ class WordQuizLayout extends HookConsumerWidget {
                             if (_showAnswer(lazyQuizProcess.value))
                               AnswerButton(quizPageInfo: quizPageInfo),
                             if (_showRetire(lazyQuizProcess.value))
-                              RetireButton(enabled: controlEnabled),
+                              RetireButton(
+                                enabled: controlEnabled,
+                                quizPageInfo: quizPageInfo,
+                              ),
                             if (_showGiveUp(lazyQuizProcess.value, quizType))
-                              const GiveUpButton(),
+                              GiveUpButton(quizPageInfo: quizPageInfo),
                             if (_showNextQuiz(lazyQuizProcess.value, quizType))
                               const NextQuizButton(),
                             if (_showRestart(lazyQuizProcess.value, quizType))
@@ -101,9 +104,15 @@ class WordQuizLayout extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    WordKeyboard(wordAnimation: wordAnimation),
+                    WordKeyboard(
+                      wordAnimation: wordAnimation,
+                      quizPageInfo: quizPageInfo,
+                    ),
                     const SizedBox(height: 8),
-                    EnterButton(enabled: controlEnabled),
+                    EnterButton(
+                      enabled: controlEnabled,
+                      quizPageInfo: quizPageInfo,
+                    ),
                     const SizedBox(height: 24),
                     const QuizFooterInfo(),
                   ],
@@ -116,7 +125,7 @@ class WordQuizLayout extends HookConsumerWidget {
           Positioned.fill(
             child: AnswerView(quizPageInfo: quizPageInfo),
           ),
-        if (quizPageInfo.value.showStatistics)
+        if (controlEnabled && quizPageInfo.value.showStatistics)
           Positioned.fill(
             child: StatisticsView(quizPageInfo: quizPageInfo),
           ),

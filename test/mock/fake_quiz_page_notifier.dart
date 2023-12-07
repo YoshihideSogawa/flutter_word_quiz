@@ -11,16 +11,10 @@ class FakeQuizPageNotifier extends StateNotifier<QuizPageInfo>
   bool showStatisticsCalled = false;
 
   @override
-  void showAnswer() {}
-
-  @override
   void showQuizChanged() {}
 
   @override
   void showQuizSelection() {}
-
-  @override
-  void showResult() {}
 
   @override
   void showStatistics() {

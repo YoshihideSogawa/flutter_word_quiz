@@ -19,24 +19,10 @@ class QuizPageNotifier extends StateNotifier<QuizPageInfo> {
     );
   }
 
-  /// 答え画面を表示します。
-  void showAnswer() {
-    state = state.copyWith(
-      showAnswer: true,
-    );
-  }
-
   /// 問題選択を表示します。
   void showQuizSelection() {
     state = state.copyWith(
       showQuizSelection: true,
-    );
-  }
-
-  /// 結果を表示します。
-  void showResult() {
-    state = state.copyWith(
-      showResult: true,
     );
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/monster_series.dart';
@@ -11,12 +10,10 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 
 import '../mock/fake_monster_list_repository.dart';
-import '../mock/generate_mocks.mocks.dart';
 import '../mock/mock_box_data.dart';
 
 void main() {
@@ -44,14 +41,11 @@ void main() {
 
   test('初期化(endless)', () async {
     const quizType = QuizTypes.endless;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
     final container = ProviderContainer(
       overrides: [
         quizOverride(quizType: quizType),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
@@ -121,32 +115,6 @@ void main() {
     expect(quizInfo.quizRange, initQuizInfo.quizRange);
     expect(quizInfo.playDate, generateDate());
     expect(quizInfo.seedText, initQuizInfo.seedText);
-  });
-
-  test('保存データあり(daily/success>履歴表示)', () async {
-    const quizType = QuizTypes.daily;
-    final initQuizInfo = _quizInfoTest3(quizType);
-
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
-    final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, quizInfo: initQuizInfo),
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
-      ],
-    );
-
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    // ignore: invalid_use_of_visible_for_testing_member
-    await container.read(quizInfoProvider(quizType).notifier).init();
-    final quizInfo = container.read(quizInfoProvider(quizType)).value!;
-
-    // Future.microtask() を待つ
-    await Future.delayed(const Duration(milliseconds: 1), () {});
-
-    // verify(mockQuizPageNotifier.showStatistics()).called(1);
   });
 
   test('保存データあり(endless)', () async {
@@ -314,8 +282,6 @@ void main() {
 
   test('quitQuiz()', () async {
     const quizType = QuizTypes.endless;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
     final quizOverrideBox = quizOverrideAndBox(
       quizType: quizType,
       quizInfo: _quizInfoTest(quizType),
@@ -325,7 +291,6 @@ void main() {
         quizOverrideBox.override,
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
@@ -339,13 +304,10 @@ void main() {
 
     final quizInfoData = parseQuizInfo(quizOverrideBox.box);
     expect(quizInfoData?.quizProcess, QuizProcessType.quit);
-    verify(mockQuizPageNotifier.showResult()).called(1);
   });
 
   test('retireQuiz(endless)', () async {
     const quizType = QuizTypes.endless;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
     final container = ProviderContainer(
       overrides: [
         quizOverride(
@@ -355,7 +317,6 @@ void main() {
         quizOverride(quizType: quizType, quizInfo: const QuizInfo()),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
@@ -370,14 +331,11 @@ void main() {
 
   test('retireQuiz(daily)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
     final container = ProviderContainer(
       overrides: [
         quizOverride(quizType: quizType, quizInfo: _quizInfoTest(quizType)),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
@@ -464,8 +422,6 @@ void main() {
 
   test('updateQuiz(回答数オーバー)', () async {
     const quizType = QuizTypes.daily;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
     final resultList = <List<WordNameState>?>[];
     for (var i = 0; i < 10; i++) {
       resultList.add([]);
@@ -490,7 +446,6 @@ void main() {
         ),
         monsterListRepositoryProvider
             .overrideWith(FakeMonsterListRepository.new),
-        quizPageProvider(quizType).overrideWith((ref) => mockQuizPageNotifier),
       ],
     );
 
@@ -531,22 +486,6 @@ QuizInfo _quizInfoTest2(QuizTypes quizType) {
     quizProcess: QuizProcessType.started,
     quizRange: blackWhite,
     playDate: generateDate() + 1,
-    seedText: 'ヒトカゲ',
-  );
-}
-
-/// quizProcessが成功状態
-QuizInfo _quizInfoTest3(QuizTypes quizType) {
-  return QuizInfo(
-    answer: const Monster(
-      id: 0,
-      name: 'フシギダネ',
-    ),
-    maxAnswer: 10,
-    quizType: quizType,
-    quizProcess: QuizProcessType.success,
-    quizRange: blackWhite,
-    playDate: generateDate(),
     seedText: 'ヒトカゲ',
   );
 }

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
@@ -17,6 +18,7 @@ import '../../../mock/mock_box_data.dart';
 void main() {
   testWidgets('WordKeyboard(きりかえタイプ、通常キー)', (tester) async {
     const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -29,6 +31,7 @@ void main() {
             child: Scaffold(
               body: WordKeyboard(
                 wordAnimation: ValueNotifier(true),
+                quizPageInfo: quizPageInfo,
               ),
             ),
           ),
@@ -42,6 +45,7 @@ void main() {
 
   testWidgets('WordKeyboard(きりかえタイプ、特殊キー)', (tester) async {
     const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -54,6 +58,7 @@ void main() {
             child: Scaffold(
               body: WordKeyboard(
                 wordAnimation: ValueNotifier(true),
+                quizPageInfo: quizPageInfo,
               ),
             ),
           ),
@@ -68,6 +73,7 @@ void main() {
   testWidgets('WordKeyboard(全表示タイプ)', (tester) async {
     const quizType = QuizTypes.daily;
     await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     const wordInput = WordInput(
       keyResultList: <String, WordKeyboardInfo>{
         'ア': WordKeyboardInfo.notMatch,
@@ -86,6 +92,7 @@ void main() {
             child: Scaffold(
               body: WordKeyboard(
                 wordAnimation: ValueNotifier(true),
+                quizPageInfo: quizPageInfo,
               ),
             ),
           ),
@@ -103,6 +110,7 @@ void main() {
   testWidgets('change wordResult List', (tester) async {
     const quizType = QuizTypes.daily;
     await tester.binding.setSurfaceSize(const Size(1000, 1000));
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -134,6 +142,7 @@ void main() {
             child: Scaffold(
               body: WordKeyboard(
                 wordAnimation: ValueNotifier(true),
+                quizPageInfo: quizPageInfo,
               ),
             ),
           ),

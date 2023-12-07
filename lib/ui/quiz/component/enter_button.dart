@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
@@ -14,10 +15,14 @@ class EnterButton extends ConsumerWidget {
   const EnterButton({
     super.key,
     required this.enabled,
+    required this.quizPageInfo,
   });
 
   /// 有効かどうか
   final bool enabled;
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -85,7 +90,33 @@ class EnterButton extends ConsumerWidget {
 
       state.hideCurrentSnackBar();
       // QuizInfoの更新
-      await ref.watch(quizInfoProvider(quizType).notifier).updateQuiz();
+      final result =
+          await ref.watch(quizInfoProvider(quizType).notifier).updateQuiz();
+      if (result == null) {
+        return;
+      }
+
+      // 失敗時：回答>2秒待ち>結果を表示
+      if (!result) {
+        quizPageInfo.value = quizPageInfo.value.copyWith(
+          showAnswer: true,
+        );
+        await Future<void>.delayed(const Duration(milliseconds: 2000));
+      }
+
+      // TODO(sogawa): 恒久的にはquizInfoの更新が終わってから表示するようにする
+      // TODO(sogawa): 暫定対応としてここで成功・失敗で出し分ける
+      // 正解のケース
+      switch (quizType) {
+        case QuizTypes.daily:
+          quizPageInfo.value = quizPageInfo.value.copyWith(
+            showStatistics: true,
+          );
+        case QuizTypes.endless:
+          quizPageInfo.value = quizPageInfo.value.copyWith(
+            showResult: true,
+          );
+      }
     }
   }
 

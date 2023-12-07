@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
@@ -19,15 +20,19 @@ import '../../../mock/monster_test_list.dart';
 void main() {
   testWidgets('EnterButton', (tester) async {
     const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           quizOverride(quizType: quizType),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: EnterButton(enabled: true),
+            child: EnterButton(
+              enabled: true,
+              quizPageInfo: quizPageInfo,
+            ),
           ),
         ),
       ),
@@ -40,6 +45,7 @@ void main() {
 
   testWidgets('EnterButtonのタップ(入力なし)', (tester) async {
     const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     final quizInfo = QuizInfo(
       quizProcess: QuizProcessType.started,
       playDate: generateDate(),
@@ -57,11 +63,14 @@ void main() {
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: Scaffold(
             body: QuizType(
               quizType: quizType,
-              child: EnterButton(enabled: true),
+              child: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
             ),
           ),
         ),
@@ -88,6 +97,8 @@ void main() {
       ].toList(growable: true),
     );
 
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
@@ -104,11 +115,14 @@ void main() {
           quizInfoProvider(quizType)
               .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: Scaffold(
             body: QuizType(
               quizType: quizType,
-              child: EnterButton(enabled: true),
+              child: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
             ),
           ),
         ),
@@ -140,6 +154,8 @@ void main() {
       ].toList(growable: true),
     );
 
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
     final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
@@ -158,11 +174,14 @@ void main() {
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: EnterButton(enabled: true),
+              body: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
             ),
           ),
         ),

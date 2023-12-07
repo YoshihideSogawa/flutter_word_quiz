@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/logic/keyboard_checker.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
@@ -20,10 +20,14 @@ class WordKeyboard extends StatefulHookConsumerWidget {
   const WordKeyboard({
     super.key,
     required this.wordAnimation,
+    required this.quizPageInfo,
   });
 
   /// 入力文字のアニメーション中かどうか
   final ValueNotifier<bool> wordAnimation;
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   WordKeyboardState createState() => WordKeyboardState();
@@ -52,7 +56,6 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
   Widget build(BuildContext context) {
     final quizType = QuizType.of(context).quizType;
     final inputType = ref.watch(inputTypeRepositoryProvider);
-    final quizPage = ref.watch(quizPageProvider(quizType));
 
     // 入力タイプの取得を待つ
     if (!inputType.hasValue) {
@@ -115,9 +118,9 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
     if (inputType.valueOrNull == InputTypes.switching) {
       return Stack(
         children: [
-          if (quizPage.normalKeyboard)
+          if (widget.quizPageInfo.value.normalKeyboard)
             _buildKeyboard(standardKeyboardMap, keyResultList),
-          if (!quizPage.normalKeyboard)
+          if (!widget.quizPageInfo.value.normalKeyboard)
             _buildKeyboard(advancedKeyboardMap, keyResultList),
         ],
       );

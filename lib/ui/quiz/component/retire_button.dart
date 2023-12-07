@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
+import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quit_quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
@@ -12,9 +14,13 @@ class RetireButton extends ConsumerWidget {
   const RetireButton({
     super.key,
     this.enabled = true,
+    required this.quizPageInfo,
   });
 
   final bool enabled;
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,6 +64,24 @@ class RetireButton extends ConsumerWidget {
 
     if (result) {
       await ref.read(quizInfoProvider(quizType).notifier).retireQuiz();
+      // 回答>2秒待ち>結果を表示
+      quizPageInfo.value = quizPageInfo.value.copyWith(
+        showAnswer: true,
+      );
+      await Future<void>.delayed(const Duration(milliseconds: 2000));
+      // TODO(sogawa): 恒久的にはquizInfoのinvalidateで自動的に表示するようにする
+      // TODO(sogawa): 暫定対応としてここで出し分ける
+      // 正解のケース
+      switch (quizType) {
+        case QuizTypes.daily:
+          quizPageInfo.value = quizPageInfo.value.copyWith(
+            showStatistics: true,
+          );
+        case QuizTypes.endless:
+          quizPageInfo.value = quizPageInfo.value.copyWith(
+            showResult: true,
+          );
+      }
     }
   }
 }

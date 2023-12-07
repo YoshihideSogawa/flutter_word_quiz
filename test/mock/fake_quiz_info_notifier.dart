@@ -41,8 +41,9 @@ class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
   Future<void> startQuiz(String seedText, QuizRange quizRange) async {}
 
   @override
-  Future<void> updateQuiz() async {
+  Future<bool> updateQuiz() async {
     updateQuizCalled = true;
+    return true;
   }
 
   @override

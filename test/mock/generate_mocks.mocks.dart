@@ -176,14 +176,13 @@ class MockQuizInfoNotifier extends _i1.Mock implements _i4.QuizInfoNotifier {
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> updateQuiz() => (super.noSuchMethod(
+  _i5.Future<bool?> updateQuiz() => (super.noSuchMethod(
         Invocation.method(
           #updateQuiz,
           [],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i5.Future<bool?>.value(),
+      ) as _i5.Future<bool?>);
 
   @override
   void updateQuizInfo(_i6.QuizInfo? quizInfo) => super.noSuchMethod(
@@ -306,43 +305,6 @@ class MockQuizPageNotifier extends _i1.Mock implements _i9.QuizPageNotifier {
       );
 
   @override
-  void dismissStatistics() => super.noSuchMethod(
-        Invocation.method(
-          #dismissStatistics,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void showAnswer() => super.noSuchMethod(
-        Invocation.method(
-          #showAnswer,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dismissAnswer() => super.noSuchMethod(
-        Invocation.method(
-          #dismissAnswer,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void updateKeyboard({required bool? isNormalKeyboard}) => super.noSuchMethod(
-        Invocation.method(
-          #updateKeyboard,
-          [],
-          {#isNormalKeyboard: isNormalKeyboard},
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
   void showQuizSelection() => super.noSuchMethod(
         Invocation.method(
           #showQuizSelection,
@@ -352,45 +314,9 @@ class MockQuizPageNotifier extends _i1.Mock implements _i9.QuizPageNotifier {
       );
 
   @override
-  void dismissQuizSelection() => super.noSuchMethod(
-        Invocation.method(
-          #dismissQuizSelection,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void showResult() => super.noSuchMethod(
-        Invocation.method(
-          #showResult,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dismissResult() => super.noSuchMethod(
-        Invocation.method(
-          #dismissResult,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
   void showQuizChanged() => super.noSuchMethod(
         Invocation.method(
           #showQuizChanged,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dismissQuizChanged() => super.noSuchMethod(
-        Invocation.method(
-          #dismissQuizChanged,
           [],
         ),
         returnValueForMissingStub: null,

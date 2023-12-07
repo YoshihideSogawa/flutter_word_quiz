@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 結果表示ボタンです。
 class StatisticsButton extends ConsumerWidget {
@@ -16,8 +14,7 @@ class StatisticsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizType = QuizType.of(context).quizType;
-    final quizPage = ref.watch(quizPageProvider(quizType));
+    final quizPage = quizPageInfo.value;
     return Tooltip(
       message: 'せいかいすう',
       child: IconButton(
