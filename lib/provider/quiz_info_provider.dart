@@ -8,7 +8,6 @@ import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
@@ -88,25 +87,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     state = AsyncValue.data(
       quizInfo,
     );
-
-    // 答えが決まっていない場合(仕様上endlessのみ)
-    if (state.value!.answer == null) {
-      // 即時実行するとエラーが表示される場合があるため対応
-      await Future.microtask(
-        () => _ref
-            .watch(quizPageProvider(_quizType).notifier)
-            .showQuizSelection(),
-      );
-    }
-
-    // きょうのもんだいが成功か失敗していたら統計画面を表示
-    if (_quizType == QuizTypes.daily &&
-        (state.value!.quizProcess == QuizProcessType.success ||
-            state.value!.quizProcess == QuizProcessType.failure)) {
-      await Future.microtask(
-        () => _ref.watch(quizPageProvider(_quizType).notifier).showStatistics(),
-      );
-    }
   }
 
   /// きょうのもんだいを自動的にリフレッシュします。
@@ -155,8 +135,6 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     await _ref
         .read(quizInfoRepositoryProvider(_quizType).notifier)
         .saveQuizInfo(newQuizInfo);
-    // 新着問題への切り替え通知
-    _ref.watch(quizPageProvider(_quizType).notifier).showQuizChanged();
 
     return newQuizInfo;
   }

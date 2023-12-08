@@ -23,6 +23,23 @@ class EndlessQuizPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizPageInfo = useState(const QuizPageInfo());
     final quizInfo = ref.watch(quizInfoProvider(_quizType));
+
+    // 初回読み込み時の処理
+    ref.listen(quizInfoProvider(_quizType), (previous, next) {
+      // 既に読み込み済み or データがない場合は何もしない
+      if (previous?.isLoading == false || !next.hasValue) {
+        return;
+      }
+
+      // // 答えが決まっていない場合(初回起動時、データ削除時)
+      if (next.valueOrNull?.answer == null) {
+        // いっぱいやるは自動的に開始する
+        quizPageInfo.value = const QuizPageInfo(
+          showQuizSelection: true,
+        );
+      }
+    });
+
     return quizInfo.when(
       error: (_, __) => const Scaffold(
         body: Center(

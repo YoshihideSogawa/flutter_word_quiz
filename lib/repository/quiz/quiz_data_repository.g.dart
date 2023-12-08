@@ -7,7 +7,7 @@ part of 'quiz_data_repository.dart';
 // **************************************************************************
 
 String _$quizDataRepositoryHash() =>
-    r'6fd33a85c98ec7c211ed29ffdc2cab153c00140e';
+    r'fc8c69359e17187fd65b7862d9c465bf2cc15e8d';
 
 /// Copied from Dart SDK
 class _SystemHash {
