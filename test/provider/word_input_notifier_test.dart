@@ -269,27 +269,6 @@ void main() {
     expect(wordInput.keyResultList.length, 7);
     expect(wordInput.inputIndex, _wordInputTest5.inputIndex + 1);
   });
-
-  test('reset()', () async {
-    const quizType = QuizTypes.daily;
-    final container = ProviderContainer(
-      overrides: [
-        quizOverride(
-          quizType: quizType,
-          wordInput: _wordInputTest5,
-        ),
-      ],
-    );
-
-    await container.read(wordInputNotifierProvider(quizType).notifier).reset();
-
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
-    expect(wordInput.wordsList, <List<String?>>[[]]);
-    expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
-    expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
-    expect(wordInput.inputIndex, 0);
-  });
 }
 
 /// isWordChecking true /文字入力あり

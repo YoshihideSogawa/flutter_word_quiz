@@ -123,13 +123,6 @@ class WordInputNotifier extends _$WordInputNotifier {
 
     return SubmitResult.success;
   }
-
-  /// 入力のリセットを行います。
-  Future<void> reset() async {
-    await ref
-        .read(wordInputRepositoryProvider(quizType).notifier)
-        .deleteWordInput();
-  }
 }
 
 /// 確定を行った後の結果

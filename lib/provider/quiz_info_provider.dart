@@ -12,6 +12,7 @@ import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz/quiz_info_repository.dart';
+import 'package:word_quiz/repository/quiz/word_input_repository.dart';
 
 /// クイズ情報のProvider
 final quizInfoProvider = StateNotifierProvider.family<QuizInfoNotifier,
@@ -123,7 +124,9 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
       playDate: today,
     );
     // 入力のリセット・クイズの開始・最新データに保存
-    await _ref.read(wordInputNotifierProvider(_quizType).notifier).reset();
+    await _ref
+        .read(wordInputRepositoryProvider(_quizType).notifier)
+        .clearWordInput();
     // 解答に成功していたら連鎖を維持
     if (quizInfo.quizProcess == QuizProcessType.success) {
       await _ref
@@ -153,7 +156,9 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     // 新しい答えを設定
     await _updateAnswer(quizRange, seedText);
     // 入力をリセット
-    await _ref.read(wordInputNotifierProvider(_quizType).notifier).reset();
+    await _ref
+        .read(wordInputRepositoryProvider(_quizType).notifier)
+        .clearWordInput();
   }
 
   /// つぎのクイズを開始します。(いっぱいやるモードのみ使用)
@@ -172,7 +177,9 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // 入力をリセット
-    await _ref.read(wordInputNotifierProvider(_quizType).notifier).reset();
+    await _ref
+        .read(wordInputRepositoryProvider(_quizType).notifier)
+        .clearWordInput();
   }
 
   /// 答えを設定します。(いっぱいやるモードのみ使用)

@@ -6,7 +6,7 @@ part of 'word_input_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$wordInputNotifierHash() => r'd69d53b849c165af50158da927500a1dd868f474';
+String _$wordInputNotifierHash() => r'cde80cc6b25d662799ecd9413da7ab117ab9c61a';
 
 /// Copied from Dart SDK
 class _SystemHash {
