@@ -145,8 +145,127 @@ void main() {
     const quizType = QuizTypes.daily;
     final quizInfo = QuizInfo(
       quizProcess: QuizProcessType.started,
+      quizType: quizType,
       answer: monsterTestList[0],
       playDate: generateDate(),
+      maxAnswer: 10,
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ].toList(growable: true),
+    );
+
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
+    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+      AsyncValue.data(quizInfo),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
+        ],
+        child: MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: Scaffold(
+              body: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('enter_button_ink_well')));
+    // NOTE: アニメーション待ち
+    await tester.pumpAndSettle(const Duration(minutes: 1));
+
+    expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
+  });
+
+  testWidgets('EnterButtonのタップ(成功->失敗)', (tester) async {
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      quizType: quizType,
+      answer: monsterTestList[0],
+      playDate: generateDate(),
+      maxAnswer: 10,
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ].toList(growable: true),
+    );
+
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+
+    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
+    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+      AsyncValue.data(quizInfo),
+      updateQuizResult: false,
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
+          quizInfoProvider(quizType)
+              .overrideWith((ref) => fakeQuizInfoNotifier),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
+        ],
+        child: MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: Scaffold(
+              body: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('enter_button_ink_well')));
+    // NOTE: アニメーション待ち
+    await tester.pumpAndSettle(const Duration(minutes: 1));
+
+    expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
+  });
+
+  testWidgets('EnterButtonのタップ(Endless -> 成功)', (tester) async {
+    const quizType = QuizTypes.endless;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      quizType: quizType,
+      answer: monsterTestList[0],
+      playDate: generateDate(),
+      maxAnswer: 10,
     );
     final wordInput = WordInput(
       wordsList: <InputWords>[

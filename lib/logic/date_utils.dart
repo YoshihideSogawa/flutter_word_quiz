@@ -3,7 +3,7 @@ import 'package:word_quiz/logic/filled_zero.dart';
 
 /// yyyyMMddの値を生成します。
 int generateDate() {
-  final now = DateTime.now();
+  final now = clock.now();
   return now.year * 10000 + now.month * 100 + now.day;
 }
 

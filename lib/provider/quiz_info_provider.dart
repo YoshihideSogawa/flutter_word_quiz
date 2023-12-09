@@ -77,6 +77,8 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
         case QuizTypes.daily:
           // 日付が変わっていたら今日の問題を自動的に更新する
           if (_playDateChanged(quizInfo)) {
+            // TODO(sogawa): 暫定対応:差分を検知できるように一旦値を設定
+            state = AsyncValue.data(quizInfo);
             quizInfo = await _refreshDailyQuiz(quizInfo);
           }
         case QuizTypes.endless:

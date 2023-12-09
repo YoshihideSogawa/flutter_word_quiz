@@ -81,6 +81,11 @@ OverrideAndBox quizOverrideAndBox({
   QuizInfo? quizInfo,
   WordInput? wordInput,
 }) {
+  var fixedQuizInfo = quizInfo;
+  if (quizInfo?.quizType != quizType) {
+    fixedQuizInfo = fixedQuizInfo?.copyWith(quizType: quizType);
+  }
+
   final box = MockHiveBox<dynamic>(
     initData: {
       if (statistics != null) statisticsKey: jsonEncode(statistics),

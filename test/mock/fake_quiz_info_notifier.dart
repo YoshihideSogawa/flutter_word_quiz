@@ -5,7 +5,10 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 
 class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
     implements QuizInfoNotifier {
-  FakeQuizInfoNotifier(super._state);
+  FakeQuizInfoNotifier(
+    super._state, {
+    this.updateQuizResult = true,
+  });
 
   bool updateQuizCalled = false;
 
@@ -14,6 +17,8 @@ class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
   bool nextQuizCalled = false;
 
   bool quitQuizCalled = false;
+
+  bool updateQuizResult;
 
   @override
   Future<void> init() async {}
@@ -43,7 +48,7 @@ class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
   @override
   Future<bool> updateQuiz() async {
     updateQuizCalled = true;
-    return true;
+    return updateQuizResult;
   }
 
   @override
