@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/repository/quiz/quiz_data_repository.dart';
+import 'package:word_quiz/repository/quiz/clear_quiz_data_repository.dart';
 
 import '../../mock/mock_box_data.dart';
 
@@ -24,9 +24,7 @@ void main() {
       ],
     );
 
-    await container
-        .read(quizDataRepositoryProvider(QuizTypes.daily).notifier)
-        .deleteAll();
+    await container.read(clearQuizDataProvider(QuizTypes.daily).future);
 
     expect(quizOverride.box.data[quizTypes.boxName], isNull);
   });
