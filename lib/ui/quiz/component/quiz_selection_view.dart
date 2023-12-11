@@ -5,7 +5,7 @@ import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_range.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
@@ -113,7 +113,7 @@ class QuizSelectionView extends HookConsumerWidget {
 
                     // 回答を設定
                     ref
-                        .read(quizInfoProvider(quizType).notifier)
+                        .read(quizInfoNotifierProvider(quizType).notifier)
                         .startQuiz(seedController.text, dropdownValue.value);
                     // 画面を閉じる
                     quizPageInfo.value = quizPageInfo.value.copyWith(

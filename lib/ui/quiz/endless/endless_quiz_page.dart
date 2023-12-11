@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_drawer.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -22,10 +22,10 @@ class EndlessQuizPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizPageInfo = useState(const QuizPageInfo());
-    final quizInfo = ref.watch(quizInfoProvider(_quizType));
+    final quizInfoNotifier = ref.watch(quizInfoNotifierProvider(_quizType));
 
     // 初回読み込み時の処理
-    ref.listen(quizInfoProvider(_quizType), (previous, next) {
+    ref.listen(quizInfoNotifierProvider(_quizType), (previous, next) {
       // 既に読み込み済み or データがない場合は何もしない
       if (previous?.isLoading == false || !next.hasValue) {
         return;
@@ -40,7 +40,7 @@ class EndlessQuizPage extends HookConsumerWidget {
       }
     });
 
-    return quizInfo.when(
+    return quizInfoNotifier.maybeWhen(
       error: (_, __) => const Scaffold(
         body: Center(
           child: Text(
@@ -49,10 +49,7 @@ class EndlessQuizPage extends HookConsumerWidget {
           ),
         ),
       ),
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      data: (_) => QuizType(
+      orElse: () => QuizType(
         quizType: _quizType,
         child: Scaffold(
           appBar: AppBar(

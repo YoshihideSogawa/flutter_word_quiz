@@ -93,14 +93,10 @@ class WordNamesState extends ConsumerState<WordNames> {
   /// 名前を1つ構築します。
   Widget _buildNameLine(int rowIndex, QuizTypes quizType) {
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
-    if (!wordInputNotifier.hasValue) {
-      return const SizedBox.shrink();
-    }
-
     final nameStatesValue = useState(<WordNameState>[]);
-    final wordInput = wordInputNotifier.value!;
-    final inputIndex = wordInput.inputIndex;
-    final wordsResultList = wordInput.wordsResultList;
+    final wordInput = wordInputNotifier.value;
+    final inputIndex = wordInput?.inputIndex ?? 0;
+    final wordsResultList = wordInput?.wordsResultList ?? [];
 
     // 入力最終行はアニメーション対象
     final isLastRow = rowIndex == inputIndex - 1;
@@ -138,7 +134,7 @@ class WordNamesState extends ConsumerState<WordNames> {
       nameStatesValue.value = nameStates;
     }
 
-    final wordsList = wordInput.wordsList;
+    final wordsList = wordInput?.wordsList ?? [[]];
     return Padding(
       padding: const EdgeInsets.only(bottom: 2),
       child: Row(

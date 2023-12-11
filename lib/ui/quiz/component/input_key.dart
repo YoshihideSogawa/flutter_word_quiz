@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -60,7 +60,8 @@ class InputKey extends ConsumerWidget {
           onTap: enabled
               ? () async {
                   // 問題が開始していない場合は無視
-                  final quizInfo = ref.read(quizInfoProvider(quizType)).value;
+                  final quizInfo =
+                      ref.read(quizInfoNotifierProvider(quizType)).valueOrNull;
                   if (quizInfo?.quizProcess != QuizProcessType.started) {
                     return;
                   }

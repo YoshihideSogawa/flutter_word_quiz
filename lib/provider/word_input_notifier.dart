@@ -4,7 +4,7 @@ import 'package:word_quiz/logic/word_checker.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz/word_input_repository.dart';
 
@@ -79,11 +79,7 @@ class WordInputNotifier extends _$WordInputNotifier {
   /// 確定を行います。
   Future<SubmitResult> submit() async {
     final wordInput = state.value!;
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進めてNotifierで書き換える
-    // ignore: invalid_use_of_visible_for_testing_member, avoid_manual_providers_as_generated_provider_dependency
-    await ref.read(quizInfoProvider(quizType).notifier).init();
-    // ignore: avoid_manual_providers_as_generated_provider_dependency
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value!;
+    final quizInfo = await ref.read(quizInfoNotifierProvider(quizType).future);
 
     // 回答が終了している場合
     if (quizInfo.quizProcess != QuizProcessType.started) {

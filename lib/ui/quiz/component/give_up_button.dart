@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quit_quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -40,7 +40,7 @@ class GiveUpButton extends ConsumerWidget {
                 );
                 if (result) {
                   await ref
-                      .read(quizInfoProvider(quizType).notifier)
+                      .read(quizInfoNotifierProvider(quizType).notifier)
                       .quitQuiz();
                   quizPageInfo.value = quizPageInfo.value.copyWith(
                     showResult: true,

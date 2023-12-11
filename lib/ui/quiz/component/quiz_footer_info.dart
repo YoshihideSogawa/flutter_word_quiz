@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -18,7 +18,7 @@ class QuizFooterInfo extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
@@ -38,6 +38,7 @@ class QuizFooterInfo extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
 
+    // TODO(sogawa): utilでやる
     final formatMMdd = DateFormat('MM/dd');
     final dateLabel = formatMMdd.format(clock.now());
     return _decoratedContainer('$dateLabel のもんだい');
@@ -49,7 +50,7 @@ class QuizFooterInfo extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
     if (quizInfo?.quizProcess == QuizProcessType.none) {
       return const SizedBox.shrink();
     }

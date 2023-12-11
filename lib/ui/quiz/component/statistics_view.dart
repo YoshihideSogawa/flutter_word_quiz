@@ -11,7 +11,7 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/clock_text.dart';
@@ -33,7 +33,7 @@ class StatisticsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).value;
     final wordInput = ref.watch(wordInputNotifierProvider(quizType));
     final statistics = ref.watch(statisticsNotifierProvider(quizType));
 
@@ -160,7 +160,9 @@ class StatisticsView extends ConsumerWidget {
 
   /// この画面を閉じます。(問題の更新があれば更新します。)
   Future<void> close(WidgetRef ref, QuizTypes quizType) async {
-    await ref.read(quizInfoProvider(quizType).notifier).refreshDailyQuiz();
+    await ref
+        .read(quizInfoNotifierProvider(quizType).notifier)
+        .refreshDailyQuiz();
     quizPageInfo.value = quizPageInfo.value.copyWith(
       showStatistics: false,
     );
@@ -175,7 +177,7 @@ class _ResultText extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
     final quizProcess =
-        ref.watch(quizInfoProvider(quizType)).value?.quizProcess;
+        ref.watch(quizInfoNotifierProvider(quizType)).value?.quizProcess;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

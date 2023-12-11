@@ -6,7 +6,7 @@ import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/provider/statistics_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quit_quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
@@ -27,7 +27,7 @@ class ResultView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
     final statistics = ref.watch(statisticsNotifierProvider(quizType));
     return QuizDialog(
       onTap: () {
@@ -115,7 +115,7 @@ class _ResultText extends ConsumerWidget {
 
   /// サブタイトルを取得します。
   String _subTitle(WidgetRef ref, QuizTypes quizType) {
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
     if (quizInfo?.quizProcess == QuizProcessType.success) {
       return 'れんさちゅう';
     }
@@ -130,7 +130,7 @@ class _ResultText extends ConsumerWidget {
 
   /// 連鎖テキストを構築します。
   Widget _buildChainText(WidgetRef ref, QuizTypes quizType) {
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
     final statistics = ref.watch(statisticsNotifierProvider(quizType));
     if (!statistics.hasValue) {
       return const SizedBox.shrink();
@@ -156,7 +156,7 @@ class _ResultDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -204,7 +204,7 @@ class _ActionButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).valueOrNull;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).valueOrNull;
 
     // 成功時はつぎに進むボタンを用意する
     if (quizInfo?.quizProcess == QuizProcessType.success) {
@@ -218,7 +218,9 @@ class _ActionButtons extends ConsumerWidget {
                 label: 'おわりにしますか？',
               );
               if (result) {
-                await ref.read(quizInfoProvider(quizType).notifier).quitQuiz();
+                await ref
+                    .read(quizInfoNotifierProvider(quizType).notifier)
+                    .quitQuiz();
                 quizPageInfo.value = quizPageInfo.value.copyWith(
                   showResult: true,
                 );
@@ -229,7 +231,7 @@ class _ActionButtons extends ConsumerWidget {
           const SizedBox(width: 8),
           TextButton(
             onPressed: () {
-              ref.read(quizInfoProvider(quizType).notifier).nextQuiz();
+              ref.read(quizInfoNotifierProvider(quizType).notifier).nextQuiz();
               quizPageInfo.value = quizPageInfo.value.copyWith(
                 showResult: false,
               );

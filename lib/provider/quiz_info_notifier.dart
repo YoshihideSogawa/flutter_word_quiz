@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter/foundation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/logic/quiz_info_utils.dart';
 import 'package:word_quiz/logic/seed_generator.dart';
@@ -15,92 +15,56 @@ import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/repository/quiz/quiz_info_repository.dart';
 import 'package:word_quiz/repository/quiz/word_input_repository.dart';
 
-/// クイズ情報のProvider
-@Deprecated('Use QuizInfoNotifier instead')
-final quizInfoProvider = StateNotifierProvider.family<QuizInfoNotifier,
-    AsyncValue<QuizInfo>, QuizTypes>(QuizInfoNotifier.new);
+part 'quiz_info_notifier.g.dart';
 
-/// クイズ情報に関するStateNotifierです。
-class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
-  QuizInfoNotifier(
-    this._ref,
-    this._quizType,
-  ) : super(const AsyncValue.loading()) {
-    init();
-  }
-
-  /// [Ref]
-  final Ref _ref;
-
-  /// [QuizTypes]
-  final QuizTypes _quizType;
-
-  /// デフォルトの問題範囲
-  @visibleForTesting
-  static const defaultQuizRange = diamondPearl;
-
-  /// 初期化を行います。
-  @visibleForTesting
-  Future<void> init() async {
-    var quizInfo =
-        await _ref.read(quizInfoRepositoryProvider(_quizType).future);
-
-    // データが保存されていない場合
-    if (quizInfo == null) {
-      switch (_quizType) {
-        case QuizTypes.daily:
-          // きょうのもんだいは自動的に開始する
-          final playDate = generateDate();
-          quizInfo = QuizInfo(
-            quizType: _quizType,
-            maxAnswer: 10,
-            answer: await _ref
-                .read(monsterListRepositoryProvider.notifier)
-                .pick(range: defaultQuizRange, seed: playDate),
-            quizProcess: QuizProcessType.started,
-            quizRange: defaultQuizRange,
-            playDate: playDate,
-          );
-          await _ref
-              .read(statisticsNotifierProvider(_quizType).notifier)
-              .startQuiz();
-        case QuizTypes.endless:
-          // いっぱいやるモードは未開始状態にする
-          quizInfo = QuizInfo(
-            quizType: _quizType,
-            maxAnswer: 10,
-          );
-      }
-      await _ref
-          .read(quizInfoRepositoryProvider(_quizType).notifier)
-          .saveQuizInfo(quizInfo);
-    } else {
-      // データが保存されている場合
-      switch (_quizType) {
-        case QuizTypes.daily:
-        // 日付が変わっていたら今日の問題を自動的に更新する
-        // if (_playDateChanged(quizInfo)) {
-        // TODO(sogawa): 暫定対応:差分を検知できるように一旦値を設定
-        // state = AsyncValue.data(quizInfo);
-        // quizInfo = await _refreshDailyQuiz(quizInfo);
-        // }
-        case QuizTypes.endless:
-        // 特に何もしない
-      }
+/// 問題情報に関するNotifierです。
+@riverpod
+class QuizInfoNotifier extends _$QuizInfoNotifier {
+  @override
+  Future<QuizInfo> build(QuizTypes quizType) async {
+    var quizInfo = await ref.watch(quizInfoRepositoryProvider(quizType).future);
+    if (quizInfo != null) {
+      return quizInfo;
     }
 
-    state = AsyncValue.data(
-      quizInfo,
-    );
+    // データが保存されていない場合
+    switch (quizType) {
+      case QuizTypes.daily:
+        // きょうのもんだいは自動的に開始する
+        final playDate = generateDate();
+        quizInfo = QuizInfo(
+          quizType: quizType,
+          maxAnswer: defaultMaxAnswer,
+          answer: await ref
+              .read(monsterListRepositoryProvider.notifier)
+              .pick(range: defaultQuizRange, seed: playDate),
+          quizProcess: QuizProcessType.started,
+          quizRange: defaultQuizRange,
+          playDate: playDate,
+        );
+        await ref
+            .read(statisticsNotifierProvider(quizType).notifier)
+            .startQuiz();
+      case QuizTypes.endless:
+        // いっぱいやるモードは未開始状態にする
+        quizInfo = QuizInfo(
+          quizType: quizType,
+          maxAnswer: 10,
+        );
+    }
+    await ref
+        .read(quizInfoRepositoryProvider(quizType).notifier)
+        .saveQuizInfo(quizInfo);
+    return quizInfo;
   }
 
   /// きょうのもんだいを自動的にリフレッシュします。
   Future<bool> refreshDailyQuiz() async {
-    if (_quizType != QuizTypes.daily) {
+    if (quizType != QuizTypes.daily) {
       return false;
     }
 
-    if (state.value == null) {
+    if (state.valueOrNull == null) {
       return false;
     }
 
@@ -119,28 +83,24 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     var newQuizInfo = quizInfo;
     final today = generateDate();
     newQuizInfo = quizInfo.copyWith(
-      answer: await _ref
+      answer: await ref
           .read(monsterListRepositoryProvider.notifier)
           .pick(range: defaultQuizRange, seed: today),
       quizProcess: QuizProcessType.started,
       playDate: today,
     );
     // 入力のリセット・クイズの開始・最新データに保存
-    await _ref
-        .read(wordInputRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(wordInputRepositoryProvider(quizType).notifier)
         .clearWordInput();
     // 解答に成功していたら連鎖を維持
     if (quizInfo.quizProcess == QuizProcessType.success) {
-      await _ref
-          .read(statisticsNotifierProvider(_quizType).notifier)
-          .nextQuiz();
+      await ref.read(statisticsNotifierProvider(quizType).notifier).nextQuiz();
     } else {
-      await _ref
-          .read(statisticsNotifierProvider(_quizType).notifier)
-          .startQuiz();
+      await ref.read(statisticsNotifierProvider(quizType).notifier).startQuiz();
     }
-    await _ref
-        .read(quizInfoRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(quizInfoRepositoryProvider(quizType).notifier)
         .saveQuizInfo(newQuizInfo);
 
     return newQuizInfo;
@@ -149,12 +109,12 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// クイズを開始します。(いっぱいやるモードのみ使用)
   Future<void> startQuiz(String seedText, QuizRange quizRange) async {
     // 履歴情報の設定
-    await _ref.read(statisticsNotifierProvider(_quizType).notifier).startQuiz();
+    await ref.read(statisticsNotifierProvider(quizType).notifier).startQuiz();
     // 新しい答えを設定
     await _updateAnswer(quizRange, seedText);
     // 入力をリセット
-    await _ref
-        .read(wordInputRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(wordInputRepositoryProvider(quizType).notifier)
         .clearWordInput();
   }
 
@@ -165,7 +125,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     }
 
     // 次の問題への進行を記録
-    await _ref.read(statisticsNotifierProvider(_quizType).notifier).nextQuiz();
+    await ref.read(statisticsNotifierProvider(quizType).notifier).nextQuiz();
 
     // 新しい答えを設定
     await _updateAnswer(
@@ -174,8 +134,8 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // 入力をリセット
-    await _ref
-        .read(wordInputRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(wordInputRepositoryProvider(quizType).notifier)
         .clearWordInput();
   }
 
@@ -183,11 +143,11 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   Future<void> _updateAnswer(QuizRange quizRange, String seedText) async {
     // シードを生成
     final statistics =
-        await _ref.read(statisticsNotifierProvider(_quizType).future);
+        await ref.read(statisticsNotifierProvider(quizType).future);
     final seed = generateSeed(seedText, statistics.currentChain);
     state = AsyncValue.data(
       state.value!.copyWith(
-        answer: await _ref
+        answer: await ref
             .read(monsterListRepositoryProvider.notifier)
             .pick(range: quizRange, seed: seed),
         quizRange: quizRange,
@@ -197,17 +157,15 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // QuizInfoの保存
-    await _ref
-        .read(quizInfoRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(quizInfoRepositoryProvider(quizType).notifier)
         .saveQuizInfo(state.value);
   }
 
   /// 問題を終了します。
   Future<void> quitQuiz() async {
     // 失敗を記録
-    await _ref
-        .read(statisticsNotifierProvider(_quizType).notifier)
-        .finishQuiz();
+    await ref.read(statisticsNotifierProvider(quizType).notifier).finishQuiz();
 
     state = AsyncValue.data(
       state.value!.copyWith(
@@ -216,8 +174,8 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // QuizInfoの保存
-    await _ref
-        .read(quizInfoRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(quizInfoRepositoryProvider(quizType).notifier)
         .saveQuizInfo(state.value);
   }
 
@@ -229,7 +187,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// QuizInfoの更新を行います。
   Future<bool?> updateQuiz() async {
     final wordInput =
-        await _ref.read(wordInputNotifierProvider(_quizType).future);
+        await ref.read(wordInputNotifierProvider(quizType).future);
     final currentIndex = wordInput.inputIndex;
     // 回答が1つでもある場合
     if (currentIndex >= 1) {
@@ -254,9 +212,7 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
   /// 正解時の処理を行います。
   Future<void> _successProcess() async {
     // 成功を記録
-    await _ref
-        .read(statisticsNotifierProvider(_quizType).notifier)
-        .successQuiz();
+    await ref.read(statisticsNotifierProvider(quizType).notifier).successQuiz();
 
     state = AsyncValue.data(
       state.value!.copyWith(
@@ -265,17 +221,15 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // QuizInfoの保存
-    await _ref
-        .read(quizInfoRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(quizInfoRepositoryProvider(quizType).notifier)
         .saveQuizInfo(state.value);
   }
 
   /// 失敗時の処理を行います。
   Future<void> _failureProcess() async {
     // 終了を記録
-    await _ref
-        .read(statisticsNotifierProvider(_quizType).notifier)
-        .finishQuiz();
+    await ref.read(statisticsNotifierProvider(quizType).notifier).finishQuiz();
 
     state = AsyncValue.data(
       state.value!.copyWith(
@@ -284,14 +238,15 @@ class QuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>> {
     );
 
     // QuizInfoの保存
-    await _ref
-        .read(quizInfoRepositoryProvider(_quizType).notifier)
+    await ref
+        .read(quizInfoRepositoryProvider(quizType).notifier)
         .saveQuizInfo(state.value);
   }
-
-  /// テスト用の[QuizInfo]を設定します。
-  @visibleForTesting
-  void updateQuizInfo(QuizInfo quizInfo) {
-    state = AsyncValue.data(quizInfo);
-  }
 }
+
+/// デフォルトの問題範囲
+@visibleForTesting
+const defaultQuizRange = diamondPearl;
+
+/// 最大の回答数
+const defaultMaxAnswer = 10;

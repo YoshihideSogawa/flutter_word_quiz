@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'clear_quiz_data_repository.dart';
+part of 'quiz_info_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clearQuizDataHash() => r'bb873a89cfc3d77af6a0d69ce572504e2a3a71d7';
+String _$quizInfoNotifierHash() => r'2071d606b220e9046198a0f99c3b9df3d27c0315';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +29,36 @@ class _SystemHash {
   }
 }
 
-/// 問題データを削除します。
-///
-/// Copied from [clearQuizData].
-@ProviderFor(clearQuizData)
-const clearQuizDataProvider = ClearQuizDataFamily();
+abstract class _$QuizInfoNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<QuizInfo> {
+  late final QuizTypes quizType;
 
-/// 問題データを削除します。
-///
-/// Copied from [clearQuizData].
-class ClearQuizDataFamily extends Family<AsyncValue<void>> {
-  /// 問題データを削除します。
-  ///
-  /// Copied from [clearQuizData].
-  const ClearQuizDataFamily();
+  FutureOr<QuizInfo> build(
+    QuizTypes quizType,
+  );
+}
 
-  /// 問題データを削除します。
-  ///
-  /// Copied from [clearQuizData].
-  ClearQuizDataProvider call(
+/// See also [QuizInfoNotifier].
+@ProviderFor(QuizInfoNotifier)
+const quizInfoNotifierProvider = QuizInfoNotifierFamily();
+
+/// See also [QuizInfoNotifier].
+class QuizInfoNotifierFamily extends Family<AsyncValue<QuizInfo>> {
+  /// See also [QuizInfoNotifier].
+  const QuizInfoNotifierFamily();
+
+  /// See also [QuizInfoNotifier].
+  QuizInfoNotifierProvider call(
     QuizTypes quizType,
   ) {
-    return ClearQuizDataProvider(
+    return QuizInfoNotifierProvider(
       quizType,
     );
   }
 
   @override
-  ClearQuizDataProvider getProviderOverride(
-    covariant ClearQuizDataProvider provider,
+  QuizInfoNotifierProvider getProviderOverride(
+    covariant QuizInfoNotifierProvider provider,
   ) {
     return call(
       provider.quizType,
@@ -76,36 +77,30 @@ class ClearQuizDataFamily extends Family<AsyncValue<void>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'clearQuizDataProvider';
+  String? get name => r'quizInfoNotifierProvider';
 }
 
-/// 問題データを削除します。
-///
-/// Copied from [clearQuizData].
-class ClearQuizDataProvider extends AutoDisposeFutureProvider<void> {
-  /// 問題データを削除します。
-  ///
-  /// Copied from [clearQuizData].
-  ClearQuizDataProvider(
+/// See also [QuizInfoNotifier].
+class QuizInfoNotifierProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<QuizInfoNotifier, QuizInfo> {
+  /// See also [QuizInfoNotifier].
+  QuizInfoNotifierProvider(
     QuizTypes quizType,
   ) : this._internal(
-          (ref) => clearQuizData(
-            ref as ClearQuizDataRef,
-            quizType,
-          ),
-          from: clearQuizDataProvider,
-          name: r'clearQuizDataProvider',
+          () => QuizInfoNotifier()..quizType = quizType,
+          from: quizInfoNotifierProvider,
+          name: r'quizInfoNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$clearQuizDataHash,
-          dependencies: ClearQuizDataFamily._dependencies,
+                  : _$quizInfoNotifierHash,
+          dependencies: QuizInfoNotifierFamily._dependencies,
           allTransitiveDependencies:
-              ClearQuizDataFamily._allTransitiveDependencies,
+              QuizInfoNotifierFamily._allTransitiveDependencies,
           quizType: quizType,
         );
 
-  ClearQuizDataProvider._internal(
+  QuizInfoNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -118,13 +113,20 @@ class ClearQuizDataProvider extends AutoDisposeFutureProvider<void> {
   final QuizTypes quizType;
 
   @override
-  Override overrideWith(
-    FutureOr<void> Function(ClearQuizDataRef provider) create,
+  FutureOr<QuizInfo> runNotifierBuild(
+    covariant QuizInfoNotifier notifier,
   ) {
+    return notifier.build(
+      quizType,
+    );
+  }
+
+  @override
+  Override overrideWith(QuizInfoNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: ClearQuizDataProvider._internal(
-        (ref) => create(ref as ClearQuizDataRef),
+      override: QuizInfoNotifierProvider._internal(
+        () => create()..quizType = quizType,
         from: from,
         name: null,
         dependencies: null,
@@ -136,13 +138,14 @@ class ClearQuizDataProvider extends AutoDisposeFutureProvider<void> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<void> createElement() {
-    return _ClearQuizDataProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<QuizInfoNotifier, QuizInfo>
+      createElement() {
+    return _QuizInfoNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ClearQuizDataProvider && other.quizType == quizType;
+    return other is QuizInfoNotifierProvider && other.quizType == quizType;
   }
 
   @override
@@ -154,17 +157,18 @@ class ClearQuizDataProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
-mixin ClearQuizDataRef on AutoDisposeFutureProviderRef<void> {
+mixin QuizInfoNotifierRef on AutoDisposeAsyncNotifierProviderRef<QuizInfo> {
   /// The parameter `quizType` of this provider.
   QuizTypes get quizType;
 }
 
-class _ClearQuizDataProviderElement
-    extends AutoDisposeFutureProviderElement<void> with ClearQuizDataRef {
-  _ClearQuizDataProviderElement(super.provider);
+class _QuizInfoNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<QuizInfoNotifier, QuizInfo>
+    with QuizInfoNotifierRef {
+  _QuizInfoNotifierProviderElement(super.provider);
 
   @override
-  QuizTypes get quizType => (origin as ClearQuizDataProvider).quizType;
+  QuizTypes get quizType => (origin as QuizInfoNotifierProvider).quizType;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

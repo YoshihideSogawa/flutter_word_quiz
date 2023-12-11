@@ -56,22 +56,12 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
   Widget build(BuildContext context) {
     final quizType = QuizType.of(context).quizType;
     final inputType = ref.watch(inputTypeRepositoryProvider);
-
-    // 入力タイプの取得を待つ
-    if (!inputType.hasValue) {
-      return const SizedBox.shrink();
-    }
-
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
-    if (!wordInputNotifier.hasValue) {
-      return const SizedBox.shrink();
-    }
-
     final nameStatesValue = useRef(<WordNameState>[]);
     final resultList =
         useState<Map<String, WordKeyboardInfo>>(<String, WordKeyboardInfo>{});
-    final wordInput = wordInputNotifier.value!;
-    final wordsResultList = wordInput.wordsResultList;
+    final wordInput = wordInputNotifier.value;
+    final wordsResultList = wordInput?.wordsResultList ?? [];
 
     // 入力最終行はアニメーション対象
     final nameStates = wordsResultList.isNotEmpty
@@ -99,7 +89,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
             ..add(nameStatesValue.value);
 
           resultList.value =
-              checkKeyboard(wordInput.wordsList, currentWordsResultList);
+              checkKeyboard(wordInput!.wordsList, currentWordsResultList);
         }
 
         // タイマーの初期化
@@ -111,7 +101,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
       }
     } else {
       nameStatesValue.value = nameStates;
-      resultList.value = wordInput.keyResultList;
+      resultList.value = wordInput?.keyResultList ?? {};
     }
 
     final keyResultList = resultList.value;

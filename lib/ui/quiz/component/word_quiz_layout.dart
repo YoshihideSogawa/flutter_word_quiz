@@ -5,7 +5,7 @@ import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/repository/settings/input_type_repository.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
@@ -41,7 +41,7 @@ class WordQuizLayout extends HookConsumerWidget {
     final quizType = QuizType.of(context).quizType;
     // アニメーションに連動してQuizProcessを同期するための変数
     final lazyQuizProcess = useState<QuizProcessType?>(null);
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).value;
     final inputType = ref.watch(inputTypeRepositoryProvider);
     final wordAnimation = useState<bool>(false);
     final controlEnabled = !wordAnimation.value;

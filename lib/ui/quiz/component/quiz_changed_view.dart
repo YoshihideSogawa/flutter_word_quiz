@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
+import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 問題が切り替わったことを表す画面です。
 class QuizChangedView extends ConsumerWidget {
@@ -15,6 +17,7 @@ class QuizChangedView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quizType = QuizType.of(context).quizType;
     return QuizDialog(
       onTap: () {
         quizPageInfo.value = quizPageInfo.value.copyWith(
@@ -44,7 +47,10 @@ class QuizChangedView extends ConsumerWidget {
                 const Text('もんだいが こうしんされました'),
                 const SizedBox(height: 18),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await ref
+                        .read(quizInfoNotifierProvider(quizType).notifier)
+                        .refreshDailyQuiz();
                     quizPageInfo.value = quizPageInfo.value.copyWith(
                       showQuizChanged: false,
                     );

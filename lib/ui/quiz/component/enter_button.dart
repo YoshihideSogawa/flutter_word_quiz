@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
@@ -29,6 +29,7 @@ class EnterButton extends ConsumerWidget {
     final quizType = QuizType.of(context).quizType;
     final size = MediaQuery.of(context).size;
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType));
     return Material(
       child: IntrinsicWidth(
         child: Ink(
@@ -40,7 +41,7 @@ class EnterButton extends ConsumerWidget {
           ),
           child: InkWell(
             key: const Key('enter_button_ink_well'),
-            onTap: wordInputNotifier.hasValue && enabled
+            onTap: wordInputNotifier.hasValue && quizInfo.hasValue && enabled
                 ? () async => _onTapEnter(context, ref, quizType)
                 : null,
             borderRadius: BorderRadius.circular(4),
@@ -71,7 +72,7 @@ class EnterButton extends ConsumerWidget {
   ) async {
     final state = ScaffoldMessenger.of(context);
     // 問題が開始していない場合は無視
-    final quizInfo = ref.read(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.read(quizInfoNotifierProvider(quizType)).value;
     if (quizInfo?.quizProcess != QuizProcessType.started) {
       return;
     }
@@ -90,8 +91,9 @@ class EnterButton extends ConsumerWidget {
 
       state.hideCurrentSnackBar();
       // QuizInfoの更新
-      final result =
-          await ref.watch(quizInfoProvider(quizType).notifier).updateQuiz();
+      final result = await ref
+          .read(quizInfoNotifierProvider(quizType).notifier)
+          .updateQuiz();
       if (result == null) {
         return;
       }
