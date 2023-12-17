@@ -59,13 +59,13 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
     final nameStatesValue = useRef(<WordNameState>[]);
     final resultList =
-        useState<Map<String, WordKeyboardInfo>>(<String, WordKeyboardInfo>{});
+        useState<Map<String, WordKeyboardInfo>?>(<String, WordKeyboardInfo>{});
     final wordInput = wordInputNotifier.value;
-    final wordsResultList = wordInput?.wordsResultList ?? [];
+    final wordsResultList = wordInput?.wordsResultList;
 
     // 入力最終行はアニメーション対象
-    final nameStates = wordsResultList.isNotEmpty
-        ? wordsResultList.last ?? <WordNameState>[]
+    final nameStates = (wordsResultList?.isNotEmpty ?? false)
+        ? wordsResultList?.last ?? <WordNameState>[]
         : <WordNameState>[];
     // アニメーションを行う場合
     if (widget.wordAnimation.value) {
@@ -84,7 +84,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
           nameStatesValue.value =
               nameStates.sublist(0, nameStatesValue.value.length + 1);
 
-          final currentWordsResultList = [...wordsResultList]
+          final currentWordsResultList = [...?wordsResultList]
             ..removeLast()
             ..add(nameStatesValue.value);
 
@@ -101,7 +101,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
       }
     } else {
       nameStatesValue.value = nameStates;
-      resultList.value = wordInput?.keyResultList ?? {};
+      resultList.value = wordInput?.keyResultList;
     }
 
     final keyResultList = resultList.value;
