@@ -29,12 +29,11 @@ class MonsterListRepository extends _$MonsterListRepository {
     int? seed,
   }) async {
     // buildの完了を待つ
-    await future;
+    final monsterList = await future;
 
     // NOTE:デバッグコード
     // return monsterList.firstWhere((element) => element.id == 120);
 
-    final monsterList = state.value!;
     // 範囲もシードも設定されていない場合はランダムに選出
     if (range == null && seed == null) {
       return monsterList[Random().nextInt(monsterList.length)];
