@@ -3,6 +3,7 @@ import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/provider/quiz_info_provider.dart';
 
+@Deprecated('Delete this class after migration to Riverpod')
 class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
     implements QuizInfoNotifier {
   FakeQuizInfoNotifier(

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
 import 'package:word_quiz/provider/splash_page_notifier.dart';
 
-class FakeSplashPageNotifier extends SplashPageNotifierMock {
+class FakeSplashPageNotifier extends MockSplashPageNotifier {
   FakeSplashPageNotifier({
     this.splashPageInfo,
     this.exception,

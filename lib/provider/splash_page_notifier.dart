@@ -29,6 +29,6 @@ class SplashPageNotifier extends _$SplashPageNotifier {
 
 /// テスト用のMock
 @visibleForTesting
-class SplashPageNotifierMock extends _$SplashPageNotifier
+class MockSplashPageNotifier extends _$SplashPageNotifier
     with Mock
     implements SplashPageNotifier {}

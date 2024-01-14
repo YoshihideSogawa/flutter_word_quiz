@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:mockito/mockito.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/logic/quiz_info_utils.dart';
@@ -250,3 +251,9 @@ const defaultQuizRange = diamondPearl;
 
 /// 最大の回答数
 const defaultMaxAnswer = 10;
+
+/// テスト用のMock
+@visibleForTesting
+class MockQuizInfoNotifier extends _$QuizInfoNotifier
+    with Mock
+    implements QuizInfoNotifier {}
