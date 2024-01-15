@@ -8,7 +8,7 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 
-import '../../mock/fake_quiz_info_notifier.dart';
+import '../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../mock/mock_box_data.dart';
 
 void main() {
@@ -20,10 +20,12 @@ void main() {
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
           quizInfoProvider(QuizTypes.daily).overrideWith(
-            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+            (ref) =>
+                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
           ),
           quizInfoProvider(QuizTypes.endless).overrideWith(
-            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+            (ref) =>
+                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
           ),
         ],
         child: const MaterialApp(
@@ -48,10 +50,12 @@ void main() {
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
           quizInfoProvider(QuizTypes.daily).overrideWith(
-            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+            (ref) =>
+                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
           ),
           quizInfoProvider(QuizTypes.endless).overrideWith(
-            (ref) => FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
+            (ref) =>
+                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
           ),
         ],
         child: const MaterialApp(

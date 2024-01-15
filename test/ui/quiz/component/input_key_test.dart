@@ -10,7 +10,7 @@ import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/input_key.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
+import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -240,7 +240,7 @@ void main() {
       quizType: quizType,
       quizInfo: quizInfo,
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(quizInfo),
     );
 

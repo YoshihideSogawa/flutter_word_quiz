@@ -12,7 +12,7 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
+import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -21,7 +21,7 @@ void main() {
     const quizInfo = QuizInfo(
       quizProcess: QuizProcessType.started,
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(quizInfo),
     );
 
@@ -83,7 +83,7 @@ void main() {
 
   testWidgets('StatisticsView(Endless)', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.started,
@@ -145,7 +145,7 @@ void main() {
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.started,
@@ -189,7 +189,7 @@ void main() {
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.success,
@@ -230,7 +230,7 @@ void main() {
 
   testWidgets('StatisticsView(Daily failure)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.failure,
@@ -272,7 +272,7 @@ void main() {
   testWidgets('StatisticsView(Daily none)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(),
       ),
@@ -312,7 +312,7 @@ void main() {
   testWidgets('StatisticsView(Daily quit)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.quit,
@@ -357,7 +357,7 @@ void main() {
   testWidgets('StatisticsView(Daily null)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.loading(),
     );
 

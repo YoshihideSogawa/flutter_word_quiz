@@ -13,7 +13,7 @@ import 'package:word_quiz/ui/quiz/component/enter_button.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 import '../../../mock/fake_monster_list_repository.dart';
-import '../../../mock/fake_quiz_info_notifier.dart';
+import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 import '../../../mock/monster_test_list.dart';
 
@@ -52,7 +52,7 @@ void main() {
     );
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
     );
 
@@ -100,7 +100,7 @@ void main() {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
     );
 
@@ -159,7 +159,7 @@ void main() {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
     );
 
@@ -217,7 +217,7 @@ void main() {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
       updateQuizResult: false,
     );
@@ -276,7 +276,7 @@ void main() {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       AsyncValue.data(quizInfo),
     );
 

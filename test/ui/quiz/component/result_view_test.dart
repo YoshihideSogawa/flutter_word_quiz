@@ -12,7 +12,7 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/result_view.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
+import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -84,7 +84,7 @@ void main() {
           appPropertyOverride(parentalControl: false),
           quizOverride(quizType: quizType, statistics: quizStatistics),
           quizInfoProvider(quizType).overrideWith(
-            (ref) => FakeQuizInfoNotifier(
+            (ref) => LegacyFakeQuizInfoNotifier(
               const AsyncValue.data(
                 QuizInfo(
                   quizProcess: QuizProcessType.failure,
@@ -134,7 +134,7 @@ void main() {
           quizOverride(quizType: quizType, statistics: quizStatistics),
           appPropertyOverride(parentalControl: false),
           quizInfoProvider(quizType).overrideWith(
-            (ref) => FakeQuizInfoNotifier(
+            (ref) => LegacyFakeQuizInfoNotifier(
               const AsyncValue.data(
                 QuizInfo(
                   quizProcess: QuizProcessType.quit,
@@ -173,7 +173,7 @@ void main() {
   testWidgets('おわるのタップ', (tester) async {
     const quizType = QuizTypes.daily;
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.success,
@@ -214,7 +214,7 @@ void main() {
 
   testWidgets('おわるのタップ', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.success,
@@ -256,7 +256,7 @@ void main() {
 
   testWidgets('とじるのタップ', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizProcess: QuizProcessType.failure,

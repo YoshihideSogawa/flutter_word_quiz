@@ -9,11 +9,11 @@ import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
+import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 
 void main() {
   testWidgets('AnswerView', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           answer: Monster(
@@ -46,7 +46,7 @@ void main() {
 
   testWidgets('AnswerViewを閉じる', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           answer: Monster(

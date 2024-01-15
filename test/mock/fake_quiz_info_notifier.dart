@@ -1,57 +1,26 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import 'package:word_quiz/model/quiz_info.dart';
-import 'package:word_quiz/model/quiz_range.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/model/quiz_type.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 
-@Deprecated('Delete this class after migration to Riverpod')
-class FakeQuizInfoNotifier extends StateNotifier<AsyncValue<QuizInfo>>
-    implements QuizInfoNotifier {
-  FakeQuizInfoNotifier(
-    super._state, {
-    this.updateQuizResult = true,
+class FakeQuizInfoNotifier extends MockQuizInfoNotifier {
+  FakeQuizInfoNotifier({
+    this.quizInfo,
+    this.exception,
   });
 
-  bool updateQuizCalled = false;
+  @visibleForTesting
+  final QuizInfo? quizInfo;
 
-  bool refreshDailyQuizCalled = false;
-
-  bool nextQuizCalled = false;
-
-  bool quitQuizCalled = false;
-
-  bool updateQuizResult;
+  @visibleForTesting
+  final Exception? exception;
 
   @override
-  Future<void> init() async {}
+  Future<QuizInfo> build(QuizTypes quizType) async {
+    if (exception != null) {
+      throw exception!;
+    }
 
-  @override
-  Future<void> nextQuiz() async {
-    nextQuizCalled = true;
+    return quizInfo ?? await super.build(quizType);
   }
-
-  @override
-  Future<void> quitQuiz() async {
-    quitQuizCalled = true;
-  }
-
-  @override
-  Future<bool> refreshDailyQuiz() async {
-    refreshDailyQuizCalled = true;
-    return true;
-  }
-
-  @override
-  Future<void> retireQuiz() async {}
-
-  @override
-  Future<void> startQuiz(String seedText, QuizRange quizRange) async {}
-
-  @override
-  Future<bool> updateQuiz() async {
-    updateQuizCalled = true;
-    return updateQuizResult;
-  }
-
-  @override
-  void updateQuizInfo(QuizInfo quizInfo) {}
 }

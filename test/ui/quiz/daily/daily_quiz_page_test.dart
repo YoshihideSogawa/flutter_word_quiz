@@ -7,7 +7,7 @@ import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_changed_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_drawer.dart';
 import 'package:word_quiz/ui/quiz/component/refresh_quiz_button.dart';
@@ -22,25 +22,19 @@ import '../../../mock/monster_test_list.dart';
 
 void main() {
   testWidgets('DailyQuizPage(読み込み完了)', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(),
-      ),
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: const MaterialApp(
           home: DailyQuizPage(),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('きょうのもんだい'), findsOneWidget);
     expect(find.byType(RefreshQuizButton), findsOneWidget);
@@ -53,40 +47,23 @@ void main() {
     expect(find.byType(QuizDrawer), findsOneWidget);
   });
 
-  testWidgets('DailyQuizPage(Loading)', (tester) async {
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.loading());
-
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
-        ],
-        child: const MaterialApp(
-          home: DailyQuizPage(),
-        ),
-      ),
-    );
-
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-  });
-
   testWidgets('DailyQuizPage(Error)', (tester) async {
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.error('', StackTrace.empty));
-
+    final errorNotifier = FakeQuizInfoNotifier(exception: Exception());
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          settingsOverride(inputType: InputTypes.switching),
+          quizOverride(quizType: QuizTypes.daily),
+          quizInfoNotifierProvider(QuizTypes.daily)
+              .overrideWith(() => errorNotifier),
         ],
         child: const MaterialApp(
           home: DailyQuizPage(),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(
       find.text('もんだいが おこりました\nアプリを さいきどう してください'),

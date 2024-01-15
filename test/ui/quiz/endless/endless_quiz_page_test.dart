@@ -10,7 +10,7 @@ import 'package:word_quiz/ui/quiz/component/statistics_button.dart';
 import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 import 'package:word_quiz/ui/quiz/endless/endless_quiz_page.dart';
 
-import '../../../mock/fake_quiz_info_page_notifier.dart';
+import '../../../mock/fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {

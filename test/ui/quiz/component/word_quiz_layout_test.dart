@@ -29,7 +29,7 @@ import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 import 'package:word_quiz/ui/quiz/component/word_keyboard.dart';
 import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
+import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -40,7 +40,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -103,7 +103,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -166,7 +166,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -229,7 +229,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -292,7 +292,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -354,7 +354,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -417,7 +417,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -480,7 +480,7 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -538,7 +538,7 @@ void main() {
 
   testWidgets('切り替えモード/endless/quit', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
@@ -612,7 +612,7 @@ void main() {
         showQuizChanged: true,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
+    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
       const AsyncValue.data(
         QuizInfo(
           quizType: quizType,
