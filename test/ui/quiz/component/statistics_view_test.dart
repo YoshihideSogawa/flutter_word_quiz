@@ -8,11 +8,9 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
-import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -20,9 +18,6 @@ void main() {
     const quizType = QuizTypes.daily;
     const quizInfo = QuizInfo(
       quizProcess: QuizProcessType.started,
-    );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(quizInfo),
     );
 
     const quizStatistics = QuizStatistics(
@@ -43,8 +38,6 @@ void main() {
             statistics: quizStatistics,
           ),
           appPropertyOverride(parentalControl: false),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -77,19 +70,16 @@ void main() {
 
     // とじるをタップ
     await tester.tap(find.text('とじる'));
-    expect(fakeQuizInfoNotifier.refreshDailyQuizCalled, isTrue);
+    await tester.pumpAndSettle();
+
     expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Endless)', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-          seedText: 'フシギダネ',
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      seedText: 'フシギダネ',
     );
 
     const quizStatistics = QuizStatistics(
@@ -104,10 +94,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, statistics: quizStatistics),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
           appPropertyOverride(parentalControl: false),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -145,14 +137,9 @@ void main() {
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
     );
-
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -165,10 +152,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, statistics: quizStatistics),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
           appPropertyOverride(parentalControl: false),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -181,22 +170,20 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     // とじるをタップ
     await tester.tapAt(Offset.zero);
-    expect(fakeQuizInfoNotifier.refreshDailyQuizCalled, isTrue);
+    await tester.pumpAndSettle();
+
     expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.success,
     );
-
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -210,9 +197,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType, statistics: quizStatistics),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -224,20 +213,17 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.textContaining('クリア！'), findsOneWidget);
   });
 
   testWidgets('StatisticsView(Daily failure)', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.failure,
     );
-
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -251,9 +237,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType, statistics: quizStatistics),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -265,6 +253,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('しっぱい...'), findsOneWidget);
   });
@@ -272,12 +262,7 @@ void main() {
   testWidgets('StatisticsView(Daily none)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(),
-      ),
-    );
-
+    const quizInfo = QuizInfo();
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -291,9 +276,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType, statistics: quizStatistics),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -306,20 +293,17 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.text('[はじめから] をおしてね'), findsOneWidget);
   });
 
   testWidgets('StatisticsView(Daily quit)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.quit,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.quit,
     );
-
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -333,9 +317,11 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType, statistics: quizStatistics),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -357,10 +343,6 @@ void main() {
   testWidgets('StatisticsView(Daily null)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.loading(),
-    );
-
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -375,8 +357,6 @@ void main() {
         overrides: [
           appPropertyOverride(parentalControl: false),
           quizOverride(quizType: quizType, statistics: quizStatistics),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/quiz_page.dart';
 
-import '../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../mock/mock_box_data.dart';
 
 void main() {
@@ -19,14 +16,6 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
-          quizInfoProvider(QuizTypes.daily).overrideWith(
-            (ref) =>
-                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
-          ),
-          quizInfoProvider(QuizTypes.endless).overrideWith(
-            (ref) =>
-                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
-          ),
         ],
         child: const MaterialApp(
           home: QuizPage(),
@@ -49,14 +38,6 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
-          quizInfoProvider(QuizTypes.daily).overrideWith(
-            (ref) =>
-                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
-          ),
-          quizInfoProvider(QuizTypes.endless).overrideWith(
-            (ref) =>
-                LegacyFakeQuizInfoNotifier(const AsyncValue.data(QuizInfo())),
-          ),
         ],
         child: const MaterialApp(
           home: QuizPage(),

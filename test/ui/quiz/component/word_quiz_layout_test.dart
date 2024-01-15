@@ -9,7 +9,6 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/delete_button.dart';
@@ -29,7 +28,6 @@ import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 import 'package:word_quiz/ui/quiz/component/word_keyboard.dart';
 import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
-import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -40,13 +38,9 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
     );
 
     const wordInput = WordInput(
@@ -66,10 +60,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -103,15 +99,10 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -129,9 +120,11 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.all),
         ],
         child: MaterialApp(
@@ -161,20 +154,15 @@ void main() {
 
   testWidgets('切り替えモード/Daily/success', (tester) async {
     const quizType = QuizTypes.daily;
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.success,
+    );
     final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
-    );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -192,10 +180,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -229,15 +219,10 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.failure,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -255,10 +240,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -292,14 +279,9 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -317,10 +299,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -354,15 +338,10 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -380,10 +359,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -417,15 +398,10 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.success,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -443,10 +419,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -480,15 +458,10 @@ void main() {
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.failure,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -506,10 +479,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -538,15 +513,10 @@ void main() {
 
   testWidgets('切り替えモード/endless/quit', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.quit,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.quit,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -564,10 +534,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(inputType: InputTypes.switching),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -612,15 +584,10 @@ void main() {
         showQuizChanged: true,
       ),
     );
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.quit,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.quit,
     );
-
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -639,13 +606,15 @@ void main() {
       ProviderScope(
         overrides: [
           appPropertyOverride(parentalControl: false),
-          quizOverride(quizType: quizType, wordInput: wordInput),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
           settingsOverride(
             inputType: InputTypes.switching,
             quizRange: diamondPearl,
           ),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(

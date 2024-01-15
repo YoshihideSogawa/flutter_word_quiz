@@ -6,7 +6,7 @@ part of 'quiz_info_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizInfoNotifierHash() => r'2071d606b220e9046198a0f99c3b9df3d27c0315';
+String _$quizInfoNotifierHash() => r'807e42a1283f070a7626c092cd89763ef826a461';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -38,16 +38,24 @@ abstract class _$QuizInfoNotifier
   );
 }
 
-/// See also [QuizInfoNotifier].
+/// 問題情報に関するNotifierです。
+///
+/// Copied from [QuizInfoNotifier].
 @ProviderFor(QuizInfoNotifier)
 const quizInfoNotifierProvider = QuizInfoNotifierFamily();
 
-/// See also [QuizInfoNotifier].
+/// 問題情報に関するNotifierです。
+///
+/// Copied from [QuizInfoNotifier].
 class QuizInfoNotifierFamily extends Family<AsyncValue<QuizInfo>> {
-  /// See also [QuizInfoNotifier].
+  /// 問題情報に関するNotifierです。
+  ///
+  /// Copied from [QuizInfoNotifier].
   const QuizInfoNotifierFamily();
 
-  /// See also [QuizInfoNotifier].
+  /// 問題情報に関するNotifierです。
+  ///
+  /// Copied from [QuizInfoNotifier].
   QuizInfoNotifierProvider call(
     QuizTypes quizType,
   ) {
@@ -80,10 +88,14 @@ class QuizInfoNotifierFamily extends Family<AsyncValue<QuizInfo>> {
   String? get name => r'quizInfoNotifierProvider';
 }
 
-/// See also [QuizInfoNotifier].
+/// 問題情報に関するNotifierです。
+///
+/// Copied from [QuizInfoNotifier].
 class QuizInfoNotifierProvider
     extends AutoDisposeAsyncNotifierProviderImpl<QuizInfoNotifier, QuizInfo> {
-  /// See also [QuizInfoNotifier].
+  /// 問題情報に関するNotifierです。
+  ///
+  /// Copied from [QuizInfoNotifier].
   QuizInfoNotifierProvider(
     QuizTypes quizType,
   ) : this._internal(
