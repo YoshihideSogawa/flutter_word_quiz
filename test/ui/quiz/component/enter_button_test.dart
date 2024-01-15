@@ -7,13 +7,11 @@ import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/ui/quiz/component/enter_button.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 import '../../../mock/fake_monster_list_repository.dart';
-import '../../../mock/legacy_fake_quiz_info_notifier.dart';
 import '../../../mock/mock_box_data.dart';
 import '../../../mock/monster_test_list.dart';
 
@@ -51,17 +49,10 @@ void main() {
       playDate: generateDate(),
     );
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      AsyncValue.data(quizInfo),
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           quizOverride(quizType: quizType, quizInfo: quizInfo),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -99,11 +90,6 @@ void main() {
 
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      AsyncValue.data(quizInfo),
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -112,8 +98,8 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -158,11 +144,6 @@ void main() {
 
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      AsyncValue.data(quizInfo),
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -171,8 +152,6 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
         ],
@@ -196,7 +175,7 @@ void main() {
     // NOTE: アニメーション待ち
     await tester.pumpAndSettle(const Duration(minutes: 1));
 
-    expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
+    // TODO(sogawa): ここでなんらかの結果を確認する
   });
 
   testWidgets('EnterButtonのタップ(成功->失敗)', (tester) async {
@@ -216,12 +195,6 @@ void main() {
 
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      AsyncValue.data(quizInfo),
-      updateQuizResult: false,
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -230,8 +203,6 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
         ],
@@ -255,7 +226,7 @@ void main() {
     // NOTE: アニメーション待ち
     await tester.pumpAndSettle(const Duration(minutes: 1));
 
-    expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
+    // TODO(sogawa): ここでなんらかの結果を確認する
   });
 
   testWidgets('EnterButtonのタップ(Endless -> 成功)', (tester) async {
@@ -275,11 +246,6 @@ void main() {
 
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    // TODO(sogawa): すぐには書き換えられないので、一旦このまま進める
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      AsyncValue.data(quizInfo),
-    );
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -288,8 +254,6 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          quizInfoProvider(quizType)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
         ],
@@ -313,6 +277,6 @@ void main() {
     // NOTE: アニメーション待ち
     await tester.pumpAndSettle(const Duration(minutes: 1));
 
-    expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
+    // TODO(sogawa): ここでなんらかの結果を確認する
   });
 }

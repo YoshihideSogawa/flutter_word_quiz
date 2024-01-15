@@ -5,30 +5,24 @@ import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/legacy_fake_quiz_info_notifier.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('AnswerView', (tester) async {
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          answer: Monster(
-            id: 1,
-            name: 'フシギダネ',
-          ),
-        ),
+    const quizInfo = QuizInfo(
+      answer: Monster(
+        id: 1,
+        name: 'フシギダネ',
       ),
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(quizType: QuizTypes.daily, quizInfo: quizInfo),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -41,27 +35,24 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.text('フシギダネ'), findsOneWidget);
   });
 
   testWidgets('AnswerViewを閉じる', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    final fakeQuizInfoNotifier = LegacyFakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          answer: Monster(
-            id: 1,
-            name: 'フシギダネ',
-          ),
-        ),
+    const quizInfo = QuizInfo(
+      answer: Monster(
+        id: 1,
+        name: 'フシギダネ',
       ),
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => fakeQuizInfoNotifier),
+          quizOverride(quizType: QuizTypes.daily, quizInfo: quizInfo),
         ],
         child: MaterialApp(
           home: QuizType(

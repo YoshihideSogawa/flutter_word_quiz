@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_selection_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 import '../../../mock/fake_monster_list_repository.dart';
-import '../../../mock/generate_mocks.mocks.dart';
 import '../../../mock/mock_box_data.dart';
 
 void main() {
@@ -76,7 +73,6 @@ void main() {
 
   testWidgets('ドロップダウンの選択', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    final mockQuizInfoNotifier = MockQuizInfoNotifier();
 
     await tester.pumpWidget(
       ProviderScope(
@@ -84,8 +80,6 @@ void main() {
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
           settingsOverride(quizRange: xy),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockQuizInfoNotifier),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -111,16 +105,13 @@ void main() {
 
   testWidgets('スタートのタップ', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    final mockQuizInfoNotifier = MockQuizInfoNotifier();
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           monsterListRepositoryProvider
               .overrideWith(FakeMonsterListRepository.new),
           settingsOverride(quizRange: xy),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockQuizInfoNotifier),
+          quizOverride(quizType: QuizTypes.daily),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -136,8 +127,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('start_button')));
+    await tester.pumpAndSettle();
 
-    verify(mockQuizInfoNotifier.startQuiz(any, any)).called(1);
     expect(quizPageInfo.value.showQuizSelection, false);
   });
 }

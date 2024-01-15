@@ -61,8 +61,8 @@ class InputKey extends ConsumerWidget {
               ? () async {
                   // 問題が開始していない場合は無視
                   final quizInfo =
-                      ref.read(quizInfoNotifierProvider(quizType)).valueOrNull;
-                  if (quizInfo?.quizProcess != QuizProcessType.started) {
+                      await ref.read(quizInfoNotifierProvider(quizType).future);
+                  if (quizInfo.quizProcess != QuizProcessType.started) {
                     return;
                   }
 

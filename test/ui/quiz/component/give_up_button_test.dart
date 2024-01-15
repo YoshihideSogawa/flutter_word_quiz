@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
 import 'package:word_quiz/ui/quiz/component/give_up_button.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('GiveUpButton', (tester) async {
@@ -26,17 +24,17 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.text('おわる'), findsOneWidget);
   });
 
   testWidgets('GiveUpButton(タップ)', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    final mockQuizInfoNotifier = MockQuizInfoNotifier();
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWith((ref) => mockQuizInfoNotifier),
+          quizOverride(quizType: QuizTypes.daily),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -49,6 +47,8 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byKey(const Key('give_up_button_ink_well')));
     await tester.pumpAndSettle();
 
@@ -58,6 +58,6 @@ void main() {
     await tester.tap(find.text('はい'));
     await tester.pumpAndSettle();
 
-    verify(mockQuizInfoNotifier.quitQuiz()).called(1);
+    expect(quizPageInfo.value.showResult, isTrue);
   });
 }
