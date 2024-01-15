@@ -29,9 +29,11 @@ void main() {
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(
-                wordAnimation: ValueNotifier(true),
-                quizPageInfo: quizPageInfo,
+              body: SingleChildScrollView(
+                child: WordKeyboard(
+                  wordAnimation: ValueNotifier(true),
+                  quizPageInfo: quizPageInfo,
+                ),
               ),
             ),
           ),
@@ -56,9 +58,11 @@ void main() {
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(
-                wordAnimation: ValueNotifier(true),
-                quizPageInfo: quizPageInfo,
+              body: SingleChildScrollView(
+                child: WordKeyboard(
+                  wordAnimation: ValueNotifier(true),
+                  quizPageInfo: quizPageInfo,
+                ),
               ),
             ),
           ),
@@ -90,9 +94,11 @@ void main() {
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(
-                wordAnimation: ValueNotifier(true),
-                quizPageInfo: quizPageInfo,
+              body: SingleChildScrollView(
+                child: WordKeyboard(
+                  wordAnimation: ValueNotifier(true),
+                  quizPageInfo: quizPageInfo,
+                ),
               ),
             ),
           ),
@@ -140,9 +146,11 @@ void main() {
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordKeyboard(
-                wordAnimation: ValueNotifier(true),
-                quizPageInfo: quizPageInfo,
+              body: SingleChildScrollView(
+                child: WordKeyboard(
+                  wordAnimation: ValueNotifier(true),
+                  quizPageInfo: quizPageInfo,
+                ),
               ),
             ),
           ),

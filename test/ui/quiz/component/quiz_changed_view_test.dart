@@ -6,10 +6,15 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_changed_view.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
+import '../../../mock/mock_box_data.dart';
+
 void main() {
   testWidgets('QuizChallengeView', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          quizOverride(quizType: QuizTypes.daily),
+        ],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
@@ -23,14 +28,19 @@ void main() {
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.text('もんだいが こうしんされました'), findsOneWidget);
   });
 
-  testWidgets('QuizChallengeView', (tester) async {
+  testWidgets('QuizChallengeView(Close)', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          quizOverride(quizType: QuizTypes.daily),
+        ],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,

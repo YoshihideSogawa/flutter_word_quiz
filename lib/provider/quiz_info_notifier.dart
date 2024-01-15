@@ -165,6 +165,8 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
 
   /// 問題を終了します。
   Future<void> quitQuiz() async {
+    await future;
+
     // 失敗を記録
     await ref.read(statisticsNotifierProvider(quizType).notifier).finishQuiz();
 
