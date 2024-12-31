@@ -10,9 +10,13 @@ void main() {
     final monsterList =
         await container.read(monsterListRepositoryProvider.future);
 
-    expect(monsterList[0].id, 1);
-    expect(monsterList[0].name, 'フシギダネ');
-    expect(monsterList.length, 905);
+    expect(monsterList.first.id, 1);
+    expect(monsterList.first.name, 'フシギダネ');
+
+    expect(monsterList.last.id, 1025);
+    expect(monsterList.last.name, 'モモワロウ');
+
+    expect(monsterList.length, 1025);
   });
 
   test('pickMonster', () async {
