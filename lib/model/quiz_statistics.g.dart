@@ -8,11 +8,11 @@ part of 'quiz_statistics.dart';
 
 _$QuizStatisticsImpl _$$QuizStatisticsImplFromJson(Map<String, dynamic> json) =>
     _$QuizStatisticsImpl(
-      clearCount: json['clearCount'] as int? ?? 0,
-      currentChain: json['currentChain'] as int? ?? 0,
-      lastChain: json['lastChain'] as int? ?? 0,
-      maxChain: json['maxChain'] as int? ?? 0,
-      playCount: json['playCount'] as int? ?? 0,
+      clearCount: (json['clearCount'] as num?)?.toInt() ?? 0,
+      currentChain: (json['currentChain'] as num?)?.toInt() ?? 0,
+      lastChain: (json['lastChain'] as num?)?.toInt() ?? 0,
+      maxChain: (json['maxChain'] as num?)?.toInt() ?? 0,
+      playCount: (json['playCount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$QuizStatisticsImplToJson(

@@ -12,7 +12,7 @@ part of 'quiz_range.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 QuizRange _$QuizRangeFromJson(Map<String, dynamic> json) {
   return _QuizRange.fromJson(json);
@@ -24,8 +24,12 @@ mixin _$QuizRange {
   int get maxNo => throw _privateConstructorUsedError;
   String? get displayName => throw _privateConstructorUsedError;
 
+  /// Serializes this QuizRange to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of QuizRange
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $QuizRangeCopyWith<QuizRange> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$QuizRangeCopyWithImpl<$Res, $Val extends QuizRange>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of QuizRange
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$QuizRangeImplCopyWithImpl<$Res>
       _$QuizRangeImpl _value, $Res Function(_$QuizRangeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of QuizRange
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,7 +156,7 @@ class _$QuizRangeImpl with DiagnosticableTreeMixin implements _QuizRange {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuizRangeImpl &&
@@ -158,11 +166,13 @@ class _$QuizRangeImpl with DiagnosticableTreeMixin implements _QuizRange {
                 other.displayName == displayName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, maxNo, displayName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of QuizRange
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QuizRangeImplCopyWith<_$QuizRangeImpl> get copyWith =>
@@ -191,8 +201,11 @@ abstract class _QuizRange implements QuizRange {
   int get maxNo;
   @override
   String? get displayName;
+
+  /// Create a copy of QuizRange
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuizRangeImplCopyWith<_$QuizRangeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

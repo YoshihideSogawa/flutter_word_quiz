@@ -12,7 +12,7 @@ part of 'word_input.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 WordInput _$WordInputFromJson(Map<String, dynamic> json) {
   return _WordInput.fromJson(json);
@@ -27,8 +27,12 @@ mixin _$WordInput {
       throw _privateConstructorUsedError;
   int get inputIndex => throw _privateConstructorUsedError;
 
+  /// Serializes this WordInput to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WordInput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WordInputCopyWith<WordInput> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$WordInputCopyWithImpl<$Res, $Val extends WordInput>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WordInput
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -107,6 +113,8 @@ class __$$WordInputImplCopyWithImpl<$Res>
       _$WordInputImpl _value, $Res Function(_$WordInputImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WordInput
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -200,7 +208,7 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WordInputImpl &&
@@ -214,7 +222,7 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
                 other.inputIndex == inputIndex));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -223,7 +231,9 @@ class _$WordInputImpl with DiagnosticableTreeMixin implements _WordInput {
       const DeepCollectionEquality().hash(_keyResultList),
       inputIndex);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WordInput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WordInputImplCopyWith<_$WordInputImpl> get copyWith =>
@@ -255,8 +265,11 @@ abstract class _WordInput implements WordInput {
   Map<String, WordKeyboardInfo> get keyResultList;
   @override
   int get inputIndex;
+
+  /// Create a copy of WordInput
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WordInputImplCopyWith<_$WordInputImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

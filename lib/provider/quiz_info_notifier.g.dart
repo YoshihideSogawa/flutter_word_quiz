@@ -6,7 +6,7 @@ part of 'quiz_info_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizInfoNotifierHash() => r'807e42a1283f070a7626c092cd89763ef826a461';
+String _$quizInfoNotifierHash() => r'5dd1acdd5cf038df3b34e78088ca96271faea544';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -169,6 +169,8 @@ class QuizInfoNotifierProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin QuizInfoNotifierRef on AutoDisposeAsyncNotifierProviderRef<QuizInfo> {
   /// The parameter `quizType` of this provider.
   QuizTypes get quizType;
@@ -183,4 +185,4 @@ class _QuizInfoNotifierProviderElement
   QuizTypes get quizType => (origin as QuizInfoNotifierProvider).quizType;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

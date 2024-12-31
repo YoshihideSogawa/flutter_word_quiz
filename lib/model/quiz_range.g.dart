@@ -8,8 +8,8 @@ part of 'quiz_range.dart';
 
 _$QuizRangeImpl _$$QuizRangeImplFromJson(Map<String, dynamic> json) =>
     _$QuizRangeImpl(
-      id: json['id'] as int? ?? 0,
-      maxNo: json['maxNo'] as int? ?? 0,
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      maxNo: (json['maxNo'] as num?)?.toInt() ?? 0,
       displayName: json['displayName'] as String?,
     );
 

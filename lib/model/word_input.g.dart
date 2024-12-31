@@ -23,7 +23,7 @@ _$WordInputImpl _$$WordInputImplFromJson(Map<String, dynamic> json) =>
             (k, e) => MapEntry(k, $enumDecode(_$WordKeyboardInfoEnumMap, e)),
           ) ??
           const <String, WordKeyboardInfo>{},
-      inputIndex: json['inputIndex'] as int? ?? 0,
+      inputIndex: (json['inputIndex'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$WordInputImplToJson(_$WordInputImpl instance) =>
