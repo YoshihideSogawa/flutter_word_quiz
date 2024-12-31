@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:word_quiz/repository/app_property/parental_control_repository.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
+import 'package:word_quiz/routing/routes.dart';
 
 /// シェアボタンです。
 class ShareButton extends ConsumerWidget {
@@ -31,12 +32,7 @@ class ShareButton extends ConsumerWidget {
 
         // ペアレンタルコントロールがオンの場合
         if (isParentalControl) {
-          Navigator.of(context).push<void>(
-            MaterialPageRoute(
-              builder: (context) => const ParentalGatePage(),
-              fullscreenDialog: true,
-            ),
-          );
+          context.push(Routes.parentalGate);
         } else {
           Share.share(shareText);
         }

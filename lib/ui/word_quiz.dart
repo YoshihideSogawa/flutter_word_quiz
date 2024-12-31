@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:word_quiz/ui/splash/splash_page.dart';
+import 'package:word_quiz/routing/router.dart';
 
 /// WordQuizアプリです。
 class WordQuiz extends StatelessWidget {
@@ -10,7 +10,7 @@ class WordQuiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'ワードクイズ',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(
@@ -27,7 +27,7 @@ class WordQuiz extends StatelessWidget {
       supportedLocales: const [
         Locale('ja', 'JP'),
       ],
-      home: const SplashPage(),
+      routerConfig: router,
     );
   }
 }

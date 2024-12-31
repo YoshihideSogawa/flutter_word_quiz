@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
-import 'package:word_quiz/ui/settings/settings_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:word_quiz/routing/routes.dart';
 
 /// クイズ画面共通のドロワーです。
 class QuizDrawer extends StatelessWidget {
@@ -41,12 +41,7 @@ class QuizDrawer extends StatelessWidget {
             title: const Text('あそびかた'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HowToPlayPage(),
-                ),
-              );
+              context.push(Routes.howToPlay);
             },
           ),
           ListTile(
@@ -54,12 +49,7 @@ class QuizDrawer extends StatelessWidget {
             title: const Text('せってい'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push<void>(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
-                ),
-              );
+              context.push(Routes.settings);
             },
           ),
           ListTile(
