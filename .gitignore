@@ -46,8 +46,10 @@ app.*.map.json
 /android/app/release
 
 # fvm
-.fvm/*
 
 # Exceptions to above rules.
 coverage/
 /test/coverage_test.dart
+
+# FVM Version Cache
+.fvm/
