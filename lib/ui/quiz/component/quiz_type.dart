@@ -9,6 +9,7 @@ class QuizType extends InheritedWidget {
     required super.child,
   });
 
+  /// [QuizTypes]
   final QuizTypes quizType;
 
   /// [QuizTypes]を取得します。

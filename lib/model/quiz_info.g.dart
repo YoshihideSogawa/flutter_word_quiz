@@ -11,7 +11,7 @@ _$QuizInfoImpl _$$QuizInfoImplFromJson(Map<String, dynamic> json) =>
       answer: json['answer'] == null
           ? null
           : Monster.fromJson(json['answer'] as Map<String, dynamic>),
-      maxAnswer: json['maxAnswer'] as int? ?? 0,
+      maxAnswer: (json['maxAnswer'] as num?)?.toInt() ?? 0,
       quizType: $enumDecodeNullable(_$QuizTypesEnumMap, json['quizType']),
       quizProcess:
           $enumDecodeNullable(_$QuizProcessTypeEnumMap, json['quizProcess']) ??
@@ -20,7 +20,7 @@ _$QuizInfoImpl _$$QuizInfoImplFromJson(Map<String, dynamic> json) =>
           ? null
           : QuizRange.fromJson(json['quizRange'] as Map<String, dynamic>),
       seedText: json['seedText'] as String?,
-      playDate: json['playDate'] as int? ?? 0,
+      playDate: (json['playDate'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$QuizInfoImplToJson(_$QuizInfoImpl instance) =>

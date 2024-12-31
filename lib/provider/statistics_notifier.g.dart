@@ -170,6 +170,8 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin StatisticsNotifierRef
     on AutoDisposeAsyncNotifierProviderRef<QuizStatistics> {
   /// The parameter `quizType` of this provider.
@@ -185,4 +187,4 @@ class _StatisticsNotifierProviderElement
   QuizTypes get quizType => (origin as StatisticsNotifierProvider).quizType;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -12,7 +12,7 @@ part of 'splash_page_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 SplashPageInfo _$SplashPageInfoFromJson(Map<String, dynamic> json) {
   return _SplashPageInfo.fromJson(json);
@@ -22,8 +22,12 @@ SplashPageInfo _$SplashPageInfoFromJson(Map<String, dynamic> json) {
 mixin _$SplashPageInfo {
   bool get showRule => throw _privateConstructorUsedError;
 
+  /// Serializes this SplashPageInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SplashPageInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SplashPageInfoCopyWith<SplashPageInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -47,6 +51,8 @@ class _$SplashPageInfoCopyWithImpl<$Res, $Val extends SplashPageInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SplashPageInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -80,6 +86,8 @@ class __$$SplashPageInfoImplCopyWithImpl<$Res>
       _$SplashPageInfoImpl _value, $Res Function(_$SplashPageInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SplashPageInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -122,7 +130,7 @@ class _$SplashPageInfoImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SplashPageInfoImpl &&
@@ -130,11 +138,13 @@ class _$SplashPageInfoImpl
                 other.showRule == showRule));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, showRule);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SplashPageInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SplashPageInfoImplCopyWith<_$SplashPageInfoImpl> get copyWith =>
@@ -157,8 +167,11 @@ abstract class _SplashPageInfo implements SplashPageInfo {
 
   @override
   bool get showRule;
+
+  /// Create a copy of SplashPageInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SplashPageInfoImplCopyWith<_$SplashPageInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

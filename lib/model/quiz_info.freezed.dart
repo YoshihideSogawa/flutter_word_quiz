@@ -12,7 +12,7 @@ part of 'quiz_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 QuizInfo _$QuizInfoFromJson(Map<String, dynamic> json) {
   return _QuizInfo.fromJson(json);
@@ -28,8 +28,12 @@ mixin _$QuizInfo {
   String? get seedText => throw _privateConstructorUsedError;
   int get playDate => throw _privateConstructorUsedError;
 
+  /// Serializes this QuizInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $QuizInfoCopyWith<QuizInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$QuizInfoCopyWithImpl<$Res, $Val extends QuizInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -105,6 +111,8 @@ class _$QuizInfoCopyWithImpl<$Res, $Val extends QuizInfo>
     ) as $Val);
   }
 
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MonsterCopyWith<$Res>? get answer {
@@ -117,6 +125,8 @@ class _$QuizInfoCopyWithImpl<$Res, $Val extends QuizInfo>
     });
   }
 
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $QuizRangeCopyWith<$Res>? get quizRange {
@@ -161,6 +171,8 @@ class __$$QuizInfoImplCopyWithImpl<$Res>
       _$QuizInfoImpl _value, $Res Function(_$QuizInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -258,7 +270,7 @@ class _$QuizInfoImpl with DiagnosticableTreeMixin implements _QuizInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuizInfoImpl &&
@@ -277,12 +289,14 @@ class _$QuizInfoImpl with DiagnosticableTreeMixin implements _QuizInfo {
                 other.playDate == playDate));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, answer, maxAnswer, quizType,
       quizProcess, quizRange, seedText, playDate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QuizInfoImplCopyWith<_$QuizInfoImpl> get copyWith =>
@@ -323,8 +337,11 @@ abstract class _QuizInfo implements QuizInfo {
   String? get seedText;
   @override
   int get playDate;
+
+  /// Create a copy of QuizInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuizInfoImplCopyWith<_$QuizInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

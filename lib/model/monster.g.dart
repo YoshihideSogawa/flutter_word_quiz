@@ -8,7 +8,7 @@ part of 'monster.dart';
 
 _$MonsterImpl _$$MonsterImplFromJson(Map<String, dynamic> json) =>
     _$MonsterImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
     );
 

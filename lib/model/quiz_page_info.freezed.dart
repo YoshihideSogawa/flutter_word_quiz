@@ -12,7 +12,7 @@ part of 'quiz_page_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 QuizPageInfo _$QuizPageInfoFromJson(Map<String, dynamic> json) {
   return _QuizPageInfo.fromJson(json);
@@ -27,8 +27,12 @@ mixin _$QuizPageInfo {
   bool get showResult => throw _privateConstructorUsedError;
   bool get showQuizChanged => throw _privateConstructorUsedError;
 
+  /// Serializes this QuizPageInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of QuizPageInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $QuizPageInfoCopyWith<QuizPageInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,6 +62,8 @@ class _$QuizPageInfoCopyWithImpl<$Res, $Val extends QuizPageInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of QuizPageInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -122,6 +128,8 @@ class __$$QuizPageInfoImplCopyWithImpl<$Res>
       _$QuizPageInfoImpl _value, $Res Function(_$QuizPageInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of QuizPageInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -213,7 +221,7 @@ class _$QuizPageInfoImpl with DiagnosticableTreeMixin implements _QuizPageInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuizPageInfoImpl &&
@@ -231,12 +239,14 @@ class _$QuizPageInfoImpl with DiagnosticableTreeMixin implements _QuizPageInfo {
                 other.showQuizChanged == showQuizChanged));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, showAnswer, showStatistics,
       normalKeyboard, showQuizSelection, showResult, showQuizChanged);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of QuizPageInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QuizPageInfoImplCopyWith<_$QuizPageInfoImpl> get copyWith =>
@@ -274,8 +284,11 @@ abstract class _QuizPageInfo implements QuizPageInfo {
   bool get showResult;
   @override
   bool get showQuizChanged;
+
+  /// Create a copy of QuizPageInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuizPageInfoImplCopyWith<_$QuizPageInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

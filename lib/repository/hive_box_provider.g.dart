@@ -153,6 +153,8 @@ class HiveBoxProvider extends AutoDisposeFutureProvider<Box<dynamic>> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin HiveBoxRef on AutoDisposeFutureProviderRef<Box<dynamic>> {
   /// The parameter `boxName` of this provider.
   String get boxName;
@@ -166,4 +168,4 @@ class _HiveBoxProviderElement
   String get boxName => (origin as HiveBoxProvider).boxName;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
