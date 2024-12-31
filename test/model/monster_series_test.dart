@@ -3,6 +3,6 @@ import 'package:word_quiz/model/monster_series.dart';
 
 void main() {
   test('quizRangeList', () {
-    expect(quizRangeList.length, 9);
+    expect(quizRangeList.length, 10);
   });
 }
