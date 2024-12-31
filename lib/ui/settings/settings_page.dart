@@ -4,9 +4,10 @@ import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/data_settings_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
+import 'package:word_quiz/repository/quiz/clear_quiz_data_repository.dart';
+import 'package:word_quiz/repository/settings/input_type_repository.dart';
+import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
+import 'package:word_quiz/ui/settings/component/data_delete_confirm_dialog.dart';
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
@@ -16,8 +17,10 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputType = ref.watch(settingsInputTypeProvider);
-    final quizRange = ref.watch(settingsQuizRangeProvider);
+    final inputTypeNotifier = ref.watch(inputTypeRepositoryProvider);
+    final quizRangeNotifier = ref.watch(quizRangeRepositoryProvider);
+    final inputType = inputTypeNotifier.valueOrNull;
+    final quizRange = quizRangeNotifier.valueOrNull;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black38,
@@ -28,12 +31,12 @@ class SettingsPage extends ConsumerWidget {
           ListTile(
             title: const Text('にゅうりょくタイプ'),
             subtitle: Text(_inputTypeTitle(inputType)),
-            onTap: () => _onTapInputType(context, ref),
+            onTap: () => _onTapInputType(context, ref, inputType),
           ),
           ListTile(
             title: const Text('もんだいのはんい'),
-            subtitle: Text(quizRange.displayName ?? ''),
-            onTap: () => _onTapQuizRange(context, ref),
+            subtitle: Text(quizRange?.displayName ?? ''),
+            onTap: () => _onTapQuizRange(context, ref, quizRange),
           ),
           ListTile(
             title: const Text(
@@ -53,9 +56,12 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// 入力タイプの変更を行います。
-  void _onTapInputType(BuildContext context, WidgetRef ref) {
-    final inputType = ref.watch(settingsInputTypeProvider);
-    showDialog<int>(
+  void _onTapInputType(
+    BuildContext context,
+    WidgetRef ref,
+    InputTypes? inputTypes,
+  ) {
+    showDialog<InputTypes>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -63,28 +69,32 @@ class SettingsPage extends ConsumerWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile<int>(
-                value: inputTypeSwitching,
-                groupValue: inputType,
+              RadioListTile<InputTypes>(
+                value: InputTypes.switching,
+                groupValue: inputTypes,
                 toggleable: true,
                 title: const Text('きりかえタイプ'),
-                onChanged: (value) {
-                  ref
-                      .read(settingsInputTypeProvider.notifier)
-                      .updateInputType(inputTypeSwitching);
-                  Navigator.pop(context);
+                onChanged: (value) async {
+                  await ref
+                      .read(inputTypeRepositoryProvider.notifier)
+                      .updateInputType(InputTypes.switching);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 },
               ),
-              RadioListTile<int>(
-                value: inputTypeAll,
-                groupValue: inputType,
+              RadioListTile<InputTypes>(
+                value: InputTypes.all,
+                groupValue: inputTypes,
                 toggleable: true,
                 title: const Text('ぜんぶひょうじタイプ'),
-                onChanged: (value) {
-                  ref
-                      .read(settingsInputTypeProvider.notifier)
-                      .updateInputType(inputTypeAll);
-                  Navigator.pop(context);
+                onChanged: (value) async {
+                  await ref
+                      .read(inputTypeRepositoryProvider.notifier)
+                      .updateInputType(InputTypes.all);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 },
               ),
             ],
@@ -95,18 +105,20 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// 入力タイプのタイトルを取得します。
-  String _inputTypeTitle(int inputType) {
-    if (inputType == inputTypeSwitching) {
-      return 'きりかえタイプ';
-    } else if (inputType == inputTypeAll) {
-      return 'ぜんぶひょうじタイプ';
-    }
-    return '';
+  String _inputTypeTitle(InputTypes? inputType) {
+    return switch (inputType) {
+      InputTypes.switching => 'きりかえタイプ',
+      InputTypes.all => 'ぜんぶひょうじタイプ',
+      _ => '',
+    };
   }
 
   /// 問題の範囲の変更を行います。
-  void _onTapQuizRange(BuildContext context, WidgetRef ref) {
-    final quizRange = ref.watch(settingsQuizRangeProvider);
+  void _onTapQuizRange(
+    BuildContext context,
+    WidgetRef ref,
+    QuizRange? quizRange,
+  ) {
     showDialog<int>(
       context: context,
       builder: (context) {
@@ -124,12 +136,12 @@ class SettingsPage extends ConsumerWidget {
                     toggleable: true,
                     onChanged: (value) {
                       ref
-                          .read(settingsQuizRangeProvider.notifier)
+                          .read(quizRangeRepositoryProvider.notifier)
                           .updateQuizRange(e);
                       Navigator.pop(context);
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -139,70 +151,38 @@ class SettingsPage extends ConsumerWidget {
   }
 
   /// きょうのもんだいのデータを削除します。
-  void _onTapDeleteDailyData(BuildContext context, WidgetRef ref) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: const Text(
-          '「きょうのもんだい」のデータをけすと もとにもどせません\nいいですか？',
-          style: TextStyle(
-            color: Colors.redAccent,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('とじる'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await ref.read(dataSettingsProvider(QuizTypes.daily)).deleteAll();
-              if (!navigator.mounted) {
-                return;
-              }
-
-              navigator.pop();
-            },
-            child: const Text('データをけす'),
-          )
-        ],
-      ),
+  Future<void> _onTapDeleteDailyData(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final result = await showDataDeleteDialog(
+      context,
+      '「きょうのもんだい」のデータをけすと もとにもどせません\nいいですか？',
     );
+
+    if (result != true) {
+      return;
+    }
+
+    // データの削除
+    await ref.read(clearQuizDataProvider(QuizTypes.daily).future);
   }
 
   /// いっぱいやるのデータを削除します。
-  void _onTapDeleteEndlessData(BuildContext context, WidgetRef ref) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: const Text(
-          '「いっぱいやる」のデータをけすと もとにもどせません\nいいですか？',
-          style: TextStyle(
-            color: Colors.redAccent,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('とじる'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await ref
-                  .read(dataSettingsProvider(QuizTypes.endless))
-                  .deleteAll();
-              if (!navigator.mounted) {
-                return;
-              }
-
-              navigator.pop();
-            },
-            child: const Text('データをけす'),
-          )
-        ],
-      ),
+  Future<void> _onTapDeleteEndlessData(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final result = await showDataDeleteDialog(
+      context,
+      '「いっぱいやる」のデータをけすと もとにもどせません\nいいですか？',
     );
+
+    if (result != true) {
+      return;
+    }
+
+    // データの削除
+    await ref.read(clearQuizDataProvider(QuizTypes.endless).future);
   }
 }

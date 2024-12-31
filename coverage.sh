@@ -27,5 +27,11 @@ genhtml coverage/lcov.info -o coverage/result
 
 rm "$outputFile"
 
-# open coverage html
-# open coverage/result/index.html
+while getopts :o opt; do
+  case $opt in
+  "o") open coverage/result/index.html ;;
+  *)
+    echo "usage $0 [-o]"
+    exit 1 ;;
+  esac
+done

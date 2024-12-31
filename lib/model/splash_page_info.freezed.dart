@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'splash_page_info.dart';
 
@@ -32,59 +32,61 @@ mixin _$SplashPageInfo {
 abstract class $SplashPageInfoCopyWith<$Res> {
   factory $SplashPageInfoCopyWith(
           SplashPageInfo value, $Res Function(SplashPageInfo) then) =
-      _$SplashPageInfoCopyWithImpl<$Res>;
+      _$SplashPageInfoCopyWithImpl<$Res, SplashPageInfo>;
+  @useResult
   $Res call({bool showRule});
 }
 
 /// @nodoc
-class _$SplashPageInfoCopyWithImpl<$Res>
+class _$SplashPageInfoCopyWithImpl<$Res, $Val extends SplashPageInfo>
     implements $SplashPageInfoCopyWith<$Res> {
   _$SplashPageInfoCopyWithImpl(this._value, this._then);
 
-  final SplashPageInfo _value;
   // ignore: unused_field
-  final $Res Function(SplashPageInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? showRule = freezed,
+    Object? showRule = null,
   }) {
     return _then(_value.copyWith(
-      showRule: showRule == freezed
+      showRule: null == showRule
           ? _value.showRule
           : showRule // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_SplashPageInfoCopyWith<$Res>
+abstract class _$$SplashPageInfoImplCopyWith<$Res>
     implements $SplashPageInfoCopyWith<$Res> {
-  factory _$$_SplashPageInfoCopyWith(
-          _$_SplashPageInfo value, $Res Function(_$_SplashPageInfo) then) =
-      __$$_SplashPageInfoCopyWithImpl<$Res>;
+  factory _$$SplashPageInfoImplCopyWith(_$SplashPageInfoImpl value,
+          $Res Function(_$SplashPageInfoImpl) then) =
+      __$$SplashPageInfoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool showRule});
 }
 
 /// @nodoc
-class __$$_SplashPageInfoCopyWithImpl<$Res>
-    extends _$SplashPageInfoCopyWithImpl<$Res>
-    implements _$$_SplashPageInfoCopyWith<$Res> {
-  __$$_SplashPageInfoCopyWithImpl(
-      _$_SplashPageInfo _value, $Res Function(_$_SplashPageInfo) _then)
-      : super(_value, (v) => _then(v as _$_SplashPageInfo));
+class __$$SplashPageInfoImplCopyWithImpl<$Res>
+    extends _$SplashPageInfoCopyWithImpl<$Res, _$SplashPageInfoImpl>
+    implements _$$SplashPageInfoImplCopyWith<$Res> {
+  __$$SplashPageInfoImplCopyWithImpl(
+      _$SplashPageInfoImpl _value, $Res Function(_$SplashPageInfoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_SplashPageInfo get _value => super._value as _$_SplashPageInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? showRule = freezed,
+    Object? showRule = null,
   }) {
-    return _then(_$_SplashPageInfo(
-      showRule: showRule == freezed
+    return _then(_$SplashPageInfoImpl(
+      showRule: null == showRule
           ? _value.showRule
           : showRule // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -94,13 +96,13 @@ class __$$_SplashPageInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SplashPageInfo
+class _$SplashPageInfoImpl
     with DiagnosticableTreeMixin
     implements _SplashPageInfo {
-  const _$_SplashPageInfo({this.showRule = false});
+  const _$SplashPageInfoImpl({this.showRule = false});
 
-  factory _$_SplashPageInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_SplashPageInfoFromJson(json);
+  factory _$SplashPageInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SplashPageInfoImplFromJson(json);
 
   @override
   @JsonKey()
@@ -123,36 +125,40 @@ class _$_SplashPageInfo
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SplashPageInfo &&
-            const DeepCollectionEquality().equals(other.showRule, showRule));
+            other is _$SplashPageInfoImpl &&
+            (identical(other.showRule, showRule) ||
+                other.showRule == showRule));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(showRule));
+  int get hashCode => Object.hash(runtimeType, showRule);
 
   @JsonKey(ignore: true)
   @override
-  _$$_SplashPageInfoCopyWith<_$_SplashPageInfo> get copyWith =>
-      __$$_SplashPageInfoCopyWithImpl<_$_SplashPageInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SplashPageInfoImplCopyWith<_$SplashPageInfoImpl> get copyWith =>
+      __$$SplashPageInfoImplCopyWithImpl<_$SplashPageInfoImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SplashPageInfoToJson(this);
+    return _$$SplashPageInfoImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _SplashPageInfo implements SplashPageInfo {
-  const factory _SplashPageInfo({final bool showRule}) = _$_SplashPageInfo;
+  const factory _SplashPageInfo({final bool showRule}) = _$SplashPageInfoImpl;
 
   factory _SplashPageInfo.fromJson(Map<String, dynamic> json) =
-      _$_SplashPageInfo.fromJson;
+      _$SplashPageInfoImpl.fromJson;
 
   @override
-  bool get showRule => throw _privateConstructorUsedError;
+  bool get showRule;
   @override
   @JsonKey(ignore: true)
-  _$$_SplashPageInfoCopyWith<_$_SplashPageInfo> get copyWith =>
+  _$$SplashPageInfoImplCopyWith<_$SplashPageInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

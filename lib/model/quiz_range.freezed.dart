@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz_range.dart';
 
@@ -33,76 +33,81 @@ mixin _$QuizRange {
 /// @nodoc
 abstract class $QuizRangeCopyWith<$Res> {
   factory $QuizRangeCopyWith(QuizRange value, $Res Function(QuizRange) then) =
-      _$QuizRangeCopyWithImpl<$Res>;
+      _$QuizRangeCopyWithImpl<$Res, QuizRange>;
+  @useResult
   $Res call({int id, int maxNo, String? displayName});
 }
 
 /// @nodoc
-class _$QuizRangeCopyWithImpl<$Res> implements $QuizRangeCopyWith<$Res> {
+class _$QuizRangeCopyWithImpl<$Res, $Val extends QuizRange>
+    implements $QuizRangeCopyWith<$Res> {
   _$QuizRangeCopyWithImpl(this._value, this._then);
 
-  final QuizRange _value;
   // ignore: unused_field
-  final $Res Function(QuizRange) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? maxNo = freezed,
+    Object? id = null,
+    Object? maxNo = null,
     Object? displayName = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      maxNo: maxNo == freezed
+      maxNo: null == maxNo
           ? _value.maxNo
           : maxNo // ignore: cast_nullable_to_non_nullable
               as int,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_QuizRangeCopyWith<$Res> implements $QuizRangeCopyWith<$Res> {
-  factory _$$_QuizRangeCopyWith(
-          _$_QuizRange value, $Res Function(_$_QuizRange) then) =
-      __$$_QuizRangeCopyWithImpl<$Res>;
+abstract class _$$QuizRangeImplCopyWith<$Res>
+    implements $QuizRangeCopyWith<$Res> {
+  factory _$$QuizRangeImplCopyWith(
+          _$QuizRangeImpl value, $Res Function(_$QuizRangeImpl) then) =
+      __$$QuizRangeImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, int maxNo, String? displayName});
 }
 
 /// @nodoc
-class __$$_QuizRangeCopyWithImpl<$Res> extends _$QuizRangeCopyWithImpl<$Res>
-    implements _$$_QuizRangeCopyWith<$Res> {
-  __$$_QuizRangeCopyWithImpl(
-      _$_QuizRange _value, $Res Function(_$_QuizRange) _then)
-      : super(_value, (v) => _then(v as _$_QuizRange));
+class __$$QuizRangeImplCopyWithImpl<$Res>
+    extends _$QuizRangeCopyWithImpl<$Res, _$QuizRangeImpl>
+    implements _$$QuizRangeImplCopyWith<$Res> {
+  __$$QuizRangeImplCopyWithImpl(
+      _$QuizRangeImpl _value, $Res Function(_$QuizRangeImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_QuizRange get _value => super._value as _$_QuizRange;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? maxNo = freezed,
+    Object? id = null,
+    Object? maxNo = null,
     Object? displayName = freezed,
   }) {
-    return _then(_$_QuizRange(
-      id: id == freezed
+    return _then(_$QuizRangeImpl(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      maxNo: maxNo == freezed
+      maxNo: null == maxNo
           ? _value.maxNo
           : maxNo // ignore: cast_nullable_to_non_nullable
               as int,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -112,11 +117,11 @@ class __$$_QuizRangeCopyWithImpl<$Res> extends _$QuizRangeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_QuizRange with DiagnosticableTreeMixin implements _QuizRange {
-  const _$_QuizRange({this.id = 0, this.maxNo = 0, this.displayName});
+class _$QuizRangeImpl with DiagnosticableTreeMixin implements _QuizRange {
+  const _$QuizRangeImpl({this.id = 0, this.maxNo = 0, this.displayName});
 
-  factory _$_QuizRange.fromJson(Map<String, dynamic> json) =>
-      _$$_QuizRangeFromJson(json);
+  factory _$QuizRangeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$QuizRangeImplFromJson(json);
 
   @override
   @JsonKey()
@@ -146,29 +151,28 @@ class _$_QuizRange with DiagnosticableTreeMixin implements _QuizRange {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuizRange &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.maxNo, maxNo) &&
-            const DeepCollectionEquality()
-                .equals(other.displayName, displayName));
+            other is _$QuizRangeImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.maxNo, maxNo) || other.maxNo == maxNo) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(maxNo),
-      const DeepCollectionEquality().hash(displayName));
+  int get hashCode => Object.hash(runtimeType, id, maxNo, displayName);
 
   @JsonKey(ignore: true)
   @override
-  _$$_QuizRangeCopyWith<_$_QuizRange> get copyWith =>
-      __$$_QuizRangeCopyWithImpl<_$_QuizRange>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$QuizRangeImplCopyWith<_$QuizRangeImpl> get copyWith =>
+      __$$QuizRangeImplCopyWithImpl<_$QuizRangeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_QuizRangeToJson(this);
+    return _$$QuizRangeImplToJson(
+      this,
+    );
   }
 }
 
@@ -176,19 +180,19 @@ abstract class _QuizRange implements QuizRange {
   const factory _QuizRange(
       {final int id,
       final int maxNo,
-      final String? displayName}) = _$_QuizRange;
+      final String? displayName}) = _$QuizRangeImpl;
 
   factory _QuizRange.fromJson(Map<String, dynamic> json) =
-      _$_QuizRange.fromJson;
+      _$QuizRangeImpl.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  int get maxNo => throw _privateConstructorUsedError;
+  int get maxNo;
   @override
-  String? get displayName => throw _privateConstructorUsedError;
+  String? get displayName;
   @override
   @JsonKey(ignore: true)
-  _$$_QuizRangeCopyWith<_$_QuizRange> get copyWith =>
+  _$$QuizRangeImplCopyWith<_$QuizRangeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

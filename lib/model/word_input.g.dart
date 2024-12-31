@@ -6,7 +6,8 @@ part of 'word_input.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_WordInput _$$_WordInputFromJson(Map<String, dynamic> json) => _$_WordInput(
+_$WordInputImpl _$$WordInputImplFromJson(Map<String, dynamic> json) =>
+    _$WordInputImpl(
       wordsList: (json['wordsList'] as List<dynamic>?)
               ?.map((e) =>
                   (e as List<dynamic>?)?.map((e) => e as String).toList())
@@ -23,19 +24,17 @@ _$_WordInput _$$_WordInputFromJson(Map<String, dynamic> json) => _$_WordInput(
           ) ??
           const <String, WordKeyboardInfo>{},
       inputIndex: json['inputIndex'] as int? ?? 0,
-      isWordChecking: json['isWordChecking'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$_WordInputToJson(_$_WordInput instance) =>
+Map<String, dynamic> _$$WordInputImplToJson(_$WordInputImpl instance) =>
     <String, dynamic>{
       'wordsList': instance.wordsList,
       'wordsResultList': instance.wordsResultList
-          .map((e) => e?.map((e) => _$WordNameStateEnumMap[e]).toList())
+          .map((e) => e?.map((e) => _$WordNameStateEnumMap[e]!).toList())
           .toList(),
       'keyResultList': instance.keyResultList
-          .map((k, e) => MapEntry(k, _$WordKeyboardInfoEnumMap[e])),
+          .map((k, e) => MapEntry(k, _$WordKeyboardInfoEnumMap[e]!)),
       'inputIndex': instance.inputIndex,
-      'isWordChecking': instance.isWordChecking,
     };
 
 const _$WordNameStateEnumMap = {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
@@ -9,67 +8,49 @@ import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/fake_quiz_page_notifier.dart';
-import '../../../mock/fake_statistics_notifier.dart';
-import '../../../mock/fake_word_input_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('StatisticsView(Daily)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
+
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            statistics: quizStatistics,
           ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('きょうの もんだい'), findsOneWidget);
     expect(find.text('ちょうせんちゅう'), findsOneWidget);
@@ -89,56 +70,49 @@ void main() {
 
     // とじるをタップ
     await tester.tap(find.text('とじる'));
-    expect(fakeQuizInfoNotifier.refreshDailyQuizCalled, isTrue);
-    expect(fakeQuizPageNotifier.dismissStatisticsCalled, isTrue);
+    await tester.pumpAndSettle();
+
+    expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Endless)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.endless;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-          seedText: 'フシギダネ',
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      seedText: 'フシギダネ',
     );
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
+    );
+
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                playCount: 5,
-                clearCount: 4,
-                currentChain: 2,
-                maxChain: 3,
-              ),
-            ),
-          ),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('いっぱいやる モード'), findsOneWidget);
     expect(find.text('さいごにあそんだ あいことば'), findsOneWidget);
@@ -157,255 +131,203 @@ void main() {
 
     // とじるをタップ
     await tester.tap(find.text('とじる'));
-    expect(fakeQuizPageNotifier.dismissStatisticsCalled, isTrue);
+
+    expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
     );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     // とじるをタップ
     await tester.tapAt(Offset.zero);
-    expect(fakeQuizInfoNotifier.refreshDailyQuizCalled, isTrue);
-    expect(fakeQuizPageNotifier.dismissStatisticsCalled, isTrue);
+    await tester.pumpAndSettle();
+
+    expect(quizPageInfo.value.showStatistics, isFalse);
   });
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.success,
     );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.textContaining('クリア！'), findsOneWidget);
   });
 
   testWidgets('StatisticsView(Daily failure)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.failure,
     );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('しっぱい...'), findsOneWidget);
   });
 
   testWidgets('StatisticsView(Daily none)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.none,
-        ),
-      ),
-    );
+    const quizInfo = QuizInfo();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
 
+    await tester.pumpAndSettle();
+
     expect(find.text('[はじめから] をおしてね'), findsOneWidget);
   });
 
   testWidgets('StatisticsView(Daily quit)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.quit,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.quit,
     );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -419,43 +341,28 @@ void main() {
   });
 
   testWidgets('StatisticsView(Daily null)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.loading(),
-    );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(const QuizPageInfo());
-
-    final fakeStatisticsNotifier = FakeStatisticsNotifier(
-      const QuizStatistics(
-        playCount: 5,
-        clearCount: 4,
-        currentChain: 2,
-        maxChain: 3,
-      ),
+    const quizStatistics = QuizStatistics(
+      playCount: 5,
+      clearCount: 4,
+      currentChain: 2,
+      maxChain: 3,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(const WordInput()),
-          ),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(quizType: quizType, statistics: quizStatistics),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: StatisticsView(),
+              body: StatisticsView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -643,7 +550,6 @@ void main() {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.daily,
-        quizProcess: QuizProcessType.none,
         maxAnswer: 10,
         playDate: 20220202,
       ),
@@ -738,13 +644,11 @@ void main() {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.endless,
-        quizProcess: QuizProcessType.none,
         maxAnswer: 10,
         playDate: 20220202,
       ),
       const WordInput(
         inputIndex: 3,
-        wordsResultList: [],
       ),
       const QuizStatistics(
         playCount: 5,

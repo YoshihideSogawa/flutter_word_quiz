@@ -103,5 +103,5 @@ const advancedKeyboardMap = <String>[
   '♂',
   '',
   '2',
-  'Z'
+  'Z',
 ];

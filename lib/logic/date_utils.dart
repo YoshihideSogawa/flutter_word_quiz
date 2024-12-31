@@ -1,8 +1,9 @@
+import 'package:clock/clock.dart';
 import 'package:word_quiz/logic/filled_zero.dart';
 
 /// yyyyMMddの値を生成します。
 int generateDate() {
-  final now = DateTime.now();
+  final now = clock.now();
   return now.year * 10000 + now.month * 100 + now.day;
 }
 
@@ -17,7 +18,7 @@ String? parseDateText(int date) {
 
 /// 残り時間のテキストを取得します。
 String parseRemainingTimeText() {
-  final now = DateTime.now();
+  final now = clock.now();
   final tomorrow = DateTime(now.year, now.month, now.day + 1);
   final diff = tomorrow.millisecondsSinceEpoch - now.millisecondsSinceEpoch;
   final hour = (diff ~/ Duration.millisecondsPerHour).remainder(60);

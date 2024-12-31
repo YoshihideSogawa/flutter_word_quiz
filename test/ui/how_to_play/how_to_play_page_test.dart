@@ -2,24 +2,28 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 
-import '../../mock/generate_mocks.mocks.dart';
+import '../../mock/mock_box_data.dart';
 import '../../mock/url_launcher_tester.dart';
 
 void main() {
   late FakeUrlLauncher urlLauncher;
 
-  setUp(() {
+  setUp(() async {
     urlLauncher = setUpUrlLauncher();
   });
 
+  tearDown(() => AppPlatform.overridePlatForm = null);
+
   testWidgets('HowToPlayPage', (tester) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          appPropertyOverride(),
+        ],
+        child: const MaterialApp(
           home: Scaffold(
             body: HowToPlayPage(),
           ),
@@ -31,13 +35,10 @@ void main() {
   });
 
   testWidgets('リンクタップ', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -46,6 +47,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.byKey(const Key('for_developer')));
     final textRich =
@@ -71,13 +74,11 @@ void main() {
   });
 
   testWidgets('リンクタップ(ペアレンタルコントロール)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(true);
-
+    AppPlatform.overridePlatForm = Platforms.iOS;
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: true),
         ],
         child: const MaterialApp(
           home: Scaffold(
@@ -86,6 +87,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.byKey(const Key('for_developer')));
     final textRich =

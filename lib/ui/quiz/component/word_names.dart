@@ -1,16 +1,24 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/component/name_text.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 入力した名前の一覧です。
-class WordNames extends ConsumerStatefulWidget {
-  const WordNames({super.key}); // coverage:ignore-line
+class WordNames extends StatefulHookConsumerWidget {
+  const WordNames({
+    super.key,
+    required this.wordAnimation,
+  });
+
+  /// 入力文字のアニメーション中かどうか
+  final ValueNotifier<bool> wordAnimation;
 
   @override
   WordNamesState createState() => WordNamesState();
@@ -35,6 +43,9 @@ class WordNamesState extends ConsumerState<WordNames> {
   /// 1文字のWidgetのサイズ
   late Size _wordNameSize;
 
+  /// 入力文字用のタイマー
+  Timer? _timer;
+
   @override
   void didChangeDependencies() {
     _wordNameSize = _calcWordNameSize(context);
@@ -44,6 +55,21 @@ class WordNamesState extends ConsumerState<WordNames> {
   @override
   Widget build(BuildContext context) {
     final quizType = QuizType.of(context).quizType;
+    ref.listen(wordInputNotifierProvider(quizType), (previous, next) async {
+      if (widget.wordAnimation.value) {
+        return;
+      }
+      // データ取得完了後
+      if ((previous?.hasValue ?? false) && next.hasValue) {
+        final prevResultListLength = previous!.value!.wordsResultList.length;
+        final nextResultListLength = next.value!.wordsResultList.length;
+        // 1つ前の状態から、判定結果が増えていた場合
+        if (prevResultListLength < nextResultListLength) {
+          widget.wordAnimation.value = true;
+        }
+      }
+    });
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -67,8 +93,48 @@ class WordNamesState extends ConsumerState<WordNames> {
   /// 名前を1つ構築します。
   Widget _buildNameLine(int rowIndex, QuizTypes quizType) {
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
-    final wordsList = wordInputNotifier.wordsList;
-    final wordsResultList = wordInputNotifier.wordsResultList;
+    final nameStatesValue = useState(<WordNameState>[]);
+    final wordInput = wordInputNotifier.value;
+    final inputIndex = wordInput?.inputIndex ?? 0;
+    final wordsResultList = wordInput?.wordsResultList ?? [];
+
+    // 入力最終行はアニメーション対象
+    final isLastRow = rowIndex == inputIndex - 1;
+    final nameStates = (rowIndex < wordsResultList.length
+            ? wordsResultList[rowIndex]
+            : <WordNameState>[]) ??
+        [];
+
+    // 入力最終行がアニメーション対象の場合
+    if (isLastRow && widget.wordAnimation.value) {
+      // タイマーが実行中でない場合
+      if (!(_timer?.isActive ?? false)) {
+        void timerCallback(Timer timer) {
+          // 最後の文字まで到達していたら終了
+          // 1周待ってwait時間に充てる
+          if (nameStatesValue.value.length == nameStates.length) {
+            timer.cancel();
+            widget.wordAnimation.value = false;
+            return;
+          }
+
+          // 1文字ずつ増やしていく
+          nameStatesValue.value =
+              nameStates.sublist(0, nameStatesValue.value.length + 1);
+        }
+
+        // タイマーの初期化
+        _timer?.cancel();
+        _timer =
+            Timer.periodic(const Duration(milliseconds: 300), timerCallback);
+        // 初回はノータイムでコール
+        timerCallback.call(_timer!);
+      }
+    } else {
+      nameStatesValue.value = nameStates;
+    }
+
+    final wordsList = wordInput?.wordsList ?? [[]];
     return Padding(
       padding: const EdgeInsets.only(bottom: 2),
       child: Row(
@@ -83,9 +149,8 @@ class WordNamesState extends ConsumerState<WordNames> {
                         i < wordsList[rowIndex]!.length
                     ? wordsList[rowIndex]![i]
                     : '',
-                nameState: rowIndex < wordsResultList.length &&
-                        i < wordsResultList[rowIndex]!.length
-                    ? wordsResultList[rowIndex]![i]
+                nameState: i < nameStatesValue.value.length
+                    ? nameStatesValue.value[i]
                     : WordNameState.none,
                 width: _wordNameSize.width,
                 height: _wordNameSize.height,
@@ -94,6 +159,12 @@ class WordNamesState extends ConsumerState<WordNames> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   /// 1文字のサイズを計算します。

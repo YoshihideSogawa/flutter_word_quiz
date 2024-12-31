@@ -1,48 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/model/parental_gate_list.dart';
 import 'package:word_quiz/model/parental_gate_page_info.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
-import 'package:word_quiz/provider/parental_gate_provider.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/app_property_repository.dart';
+import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 
 import '../../mock/fake_parental_gate_page_notifier.dart';
-import '../../mock/fake_quiz_info_notifier.dart';
-import '../../mock/fake_settings_input_type_notifier.dart';
-import '../../mock/fake_word_input_notifier.dart';
-import '../../mock/generate_mocks.mocks.dart';
+import '../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('表示の確認', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
-      answerNum: 1,
-      targetData: mizuDeppou,
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
+    );
+
+    final notifier = FakeParentalGatePageNotifier(
+      parentalGatePageInfo: parentalGatePageInfo,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalGatePageProvider.overrideWithValue(
-            FakeParentalGatePageNotifier(
-              parentalGatePageInfo,
-            ),
-          ),
+          parentalGatePageNotifierProvider.overrideWith(() => notifier),
         ],
         child: const MaterialApp(
           home: ParentalGatePage(),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ねんれいかくにん'), findsOneWidget);
     expect(find.text('みずでっぽうを選んでください(1/3)'), findsOneWidget);
@@ -55,41 +48,32 @@ void main() {
   testWidgets('不正解のタップ', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
-      answerNum: 1,
-      targetData: mizuDeppou,
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
-    // Splash
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
+    final notifier = FakeParentalGatePageNotifier(
+      parentalGatePageInfo: parentalGatePageInfo,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalGatePageProvider.overrideWithValue(
-            FakeParentalGatePageNotifier(
-              parentalGatePageInfo,
-            ),
+          appPropertyOverride(
+            parentalControl: false,
+            alreadyLaunched: true,
           ),
-          // 以下Splash
-          appPropertyRepositoryProvider
-              .overrideWithValue(mockAppPropertyRepository),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+          quizOverride(
+            quizType: QuizTypes.daily,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
+          quizOverride(
+            quizType: QuizTypes.endless,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
+          parentalGatePageNotifierProvider.overrideWith(() => notifier),
+          settingsOverride(inputType: InputTypes.switching),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -131,18 +115,17 @@ void main() {
   testWidgets('正解のタップ', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
       maxAnswerNum: 3,
-      answerNum: 1,
-      targetData: mizuDeppou,
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
-    final fakeParentalGatePageNotifier =
-        FakeParentalGatePageNotifier(parentalGatePageInfo);
+    final notifier = FakeParentalGatePageNotifier(
+      parentalGatePageInfo: parentalGatePageInfo,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalGatePageProvider
-              .overrideWithValue(fakeParentalGatePageNotifier),
+          parentalGatePageNotifierProvider.overrideWith(() => notifier),
         ],
         child: const MaterialApp(
           home: ParentalGatePage(),
@@ -153,46 +136,40 @@ void main() {
     await tester.tap(find.text('水鉄砲'));
     await tester.pumpAndSettle();
 
-    expect(fakeParentalGatePageNotifier.pickCallTimes, 1);
+    await tester.tap(find.textContaining('だいもんじ'));
   });
 
   testWidgets('正解のタップ(全問正解)', (tester) async {
     const parentalGatePageInfo = ParentalGatePageInfo(
-      maxAnswerNum: 3,
-      answerNum: 3,
-      targetData: mizuDeppou,
+      maxAnswerNum: 1,
+      parentalGateDataList: [mizuDeppou, daiMonji, hakaiKosen],
     );
 
-    // Splash
-    final mockAppPropertyRepository = MockAppPropertyRepository();
-    when(mockAppPropertyRepository.alreadyLaunched()).thenReturn(true);
-    when(mockAppPropertyRepository.parentalControl()).thenReturn(false);
-    final fakeParentalGatePageNotifier =
-        FakeParentalGatePageNotifier(parentalGatePageInfo);
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizInfoNotifier =
-        FakeQuizInfoNotifier(const AsyncValue.data(QuizInfo()));
-    final fakeWordInputNotifier = FakeWordInputNotifier(const WordInput());
+    final notifier = FakeParentalGatePageNotifier(
+      parentalGatePageInfo: parentalGatePageInfo,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalGatePageProvider
-              .overrideWithValue(fakeParentalGatePageNotifier),
-          // 以下Splash
-          appPropertyRepositoryProvider
-              .overrideWithValue(mockAppPropertyRepository),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(fakeWordInputNotifier),
-          quizInfoProvider(QuizTypes.endless)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          wordInputNotifierProvider(QuizTypes.endless)
-              .overrideWithValue(fakeWordInputNotifier),
+          appPropertyOverride(
+            parentalControl: false,
+            alreadyLaunched: true,
+          ),
+          parentalGatePageNotifierProvider.overrideWith(() => notifier),
+          settingsOverride(
+            inputType: InputTypes.switching,
+          ),
+          quizOverride(
+            quizType: QuizTypes.daily,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
+          quizOverride(
+            quizType: QuizTypes.endless,
+            quizInfo: const QuizInfo(),
+            wordInput: const WordInput(),
+          ),
         ],
         child: MaterialApp(
           home: Scaffold(

@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_info.dart';
 import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
-import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/answer_button.dart';
 import 'package:word_quiz/ui/quiz/component/answer_view.dart';
 import 'package:word_quiz/ui/quiz/component/delete_button.dart';
@@ -35,68 +28,56 @@ import 'package:word_quiz/ui/quiz/component/statistics_view.dart';
 import 'package:word_quiz/ui/quiz/component/word_keyboard.dart';
 import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/fake_quiz_page_notifier.dart';
-import '../../../mock/fake_settings_input_type_notifier.dart';
-import '../../../mock/fake_statistics_notifier.dart';
-import '../../../mock/fake_word_input_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('切り替えモード/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
     );
 
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -113,58 +94,50 @@ void main() {
 
   testWidgets('全表示/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeAll);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
     );
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.all),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsNothing);
     expect(find.byType(AnswerButton), findsNothing);
@@ -181,58 +154,50 @@ void main() {
 
   testWidgets('切り替えモード/Daily/success', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.success,
+    );
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
-    );
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -249,58 +214,50 @@ void main() {
 
   testWidgets('切り替えモード/Daily/failure', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.failure,
     );
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsOneWidget);
@@ -317,58 +274,49 @@ void main() {
 
   testWidgets('切り替えモード/endless/none', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.none,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
     );
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -385,63 +333,50 @@ void main() {
 
   testWidgets('切り替えモード/endless/started', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
     );
-
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -458,63 +393,50 @@ void main() {
 
   testWidgets('切り替えモード/endless/success', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.success,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.success,
     );
-
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -531,63 +453,50 @@ void main() {
 
   testWidgets('切り替えモード/endless/failure', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.failure,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.failure,
     );
-
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsOneWidget);
@@ -604,63 +513,51 @@ void main() {
 
   testWidgets('切り替えモード/endless/quit', (tester) async {
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.quit,
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.quit,
-        ),
-      ),
-    );
-
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(inputType: InputTypes.switching),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(
+                quizPageInfo: ValueNotifier(
+                  const QuizPageInfo(
+                    normalKeyboard: false,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(KeyboardSwitchButton), findsOneWidget);
     expect(find.byType(AnswerButton), findsNothing);
@@ -676,13 +573,8 @@ void main() {
   });
 
   testWidgets('全ダイアログ表示', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.endless;
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeQuizPageNotifier = FakeQuizPageNotifier(
+    final quizPageInfo = ValueNotifier(
       const QuizPageInfo(
         normalKeyboard: false,
         showAnswer: true,
@@ -692,57 +584,49 @@ void main() {
         showQuizChanged: true,
       ),
     );
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizType: quizType,
-          quizProcess: QuizProcessType.quit,
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizType: quizType,
+      quizProcess: QuizProcessType.quit,
     );
-
-    final fakeStatisticsNotifier =
-        FakeStatisticsNotifier(const QuizStatistics());
-
-    final fakeWordInputNotifier = FakeWordInputNotifier(
-      const WordInput(
-        wordsList: [
-          ['フ', 'シ', 'ギ', 'ダ', 'ネ']
-        ],
-        wordsResultList: [
-          [
-            WordNameState.notMatch,
-            WordNameState.notMatch,
-            WordNameState.hit,
-            WordNameState.match,
-          ]
-        ],
-      ),
+    const wordInput = WordInput(
+      wordsList: [
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ],
+      wordsResultList: [
+        [
+          WordNameState.notMatch,
+          WordNameState.notMatch,
+          WordNameState.hit,
+          WordNameState.match,
+        ]
+      ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(fakeQuizPageNotifier),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          wordInputNotifierProvider(quizType)
-              .overrideWithValue(fakeWordInputNotifier),
-          statisticsProvider(quizType)
-              .overrideWithValue(fakeStatisticsNotifier),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(
+            quizType: quizType,
+            wordInput: wordInput,
+            quizInfo: quizInfo,
+          ),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: diamondPearl,
+          ),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordQuizLayout(),
+              body: WordQuizLayout(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(AnswerView), findsOneWidget);
     expect(find.byType(StatisticsView), findsOneWidget);

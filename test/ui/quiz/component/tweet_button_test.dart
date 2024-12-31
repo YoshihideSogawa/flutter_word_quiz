@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+import 'package:word_quiz/constant/app_platform.dart';
+import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
+import 'package:word_quiz/repository/app_property/app_property_keys.dart';
+import 'package:word_quiz/repository/hive_box_provider.dart';
 import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
+import '../../../mock/mock_hive_box.dart';
 import '../../../mock/url_launcher_tester.dart';
 
 void main() {
   late FakeUrlLauncher urlLauncher;
 
   setUp(() {
+    AppPlatform.overridePlatForm = Platforms.iOS;
     urlLauncher = setUpUrlLauncher();
   });
 
-  testWidgets('TweetButton', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
+  tearDown(() {
+    AppPlatform.overridePlatForm = null;
+  });
 
+  testWidgets('TweetButton', (tester) async {
     const quizType = QuizTypes.daily;
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -38,20 +43,20 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('ツイート'), findsOneWidget);
     expect(find.byIcon(Icons.send), findsOneWidget);
   });
 
   testWidgets('TweetButton(ペアレンタルコントロール中のタップ)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(true);
-
     const quizType = QuizTypes.daily;
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverrideAndBox(parentalControl: true).override,
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -63,6 +68,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('ツイート'));
     await tester.pumpAndSettle();
@@ -71,14 +78,16 @@ void main() {
   });
 
   testWidgets('TweetButton(Tap)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
+    final box = MockHiveBox<dynamic>(
+      initData: {
+        parentalControlKey: false,
+      },
+    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
         ],
         child: const MaterialApp(
           home: QuizType(
@@ -90,6 +99,8 @@ void main() {
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('ツイート'));
     await tester.pumpAndSettle();

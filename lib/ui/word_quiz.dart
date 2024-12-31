@@ -13,8 +13,12 @@ class WordQuiz extends StatelessWidget {
     return MaterialApp(
       title: 'ワードクイズ',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      theme: ThemeData.light(
+        useMaterial3: false,
+      ),
+      darkTheme: ThemeData.dark(
+        useMaterial3: false,
+      ),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

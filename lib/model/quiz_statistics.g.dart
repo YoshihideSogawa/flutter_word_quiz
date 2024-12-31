@@ -6,8 +6,8 @@ part of 'quiz_statistics.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_QuizStatistics _$$_QuizStatisticsFromJson(Map<String, dynamic> json) =>
-    _$_QuizStatistics(
+_$QuizStatisticsImpl _$$QuizStatisticsImplFromJson(Map<String, dynamic> json) =>
+    _$QuizStatisticsImpl(
       clearCount: json['clearCount'] as int? ?? 0,
       currentChain: json['currentChain'] as int? ?? 0,
       lastChain: json['lastChain'] as int? ?? 0,
@@ -15,7 +15,8 @@ _$_QuizStatistics _$$_QuizStatisticsFromJson(Map<String, dynamic> json) =>
       playCount: json['playCount'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$$_QuizStatisticsToJson(_$_QuizStatistics instance) =>
+Map<String, dynamic> _$$QuizStatisticsImplToJson(
+        _$QuizStatisticsImpl instance) =>
     <String, dynamic>{
       'clearCount': instance.clearCount,
       'currentChain': instance.currentChain,

@@ -75,7 +75,7 @@ class NameText extends HookWidget {
   Color? _textColor() {
     switch (nameState) {
       case WordNameState.none:
-        return Theme.of(useContext()).textTheme.subtitle1?.color ??
+        return Theme.of(useContext()).textTheme.titleMedium?.color ??
             Colors.blueAccent;
       case WordNameState.hit:
         return Colors.white;

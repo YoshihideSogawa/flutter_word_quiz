@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz_info.dart';
 
@@ -37,7 +37,8 @@ mixin _$QuizInfo {
 /// @nodoc
 abstract class $QuizInfoCopyWith<$Res> {
   factory $QuizInfoCopyWith(QuizInfo value, $Res Function(QuizInfo) then) =
-      _$QuizInfoCopyWithImpl<$Res>;
+      _$QuizInfoCopyWithImpl<$Res, QuizInfo>;
+  @useResult
   $Res call(
       {Monster? answer,
       int maxAnswer,
@@ -52,84 +53,91 @@ abstract class $QuizInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$QuizInfoCopyWithImpl<$Res> implements $QuizInfoCopyWith<$Res> {
+class _$QuizInfoCopyWithImpl<$Res, $Val extends QuizInfo>
+    implements $QuizInfoCopyWith<$Res> {
   _$QuizInfoCopyWithImpl(this._value, this._then);
 
-  final QuizInfo _value;
   // ignore: unused_field
-  final $Res Function(QuizInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? answer = freezed,
-    Object? maxAnswer = freezed,
+    Object? maxAnswer = null,
     Object? quizType = freezed,
-    Object? quizProcess = freezed,
+    Object? quizProcess = null,
     Object? quizRange = freezed,
     Object? seedText = freezed,
-    Object? playDate = freezed,
+    Object? playDate = null,
   }) {
     return _then(_value.copyWith(
-      answer: answer == freezed
+      answer: freezed == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as Monster?,
-      maxAnswer: maxAnswer == freezed
+      maxAnswer: null == maxAnswer
           ? _value.maxAnswer
           : maxAnswer // ignore: cast_nullable_to_non_nullable
               as int,
-      quizType: quizType == freezed
+      quizType: freezed == quizType
           ? _value.quizType
           : quizType // ignore: cast_nullable_to_non_nullable
               as QuizTypes?,
-      quizProcess: quizProcess == freezed
+      quizProcess: null == quizProcess
           ? _value.quizProcess
           : quizProcess // ignore: cast_nullable_to_non_nullable
               as QuizProcessType,
-      quizRange: quizRange == freezed
+      quizRange: freezed == quizRange
           ? _value.quizRange
           : quizRange // ignore: cast_nullable_to_non_nullable
               as QuizRange?,
-      seedText: seedText == freezed
+      seedText: freezed == seedText
           ? _value.seedText
           : seedText // ignore: cast_nullable_to_non_nullable
               as String?,
-      playDate: playDate == freezed
+      playDate: null == playDate
           ? _value.playDate
           : playDate // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MonsterCopyWith<$Res>? get answer {
     if (_value.answer == null) {
       return null;
     }
 
     return $MonsterCopyWith<$Res>(_value.answer!, (value) {
-      return _then(_value.copyWith(answer: value));
+      return _then(_value.copyWith(answer: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $QuizRangeCopyWith<$Res>? get quizRange {
     if (_value.quizRange == null) {
       return null;
     }
 
     return $QuizRangeCopyWith<$Res>(_value.quizRange!, (value) {
-      return _then(_value.copyWith(quizRange: value));
+      return _then(_value.copyWith(quizRange: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_QuizInfoCopyWith<$Res> implements $QuizInfoCopyWith<$Res> {
-  factory _$$_QuizInfoCopyWith(
-          _$_QuizInfo value, $Res Function(_$_QuizInfo) then) =
-      __$$_QuizInfoCopyWithImpl<$Res>;
+abstract class _$$QuizInfoImplCopyWith<$Res>
+    implements $QuizInfoCopyWith<$Res> {
+  factory _$$QuizInfoImplCopyWith(
+          _$QuizInfoImpl value, $Res Function(_$QuizInfoImpl) then) =
+      __$$QuizInfoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Monster? answer,
       int maxAnswer,
@@ -146,51 +154,50 @@ abstract class _$$_QuizInfoCopyWith<$Res> implements $QuizInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_QuizInfoCopyWithImpl<$Res> extends _$QuizInfoCopyWithImpl<$Res>
-    implements _$$_QuizInfoCopyWith<$Res> {
-  __$$_QuizInfoCopyWithImpl(
-      _$_QuizInfo _value, $Res Function(_$_QuizInfo) _then)
-      : super(_value, (v) => _then(v as _$_QuizInfo));
+class __$$QuizInfoImplCopyWithImpl<$Res>
+    extends _$QuizInfoCopyWithImpl<$Res, _$QuizInfoImpl>
+    implements _$$QuizInfoImplCopyWith<$Res> {
+  __$$QuizInfoImplCopyWithImpl(
+      _$QuizInfoImpl _value, $Res Function(_$QuizInfoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_QuizInfo get _value => super._value as _$_QuizInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? answer = freezed,
-    Object? maxAnswer = freezed,
+    Object? maxAnswer = null,
     Object? quizType = freezed,
-    Object? quizProcess = freezed,
+    Object? quizProcess = null,
     Object? quizRange = freezed,
     Object? seedText = freezed,
-    Object? playDate = freezed,
+    Object? playDate = null,
   }) {
-    return _then(_$_QuizInfo(
-      answer: answer == freezed
+    return _then(_$QuizInfoImpl(
+      answer: freezed == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as Monster?,
-      maxAnswer: maxAnswer == freezed
+      maxAnswer: null == maxAnswer
           ? _value.maxAnswer
           : maxAnswer // ignore: cast_nullable_to_non_nullable
               as int,
-      quizType: quizType == freezed
+      quizType: freezed == quizType
           ? _value.quizType
           : quizType // ignore: cast_nullable_to_non_nullable
               as QuizTypes?,
-      quizProcess: quizProcess == freezed
+      quizProcess: null == quizProcess
           ? _value.quizProcess
           : quizProcess // ignore: cast_nullable_to_non_nullable
               as QuizProcessType,
-      quizRange: quizRange == freezed
+      quizRange: freezed == quizRange
           ? _value.quizRange
           : quizRange // ignore: cast_nullable_to_non_nullable
               as QuizRange?,
-      seedText: seedText == freezed
+      seedText: freezed == seedText
           ? _value.seedText
           : seedText // ignore: cast_nullable_to_non_nullable
               as String?,
-      playDate: playDate == freezed
+      playDate: null == playDate
           ? _value.playDate
           : playDate // ignore: cast_nullable_to_non_nullable
               as int,
@@ -200,8 +207,8 @@ class __$$_QuizInfoCopyWithImpl<$Res> extends _$QuizInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
-  const _$_QuizInfo(
+class _$QuizInfoImpl with DiagnosticableTreeMixin implements _QuizInfo {
+  const _$QuizInfoImpl(
       {this.answer,
       this.maxAnswer = 0,
       this.quizType,
@@ -210,8 +217,8 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
       this.seedText,
       this.playDate = 0});
 
-  factory _$_QuizInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_QuizInfoFromJson(json);
+  factory _$QuizInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$QuizInfoImplFromJson(json);
 
   @override
   final Monster? answer;
@@ -254,37 +261,38 @@ class _$_QuizInfo with DiagnosticableTreeMixin implements _QuizInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuizInfo &&
-            const DeepCollectionEquality().equals(other.answer, answer) &&
-            const DeepCollectionEquality().equals(other.maxAnswer, maxAnswer) &&
-            const DeepCollectionEquality().equals(other.quizType, quizType) &&
-            const DeepCollectionEquality()
-                .equals(other.quizProcess, quizProcess) &&
-            const DeepCollectionEquality().equals(other.quizRange, quizRange) &&
-            const DeepCollectionEquality().equals(other.seedText, seedText) &&
-            const DeepCollectionEquality().equals(other.playDate, playDate));
+            other is _$QuizInfoImpl &&
+            (identical(other.answer, answer) || other.answer == answer) &&
+            (identical(other.maxAnswer, maxAnswer) ||
+                other.maxAnswer == maxAnswer) &&
+            (identical(other.quizType, quizType) ||
+                other.quizType == quizType) &&
+            (identical(other.quizProcess, quizProcess) ||
+                other.quizProcess == quizProcess) &&
+            (identical(other.quizRange, quizRange) ||
+                other.quizRange == quizRange) &&
+            (identical(other.seedText, seedText) ||
+                other.seedText == seedText) &&
+            (identical(other.playDate, playDate) ||
+                other.playDate == playDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(answer),
-      const DeepCollectionEquality().hash(maxAnswer),
-      const DeepCollectionEquality().hash(quizType),
-      const DeepCollectionEquality().hash(quizProcess),
-      const DeepCollectionEquality().hash(quizRange),
-      const DeepCollectionEquality().hash(seedText),
-      const DeepCollectionEquality().hash(playDate));
+  int get hashCode => Object.hash(runtimeType, answer, maxAnswer, quizType,
+      quizProcess, quizRange, seedText, playDate);
 
   @JsonKey(ignore: true)
   @override
-  _$$_QuizInfoCopyWith<_$_QuizInfo> get copyWith =>
-      __$$_QuizInfoCopyWithImpl<_$_QuizInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$QuizInfoImplCopyWith<_$QuizInfoImpl> get copyWith =>
+      __$$QuizInfoImplCopyWithImpl<_$QuizInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_QuizInfoToJson(this);
+    return _$$QuizInfoImplToJson(
+      this,
+    );
   }
 }
 
@@ -296,26 +304,27 @@ abstract class _QuizInfo implements QuizInfo {
       final QuizProcessType quizProcess,
       final QuizRange? quizRange,
       final String? seedText,
-      final int playDate}) = _$_QuizInfo;
+      final int playDate}) = _$QuizInfoImpl;
 
-  factory _QuizInfo.fromJson(Map<String, dynamic> json) = _$_QuizInfo.fromJson;
+  factory _QuizInfo.fromJson(Map<String, dynamic> json) =
+      _$QuizInfoImpl.fromJson;
 
   @override
-  Monster? get answer => throw _privateConstructorUsedError;
+  Monster? get answer;
   @override
-  int get maxAnswer => throw _privateConstructorUsedError;
+  int get maxAnswer;
   @override
-  QuizTypes? get quizType => throw _privateConstructorUsedError;
+  QuizTypes? get quizType;
   @override
-  QuizProcessType get quizProcess => throw _privateConstructorUsedError;
+  QuizProcessType get quizProcess;
   @override
-  QuizRange? get quizRange => throw _privateConstructorUsedError;
+  QuizRange? get quizRange;
   @override
-  String? get seedText => throw _privateConstructorUsedError;
+  String? get seedText;
   @override
-  int get playDate => throw _privateConstructorUsedError;
+  int get playDate;
   @override
   @JsonKey(ignore: true)
-  _$$_QuizInfoCopyWith<_$_QuizInfo> get copyWith =>
+  _$$QuizInfoImplCopyWith<_$QuizInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,18 +1,20 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:word_quiz/model/parental_gate_page_info.dart';
-import 'package:word_quiz/provider/parental_gate_provider.dart';
+import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
 
-class FakeParentalGatePageNotifier extends StateNotifier<ParentalGatePageInfo>
-    implements ParentalGatePageNotifier {
-  FakeParentalGatePageNotifier(super.state);
+class FakeParentalGatePageNotifier extends MockParentalGatePageNotifier {
+  FakeParentalGatePageNotifier({
+    this.parentalGatePageInfo,
+  });
 
-  int pickCallTimes = 0;
+  @visibleForTesting
+  final ParentalGatePageInfo? parentalGatePageInfo;
 
   @override
-  void pick() {
-    pickCallTimes++;
+  ParentalGatePageInfo build() {
+    return parentalGatePageInfo ?? super.build();
   }
 
   @override
-  void updateParentalControl({required bool parentalControl}) {}
+  Future<void> updateParentalControl({required bool parentalControl}) async {}
 }

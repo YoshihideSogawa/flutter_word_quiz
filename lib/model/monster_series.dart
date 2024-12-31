@@ -1,7 +1,6 @@
 import 'package:word_quiz/model/quiz_range.dart';
 
 const redGreen = QuizRange(
-  id: 0,
   displayName: 'あか・みどり',
   maxNo: 151,
 );
@@ -64,5 +63,5 @@ final quizRangeList = [
   xy,
   sunMoon,
   swordShield,
-  arceus
+  arceus,
 ];

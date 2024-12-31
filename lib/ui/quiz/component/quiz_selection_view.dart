@@ -3,11 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/monster.dart';
 import 'package:word_quiz/model/monster_series.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_range.dart';
-import 'package:word_quiz/provider/monster_picker_provider.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
+import 'package:word_quiz/repository/settings/quiz_range_repository.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -15,31 +15,42 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 class QuizSelectionView extends HookConsumerWidget {
   const QuizSelectionView({
     super.key,
-  }); // coverage:ignore-line
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quizType = QuizType.of(context).quizType;
+    // 初期入力はランダムにモンスターを選択
     final randomPickFuture = useMemoized<Future<Monster?>>(
-      () => ref.watch(monsterPickerProvider).pick(),
+      () => ref.watch(monsterListRepositoryProvider.notifier).pick(),
     );
     final snapshot = useFuture(randomPickFuture);
     if (!snapshot.hasData) {
       return const SizedBox.shrink();
     }
-
-    // 初期入力はランダムにモンスターを選択
     final seedController =
         useTextEditingController(text: snapshot.data?.name ?? '');
-    final quizType = QuizType.of(context).quizType;
-    final defaultQuizRange = ref.watch(settingsQuizRangeProvider);
-    final dropdownValue = useState<QuizRange>(defaultQuizRange);
+
+    // 問題の範囲を取得して、ドロップダウンに反映
+    final quizRangeNotifier = ref.watch(quizRangeRepositoryProvider);
+    if (!quizRangeNotifier.hasValue) {
+      return const SizedBox.shrink();
+    }
+    final dropdownValue = useState<QuizRange>(quizRangeNotifier.value!);
+
     return QuizDialog(
       onTap: () {
-        ref.read(quizPageProvider(quizType).notifier).dismissQuizSelection();
+        quizPageInfo.value = quizPageInfo.value.copyWith(
+          showQuizSelection: false,
+        );
       },
       child: IntrinsicHeight(
         child: Container(
-          width: 300,
+          width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
             borderRadius: BorderRadius.circular(4),
@@ -102,12 +113,12 @@ class QuizSelectionView extends HookConsumerWidget {
 
                     // 回答を設定
                     ref
-                        .read(quizInfoProvider(quizType).notifier)
+                        .read(quizInfoNotifierProvider(quizType).notifier)
                         .startQuiz(seedController.text, dropdownValue.value);
                     // 画面を閉じる
-                    ref
-                        .read(quizPageProvider(quizType).notifier)
-                        .dismissQuizSelection();
+                    quizPageInfo.value = quizPageInfo.value.copyWith(
+                      showQuizSelection: false,
+                    );
                   },
                   child: const Text('スタート'),
                 ),

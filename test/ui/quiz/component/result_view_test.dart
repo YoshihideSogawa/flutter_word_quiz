@@ -1,61 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/parental_control_provider.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/result_view.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/fake_statistics_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('ResultView(success)', (tester) async {
     const quizType = QuizTypes.daily;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.success,
+      quizRange: diamondPearl,
+      seedText: 'フシギダネ',
+      playDate: generateDate(),
+    );
+    const quizStatistics = QuizStatistics(
+      currentChain: 3,
+      lastChain: 2,
+    );
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(
-            FakeQuizInfoNotifier(
-              const AsyncValue.data(
-                QuizInfo(
-                  quizProcess: QuizProcessType.success,
-                  quizRange: diamondPearl,
-                  seedText: 'フシギダネ',
-                ),
-              ),
-            ),
-          ),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                currentChain: 3,
-                lastChain: 2,
-              ),
-            ),
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            statistics: quizStatistics,
           ),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: ResultView(),
+              body: ResultView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('いっぱいやる'), findsOneWidget);
     expect(find.text('れんさちゅう'), findsOneWidget);
@@ -69,50 +62,47 @@ void main() {
     expect(find.text('つぎへ'), findsOneWidget);
 
     await tester.tapAt(Offset.zero);
-    verify(mockQuizPageNotifier.dismissResult()).called(1);
+
+    await tester.pumpAndSettle();
+
+    expect(quizPageInfo.value.showResult, isFalse);
   });
 
   testWidgets('ResultView(failure)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.failure,
+      quizRange: diamondPearl,
+      seedText: 'フシギダネ',
+    );
+    const quizStatistics = QuizStatistics(
+      currentChain: 3,
+      lastChain: 2,
+    );
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(
-            FakeQuizInfoNotifier(
-              const AsyncValue.data(
-                QuizInfo(
-                  quizProcess: QuizProcessType.failure,
-                  quizRange: diamondPearl,
-                  seedText: 'フシギダネ',
-                ),
-              ),
-            ),
+          appPropertyOverride(parentalControl: false),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                currentChain: 3,
-                lastChain: 2,
-              ),
-            ),
-          ),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: ResultView(),
+              body: ResultView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('いっぱいやる'), findsOneWidget);
     expect(find.text('けっか'), findsOneWidget);
@@ -127,46 +117,40 @@ void main() {
   });
 
   testWidgets('ResultView(quit)', (tester) async {
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
-
     const quizType = QuizTypes.daily;
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.quit,
+      quizRange: diamondPearl,
+      seedText: 'フシギダネ',
+    );
+    const quizStatistics = QuizStatistics(
+      currentChain: 3,
+      lastChain: 2,
+    );
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(
-            FakeQuizInfoNotifier(
-              const AsyncValue.data(
-                QuizInfo(
-                  quizProcess: QuizProcessType.quit,
-                  quizRange: diamondPearl,
-                  seedText: 'フシギダネ',
-                ),
-              ),
-            ),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                currentChain: 3,
-                lastChain: 2,
-              ),
-            ),
-          ),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: ResultView(),
+              body: ResultView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     expect(find.text('いっぱいやる'), findsOneWidget);
     expect(find.text('けっか'), findsOneWidget);
@@ -182,137 +166,125 @@ void main() {
 
   testWidgets('おわるのタップ', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.success,
-          quizRange: diamondPearl,
-          seedText: 'フシギダネ',
-        ),
-      ),
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.success,
+      quizRange: diamondPearl,
+      seedText: 'フシギダネ',
+    );
+    const quizStatistics = QuizStatistics(
+      currentChain: 3,
+      lastChain: 2,
     );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                currentChain: 3,
-                lastChain: 2,
-              ),
-            ),
-          )
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: ResultView(),
+              body: ResultView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('おわる'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('はい'));
     await tester.pumpAndSettle();
-    expect(fakeQuizInfoNotifier.quitQuizCalled, isTrue);
+    expect(quizPageInfo.value.showResult, isTrue);
   });
 
   testWidgets('おわるのタップ', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.success,
-          quizRange: diamondPearl,
-          seedText: 'フシギダネ',
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.success,
+      quizRange: diamondPearl,
+      seedText: 'フシギダネ',
     );
-
-    final mockQuizPageNotifier = MockQuizPageNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    const quizStatistics = QuizStatistics(
+      currentChain: 3,
+      lastChain: 2,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                currentChain: 3,
-                lastChain: 2,
-              ),
-            ),
-          )
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
+          ),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: ResultView(),
+              body: ResultView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
 
+    await tester.pumpAndSettle();
+
     await tester.tap(find.text('つぎへ'));
     await tester.pumpAndSettle();
-    verify(mockQuizPageNotifier.dismissResult()).called(1);
-    expect(fakeQuizInfoNotifier.nextQuizCalled, isTrue);
+    expect(quizPageInfo.value.showResult, isFalse);
   });
 
   testWidgets('とじるのタップ', (tester) async {
     const quizType = QuizTypes.daily;
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.failure,
-          quizRange: diamondPearl,
-          seedText: 'フシギダネ',
-        ),
-      ),
+    const quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.failure,
+      quizRange: diamondPearl,
+      seedText: 'フシギダネ',
     );
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    final mockQuizPageNotifier = MockQuizPageNotifier();
-
-    final mockParentalControl = MockParentalControl();
-    when(mockParentalControl.isParentalControl()).thenReturn(false);
+    const quizStatistics = QuizStatistics(
+      currentChain: 3,
+      lastChain: 2,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(quizType).overrideWithValue(fakeQuizInfoNotifier),
-          quizPageProvider(quizType).overrideWithValue(mockQuizPageNotifier),
-          statisticsProvider(quizType).overrideWithValue(
-            FakeStatisticsNotifier(
-              const QuizStatistics(
-                currentChain: 3,
-                lastChain: 2,
-              ),
-            ),
+          quizOverride(
+            quizType: quizType,
+            statistics: quizStatistics,
+            quizInfo: quizInfo,
           ),
-          parentalControlProvider.overrideWithValue(mockParentalControl),
+          appPropertyOverride(parentalControl: false),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: ResultView(),
+              body: ResultView(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
 
+    await tester.pumpAndSettle();
+
     await tester.tap(find.text('とじる'));
-    verify(mockQuizPageNotifier.dismissResult()).called(1);
+    expect(quizPageInfo.value.showResult, isFalse);
   });
 
   test('とじるのタップ', () async {

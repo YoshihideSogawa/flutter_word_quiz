@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/word_keyboard_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
 import 'package:word_quiz/ui/quiz/app_colors.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
@@ -16,6 +16,7 @@ class InputKey extends ConsumerWidget {
     required this.width,
     required this.height,
     required this.keyboardInfo,
+    required this.enabled,
     required this.text,
   }); // coverage:ignore-line
 
@@ -27,6 +28,9 @@ class InputKey extends ConsumerWidget {
 
   /// キーボードの表示状態
   final WordKeyboardInfo keyboardInfo;
+
+  /// 有効かどうか
+  final bool enabled;
 
   /// 表示テキスト
   final String text;
@@ -53,17 +57,20 @@ class InputKey extends ConsumerWidget {
         ),
         child: InkWell(
           key: const Key('input_key_ink_well'),
-          onTap: () async {
-            // 問題が開始していない場合は無視
-            final quizInfo = ref.read(quizInfoProvider(quizType)).value;
-            if (quizInfo?.quizProcess != QuizProcessType.started) {
-              return;
-            }
+          onTap: enabled
+              ? () async {
+                  // 問題が開始していない場合は無視
+                  final quizInfo =
+                      await ref.read(quizInfoNotifierProvider(quizType).future);
+                  if (quizInfo.quizProcess != QuizProcessType.started) {
+                    return;
+                  }
 
-            ref
-                .read(wordInputNotifierProvider(quizType).notifier)
-                .inputWord(text);
-          },
+                  await ref
+                      .read(wordInputNotifierProvider(quizType).notifier)
+                      .inputWord(text);
+                }
+              : null,
           borderRadius: BorderRadius.circular(4),
           splashColor: Colors.grey,
           child: Center(

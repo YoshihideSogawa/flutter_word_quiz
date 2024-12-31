@@ -6,7 +6,8 @@ part of 'quiz_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_QuizInfo _$$_QuizInfoFromJson(Map<String, dynamic> json) => _$_QuizInfo(
+_$QuizInfoImpl _$$QuizInfoImplFromJson(Map<String, dynamic> json) =>
+    _$QuizInfoImpl(
       answer: json['answer'] == null
           ? null
           : Monster.fromJson(json['answer'] as Map<String, dynamic>),
@@ -22,12 +23,12 @@ _$_QuizInfo _$$_QuizInfoFromJson(Map<String, dynamic> json) => _$_QuizInfo(
       playDate: json['playDate'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$$_QuizInfoToJson(_$_QuizInfo instance) =>
+Map<String, dynamic> _$$QuizInfoImplToJson(_$QuizInfoImpl instance) =>
     <String, dynamic>{
       'answer': instance.answer,
       'maxAnswer': instance.maxAnswer,
       'quizType': _$QuizTypesEnumMap[instance.quizType],
-      'quizProcess': _$QuizProcessTypeEnumMap[instance.quizProcess],
+      'quizProcess': _$QuizProcessTypeEnumMap[instance.quizProcess]!,
       'quizRange': instance.quizRange,
       'seedText': instance.seedText,
       'playDate': instance.playDate,

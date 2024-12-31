@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/model/monster_series.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/settings_input_type.dart';
-import 'package:word_quiz/provider/data_settings_provider.dart';
-import 'package:word_quiz/provider/settings_input_type_provider.dart';
-import 'package:word_quiz/provider/settings_quiz_range_provider.dart';
+import 'package:word_quiz/repository/settings/settings_keys.dart';
 import 'package:word_quiz/ui/settings/settings_page.dart';
 
-import '../../mock/fake_settings_input_type_notifier.dart';
-import '../../mock/fake_settings_quiz_range_notifier.dart';
-import '../../mock/generate_mocks.mocks.dart';
+import '../../mock/mock_box_data.dart';
 
 void main() {
   setUp(() {
@@ -21,24 +16,20 @@ void main() {
   });
 
   testWidgets('SettingsPage(きりかえタイプ)', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: blackWhite,
+          ),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.text('にゅうりょくタイプ'), findsOneWidget);
     expect(find.text('きりかえタイプ'), findsOneWidget);
@@ -49,48 +40,42 @@ void main() {
   });
 
   testWidgets('SettingsPage(ぜんぶひょうじタイプ)', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeAll);
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+          settingsOverride(
+            inputType: InputTypes.all,
+            quizRange: blackWhite,
+          ),
         ],
         child: const MaterialApp(
           home: SettingsPage(),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.text('にゅうりょくタイプ'), findsOneWidget);
     expect(find.text('ぜんぶひょうじタイプ'), findsOneWidget);
   });
 
   testWidgets('にゅうりょくタイプのタップ', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
+    final settings = settingsOverrideAndBox(
+      inputType: InputTypes.switching,
+      quizRange: blackWhite,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+          settings.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     // ダイアログ表示(1回目)
     await tester.tap(find.text('にゅうりょくタイプ'));
@@ -103,7 +88,7 @@ void main() {
     // ぜんぶひょうじタイプを選択
     await tester.tap(find.text('ぜんぶひょうじタイプ'));
     await tester.pumpAndSettle();
-    expect(fakeSettingsInputTypeNotifier.inputType, inputTypeAll);
+    expect(settings.box.data[inputTypeKey], InputTypes.all.typeId);
 
     // ダイアログ表示(2回目)
     await tester.tap(find.text('にゅうりょくタイプ'));
@@ -112,28 +97,25 @@ void main() {
     // きりかえタイプを選択
     await tester.tap(find.text('きりかえタイプ').last);
     await tester.pumpAndSettle();
-    expect(fakeSettingsInputTypeNotifier.inputType, inputTypeSwitching);
+    expect(settings.box.data[inputTypeKey], InputTypes.switching.typeId);
   });
 
   testWidgets('もんだいのはんいのタップ', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-
+    final settings = settingsOverrideAndBox(
+      inputType: InputTypes.switching,
+      quizRange: blackWhite,
+    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+          settings.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     // ダイアログ表示
     await tester.tap(find.text('もんだいのはんい'));
@@ -154,31 +136,27 @@ void main() {
     await tester.tap(find.text('ソード・シールド'));
     await tester.pumpAndSettle();
 
-    expect(fakeSettingsQuizRangeNotifier.quizRange, swordShield);
+    expect(settings.box.data[quizRangeKey], swordShield.id);
   });
 
   testWidgets('きょうのもんだいのデータ削除のタップ', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-    final mockDataSettings = MockDataSettings();
+    final quizOverride = quizOverrideAndBox(quizType: QuizTypes.daily);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          dataSettingsProvider(QuizTypes.daily)
-              .overrideWithValue(mockDataSettings),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: blackWhite,
+          ),
+          quizOverride.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     // ダイアログ表示
     await tester.tap(find.text('「きょうのもんだい」のデータをけす'));
@@ -202,31 +180,27 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(confirmTitle), findsNothing);
 
-    verify(mockDataSettings.deleteAll()).called(1);
+    expect(quizOverride.box.data[QuizTypes.daily.boxName], isNull);
   });
 
   testWidgets('いっぱいやるのデータ削除のタップ', (tester) async {
-    final fakeSettingsInputTypeNotifier =
-        FakeSettingsInputTypeNotifier(inputTypeSwitching);
-    final fakeSettingsQuizRangeNotifier =
-        FakeSettingsQuizRangeNotifier(blackWhite);
-    final mockDataSettings = MockDataSettings();
+    final quizOverride = quizOverrideAndBox(quizType: QuizTypes.endless);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          dataSettingsProvider(QuizTypes.endless)
-              .overrideWithValue(mockDataSettings),
-          settingsInputTypeProvider
-              .overrideWithValue(fakeSettingsInputTypeNotifier),
-          settingsQuizRangeProvider
-              .overrideWithValue(fakeSettingsQuizRangeNotifier),
+          settingsOverride(
+            inputType: InputTypes.switching,
+            quizRange: blackWhite,
+          ),
+          quizOverride.override,
         ],
         child: const MaterialApp(
           home: SettingsPage(),
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
     // ダイアログ表示
     await tester.tap(find.text('「いっぱいやる」のデータをけす'));
@@ -250,6 +224,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(confirmTitle), findsNothing);
 
-    verify(mockDataSettings.deleteAll()).called(1);
+    expect(quizOverride.box.data[QuizTypes.endless.boxName], isNull);
   });
 }

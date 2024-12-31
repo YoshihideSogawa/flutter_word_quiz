@@ -22,11 +22,11 @@
 コードレビュー、Issues、Pull requestsについては受け付けております。ぜひよろしくおねがいします。
 
 ## 開発環境
-- Flutter : 3.0.0
-- Dart : 2.17.0
-- Android Studio : 2021.1
-- Xcode : 13.3
-- fvm : 2.2.5
+- Flutter : 3.16.0
+- Dart : 3.2.0
+- Android Studio : 2022.3.1
+- Xcode : 15.0.1
+- fvm : 2.4.1
 
 ## Special Thanks
 オープンソースにあたり、レビューをしていただきました。ありがとうございます。

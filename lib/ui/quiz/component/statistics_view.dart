@@ -5,16 +5,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_properties.dart';
 import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_statistics.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/model/word_input.dart';
 import 'package:word_quiz/model/word_name_state.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/quiz_page_provider.dart';
-import 'package:word_quiz/provider/remaining_time_provider.dart';
-import 'package:word_quiz/provider/statistics_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
+import 'package:word_quiz/provider/quiz_info_notifier.dart';
+import 'package:word_quiz/provider/statistics_notifier.dart';
+import 'package:word_quiz/provider/word_input_notifier.dart';
+import 'package:word_quiz/ui/quiz/component/clock_text.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_dialog.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/share_button.dart';
@@ -22,14 +22,20 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 統計とシェアの表示です。
 class StatisticsView extends ConsumerWidget {
-  const StatisticsView({super.key}); // coverage:ignore-line
+  const StatisticsView({
+    super.key,
+    required this.quizPageInfo,
+  });
+
+  /// [QuizPageInfo]
+  final ValueNotifier<QuizPageInfo> quizPageInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizInfo = ref.watch(quizInfoProvider(quizType)).value;
+    final quizInfo = ref.watch(quizInfoNotifierProvider(quizType)).value;
     final wordInput = ref.watch(wordInputNotifierProvider(quizType));
-    final statistics = ref.watch(statisticsProvider(quizType));
+    final statistics = ref.watch(statisticsNotifierProvider(quizType));
 
     return QuizDialog(
       onTap: () async {
@@ -37,7 +43,7 @@ class StatisticsView extends ConsumerWidget {
       },
       child: IntrinsicHeight(
         child: Container(
-          width: 300,
+          width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
             borderRadius: BorderRadius.circular(4),
@@ -72,17 +78,26 @@ class StatisticsView extends ConsumerWidget {
                     if (quizType == QuizTypes.daily) _buildClockLayout(),
                     if (quizType == QuizTypes.endless)
                       _buildSecretText(quizInfo),
-                    Column(
-                      children: [
-                        TweetButton(
-                          tweetText: shareText(quizInfo, wordInput, statistics),
-                        ),
-                        const SizedBox(height: 4),
-                        ShareButton(
-                          shareText: shareText(quizInfo, wordInput, statistics),
-                        ),
-                      ],
-                    )
+                    if (statistics.hasValue && wordInput.hasValue)
+                      Column(
+                        children: [
+                          TweetButton(
+                            tweetText: shareText(
+                              quizInfo,
+                              wordInput.value!,
+                              statistics.value!,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          ShareButton(
+                            shareText: shareText(
+                              quizInfo,
+                              wordInput.value!,
+                              statistics.value!,
+                            ),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
                 TextButton(
@@ -131,22 +146,26 @@ class StatisticsView extends ConsumerWidget {
 
   /// 時刻のレイアウトを構築します。
   Widget _buildClockLayout() {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         Text(
           'もんだいが かわるまで',
           style: TextStyle(fontSize: 10.5),
         ),
         SizedBox(height: 4),
-        _ClockText(),
+        ClockText(),
       ],
     );
   }
 
   /// この画面を閉じます。(問題の更新があれば更新します。)
   Future<void> close(WidgetRef ref, QuizTypes quizType) async {
-    await ref.read(quizInfoProvider(quizType).notifier).refreshDailyQuiz();
-    ref.read(quizPageProvider(quizType).notifier).dismissStatistics();
+    await ref
+        .read(quizInfoNotifierProvider(quizType).notifier)
+        .refreshDailyQuiz();
+    quizPageInfo.value = quizPageInfo.value.copyWith(
+      showStatistics: false,
+    );
   }
 }
 
@@ -157,7 +176,8 @@ class _ResultText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizProcess = ref.read(quizInfoProvider(quizType)).value?.quizProcess;
+    final quizProcess =
+        ref.watch(quizInfoNotifierProvider(quizType)).value?.quizProcess;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -183,22 +203,16 @@ class _ResultText extends ConsumerWidget {
     switch (quizProcess) {
       case QuizProcessType.started:
         color = Colors.redAccent;
-        break;
       case QuizProcessType.success:
         color = Colors.redAccent;
-        break;
       case QuizProcessType.failure:
         color = Colors.grey;
-        break;
       case QuizProcessType.quit:
         color = Colors.redAccent;
-        break;
       case QuizProcessType.none:
         color = Colors.grey;
-        break;
       case null:
         color = Colors.redAccent;
-        break;
     }
 
     return Padding(
@@ -236,14 +250,18 @@ class _ResultDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final statistics = ref.watch(statisticsProvider(quizType));
+    final statistics = ref.watch(statisticsNotifierProvider(quizType));
+    if (!statistics.hasValue) {
+      return const SizedBox.shrink();
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildDetailContent('プレイ\nかいすう', statistics.playCount),
-        _buildDetailContent('クリア\nかいすう', statistics.clearCount),
-        _buildDetailContent('れんさ\nかいすう', statistics.currentChain),
-        _buildDetailContent('さいだい\nれんさ', statistics.maxChain),
+        _buildDetailContent('プレイ\nかいすう', statistics.value!.playCount),
+        _buildDetailContent('クリア\nかいすう', statistics.value!.clearCount),
+        _buildDetailContent('れんさ\nかいすう', statistics.value!.currentChain),
+        _buildDetailContent('さいだい\nれんさ', statistics.value!.maxChain),
       ],
     );
   }
@@ -266,23 +284,6 @@ class _ResultDetail extends ConsumerWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// 問題が変わるまでの時間表示を行います。
-class _ClockText extends ConsumerWidget {
-  const _ClockText(); // coverage:ignore-line
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final remainingTime = ref.watch(remainingTimeProvider);
-    return Text(
-      remainingTime,
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
     );
   }
 }
@@ -362,16 +363,12 @@ List<String> _resultsText(WordInput wordInput) {
       switch (resultList[j]) {
         case WordNameState.none:
           resultText[i] += '⬜';
-          break;
         case WordNameState.hit:
           resultText[i] += '🟨';
-          break;
         case WordNameState.match:
           resultText[i] += '🟩';
-          break;
         case WordNameState.notMatch:
           resultText[i] += '⬛';
-          break;
       }
     }
   }

@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+import 'package:word_quiz/logic/date_utils.dart';
+import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
+import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/model/word_input.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/retire_button.dart';
 
-import '../../../mock/fake_word_input_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/mock_box_data.dart';
+import '../../../mock/monster_test_list.dart';
 
 void main() {
   testWidgets('RetireButton', (tester) async {
     const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
-      const ProviderScope(
+      ProviderScope(
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: RetireButton(),
+              body: RetireButton(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -33,35 +34,75 @@ void main() {
 
   testWidgets('RetireButton(Tap)', (tester) async {
     const quizType = QuizTypes.daily;
-    final mockQuizInfoNotifier = MockQuizInfoNotifier();
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
+    );
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          wordInputNotifierProvider(quizType).overrideWithValue(
-            FakeWordInputNotifier(
-              const WordInput(
-                isWordChecking: false,
-              ),
-            ),
-          ),
-          quizInfoProvider(quizType).overrideWithValue(mockQuizInfoNotifier),
+          quizOverride(quizType: quizType, quizInfo: quizInfo),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: RetireButton(),
+              body: RetireButton(quizPageInfo: quizPageInfo),
             ),
           ),
         ),
       ),
     );
 
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byKey(const Key('retire_button')));
     await tester.pumpAndSettle();
     expect(find.text('あきらめますか？'), findsOneWidget);
     await tester.tap(find.text('はい'));
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+
+    // print(quizPageInfo.value);
+    expect(quizPageInfo.value.showStatistics, isTrue);
+  });
+
+  testWidgets('RetireButton(Tap)', (tester) async {
+    const quizType = QuizTypes.endless;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    final quizInfo = QuizInfo(
+      answer: monsterTestList[0],
+      quizType: quizType,
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          quizOverride(quizType: quizType, quizInfo: quizInfo),
+        ],
+        child: MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: Scaffold(
+              body: RetireButton(quizPageInfo: quizPageInfo),
+            ),
+          ),
+        ),
+      ),
+    );
+
     await tester.pumpAndSettle();
-    verify(mockQuizInfoNotifier.retireQuiz()).called(1);
+
+    await tester.tap(find.byKey(const Key('retire_button')));
+    await tester.pumpAndSettle();
+    expect(find.text('あきらめますか？'), findsOneWidget);
+    await tester.tap(find.text('はい'));
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+
+    expect(quizPageInfo.value.showResult, isTrue);
   });
 }

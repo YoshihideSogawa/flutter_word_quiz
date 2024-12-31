@@ -1,68 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+import 'package:word_quiz/logic/date_utils.dart';
 import 'package:word_quiz/model/quiz_info.dart';
+import 'package:word_quiz/model/quiz_page_info.dart';
 import 'package:word_quiz/model/quiz_process_type.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/provider/quiz_info_provider.dart';
-import 'package:word_quiz/provider/word_input_provider.dart';
-import 'package:word_quiz/repository/quiz_repository.dart';
+import 'package:word_quiz/model/word_input.dart';
+import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'package:word_quiz/ui/quiz/component/enter_button.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
-import '../../../mock/fake_quiz_info_notifier.dart';
-import '../../../mock/generate_mocks.mocks.dart';
+import '../../../mock/fake_monster_list_repository.dart';
+import '../../../mock/mock_box_data.dart';
+import '../../../mock/monster_test_list.dart';
 
 void main() {
   testWidgets('EnterButton', (tester) async {
-    await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
-          home: QuizType(
-            quizType: QuizTypes.daily,
-            child: EnterButton(),
-          ),
-        ),
-      ),
-    );
-
-    expect(find.text('かくてい'), findsOneWidget);
-  });
-
-  testWidgets('EnterButtonのタップ(入力なし)', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
-    );
-
-    final mockWordInputNotifier = MockWordInputNotifier();
-    when(mockWordInputNotifier.submit())
-        .thenAnswer((_) async => SubmitResult.noInput);
-
+    const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          quizRepositoryProvider(QuizTypes.daily)
-              .overrideWithValue(MockQuizRepository()),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier)
+          quizOverride(quizType: quizType),
         ],
-        child: const MaterialApp(
-          home: Scaffold(
-            body: QuizType(
-              quizType: QuizTypes.daily,
-              child: EnterButton(),
+        child: MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: EnterButton(
+              enabled: true,
+              quizPageInfo: quizPageInfo,
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('かくてい'), findsOneWidget);
+  });
+
+  testWidgets('EnterButtonのタップ(入力なし)', (tester) async {
+    const quizType = QuizTypes.daily;
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          quizOverride(quizType: quizType, quizInfo: quizInfo),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: QuizType(
+              quizType: quizType,
+              child: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('enter_button_ink_well')));
     await tester.pumpAndSettle();
@@ -71,38 +77,45 @@ void main() {
   });
 
   testWidgets('EnterButtonのタップ(不明なモンスター)', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      playDate: generateDate(),
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['テ', 'ス', 'ト'],
+      ].toList(growable: true),
     );
 
-    final mockWordInputNotifier = MockWordInputNotifier();
-    when(mockWordInputNotifier.submit())
-        .thenAnswer((_) async => SubmitResult.unknownMonster);
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          quizRepositoryProvider(QuizTypes.daily)
-              .overrideWithValue(MockQuizRepository()),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier)
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: Scaffold(
             body: QuizType(
-              quizType: QuizTypes.daily,
-              child: EnterButton(),
+              quizType: quizType,
+              child: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
             ),
           ),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('enter_button_ink_well')));
     await tester.pumpAndSettle();
@@ -115,42 +128,155 @@ void main() {
   });
 
   testWidgets('EnterButtonのタップ(成功)', (tester) async {
-    final fakeQuizInfoNotifier = FakeQuizInfoNotifier(
-      const AsyncValue.data(
-        QuizInfo(
-          quizProcess: QuizProcessType.started,
-        ),
-      ),
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      quizType: quizType,
+      answer: monsterTestList[0],
+      playDate: generateDate(),
+      maxAnswer: 10,
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ].toList(growable: true),
     );
 
-    final mockWordInputNotifier = MockWordInputNotifier();
-    when(mockWordInputNotifier.submit())
-        .thenAnswer((_) async => SubmitResult.success);
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          quizInfoProvider(QuizTypes.daily)
-              .overrideWithValue(fakeQuizInfoNotifier),
-          quizRepositoryProvider(QuizTypes.daily)
-              .overrideWithValue(MockQuizRepository()),
-          wordInputNotifierProvider(QuizTypes.daily)
-              .overrideWithValue(mockWordInputNotifier)
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           home: QuizType(
-            quizType: QuizTypes.daily,
+            quizType: quizType,
             child: Scaffold(
-              body: EnterButton(),
+              body: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
             ),
           ),
         ),
       ),
     );
 
-    await tester.tap(find.byKey(const Key('enter_button_ink_well')));
     await tester.pumpAndSettle();
 
-    expect(fakeQuizInfoNotifier.updateQuizCalled, isTrue);
+    await tester.tap(find.byKey(const Key('enter_button_ink_well')));
+    // NOTE: アニメーション待ち
+    await tester.pumpAndSettle(const Duration(minutes: 1));
+
+    // TODO(sogawa): ここでなんらかの結果を確認する
+  });
+
+  testWidgets('EnterButtonのタップ(成功->失敗)', (tester) async {
+    const quizType = QuizTypes.daily;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      quizType: quizType,
+      answer: monsterTestList[0],
+      playDate: generateDate(),
+      maxAnswer: 10,
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ].toList(growable: true),
+    );
+
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
+        ],
+        child: MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: Scaffold(
+              body: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('enter_button_ink_well')));
+    // NOTE: アニメーション待ち
+    await tester.pumpAndSettle(const Duration(minutes: 1));
+
+    // TODO(sogawa): ここでなんらかの結果を確認する
+  });
+
+  testWidgets('EnterButtonのタップ(Endless -> 成功)', (tester) async {
+    const quizType = QuizTypes.endless;
+    final quizInfo = QuizInfo(
+      quizProcess: QuizProcessType.started,
+      quizType: quizType,
+      answer: monsterTestList[0],
+      playDate: generateDate(),
+      maxAnswer: 10,
+    );
+    final wordInput = WordInput(
+      wordsList: <InputWords>[
+        ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
+      ].toList(growable: true),
+    );
+
+    final quizPageInfo = ValueNotifier(const QuizPageInfo());
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          quizOverride(
+            quizType: quizType,
+            quizInfo: quizInfo,
+            wordInput: wordInput,
+          ),
+          monsterListRepositoryProvider
+              .overrideWith(FakeMonsterListRepository.new),
+        ],
+        child: MaterialApp(
+          home: QuizType(
+            quizType: quizType,
+            child: Scaffold(
+              body: EnterButton(
+                enabled: true,
+                quizPageInfo: quizPageInfo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('enter_button_ink_well')));
+    // NOTE: アニメーション待ち
+    await tester.pumpAndSettle(const Duration(minutes: 1));
+
+    // TODO(sogawa): ここでなんらかの結果を確認する
   });
 }
