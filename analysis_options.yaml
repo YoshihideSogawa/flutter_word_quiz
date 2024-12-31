@@ -13,3 +13,4 @@ analyzer:
 linter:
   rules:
     - always_use_package_imports
+    - public_member_api_docs

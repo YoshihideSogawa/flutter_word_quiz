@@ -18,5 +18,5 @@ const unusedKeyColor = Color(0xFFEBEBEB);
 /// きょうのもんだいの色
 const dailyQuizColor = Color(0xFFEF5350);
 
-// いっぱいやるの色
+/// いっぱいやるの色
 const endlessQuizColor = Color(0xFF66BB6A);
