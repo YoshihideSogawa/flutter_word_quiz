@@ -53,6 +53,12 @@ const arceus = QuizRange(
   maxNo: 905,
 );
 
+const sv = QuizRange(
+  id: 9,
+  displayName: 'スカーレット・バイオレット',
+  maxNo: 1025,
+);
+
 /// クイズ範囲の順序リスト
 final quizRangeList = [
   redGreen,
@@ -64,4 +70,5 @@ final quizRangeList = [
   sunMoon,
   swordShield,
   arceus,
+  sv,
 ];
