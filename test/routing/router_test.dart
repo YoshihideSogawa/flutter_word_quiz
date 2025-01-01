@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:word_quiz/model/quiz_type.dart';
-import 'package:word_quiz/model/settings_input_type.dart';
 import 'package:word_quiz/routing/router.dart';
 import 'package:word_quiz/routing/routes.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
