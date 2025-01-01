@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
+import 'package:word_quiz/routing/routes.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
+import '../../../mock/go_router_tester.dart';
 import '../../../mock/mock_box_data.dart';
 import '../../../mock/mock_hive_box.dart';
 import '../../../mock/url_launcher_tester.dart';
 
 void main() {
   late FakeUrlLauncher urlLauncher;
+  late FakeGoRouter router;
 
   setUp(() {
     AppPlatform.overridePlatForm = Platforms.iOS;
     urlLauncher = setUpUrlLauncher();
+    router = FakeGoRouter();
   });
 
   tearDown(() {
@@ -33,11 +37,14 @@ void main() {
         overrides: [
           appPropertyOverride(parentalControl: false),
         ],
-        child: const MaterialApp(
-          home: QuizType(
-            quizType: quizType,
-            child: Scaffold(
-              body: TweetButton(tweetText: 'https://example.com'),
+        child: InheritedGoRouter(
+          goRouter: router,
+          child: const MaterialApp(
+            home: QuizType(
+              quizType: quizType,
+              child: Scaffold(
+                body: TweetButton(tweetText: 'https://example.com'),
+              ),
             ),
           ),
         ),
@@ -58,11 +65,14 @@ void main() {
         overrides: [
           appPropertyOverrideAndBox(parentalControl: true).override,
         ],
-        child: const MaterialApp(
-          home: QuizType(
-            quizType: quizType,
-            child: Scaffold(
-              body: TweetButton(tweetText: 'https://example.com'),
+        child: InheritedGoRouter(
+          goRouter: router,
+          child: const MaterialApp(
+            home: QuizType(
+              quizType: quizType,
+              child: Scaffold(
+                body: TweetButton(tweetText: 'https://example.com'),
+              ),
             ),
           ),
         ),
@@ -74,7 +84,7 @@ void main() {
     await tester.tap(find.text('ツイート'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(ParentalGatePage), findsOneWidget);
+    expect(router.lastLocation, Routes.parentalGate);
   });
 
   testWidgets('TweetButton(Tap)', (tester) async {
@@ -89,11 +99,14 @@ void main() {
         overrides: [
           hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
         ],
-        child: const MaterialApp(
-          home: QuizType(
-            quizType: quizType,
-            child: Scaffold(
-              body: TweetButton(tweetText: 'https://example.com'),
+        child: InheritedGoRouter(
+          goRouter: router,
+          child: const MaterialApp(
+            home: QuizType(
+              quizType: quizType,
+              child: Scaffold(
+                body: TweetButton(tweetText: 'https://example.com'),
+              ),
             ),
           ),
         ),

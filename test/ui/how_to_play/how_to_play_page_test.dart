@@ -1,18 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
 
+import '../../mock/go_router_tester.dart';
 import '../../mock/mock_box_data.dart';
 import '../../mock/url_launcher_tester.dart';
 
 void main() {
   late FakeUrlLauncher urlLauncher;
+  late FakeGoRouter router;
 
   setUp(() async {
     urlLauncher = setUpUrlLauncher();
+    router = FakeGoRouter();
   });
 
   tearDown(() => AppPlatform.overridePlatForm = null);
@@ -80,9 +84,12 @@ void main() {
         overrides: [
           appPropertyOverride(parentalControl: true),
         ],
-        child: const MaterialApp(
-          home: Scaffold(
-            body: HowToPlayPage(),
+        child: InheritedGoRouter(
+          goRouter: router,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: HowToPlayPage(),
+            ),
           ),
         ),
       ),

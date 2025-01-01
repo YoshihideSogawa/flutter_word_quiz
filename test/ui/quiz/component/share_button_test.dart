@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/constant/app_platform.dart';
 import 'package:word_quiz/constant/box_names.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/repository/app_property/app_property_keys.dart';
 import 'package:word_quiz/repository/hive_box_provider.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
+import 'package:word_quiz/routing/routes.dart';
 import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 import 'package:word_quiz/ui/quiz/component/share_button.dart';
 
+import '../../../mock/go_router_tester.dart';
 import '../../../mock/mock_box_data.dart';
 import '../../../mock/mock_hive_box.dart';
 import '../../../mock/share_plus_tester.dart';
 
 void main() {
   late FakeSharePlus sharePlus;
+  late FakeGoRouter router;
 
   setUp(() {
     sharePlus = setUpSharePlus();
     AppPlatform.overridePlatForm = Platforms.iOS;
+    router = FakeGoRouter();
   });
 
   tearDown(() => AppPlatform.overridePlatForm = null);
@@ -58,11 +62,14 @@ void main() {
         overrides: [
           hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box),
         ],
-        child: const MaterialApp(
-          home: QuizType(
-            quizType: quizType,
-            child: Scaffold(
-              body: ShareButton(shareText: 'text'),
+        child: InheritedGoRouter(
+          goRouter: router,
+          child: const MaterialApp(
+            home: QuizType(
+              quizType: quizType,
+              child: Scaffold(
+                body: ShareButton(shareText: 'text'),
+              ),
             ),
           ),
         ),
@@ -74,7 +81,7 @@ void main() {
     await tester.tap(find.text('シェア'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(ParentalGatePage), findsOneWidget);
+    expect(router.lastLocation, Routes.parentalGate);
   });
 
   testWidgets('ShareButton(Tap)', (tester) async {
