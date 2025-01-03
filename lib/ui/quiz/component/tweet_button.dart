@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:word_quiz/repository/app_property/parental_control_repository.dart';
-import 'package:word_quiz/ui/parental_gate/parental_gate_page.dart';
+import 'package:word_quiz/routing/routes.dart';
 
 /// ツイートボタンです。
 class TweetButton extends ConsumerWidget {
@@ -30,14 +31,7 @@ class TweetButton extends ConsumerWidget {
         }
 
         if (isParentalControl) {
-          unawaited(
-            Navigator.of(context).push<void>(
-              MaterialPageRoute(
-                builder: (context) => const ParentalGatePage(),
-                fullscreenDialog: true,
-              ),
-            ),
-          );
+          unawaited(context.push(Routes.parentalGate));
         } else {
           await launchUrl(_tweetUri(tweetText));
         }

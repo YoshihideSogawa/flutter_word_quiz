@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:word_quiz/model/splash_page_info.dart';
 import 'package:word_quiz/provider/splash_page_notifier.dart';
-import 'package:word_quiz/ui/how_to_play/how_to_play_page.dart';
-import 'package:word_quiz/ui/quiz/quiz_page.dart';
+import 'package:word_quiz/routing/routes.dart';
 
 /// 起動時の処理を行うスプラッシュページです。
 class SplashPage extends ConsumerWidget {
@@ -46,24 +46,12 @@ class SplashPage extends ConsumerWidget {
     BuildContext context,
     SplashPageInfo splashPageInfo,
   ) async {
-    unawaited(
-      Navigator.of(context).pushAndRemoveUntil<void>(
-        MaterialPageRoute(
-          builder: (context) => const QuizPage(),
-        ),
-        (route) => false,
-      ),
-    );
-
+    context.go(Routes.quiz);
     // あそびかた画面を表示
     if (splashPageInfo.showRule) {
-      unawaited(
-        Navigator.of(context).push<void>(
-          MaterialPageRoute(
-            builder: (context) => const HowToPlayPage(),
-          ),
-        ),
-      );
+      if (context.mounted) {
+        unawaited(context.push(Routes.howToPlay));
+      }
     }
   }
 }
