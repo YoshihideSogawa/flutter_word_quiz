@@ -85,6 +85,7 @@ class HowToPlayPage extends ConsumerWidget {
               const RuleSameWordContent(),
               const Divider(),
               const ForDevelopersInfo(),
+              SizedBox(height: MediaQuery.of(context).padding.bottom),
             ],
           ),
         ),
