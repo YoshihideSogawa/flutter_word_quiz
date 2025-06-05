@@ -8,28 +8,29 @@ import 'package:word_quiz/ui/splash/splash_page.dart';
 
 /// [GoRouter]を取得します。
 final router = GoRouter(
-      initialLocation: Routes.root,
-      debugLogDiagnostics: true,
-      routes: [
-        GoRoute(
-          path: Routes.root,
-          builder: (_, __) => const SplashPage(),
-        ),
-        GoRoute(
-          path: Routes.quiz,
-          builder: (_, __) => const QuizPage(),
-        ),
-        GoRoute(
-          path: Routes.parentalGate,
-          builder: (_, __) => const ParentalGatePage(),
-        ),
-        GoRoute(
-          path: Routes.settings,
-          builder: (_, __) => const SettingsPage(),
-        ),
-        GoRoute(
-          path: Routes.howToPlay,
-          builder: (_, __) => const HowToPlayPage(),
-        ),
-      ],
-    );
+  initialLocation: Routes.root,
+  debugLogDiagnostics: true,
+  onException: (_, __, router) => router.go(Routes.root),
+  routes: [
+    GoRoute(
+      path: Routes.root,
+      builder: (_, __) => const SplashPage(),
+    ),
+    GoRoute(
+      path: Routes.quiz,
+      builder: (_, __) => const QuizPage(),
+    ),
+    GoRoute(
+      path: Routes.parentalGate,
+      builder: (_, __) => const ParentalGatePage(),
+    ),
+    GoRoute(
+      path: Routes.settings,
+      builder: (_, __) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: Routes.howToPlay,
+      builder: (_, __) => const HowToPlayPage(),
+    ),
+  ],
+);
