@@ -7,8 +7,9 @@ void main() {
   test('モンスター一覧読み込みテスト', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
     final container = ProviderContainer();
-    final monsterList =
-        await container.read(monsterListRepositoryProvider.future);
+    final monsterList = await container.read(
+      monsterListRepositoryProvider.future,
+    );
 
     expect(monsterList.first.id, 1);
     expect(monsterList.first.name, 'フシギダネ');
@@ -33,8 +34,9 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     final container = ProviderContainer();
 
-    final monster =
-        await container.read(monsterListRepositoryProvider.notifier).pick();
+    final monster = await container
+        .read(monsterListRepositoryProvider.notifier)
+        .pick();
     expect(monster.id, isNotNull);
     expect(monster.name, isNotNull);
   });

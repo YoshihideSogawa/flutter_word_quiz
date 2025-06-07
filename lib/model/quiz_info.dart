@@ -6,6 +6,7 @@ import 'package:word_quiz/model/quiz_range.dart';
 import 'package:word_quiz/model/quiz_type.dart';
 
 part 'quiz_info.freezed.dart';
+
 part 'quiz_info.g.dart';
 
 /// クイズの情報です。

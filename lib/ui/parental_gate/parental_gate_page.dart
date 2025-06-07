@@ -5,9 +5,7 @@ import 'package:word_quiz/provider/parental_gate_page_notifier.dart';
 
 /// ペアレンタルゲートページです。(Apple用)
 class ParentalGatePage extends HookConsumerWidget {
-  const ParentalGatePage({
-    super.key,
-  }); // coverage:ignore-line
+  const ParentalGatePage({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,9 +36,7 @@ class ParentalGatePage extends HookConsumerWidget {
 
     final targetData = parentalGate.parentalGateDataList[answerNum.value - 1];
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ねんれいかくにん'),
-      ),
+      appBar: AppBar(title: const Text('ねんれいかくにん')),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Center(
@@ -49,9 +45,7 @@ class ParentalGatePage extends HookConsumerWidget {
               Text(
                 '${targetData.question}を選んでください'
                 '(${answerNum.value}/${parentalGate.maxAnswerNum})',
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 12),
               for (final answer in targetData.answerList!)

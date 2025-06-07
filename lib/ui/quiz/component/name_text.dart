@@ -34,10 +34,7 @@ class NameText extends HookWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        border: Border.all(
-          color: _borderColor(),
-          width: 1.2,
-        ),
+        border: Border.all(color: _borderColor(), width: 1.2),
         borderRadius: BorderRadius.circular(4),
         color: _boxColor(),
       ),

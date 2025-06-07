@@ -13,20 +13,14 @@ void main() {
   test('QuizInfo(save/load)', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType),
-      ],
+      overrides: [quizOverride(quizType: quizType)],
     );
     const quizInfo = QuizInfo(
       answer: Monster(id: 100, name: 'テスト'),
       maxAnswer: 5,
       quizType: quizType,
       quizProcess: QuizProcessType.started,
-      quizRange: QuizRange(
-        id: 10,
-        maxNo: 100,
-        displayName: 'QuizRange',
-      ),
+      quizRange: QuizRange(id: 10, maxNo: 100, displayName: 'QuizRange'),
       seedText: 'seedText',
       playDate: 12345678,
     );
@@ -37,8 +31,9 @@ void main() {
         .saveQuizInfo(quizInfo);
 
     // 読み込み
-    final targetQuizInfo =
-        await container.read(quizInfoRepositoryProvider(quizType).future);
+    final targetQuizInfo = await container.read(
+      quizInfoRepositoryProvider(quizType).future,
+    );
 
     expect(targetQuizInfo!.answer!.id, quizInfo.answer!.id);
     expect(targetQuizInfo.maxAnswer, quizInfo.maxAnswer);

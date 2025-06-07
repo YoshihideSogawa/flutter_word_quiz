@@ -14,9 +14,7 @@ class RuleContent extends StatelessWidget {
         Center(
           child: Text(
             '🟩いろについて🟩',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(height: 8),

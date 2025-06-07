@@ -8,10 +8,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 削除ボタンです。
 class DeleteButton extends ConsumerWidget {
-  const DeleteButton({
-    super.key,
-    required this.enabled,
-  });
+  const DeleteButton({super.key, required this.enabled});
 
   /// 有効かどうか
   final bool enabled;

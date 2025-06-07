@@ -11,13 +11,12 @@ void main() {
   test('QuizStatistics(save/load)', () async {
     const quizType = QuizTypes.endless;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType),
-      ],
+      overrides: [quizOverride(quizType: quizType)],
     );
 
-    final statisticsRepositoryNotifier =
-        container.read(statisticsRepositoryProvider(quizType).notifier);
+    final statisticsRepositoryNotifier = container.read(
+      statisticsRepositoryProvider(quizType).notifier,
+    );
 
     const statistics = QuizStatistics(
       clearCount: 10,
@@ -31,8 +30,9 @@ void main() {
     await statisticsRepositoryNotifier.saveStatistics(statistics);
 
     // 読み込み
-    final targetStatistics =
-        await container.read(statisticsRepositoryProvider(quizType).future);
+    final targetStatistics = await container.read(
+      statisticsRepositoryProvider(quizType).future,
+    );
     expect(targetStatistics!.clearCount, statistics.clearCount);
     expect(targetStatistics.currentChain, statistics.currentChain);
     expect(targetStatistics.lastChain, statistics.lastChain);
@@ -43,12 +43,11 @@ void main() {
   test('clearQuizData', () async {
     const quizType = QuizTypes.endless;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType),
-      ],
+      overrides: [quizOverride(quizType: quizType)],
     );
-    final statisticsRepositoryNotifier =
-        container.read(statisticsRepositoryProvider(quizType).notifier);
+    final statisticsRepositoryNotifier = container.read(
+      statisticsRepositoryProvider(quizType).notifier,
+    );
 
     const statistics = QuizStatistics(
       clearCount: 10,
@@ -65,8 +64,9 @@ void main() {
     await container.read(clearQuizDataProvider(quizType).future);
 
     // 読み込み
-    final targetStatistics =
-        await container.read(statisticsRepositoryProvider(quizType).future);
+    final targetStatistics = await container.read(
+      statisticsRepositoryProvider(quizType).future,
+    );
     expect(targetStatistics, isNull);
   });
 }

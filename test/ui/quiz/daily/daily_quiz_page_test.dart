@@ -28,9 +28,7 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
         ],
-        child: const MaterialApp(
-          home: DailyQuizPage(),
-        ),
+        child: const MaterialApp(home: DailyQuizPage()),
       ),
     );
 
@@ -54,21 +52,17 @@ void main() {
         overrides: [
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
-          quizInfoNotifierProvider(QuizTypes.daily)
-              .overrideWith(() => errorNotifier),
+          quizInfoNotifierProvider(
+            QuizTypes.daily,
+          ).overrideWith(() => errorNotifier),
         ],
-        child: const MaterialApp(
-          home: DailyQuizPage(),
-        ),
+        child: const MaterialApp(home: DailyQuizPage()),
       ),
     );
 
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('もんだいが おこりました\nアプリを さいきどう してください'),
-      findsOneWidget,
-    );
+    expect(find.text('もんだいが おこりました\nアプリを さいきどう してください'), findsOneWidget);
   });
 
   testWidgets('showStatistics', (tester) async {
@@ -83,9 +77,7 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily, quizInfo: quizInfo),
         ],
-        child: const MaterialApp(
-          home: DailyQuizPage(),
-        ),
+        child: const MaterialApp(home: DailyQuizPage()),
       ),
     );
 
@@ -107,8 +99,10 @@ void main() {
       quizProcess: QuizProcessType.started,
     );
 
-    final quizOverrideBox =
-        quizOverrideAndBox(quizType: quizType, quizInfo: quizInfo);
+    final quizOverrideBox = quizOverrideAndBox(
+      quizType: quizType,
+      quizInfo: quizInfo,
+    );
 
     await tester.pumpWidget(
       ProviderScope(
@@ -116,9 +110,7 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizOverrideBox.override,
         ],
-        child: const MaterialApp(
-          home: DailyQuizPage(),
-        ),
+        child: const MaterialApp(home: DailyQuizPage()),
       ),
     );
 

@@ -10,15 +10,17 @@ part 'already_launched_repository.g.dart';
 class AlreadyLaunchedRepository extends _$AlreadyLaunchedRepository {
   @override
   Future<bool?> build() async {
-    final appPropertyBox =
-        await ref.watch(hiveBoxProvider(appPropertyBoxName).future);
+    final appPropertyBox = await ref.watch(
+      hiveBoxProvider(appPropertyBoxName).future,
+    );
     return appPropertyBox.get(alreadyLaunchedKey) as bool?;
   }
 
   /// 起動済みとして保存します。
   Future<void> markAsLaunched() async {
-    final appPropertyBox =
-        await ref.read(hiveBoxProvider(appPropertyBoxName).future);
+    final appPropertyBox = await ref.read(
+      hiveBoxProvider(appPropertyBoxName).future,
+    );
     await appPropertyBox.put(alreadyLaunchedKey, true);
   }
 }

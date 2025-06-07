@@ -12,12 +12,10 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
 /// いっぱいやる画面のページです。
 class EndlessQuizPage extends HookConsumerWidget {
-  const EndlessQuizPage({
-    super.key,
-  });
+  const EndlessQuizPage({super.key});
 
   /// [QuizTypes]
-  static const _quizType = QuizTypes.endless;
+  static const QuizTypes _quizType = QuizTypes.endless;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,14 +32,12 @@ class EndlessQuizPage extends HookConsumerWidget {
       // // 答えが決まっていない場合(初回起動時、データ削除時)
       if (next.valueOrNull?.answer == null) {
         // いっぱいやるは自動的に開始する
-        quizPageInfo.value = const QuizPageInfo(
-          showQuizSelection: true,
-        );
+        quizPageInfo.value = const QuizPageInfo(showQuizSelection: true);
       }
     });
 
     return quizInfoNotifier.maybeWhen(
-      error: (_, __) => const Scaffold(
+      error: (_, _) => const Scaffold(
         body: Center(
           child: Text(
             'もんだいが おこりました\nアプリを さいきどう してください',
@@ -56,9 +52,7 @@ class EndlessQuizPage extends HookConsumerWidget {
             backgroundColor: endlessQuizColor,
             centerTitle: true,
             title: const Text('いっぱいやる'),
-            actions: [
-              StatisticsButton(quizPageInfo: quizPageInfo),
-            ],
+            actions: [StatisticsButton(quizPageInfo: quizPageInfo)],
           ),
           drawer: const QuizDrawer(),
           body: WordQuizLayout(quizPageInfo: quizPageInfo),

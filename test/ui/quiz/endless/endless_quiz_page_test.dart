@@ -21,9 +21,7 @@ void main() {
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.endless),
         ],
-        child: const MaterialApp(
-          home: EndlessQuizPage(),
-        ),
+        child: const MaterialApp(home: EndlessQuizPage()),
       ),
     );
 
@@ -48,20 +46,16 @@ void main() {
         overrides: [
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.endless),
-          quizInfoNotifierProvider(QuizTypes.endless)
-              .overrideWith(() => errorNotifier),
+          quizInfoNotifierProvider(
+            QuizTypes.endless,
+          ).overrideWith(() => errorNotifier),
         ],
-        child: const MaterialApp(
-          home: EndlessQuizPage(),
-        ),
+        child: const MaterialApp(home: EndlessQuizPage()),
       ),
     );
 
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('もんだいが おこりました\nアプリを さいきどう してください'),
-      findsOneWidget,
-    );
+    expect(find.text('もんだいが おこりました\nアプリを さいきどう してください'), findsOneWidget);
   });
 }

@@ -9,8 +9,9 @@ WordResults? checkWord(
   QuizInfo quizInfo,
   InputWords inputWords,
 ) {
-  final index =
-      monsterList.indexWhere((element) => element.name == inputWords.join());
+  final index = monsterList.indexWhere(
+    (element) => element.name == inputWords.join(),
+  );
   // 入力したモンスターが存在しなければ終了
   if (index < 0) {
     return null;
@@ -44,10 +45,12 @@ WordResults? checkWord(
       final targetText = inputWords[i];
       // ヒットする可能性がある場合(重複文字考慮)
       if (targetText == answerWords[j]) {
-        final inputDup =
-            inputWords.where((element) => element == targetText).length;
-        final answerDup =
-            answerWords.where((element) => element == targetText).length;
+        final inputDup = inputWords
+            .where((element) => element == targetText)
+            .length;
+        final answerDup = answerWords
+            .where((element) => element == targetText)
+            .length;
         // 入力の重複文字数が回答の重複文字数以内までの場合
         // ほとんどの場合、入力に文字かぶりがないパターン
         if (inputDup <= answerDup) {

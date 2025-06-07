@@ -14,9 +14,7 @@ class RuleSameWordContent extends StatelessWidget {
         Center(
           child: Text(
             '💫おなじもじを つかうばあい💫',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(height: 8),

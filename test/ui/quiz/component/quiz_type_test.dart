@@ -7,10 +7,7 @@ void main() {
   testWidgets('QuizType.of()', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        home: QuizType(
-          quizType: QuizTypes.daily,
-          child: Container(),
-        ),
+        home: QuizType(quizType: QuizTypes.daily, child: Container()),
       ),
     );
 
@@ -21,30 +18,21 @@ void main() {
   testWidgets('updateShouldNotify', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        home: QuizType(
-          quizType: QuizTypes.daily,
-          child: Container(),
-        ),
+        home: QuizType(quizType: QuizTypes.daily, child: Container()),
       ),
     );
 
     final quizType = tester.widget<QuizType>(find.byType(QuizType));
     expect(
       quizType.updateShouldNotify(
-        QuizType(
-          quizType: QuizTypes.daily,
-          child: Container(),
-        ),
+        QuizType(quizType: QuizTypes.daily, child: Container()),
       ),
       isFalse,
     );
 
     expect(
       quizType.updateShouldNotify(
-        QuizType(
-          quizType: QuizTypes.endless,
-          child: Container(),
-        ),
+        QuizType(quizType: QuizTypes.endless, child: Container()),
       ),
       isTrue,
     );

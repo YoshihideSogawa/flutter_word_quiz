@@ -8,17 +8,14 @@ void main() {
   testWidgets('ClockText(new RemainingTime)', (tester) async {
     fakeAsync((fakeClock) {
       tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
-            home: ClockText(),
-          ),
-        ),
+        const ProviderScope(child: MaterialApp(home: ClockText())),
       );
 
       // 初期時間
       fakeClock.flushMicrotasks();
-      final textBefore =
-          tester.widget<Text>(find.byKey(const Key('clock_text'))).data;
+      final textBefore = tester
+          .widget<Text>(find.byKey(const Key('clock_text')))
+          .data;
 
       // 10秒経過
       fakeClock.elapse(const Duration(seconds: 10));
@@ -26,8 +23,9 @@ void main() {
       tester.pump();
       fakeClock.flushMicrotasks();
 
-      final textAfter =
-          tester.widget<Text>(find.byKey(const Key('clock_text'))).data;
+      final textAfter = tester
+          .widget<Text>(find.byKey(const Key('clock_text')))
+          .data;
       expect(textBefore != textAfter, isTrue);
     });
   });

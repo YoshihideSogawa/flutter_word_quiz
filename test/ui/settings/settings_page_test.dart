@@ -24,9 +24,7 @@ void main() {
             quizRange: blackWhite,
           ),
         ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-        ),
+        child: const MaterialApp(home: SettingsPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -43,14 +41,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          settingsOverride(
-            inputType: InputTypes.all,
-            quizRange: blackWhite,
-          ),
+          settingsOverride(inputType: InputTypes.all, quizRange: blackWhite),
         ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-        ),
+        child: const MaterialApp(home: SettingsPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -67,12 +60,8 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settings.override,
-        ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-        ),
+        overrides: [settings.override],
+        child: const MaterialApp(home: SettingsPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -107,12 +96,8 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settings.override,
-        ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-        ),
+        overrides: [settings.override],
+        child: const MaterialApp(home: SettingsPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -151,9 +136,7 @@ void main() {
           ),
           quizOverride.override,
         ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-        ),
+        child: const MaterialApp(home: SettingsPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -162,7 +145,8 @@ void main() {
     await tester.tap(find.text('「きょうのもんだい」のデータをけす'));
     await tester.pumpAndSettle();
 
-    const confirmTitle = '「きょうのもんだい」のデータをけすと もとにもどせません'
+    const confirmTitle =
+        '「きょうのもんだい」のデータをけすと もとにもどせません'
         '\nいいですか？';
     expect(find.text(confirmTitle), findsOneWidget);
 
@@ -195,9 +179,7 @@ void main() {
           ),
           quizOverride.override,
         ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-        ),
+        child: const MaterialApp(home: SettingsPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -206,7 +188,8 @@ void main() {
     await tester.tap(find.text('「いっぱいやる」のデータをけす'));
     await tester.pumpAndSettle();
 
-    const confirmTitle = '「いっぱいやる」のデータをけすと もとにもどせません'
+    const confirmTitle =
+        '「いっぱいやる」のデータをけすと もとにもどせません'
         '\nいいですか？';
     expect(find.text(confirmTitle), findsOneWidget);
 

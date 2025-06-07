@@ -16,9 +16,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: GiveUpButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: GiveUpButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -33,15 +31,11 @@ void main() {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: QuizTypes.daily),
-        ],
+        overrides: [quizOverride(quizType: QuizTypes.daily)],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: GiveUpButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: GiveUpButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

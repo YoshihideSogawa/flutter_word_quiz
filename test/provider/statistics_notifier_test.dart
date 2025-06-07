@@ -11,13 +11,12 @@ void main() {
     const quizType = QuizTypes.daily;
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType),
-      ],
+      overrides: [quizOverride(quizType: quizType)],
     );
 
-    final statistics =
-        await container.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await container.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     expect(statistics.clearCount, 0);
     expect(statistics.currentChain, 0);
     expect(statistics.lastChain, 0);
@@ -35,13 +34,12 @@ void main() {
     );
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, statistics: statisticsData),
-      ],
+      overrides: [quizOverride(quizType: quizType, statistics: statisticsData)],
     );
 
-    final statistics =
-        await container.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await container.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     expect(statistics.clearCount, 5);
     expect(statistics.currentChain, 5);
     expect(statistics.lastChain, 0);
@@ -59,16 +57,15 @@ void main() {
     );
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, statistics: statisticsData),
-      ],
+      overrides: [quizOverride(quizType: quizType, statistics: statisticsData)],
     );
 
     await container
         .read(statisticsNotifierProvider(quizType).notifier)
         .startQuiz();
-    final statistics =
-        await container.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await container.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     expect(statistics.clearCount, 5);
     expect(statistics.currentChain, 0);
     expect(statistics.lastChain, 0);
@@ -86,16 +83,15 @@ void main() {
     );
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, statistics: statisticsData),
-      ],
+      overrides: [quizOverride(quizType: quizType, statistics: statisticsData)],
     );
 
     await container
         .read(statisticsNotifierProvider(quizType).notifier)
         .nextQuiz();
-    final statistics =
-        await container.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await container.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     expect(statistics.clearCount, 1);
     expect(statistics.currentChain, 5);
     expect(statistics.lastChain, 0);
@@ -113,16 +109,15 @@ void main() {
     );
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, statistics: statisticsData),
-      ],
+      overrides: [quizOverride(quizType: quizType, statistics: statisticsData)],
     );
 
     await container
         .read(statisticsNotifierProvider(quizType).notifier)
         .successQuiz();
-    final statistics =
-        await container.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await container.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     expect(statistics.clearCount, 2);
     expect(statistics.currentChain, 6);
     expect(statistics.lastChain, 0);
@@ -140,16 +135,15 @@ void main() {
     );
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, statistics: statisticsData),
-      ],
+      overrides: [quizOverride(quizType: quizType, statistics: statisticsData)],
     );
 
     await container
         .read(statisticsNotifierProvider(quizType).notifier)
         .finishQuiz();
-    final statistics =
-        await container.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await container.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     expect(statistics.clearCount, 1);
     expect(statistics.currentChain, 0);
     expect(statistics.lastChain, 5);

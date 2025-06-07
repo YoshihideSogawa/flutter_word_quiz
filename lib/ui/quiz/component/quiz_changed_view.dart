@@ -7,10 +7,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 問題が切り替わったことを表す画面です。
 class QuizChangedView extends ConsumerWidget {
-  const QuizChangedView({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const QuizChangedView({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -28,7 +25,7 @@ class QuizChangedView extends ConsumerWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
-            color: Theme.of(context).dialogBackgroundColor,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(4),
             boxShadow: const [
               BoxShadow(

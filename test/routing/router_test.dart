@@ -17,10 +17,7 @@ void main() {
       ProviderScope(
         overrides: [
           settingsOverride(),
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: false,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: false),
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
         ],

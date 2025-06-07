@@ -25,8 +25,9 @@ class WordLine extends StatelessWidget {
           children: [
             for (var i = 0; i < labelList.length; i++)
               Padding(
-                padding:
-                    i == 0 ? EdgeInsets.zero : const EdgeInsets.only(left: 2),
+                padding: i == 0
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.only(left: 2),
                 child: NameText(
                   text: labelList[i],
                   nameState: nameStateList[i],

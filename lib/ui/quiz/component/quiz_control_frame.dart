@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 /// 問題の操作系の共通フレームです。
 class QuizControlFrame extends StatelessWidget {
-  const QuizControlFrame({
-    super.key,
-    this.child,
-  });
+  const QuizControlFrame({super.key, this.child});
 
   /// 子要素
   final Widget? child;

@@ -60,8 +60,9 @@ class InputKey extends ConsumerWidget {
           onTap: enabled
               ? () async {
                   // 問題が開始していない場合は無視
-                  final quizInfo =
-                      await ref.read(quizInfoNotifierProvider(quizType).future);
+                  final quizInfo = await ref.read(
+                    quizInfoNotifierProvider(quizType).future,
+                  );
                   if (quizInfo.quizProcess != QuizProcessType.started) {
                     return;
                   }

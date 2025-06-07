@@ -27,22 +27,18 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
-        ],
+        overrides: [quizOverride(quizType: quizType, wordInput: wordInput)],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordNames(
-                wordAnimation: ValueNotifier(true),
-              ),
+              body: WordNames(wordAnimation: ValueNotifier(true)),
             ),
           ),
         ),
@@ -71,16 +67,12 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
-        ],
+        overrides: [quizOverride(quizType: quizType, wordInput: wordInput)],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordNames(
-                wordAnimation: ValueNotifier(true),
-              ),
+              body: WordNames(wordAnimation: ValueNotifier(true)),
             ),
           ),
         ),
@@ -110,23 +102,19 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
       inputIndex: 1,
     );
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType, wordInput: wordInput),
-        ],
+        overrides: [quizOverride(quizType: quizType, wordInput: wordInput)],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordNames(
-                wordAnimation: ValueNotifier(true),
-              ),
+              body: WordNames(wordAnimation: ValueNotifier(true)),
             ),
           ),
         ),
@@ -160,23 +148,19 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
       inputIndex: 1,
     );
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverrideBox.override,
-        ],
+        overrides: [quizOverrideBox.override],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: WordNames(
-                wordAnimation: ValueNotifier(false),
-              ),
+              body: WordNames(wordAnimation: ValueNotifier(false)),
             ),
           ),
         ),
@@ -188,8 +172,9 @@ void main() {
     // データの更新
     await quizOverrideBox.box.put(wordInputKey, jsonEncode(wordInput.toJson()));
     await tester.pumpAndSettle();
-    ProviderScope.containerOf(tester.element(find.byType(WordNames)))
-        .invalidate(hiveBoxProvider(quizType.boxName));
+    ProviderScope.containerOf(
+      tester.element(find.byType(WordNames)),
+    ).invalidate(hiveBoxProvider(quizType.boxName));
 
     await tester.pumpAndSettle();
 

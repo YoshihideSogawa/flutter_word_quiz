@@ -6,7 +6,7 @@ part of 'hive_box_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hiveBoxHash() => r'ae5791ab13627cfa19fd27a31b9da519c1b22e99';
+String _$hiveBoxHash() => r'e8bc4b7be4bbc41a069ec94ea73154ec9306b2de';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -47,21 +47,13 @@ class HiveBoxFamily extends Family<AsyncValue<Box<dynamic>>> {
   /// [Box]を取得します。
   ///
   /// Copied from [hiveBox].
-  HiveBoxProvider call(
-    String boxName,
-  ) {
-    return HiveBoxProvider(
-      boxName,
-    );
+  HiveBoxProvider call(String boxName) {
+    return HiveBoxProvider(boxName);
   }
 
   @override
-  HiveBoxProvider getProviderOverride(
-    covariant HiveBoxProvider provider,
-  ) {
-    return call(
-      provider.boxName,
-    );
+  HiveBoxProvider getProviderOverride(covariant HiveBoxProvider provider) {
+    return call(provider.boxName);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -86,23 +78,18 @@ class HiveBoxProvider extends AutoDisposeFutureProvider<Box<dynamic>> {
   /// [Box]を取得します。
   ///
   /// Copied from [hiveBox].
-  HiveBoxProvider(
-    String boxName,
-  ) : this._internal(
-          (ref) => hiveBox(
-            ref as HiveBoxRef,
-            boxName,
-          ),
-          from: hiveBoxProvider,
-          name: r'hiveBoxProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$hiveBoxHash,
-          dependencies: HiveBoxFamily._dependencies,
-          allTransitiveDependencies: HiveBoxFamily._allTransitiveDependencies,
-          boxName: boxName,
-        );
+  HiveBoxProvider(String boxName)
+    : this._internal(
+        (ref) => hiveBox(ref as HiveBoxRef, boxName),
+        from: hiveBoxProvider,
+        name: r'hiveBoxProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$hiveBoxHash,
+        dependencies: HiveBoxFamily._dependencies,
+        allTransitiveDependencies: HiveBoxFamily._allTransitiveDependencies,
+        boxName: boxName,
+      );
 
   HiveBoxProvider._internal(
     super._createNotifier, {
@@ -161,11 +148,13 @@ mixin HiveBoxRef on AutoDisposeFutureProviderRef<Box<dynamic>> {
 }
 
 class _HiveBoxProviderElement
-    extends AutoDisposeFutureProviderElement<Box<dynamic>> with HiveBoxRef {
+    extends AutoDisposeFutureProviderElement<Box<dynamic>>
+    with HiveBoxRef {
   _HiveBoxProviderElement(super.provider);
 
   @override
   String get boxName => (origin as HiveBoxProvider).boxName;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

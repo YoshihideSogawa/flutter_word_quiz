@@ -6,9 +6,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 次の問題に行くボタン(いっぱいやるモードのみ)
 class NextQuizButton extends ConsumerWidget {
-  const NextQuizButton({
-    super.key,
-  }); // coverage:ignore-line
+  const NextQuizButton({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,10 +30,7 @@ class NextQuizButton extends ConsumerWidget {
             child: const Center(
               child: Text(
                 'つぎへ',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),
           ),

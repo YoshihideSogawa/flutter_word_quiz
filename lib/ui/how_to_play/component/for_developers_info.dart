@@ -9,17 +9,16 @@ class ForDevelopersInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).valueOrNull;
+    final isParentalControl = ref
+        .watch(parentalControlRepositoryProvider)
+        .valueOrNull;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Center(
           child: Text(
             '🖥アプリ開発者にむけて🖥',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         const SizedBox(height: 8),
@@ -27,7 +26,8 @@ class ForDevelopersInfo extends ConsumerWidget {
           TextSpan(
             children: [
               const TextSpan(
-                text: 'このアプリはYoshihideSogawaがFlutterの学習のために作成したアプリです。'
+                text:
+                    'このアプリはYoshihideSogawaがFlutterの学習のために作成したアプリです。'
                     '\nソースコードはすべて',
               ),
               buildLinkSpan(
@@ -37,7 +37,8 @@ class ForDevelopersInfo extends ConsumerWidget {
                 isParentalControl: isParentalControl,
               ),
               const TextSpan(
-                text: 'として公開しておりますので、Flutter開発者・'
+                text:
+                    'として公開しておりますので、Flutter開発者・'
                     'これからFlutterを始める方にはぜひレビューいただければ幸いです。\n',
               ),
               const TextSpan(

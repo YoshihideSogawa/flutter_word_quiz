@@ -15,8 +15,9 @@ part 'word_input_notifier.g.dart';
 class WordInputNotifier extends _$WordInputNotifier {
   @override
   Future<WordInput> build(QuizTypes quizType) async {
-    final wordInput =
-        await ref.watch(wordInputRepositoryProvider(quizType).future);
+    final wordInput = await ref.watch(
+      wordInputRepositoryProvider(quizType).future,
+    );
 
     return wordInput ?? const WordInput(wordsList: [[]]);
   }
@@ -42,9 +43,7 @@ class WordInputNotifier extends _$WordInputNotifier {
     final tmpWordsList = [...wordInput.wordsList];
     tmpWordsList[wordInput.inputIndex] = [...currentInputWords, text];
 
-    final newValue = wordInput.copyWith(
-      wordsList: tmpWordsList,
-    );
+    final newValue = wordInput.copyWith(wordsList: tmpWordsList);
 
     // WorInputの保存
     await ref
@@ -66,9 +65,7 @@ class WordInputNotifier extends _$WordInputNotifier {
 
     currentInputWords.removeLast();
 
-    final newValue = wordInput.copyWith(
-      wordsList: wordInput.wordsList,
-    );
+    final newValue = wordInput.copyWith(wordsList: wordInput.wordsList);
 
     // WorInputの保存
     await ref
@@ -122,9 +119,4 @@ class WordInputNotifier extends _$WordInputNotifier {
 }
 
 /// 確定を行った後の結果
-enum SubmitResult {
-  success,
-  noInput,
-  unknownMonster,
-  skip,
-}
+enum SubmitResult { success, noInput, unknownMonster, skip }

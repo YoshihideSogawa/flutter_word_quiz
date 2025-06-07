@@ -53,11 +53,7 @@ void main() {
     ];
 
     final wordState = [
-      [
-        WordNameState.notMatch,
-        WordNameState.hit,
-        WordNameState.notMatch,
-      ],
+      [WordNameState.notMatch, WordNameState.hit, WordNameState.notMatch],
     ];
 
     final result = checkKeyboard(inputWords, wordState);
@@ -71,11 +67,7 @@ void main() {
     ];
 
     final wordState = [
-      [
-        WordNameState.none,
-        WordNameState.hit,
-        WordNameState.notMatch,
-      ],
+      [WordNameState.none, WordNameState.hit, WordNameState.notMatch],
     ];
 
     final result = checkKeyboard(inputWords, wordState);

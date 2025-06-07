@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// データ削除確認ダイアログです。
-Future<bool?> showDataDeleteDialog(
-  BuildContext context,
-  String contentText,
-) async {
+Future<bool?> showDataDeleteDialog(BuildContext context, String contentText) {
   return showDialog<bool?>(
     context: context,
     builder: (context) => AlertDialog(
@@ -15,7 +12,7 @@ Future<bool?> showDataDeleteDialog(
           child: const Text('とじる'),
         ),
         TextButton(
-          onPressed: () async => Navigator.pop(context, true),
+          onPressed: () => Navigator.pop(context, true),
           child: const Text(
             'データをけす',
             style: TextStyle(

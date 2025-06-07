@@ -16,9 +16,7 @@ import '../../../mock/mock_box_data.dart';
 void main() {
   testWidgets('StatisticsView(Daily)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
 
     const quizStatistics = QuizStatistics(
       playCount: 5,
@@ -42,9 +40,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -104,9 +100,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -137,9 +131,7 @@ void main() {
 
   testWidgets('StatisticsView(Tap QuizDialog)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -162,9 +154,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -181,9 +171,7 @@ void main() {
 
   testWidgets('StatisticsView(Daily success)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.success,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.success);
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -206,9 +194,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -221,9 +207,7 @@ void main() {
 
   testWidgets('StatisticsView(Daily failure)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.failure,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.failure);
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -246,9 +230,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -285,9 +267,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -301,9 +281,7 @@ void main() {
   testWidgets('StatisticsView(Daily quit)', (tester) async {
     // 通常は発生しないフロー
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.quit,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.quit);
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
     const quizStatistics = QuizStatistics(
@@ -326,16 +304,15 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
     );
 
-    final widget =
-        tester.widget<Text>(find.byKey(const Key('statistics_label')));
+    final widget = tester.widget<Text>(
+      find.byKey(const Key('statistics_label')),
+    );
 
     expect(widget.data, '');
   });
@@ -361,21 +338,20 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
     );
 
-    final widget =
-        tester.widget<Text>(find.byKey(const Key('statistics_label')));
+    final widget = tester.widget<Text>(
+      find.byKey(const Key('statistics_label')),
+    );
 
     expect(widget.data, '');
   });
 
-  test('shareText(Daily success)', () async {
+  test('shareText(Daily success)', () {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.daily,
@@ -425,7 +401,7 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
-  test('shareText(Daily success)', () async {
+  test('shareText(Daily success)', () {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.daily,
@@ -496,7 +472,7 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
-  test('shareText(Daily started)', () async {
+  test('shareText(Daily started)', () {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.daily,
@@ -546,7 +522,7 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
-  test('shareText(Daily none)', () async {
+  test('shareText(Daily none)', () {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.daily,
@@ -595,7 +571,7 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
-  test('shareText(Daily null)', () async {
+  test('shareText(Daily null)', () {
     final text = shareText(
       null,
       const WordInput(
@@ -640,16 +616,14 @@ void main() {
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
-  test('shareText(Endless none)', () async {
+  test('shareText(Endless none)', () {
     final text = shareText(
       const QuizInfo(
         quizType: QuizTypes.endless,
         maxAnswer: 10,
         playDate: 20220202,
       ),
-      const WordInput(
-        inputIndex: 3,
-      ),
+      const WordInput(inputIndex: 3),
       const QuizStatistics(
         playCount: 5,
         clearCount: 4,

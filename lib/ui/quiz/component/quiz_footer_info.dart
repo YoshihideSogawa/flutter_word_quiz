@@ -11,9 +11,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 問題のフッター部分の情報
 class QuizFooterInfo extends HookConsumerWidget {
-  const QuizFooterInfo({
-    super.key,
-  }); // coverage:ignore-line
+  const QuizFooterInfo({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,13 +53,15 @@ class QuizFooterInfo extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final statistics =
-        ref.watch(statisticsNotifierProvider(quizType)).valueOrNull;
+    final statistics = ref
+        .watch(statisticsNotifierProvider(quizType))
+        .valueOrNull;
     final String chainLabel;
     if (quizInfo?.quizProcess == QuizProcessType.quit ||
         quizInfo?.quizProcess == QuizProcessType.failure) {
-      chainLabel =
-          statistics?.lastChain == null ? '' : '${statistics!.lastChain} れんさ';
+      chainLabel = statistics?.lastChain == null
+          ? ''
+          : '${statistics!.lastChain} れんさ';
     } else {
       chainLabel = statistics?.currentChain == null
           ? ''
@@ -86,12 +86,7 @@ class QuizFooterInfo extends HookConsumerWidget {
               : Colors.black26,
         ),
       ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 10.5,
-        ),
-      ),
+      child: Text(text, style: const TextStyle(fontSize: 10.5)),
     );
   }
 }

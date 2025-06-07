@@ -15,14 +15,12 @@ void main() {
       currentChain: 2,
       maxChain: 3,
     );
-    final quizOverride =
-        quizOverrideAndBox(quizType: QuizTypes.daily, statistics: statistics);
-
-    final container = ProviderContainer(
-      overrides: [
-        quizOverride.override,
-      ],
+    final quizOverride = quizOverrideAndBox(
+      quizType: QuizTypes.daily,
+      statistics: statistics,
     );
+
+    final container = ProviderContainer(overrides: [quizOverride.override]);
 
     await container.read(clearQuizDataProvider(QuizTypes.daily).future);
 

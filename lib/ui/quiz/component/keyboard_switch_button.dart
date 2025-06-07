@@ -7,10 +7,7 @@ import 'package:word_quiz/ui/quiz/app_colors.dart';
 
 /// キーボードの切り替えボタンです。
 class KeyboardSwitchButton extends ConsumerWidget {
-  const KeyboardSwitchButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const KeyboardSwitchButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;

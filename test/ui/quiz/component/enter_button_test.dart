@@ -21,16 +21,11 @@ void main() {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType),
-        ],
+        overrides: [quizOverride(quizType: quizType)],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: EnterButton(
-              enabled: true,
-              quizPageInfo: quizPageInfo,
-            ),
+            child: EnterButton(enabled: true, quizPageInfo: quizPageInfo),
           ),
         ),
       ),
@@ -51,17 +46,12 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType, quizInfo: quizInfo),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: MaterialApp(
           home: Scaffold(
             body: QuizType(
               quizType: quizType,
-              child: EnterButton(
-                enabled: true,
-                quizPageInfo: quizPageInfo,
-              ),
+              child: EnterButton(enabled: true, quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -98,17 +88,15 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
         ],
         child: MaterialApp(
           home: Scaffold(
             body: QuizType(
               quizType: quizType,
-              child: EnterButton(
-                enabled: true,
-                quizPageInfo: quizPageInfo,
-              ),
+              child: EnterButton(enabled: true, quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -152,17 +140,15 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: EnterButton(
-                enabled: true,
-                quizPageInfo: quizPageInfo,
-              ),
+              body: EnterButton(enabled: true, quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -203,17 +189,15 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: EnterButton(
-                enabled: true,
-                quizPageInfo: quizPageInfo,
-              ),
+              body: EnterButton(enabled: true, quizPageInfo: quizPageInfo),
             ),
           ),
         ),
@@ -254,17 +238,15 @@ void main() {
             quizInfo: quizInfo,
             wordInput: wordInput,
           ),
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
             child: Scaffold(
-              body: EnterButton(
-                enabled: true,
-                quizPageInfo: quizPageInfo,
-              ),
+              body: EnterButton(enabled: true, quizPageInfo: quizPageInfo),
             ),
           ),
         ),

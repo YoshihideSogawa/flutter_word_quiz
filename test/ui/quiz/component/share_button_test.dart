@@ -32,15 +32,11 @@ void main() {
     const quizType = QuizTypes.daily;
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          appPropertyOverride(parentalControl: false),
-        ],
+        overrides: [appPropertyOverride(parentalControl: false)],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ShareButton(shareText: 'text'),
-            ),
+            child: Scaffold(body: ShareButton(shareText: 'text')),
           ),
         ),
       ),
@@ -52,11 +48,7 @@ void main() {
 
   testWidgets('ShareButton(ペアレンタルコントロール中のタップ)', (tester) async {
     const quizType = QuizTypes.daily;
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: true,
-      },
-    );
+    final box = MockHiveBox<dynamic>(initData: {parentalControlKey: true});
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -67,9 +59,7 @@ void main() {
           child: const MaterialApp(
             home: QuizType(
               quizType: quizType,
-              child: Scaffold(
-                body: ShareButton(shareText: 'text'),
-              ),
+              child: Scaffold(body: ShareButton(shareText: 'text')),
             ),
           ),
         ),
@@ -86,11 +76,7 @@ void main() {
 
   testWidgets('ShareButton(Tap)', (tester) async {
     const quizType = QuizTypes.daily;
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );
+    final box = MockHiveBox<dynamic>(initData: {parentalControlKey: false});
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -99,9 +85,7 @@ void main() {
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ShareButton(shareText: 'text'),
-            ),
+            child: Scaffold(body: ShareButton(shareText: 'text')),
           ),
         ),
       ),

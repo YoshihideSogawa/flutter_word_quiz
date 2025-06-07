@@ -14,9 +14,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: RestartButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: RestartButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -35,9 +33,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: RestartButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: RestartButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

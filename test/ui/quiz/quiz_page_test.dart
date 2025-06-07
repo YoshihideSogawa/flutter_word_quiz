@@ -17,9 +17,7 @@ void main() {
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
         ],
-        child: const MaterialApp(
-          home: QuizPage(),
-        ),
+        child: const MaterialApp(home: QuizPage()),
       ),
     );
 
@@ -39,24 +37,24 @@ void main() {
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
         ],
-        child: const MaterialApp(
-          home: QuizPage(),
-        ),
+        child: const MaterialApp(home: QuizPage()),
       ),
     );
 
     await tester.pumpAndSettle();
 
-    final navBar =
-        tester.widget<BottomNavigationBar>(find.byType(BottomNavigationBar));
+    final navBar = tester.widget<BottomNavigationBar>(
+      find.byType(BottomNavigationBar),
+    );
     expect(navBar.selectedItemColor, dailyQuizColor);
 
     // タップ
     await tester.tap(find.byIcon(Icons.sentiment_very_satisfied));
     await tester.pumpAndSettle();
 
-    final navBar2 =
-        tester.widget<BottomNavigationBar>(find.byType(BottomNavigationBar));
+    final navBar2 = tester.widget<BottomNavigationBar>(
+      find.byType(BottomNavigationBar),
+    );
     expect(navBar2.selectedItemColor, endlessQuizColor);
   });
 }

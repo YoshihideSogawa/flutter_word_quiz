@@ -8,11 +8,7 @@ import '../../mock/mock_box_data.dart';
 
 void main() {
   test('入力タイプが保存されていない場合', () async {
-    final container = ProviderContainer(
-      overrides: [
-        settingsOverride(),
-      ],
-    );
+    final container = ProviderContainer(overrides: [settingsOverride()]);
 
     final inputType = await container.read(inputTypeRepositoryProvider.future);
     expect(inputType, InputTypes.switching);
@@ -20,9 +16,7 @@ void main() {
 
   test('入力値が保存されている場合', () async {
     final container = ProviderContainer(
-      overrides: [
-        settingsOverride(inputType: InputTypes.all),
-      ],
+      overrides: [settingsOverride(inputType: InputTypes.all)],
     );
 
     final inputType = await container.read(inputTypeRepositoryProvider.future);
@@ -32,11 +26,7 @@ void main() {
   test('入力タイプの更新', () async {
     final settings = settingsOverrideAndBox(inputType: InputTypes.all);
 
-    final container = ProviderContainer(
-      overrides: [
-        settings.override,
-      ],
-    );
+    final container = ProviderContainer(overrides: [settings.override]);
 
     await container
         .read(inputTypeRepositoryProvider.notifier)

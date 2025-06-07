@@ -12,12 +12,7 @@ import '../../../mock/mock_box_data.dart';
 
 void main() {
   testWidgets('AnswerView', (tester) async {
-    const quizInfo = QuizInfo(
-      answer: Monster(
-        id: 1,
-        name: 'フシギダネ',
-      ),
-    );
+    const quizInfo = QuizInfo(answer: Monster(id: 1, name: 'フシギダネ'));
 
     await tester.pumpWidget(
       ProviderScope(
@@ -42,12 +37,7 @@ void main() {
 
   testWidgets('AnswerViewを閉じる', (tester) async {
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    const quizInfo = QuizInfo(
-      answer: Monster(
-        id: 1,
-        name: 'フシギダネ',
-      ),
-    );
+    const quizInfo = QuizInfo(answer: Monster(id: 1, name: 'フシギダネ'));
 
     await tester.pumpWidget(
       ProviderScope(

@@ -15,9 +15,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

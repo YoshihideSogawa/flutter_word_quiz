@@ -48,10 +48,7 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
             .startQuiz();
       case QuizTypes.endless:
         // いっぱいやるモードは未開始状態にする
-        quizInfo = QuizInfo(
-          quizType: quizType,
-          maxAnswer: 10,
-        );
+        quizInfo = QuizInfo(quizType: quizType, maxAnswer: 10);
     }
     await ref
         .read(quizInfoRepositoryProvider(quizType).notifier)
@@ -143,8 +140,9 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
   /// 答えを設定します。(いっぱいやるモードのみ使用)
   Future<void> _updateAnswer(QuizRange quizRange, String seedText) async {
     // シードを生成
-    final statistics =
-        await ref.read(statisticsNotifierProvider(quizType).future);
+    final statistics = await ref.read(
+      statisticsNotifierProvider(quizType).future,
+    );
     final seed = generateSeed(seedText, statistics.currentChain);
     state = AsyncValue.data(
       state.value!.copyWith(
@@ -171,9 +169,7 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
     await ref.read(statisticsNotifierProvider(quizType).notifier).finishQuiz();
 
     state = AsyncValue.data(
-      state.value!.copyWith(
-        quizProcess: QuizProcessType.quit,
-      ),
+      state.value!.copyWith(quizProcess: QuizProcessType.quit),
     );
 
     // QuizInfoの保存
@@ -189,8 +185,9 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
 
   /// QuizInfoの更新を行います。
   Future<bool?> updateQuiz() async {
-    final wordInput =
-        await ref.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await ref.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     final currentIndex = wordInput.inputIndex;
     // 回答が1つでもある場合
     if (currentIndex >= 1) {
@@ -218,9 +215,7 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
     await ref.read(statisticsNotifierProvider(quizType).notifier).successQuiz();
 
     state = AsyncValue.data(
-      state.value!.copyWith(
-        quizProcess: QuizProcessType.success,
-      ),
+      state.value!.copyWith(quizProcess: QuizProcessType.success),
     );
 
     // QuizInfoの保存
@@ -235,9 +230,7 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
     await ref.read(statisticsNotifierProvider(quizType).notifier).finishQuiz();
 
     state = AsyncValue.data(
-      state.value!.copyWith(
-        quizProcess: QuizProcessType.failure,
-      ),
+      state.value!.copyWith(quizProcess: QuizProcessType.failure),
     );
 
     // QuizInfoの保存
@@ -249,7 +242,7 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
 
 /// デフォルトの問題範囲
 @visibleForTesting
-const defaultQuizRange = diamondPearl;
+const QuizRange defaultQuizRange = diamondPearl;
 
 /// 最大の回答数
 const defaultMaxAnswer = 10;

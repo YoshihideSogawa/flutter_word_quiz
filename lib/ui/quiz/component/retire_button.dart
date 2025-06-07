@@ -65,9 +65,7 @@ class RetireButton extends ConsumerWidget {
     if (result) {
       await ref.read(quizInfoNotifierProvider(quizType).notifier).retireQuiz();
       // 回答>2秒待ち>結果を表示
-      quizPageInfo.value = quizPageInfo.value.copyWith(
-        showAnswer: true,
-      );
+      quizPageInfo.value = quizPageInfo.value.copyWith(showAnswer: true);
       await Future<void>.delayed(const Duration(milliseconds: 2000));
       // TODO(sogawa): 恒久的にはquizInfoのinvalidateで自動的に表示するようにする
       // TODO(sogawa): 暫定対応としてここで出し分ける
@@ -78,9 +76,7 @@ class RetireButton extends ConsumerWidget {
             showStatistics: true,
           );
         case QuizTypes.endless:
-          quizPageInfo.value = quizPageInfo.value.copyWith(
-            showResult: true,
-          );
+          quizPageInfo.value = quizPageInfo.value.copyWith(showResult: true);
       }
     }
   }

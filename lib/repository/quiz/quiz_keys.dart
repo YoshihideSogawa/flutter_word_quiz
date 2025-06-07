@@ -1,8 +1,8 @@
 /// QuizInfoの保存キー
-const String quizInfoKey = 'quiz_info';
+const quizInfoKey = 'quiz_info';
 
 /// WordInputの保存キー
-const String wordInputKey = 'wordInput';
+const wordInputKey = 'wordInput';
 
 /// QuizStatisticsの保存キー
-const String statisticsKey = 'statistics';
+const statisticsKey = 'statistics';

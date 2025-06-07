@@ -7,10 +7,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 問題を更新するボタンです。
 class RefreshQuizButton extends ConsumerWidget {
-  const RefreshQuizButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const RefreshQuizButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -24,16 +21,13 @@ class RefreshQuizButton extends ConsumerWidget {
       child: IconButton(
         key: const Key('refresh_button_icon'),
         icon: const Icon(Icons.refresh),
-        onPressed: !quizPage.showAnswer &&
+        onPressed:
+            !quizPage.showAnswer &&
                 !quizPage.showStatistics &&
                 !quizPage.showQuizSelection &&
                 !quizPage.showResult &&
                 !quizPage.showQuizChanged
-            ? () async => _onTapRefreshQuiz(
-                  context,
-                  ref,
-                  quizType,
-                )
+            ? () => _onTapRefreshQuiz(context, ref, quizType)
             : null,
       ),
     );
@@ -56,11 +50,7 @@ class RefreshQuizButton extends ConsumerWidget {
 
     state.hideCurrentSnackBar();
     if (!result) {
-      state.showSnackBar(
-        const SnackBar(
-          content: Text('こうしんは ありません'),
-        ),
-      );
+      state.showSnackBar(const SnackBar(content: Text('こうしんは ありません')));
     }
   }
 }

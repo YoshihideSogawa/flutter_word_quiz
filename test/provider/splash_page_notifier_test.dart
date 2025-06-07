@@ -13,29 +13,25 @@ void main() {
   test('showFirstRule(初回起動)', () async {
     final container = ProviderContainer(
       overrides: [
-        appPropertyOverride(
-          parentalControl: false,
-          alreadyLaunched: false,
-        ),
+        appPropertyOverride(parentalControl: false, alreadyLaunched: false),
       ],
     );
 
-    final splashPageInfo =
-        await container.read(splashPageNotifierProvider.future);
+    final splashPageInfo = await container.read(
+      splashPageNotifierProvider.future,
+    );
     expect(splashPageInfo.showRule, isTrue);
   });
 
   test('showFirstRule(起動済み)', () async {
     final container = ProviderContainer(
       overrides: [
-        appPropertyOverride(
-          parentalControl: false,
-          alreadyLaunched: true,
-        ),
+        appPropertyOverride(parentalControl: false, alreadyLaunched: true),
       ],
     );
-    final splashPageInfo =
-        await container.read(splashPageNotifierProvider.future);
+    final splashPageInfo = await container.read(
+      splashPageNotifierProvider.future,
+    );
     expect(splashPageInfo.showRule, isFalse);
   });
 }

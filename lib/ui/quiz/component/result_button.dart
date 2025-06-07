@@ -7,10 +7,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
 
 /// 結果ボタンです。
 class ResultButton extends ConsumerWidget {
-  const ResultButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const ResultButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;

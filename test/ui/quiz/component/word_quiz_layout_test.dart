@@ -34,9 +34,7 @@ void main() {
   testWidgets('切り替えモード/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const quizInfo = QuizInfo(
       quizType: quizType,
@@ -53,7 +51,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -70,9 +68,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -95,9 +91,7 @@ void main() {
   testWidgets('全表示/Daily/started', (tester) async {
     const quizType = QuizTypes.daily;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const quizInfo = QuizInfo(
       quizType: quizType,
@@ -113,7 +107,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -130,9 +124,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -159,9 +151,7 @@ void main() {
       quizProcess: QuizProcessType.success,
     );
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const wordInput = WordInput(
       wordsList: [
@@ -173,7 +163,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -190,9 +180,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -215,9 +203,7 @@ void main() {
   testWidgets('切り替えモード/Daily/failure', (tester) async {
     const quizType = QuizTypes.daily;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const quizInfo = QuizInfo(
       quizType: quizType,
@@ -233,7 +219,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -250,9 +236,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -275,13 +259,9 @@ void main() {
   testWidgets('切り替えモード/endless/none', (tester) async {
     const quizType = QuizTypes.endless;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
-    const quizInfo = QuizInfo(
-      quizType: quizType,
-    );
+    const quizInfo = QuizInfo(quizType: quizType);
     const wordInput = WordInput(
       wordsList: [
         ['フ', 'シ', 'ギ', 'ダ', 'ネ'],
@@ -292,7 +272,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -309,9 +289,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -334,9 +312,7 @@ void main() {
   testWidgets('切り替えモード/endless/started', (tester) async {
     const quizType = QuizTypes.endless;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const quizInfo = QuizInfo(
       quizType: quizType,
@@ -352,7 +328,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -369,9 +345,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -394,9 +368,7 @@ void main() {
   testWidgets('切り替えモード/endless/success', (tester) async {
     const quizType = QuizTypes.endless;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const quizInfo = QuizInfo(
       quizType: quizType,
@@ -412,7 +384,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -429,9 +401,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -454,9 +424,7 @@ void main() {
   testWidgets('切り替えモード/endless/failure', (tester) async {
     const quizType = QuizTypes.endless;
     final quizPageInfo = ValueNotifier(
-      const QuizPageInfo(
-        normalKeyboard: false,
-      ),
+      const QuizPageInfo(normalKeyboard: false),
     );
     const quizInfo = QuizInfo(
       quizType: quizType,
@@ -472,7 +440,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -489,9 +457,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -527,7 +493,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -547,9 +513,7 @@ void main() {
             child: Scaffold(
               body: WordQuizLayout(
                 quizPageInfo: ValueNotifier(
-                  const QuizPageInfo(
-                    normalKeyboard: false,
-                  ),
+                  const QuizPageInfo(normalKeyboard: false),
                 ),
               ),
             ),
@@ -598,7 +562,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
     );
 
@@ -619,9 +583,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: WordQuizLayout(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: WordQuizLayout(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

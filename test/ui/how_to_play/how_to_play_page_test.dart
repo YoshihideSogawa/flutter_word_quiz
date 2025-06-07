@@ -14,7 +14,7 @@ void main() {
   late FakeUrlLauncher urlLauncher;
   late FakeGoRouter router;
 
-  setUp(() async {
+  setUp(() {
     urlLauncher = setUpUrlLauncher();
     router = FakeGoRouter();
   });
@@ -24,14 +24,8 @@ void main() {
   testWidgets('HowToPlayPage', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          appPropertyOverride(),
-        ],
-        child: const MaterialApp(
-          home: Scaffold(
-            body: HowToPlayPage(),
-          ),
-        ),
+        overrides: [appPropertyOverride()],
+        child: const MaterialApp(home: Scaffold(body: HowToPlayPage())),
       ),
     );
 
@@ -41,32 +35,25 @@ void main() {
   testWidgets('リンクタップ', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          appPropertyOverride(parentalControl: false),
-        ],
-        child: const MaterialApp(
-          home: Scaffold(
-            body: HowToPlayPage(),
-          ),
-        ),
+        overrides: [appPropertyOverride(parentalControl: false)],
+        child: const MaterialApp(home: Scaffold(body: HowToPlayPage())),
       ),
     );
 
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.byKey(const Key('for_developer')));
-    final textRich =
-        tester.widget<Text>(find.byKey(const Key('for_developer')));
-    textRich.textSpan?.visitChildren(
-      (visitor) {
-        if (visitor is TextSpan && visitor.text == 'オープンソース') {
-          (visitor.recognizer as TapGestureRecognizer?)?.onTap!();
-          return false;
-        }
-
-        return true;
-      },
+    final textRich = tester.widget<Text>(
+      find.byKey(const Key('for_developer')),
     );
+    textRich.textSpan?.visitChildren((visitor) {
+      if (visitor is TextSpan && visitor.text == 'オープンソース') {
+        (visitor.recognizer as TapGestureRecognizer?)?.onTap!();
+        return false;
+      }
+
+      return true;
+    });
 
     await tester.pumpAndSettle();
 
@@ -81,16 +68,10 @@ void main() {
     AppPlatform.overridePlatForm = Platforms.iOS;
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          appPropertyOverride(parentalControl: true),
-        ],
+        overrides: [appPropertyOverride(parentalControl: true)],
         child: InheritedGoRouter(
           goRouter: router,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: HowToPlayPage(),
-            ),
-          ),
+          child: const MaterialApp(home: Scaffold(body: HowToPlayPage())),
         ),
       ),
     );
@@ -98,18 +79,17 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.byKey(const Key('for_developer')));
-    final textRich =
-        tester.widget<Text>(find.byKey(const Key('for_developer')));
-    textRich.textSpan?.visitChildren(
-      (visitor) {
-        if (visitor is TextSpan && visitor.text == 'オープンソース') {
-          (visitor.recognizer as TapGestureRecognizer?)?.onTap!();
-          return false;
-        }
-
-        return true;
-      },
+    final textRich = tester.widget<Text>(
+      find.byKey(const Key('for_developer')),
     );
+    textRich.textSpan?.visitChildren((visitor) {
+      if (visitor is TextSpan && visitor.text == 'オープンソース') {
+        (visitor.recognizer as TapGestureRecognizer?)?.onTap!();
+        return false;
+      }
+
+      return true;
+    });
 
     await tester.pumpAndSettle();
 

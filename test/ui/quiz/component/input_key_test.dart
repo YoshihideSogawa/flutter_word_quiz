@@ -14,17 +14,10 @@ import '../../../mock/mock_box_data.dart';
 void main() {
   testWidgets('InputKey(empty)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(
-            quizType: quizType,
-            quizInfo: quizInfo,
-          ),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
@@ -49,17 +42,10 @@ void main() {
 
   testWidgets('InputKey(none)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(
-            quizType: quizType,
-            quizInfo: quizInfo,
-          ),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
@@ -96,17 +82,10 @@ void main() {
 
   testWidgets('InputKey(hit)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(
-            quizType: quizType,
-            quizInfo: quizInfo,
-          ),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
@@ -141,17 +120,10 @@ void main() {
 
   testWidgets('InputKey(match)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(
-            quizType: quizType,
-            quizInfo: quizInfo,
-          ),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
@@ -186,17 +158,10 @@ void main() {
 
   testWidgets('InputKey(notMatch)', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(
-            quizType: quizType,
-            quizInfo: quizInfo,
-          ),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
@@ -231,9 +196,7 @@ void main() {
 
   testWidgets('InputKeyのタップ', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizProcess: QuizProcessType.started,
-    );
+    const quizInfo = QuizInfo(quizProcess: QuizProcessType.started);
     final quizOverrideBox = quizOverrideAndBox(
       quizType: quizType,
       quizInfo: quizInfo,
@@ -241,9 +204,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverrideBox.override,
-        ],
+        overrides: [quizOverrideBox.override],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,

@@ -13,10 +13,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 問題の選択を行う画面です。(いっぱいやるモードのみ)
 class QuizSelectionView extends HookConsumerWidget {
-  const QuizSelectionView({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const QuizSelectionView({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -32,8 +29,9 @@ class QuizSelectionView extends HookConsumerWidget {
     if (!snapshot.hasData) {
       return const SizedBox.shrink();
     }
-    final seedController =
-        useTextEditingController(text: snapshot.data?.name ?? '');
+    final seedController = useTextEditingController(
+      text: snapshot.data?.name ?? '',
+    );
 
     // 問題の範囲を取得して、ドロップダウンに反映
     final quizRangeNotifier = ref.watch(quizRangeRepositoryProvider);
@@ -52,7 +50,7 @@ class QuizSelectionView extends HookConsumerWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
-            color: Theme.of(context).dialogBackgroundColor,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(4),
             boxShadow: const [
               BoxShadow(
@@ -70,8 +68,8 @@ class QuizSelectionView extends HookConsumerWidget {
                 Text(
                   'いっぱいやる',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const Text(
@@ -81,16 +79,10 @@ class QuizSelectionView extends HookConsumerWidget {
                   style: TextStyle(fontSize: 11),
                 ),
                 const Divider(),
-                const Text(
-                  'もんだいのはんい',
-                  style: TextStyle(fontSize: 10.5),
-                ),
+                const Text('もんだいのはんい', style: TextStyle(fontSize: 10.5)),
                 _buildQuizRangeDropDown(dropdownValue),
                 const SizedBox(height: 16),
-                const Text(
-                  'あいことば',
-                  style: TextStyle(fontSize: 10.5),
-                ),
+                const Text('あいことば', style: TextStyle(fontSize: 10.5)),
                 SizedBox(
                   width: 180,
                   child: TextField(
@@ -136,10 +128,7 @@ class QuizSelectionView extends HookConsumerWidget {
       value: dropdownValue.value,
       items: [
         ...quizRangeList.map(
-          (e) => DropdownMenuItem(
-            value: e,
-            child: Text(e.displayName ?? ''),
-          ),
+          (e) => DropdownMenuItem(value: e, child: Text(e.displayName ?? '')),
         ),
       ],
       onChanged: (value) {

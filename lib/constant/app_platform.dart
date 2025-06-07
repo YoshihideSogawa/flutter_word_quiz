@@ -24,8 +24,4 @@ class AppPlatform {
 
 /// 上書きするためのPlatform定数
 @visibleForTesting
-enum Platforms {
-  iOS,
-  android,
-  others,
-}
+enum Platforms { iOS, android, others }

@@ -8,10 +8,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 「いっぱいやる」を終わりにするボタンです。
 class GiveUpButton extends ConsumerWidget {
-  const GiveUpButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const GiveUpButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -50,10 +47,7 @@ class GiveUpButton extends ConsumerWidget {
               child: const Center(
                 child: Text(
                   'おわる',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ),
             ),

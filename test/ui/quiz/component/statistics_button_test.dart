@@ -15,9 +15,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -34,9 +32,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: StatisticsButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: StatisticsButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

@@ -9,18 +9,15 @@ import 'package:word_quiz/ui/how_to_play/component/rule_same_word_content.dart';
 
 /// 遊び方のページです。
 class HowToPlayPage extends ConsumerWidget {
-  const HowToPlayPage({
-    super.key,
-  }); // coverage:ignore-line
+  const HowToPlayPage({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).valueOrNull;
+    final isParentalControl = ref
+        .watch(parentalControlRepositoryProvider)
+        .valueOrNull;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('あそびかた'),
-      ),
+      appBar: AppBar(title: const Text('あそびかた')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -30,22 +27,14 @@ class HowToPlayPage extends ConsumerWidget {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.redAccent,
-                  ),
+                  Icon(Icons.catching_pokemon, color: Colors.redAccent),
                   SizedBox(width: 4),
                   Text(
                     'ワードクイズにようこそ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(width: 4),
-                  Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.redAccent,
-                  ),
+                  Icon(Icons.catching_pokemon, color: Colors.redAccent),
                 ],
               ),
               const SizedBox(height: 8),
@@ -53,7 +42,8 @@ class HowToPlayPage extends ConsumerWidget {
                 TextSpan(
                   children: [
                     const TextSpan(
-                      text: 'ポケモンの'
+                      text:
+                          'ポケモンの'
                           ' なまえあて'
                           ' ゲームであそべます🎉\n',
                     ),
@@ -71,7 +61,8 @@ class HowToPlayPage extends ConsumerWidget {
                       isParentalControl: isParentalControl,
                     ),
                     const TextSpan(
-                      text: 'をさんこうにして つくっています😍\n'
+                      text:
+                          'をさんこうにして つくっています😍\n'
                           'ポケモンの こうしきアプリ ではありません',
                     ),
                   ],

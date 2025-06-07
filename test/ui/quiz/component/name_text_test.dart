@@ -26,8 +26,9 @@ void main() {
 
     final context = tester.element(find.byType(Scaffold));
     // 枠と中の色
-    final container =
-        tester.widget<Container>(find.byKey(const Key('name_text_container')));
+    final container = tester.widget<Container>(
+      find.byKey(const Key('name_text_container')),
+    );
     final borderColor =
         ((container.decoration as BoxDecoration?)?.border as Border?)
             ?.left
@@ -60,8 +61,9 @@ void main() {
     expect(find.text('ア'), findsOneWidget);
 
     // 枠と中の色
-    final container =
-        tester.widget<Container>(find.byKey(const Key('name_text_container')));
+    final container = tester.widget<Container>(
+      find.byKey(const Key('name_text_container')),
+    );
     final borderColor =
         ((container.decoration as BoxDecoration?)?.border as Border?)
             ?.left
@@ -94,8 +96,9 @@ void main() {
     expect(find.text('ア'), findsOneWidget);
 
     // 枠と中の色
-    final container =
-        tester.widget<Container>(find.byKey(const Key('name_text_container')));
+    final container = tester.widget<Container>(
+      find.byKey(const Key('name_text_container')),
+    );
     final borderColor =
         ((container.decoration as BoxDecoration?)?.border as Border?)
             ?.left
@@ -128,8 +131,9 @@ void main() {
     expect(find.text('ア'), findsOneWidget);
 
     // 枠と中の色
-    final container =
-        tester.widget<Container>(find.byKey(const Key('name_text_container')));
+    final container = tester.widget<Container>(
+      find.byKey(const Key('name_text_container')),
+    );
     final borderColor =
         ((container.decoration as BoxDecoration?)?.border as Border?)
             ?.left

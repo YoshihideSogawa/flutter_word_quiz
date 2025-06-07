@@ -4,6 +4,7 @@ import 'package:word_quiz/model/word_keyboard_state.dart';
 import 'package:word_quiz/model/word_name_state.dart';
 
 part 'word_input.freezed.dart';
+
 part 'word_input.g.dart';
 
 /// 入力されたデータです。

@@ -13,11 +13,13 @@ part 'quiz_range_repository.g.dart';
 class QuizRangeRepository extends _$QuizRangeRepository {
   @override
   Future<QuizRange> build() async {
-    final settingsBox =
-        await ref.watch(hiveBoxProvider(settingsBoxName).future);
+    final settingsBox = await ref.watch(
+      hiveBoxProvider(settingsBoxName).future,
+    );
     final quizRangeId = settingsBox.get(quizRangeKey) as int?;
-    final quizRange =
-        quizRangeList.firstWhereOrNull((element) => element.id == quizRangeId);
+    final quizRange = quizRangeList.firstWhereOrNull(
+      (element) => element.id == quizRangeId,
+    );
     return quizRange ?? diamondPearl;
   }
 

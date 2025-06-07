@@ -12,7 +12,7 @@ enum QuizTypes {
 extension QuizTypesBoxName on QuizTypes {
   /// Box名を取得します。
   String get boxName => switch (this) {
-        QuizTypes.daily => dailyBoxName,
-        QuizTypes.endless => endlessBoxName,
-      };
+    QuizTypes.daily => dailyBoxName,
+    QuizTypes.endless => endlessBoxName,
+  };
 }

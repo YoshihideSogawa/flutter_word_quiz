@@ -12,10 +12,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: true,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: true),
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),

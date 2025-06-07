@@ -42,7 +42,7 @@ class EnterButton extends ConsumerWidget {
           child: InkWell(
             key: const Key('enter_button_ink_well'),
             onTap: wordInputNotifier.hasValue && quizInfo.hasValue && enabled
-                ? () async => _onTapEnter(context, ref, quizType)
+                ? () => _onTapEnter(context, ref, quizType)
                 : null,
             borderRadius: BorderRadius.circular(4),
             child: Center(
@@ -77,8 +77,9 @@ class EnterButton extends ConsumerWidget {
       return;
     }
 
-    final result =
-        await ref.read(wordInputNotifierProvider(quizType).notifier).submit();
+    final result = await ref
+        .read(wordInputNotifierProvider(quizType).notifier)
+        .submit();
 
     if (result == SubmitResult.noInput) {
       _showSnackBar(state, 'ポケモンの なまえをいれてね');
@@ -100,9 +101,7 @@ class EnterButton extends ConsumerWidget {
 
       // 失敗時：回答>2秒待ち>結果を表示
       if (!result) {
-        quizPageInfo.value = quizPageInfo.value.copyWith(
-          showAnswer: true,
-        );
+        quizPageInfo.value = quizPageInfo.value.copyWith(showAnswer: true);
         await Future<void>.delayed(const Duration(milliseconds: 2000));
       }
 
@@ -115,9 +114,7 @@ class EnterButton extends ConsumerWidget {
             showStatistics: true,
           );
         case QuizTypes.endless:
-          quizPageInfo.value = quizPageInfo.value.copyWith(
-            showResult: true,
-          );
+          quizPageInfo.value = quizPageInfo.value.copyWith(showResult: true);
       }
     }
   }
@@ -134,10 +131,7 @@ class EnterButton extends ConsumerWidget {
         SnackBar(
           key: const Key('snack_bar'),
           content: Text(text),
-          action: SnackBarAction(
-            label: 'OK',
-            onPressed: () {},
-          ),
+          action: SnackBarAction(label: 'OK', onPressed: () {}),
         ),
       );
   }

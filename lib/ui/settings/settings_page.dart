@@ -11,9 +11,7 @@ import 'package:word_quiz/ui/settings/component/data_delete_confirm_dialog.dart'
 
 /// 設定ページです。
 class SettingsPage extends ConsumerWidget {
-  const SettingsPage({
-    super.key,
-  }); // coverage:ignore-line
+  const SettingsPage({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,15 +37,11 @@ class SettingsPage extends ConsumerWidget {
             onTap: () => _onTapQuizRange(context, ref, quizRange),
           ),
           ListTile(
-            title: const Text(
-              '「きょうのもんだい」のデータをけす',
-            ),
+            title: const Text('「きょうのもんだい」のデータをけす'),
             onTap: () => _onTapDeleteDailyData(context, ref),
           ),
           ListTile(
-            title: const Text(
-              '「いっぱいやる」のデータをけす',
-            ),
+            title: const Text('「いっぱいやる」のデータをけす'),
             onTap: () => _onTapDeleteEndlessData(context, ref),
           ),
         ],

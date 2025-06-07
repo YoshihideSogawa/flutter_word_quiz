@@ -18,8 +18,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsOverride(quizRange: xy),
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
         ],
         child: MaterialApp(
           home: QuizType(
@@ -49,8 +50,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
           settingsOverride(quizRange: xy),
         ],
         child: MaterialApp(
@@ -77,8 +79,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
           settingsOverride(quizRange: xy),
         ],
         child: MaterialApp(
@@ -108,8 +111,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          monsterListRepositoryProvider
-              .overrideWith(FakeMonsterListRepository.new),
+          monsterListRepositoryProvider.overrideWith(
+            FakeMonsterListRepository.new,
+          ),
           settingsOverride(quizRange: xy),
           quizOverride(quizType: QuizTypes.daily),
         ],

@@ -10,27 +10,15 @@ import 'package:word_quiz/ui/splash/splash_page.dart';
 final router = GoRouter(
   initialLocation: Routes.root,
   debugLogDiagnostics: true,
-  onException: (_, __, router) => router.go(Routes.root),
+  onException: (_, _, router) => router.go(Routes.root),
   routes: [
-    GoRoute(
-      path: Routes.root,
-      builder: (_, __) => const SplashPage(),
-    ),
-    GoRoute(
-      path: Routes.quiz,
-      builder: (_, __) => const QuizPage(),
-    ),
+    GoRoute(path: Routes.root, builder: (_, _) => const SplashPage()),
+    GoRoute(path: Routes.quiz, builder: (_, _) => const QuizPage()),
     GoRoute(
       path: Routes.parentalGate,
-      builder: (_, __) => const ParentalGatePage(),
+      builder: (_, _) => const ParentalGatePage(),
     ),
-    GoRoute(
-      path: Routes.settings,
-      builder: (_, __) => const SettingsPage(),
-    ),
-    GoRoute(
-      path: Routes.howToPlay,
-      builder: (_, __) => const HowToPlayPage(),
-    ),
+    GoRoute(path: Routes.settings, builder: (_, _) => const SettingsPage()),
+    GoRoute(path: Routes.howToPlay, builder: (_, _) => const HowToPlayPage()),
   ],
 );

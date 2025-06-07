@@ -12,7 +12,8 @@ part of 'quiz_range.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 QuizRange _$QuizRangeFromJson(Map<String, dynamic> json) {
   return _QuizRange.fromJson(json);
@@ -21,7 +22,9 @@ QuizRange _$QuizRangeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$QuizRange {
   int get id => throw _privateConstructorUsedError;
+
   int get maxNo => throw _privateConstructorUsedError;
+
   String? get displayName => throw _privateConstructorUsedError;
 
   /// Serializes this QuizRange to a JSON map.
@@ -38,6 +41,7 @@ mixin _$QuizRange {
 abstract class $QuizRangeCopyWith<$Res> {
   factory $QuizRangeCopyWith(QuizRange value, $Res Function(QuizRange) then) =
       _$QuizRangeCopyWithImpl<$Res, QuizRange>;
+
   @useResult
   $Res call({int id, int maxNo, String? displayName});
 }
@@ -49,6 +53,7 @@ class _$QuizRangeCopyWithImpl<$Res, $Val extends QuizRange>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -61,20 +66,23 @@ class _$QuizRangeCopyWithImpl<$Res, $Val extends QuizRange>
     Object? maxNo = null,
     Object? displayName = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxNo: null == maxNo
-          ? _value.maxNo
-          : maxNo // ignore: cast_nullable_to_non_nullable
-              as int,
-      displayName: freezed == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as int,
+            maxNo: null == maxNo
+                ? _value.maxNo
+                : maxNo // ignore: cast_nullable_to_non_nullable
+                      as int,
+            displayName: freezed == displayName
+                ? _value.displayName
+                : displayName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -82,8 +90,10 @@ class _$QuizRangeCopyWithImpl<$Res, $Val extends QuizRange>
 abstract class _$$QuizRangeImplCopyWith<$Res>
     implements $QuizRangeCopyWith<$Res> {
   factory _$$QuizRangeImplCopyWith(
-          _$QuizRangeImpl value, $Res Function(_$QuizRangeImpl) then) =
-      __$$QuizRangeImplCopyWithImpl<$Res>;
+    _$QuizRangeImpl value,
+    $Res Function(_$QuizRangeImpl) then,
+  ) = __$$QuizRangeImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({int id, int maxNo, String? displayName});
@@ -94,8 +104,9 @@ class __$$QuizRangeImplCopyWithImpl<$Res>
     extends _$QuizRangeCopyWithImpl<$Res, _$QuizRangeImpl>
     implements _$$QuizRangeImplCopyWith<$Res> {
   __$$QuizRangeImplCopyWithImpl(
-      _$QuizRangeImpl _value, $Res Function(_$QuizRangeImpl) _then)
-      : super(_value, _then);
+    _$QuizRangeImpl _value,
+    $Res Function(_$QuizRangeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of QuizRange
   /// with the given fields replaced by the non-null parameter values.
@@ -106,20 +117,22 @@ class __$$QuizRangeImplCopyWithImpl<$Res>
     Object? maxNo = null,
     Object? displayName = freezed,
   }) {
-    return _then(_$QuizRangeImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxNo: null == maxNo
-          ? _value.maxNo
-          : maxNo // ignore: cast_nullable_to_non_nullable
-              as int,
-      displayName: freezed == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$QuizRangeImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as int,
+        maxNo: null == maxNo
+            ? _value.maxNo
+            : maxNo // ignore: cast_nullable_to_non_nullable
+                  as int,
+        displayName: freezed == displayName
+            ? _value.displayName
+            : displayName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
@@ -180,25 +193,26 @@ class _$QuizRangeImpl with DiagnosticableTreeMixin implements _QuizRange {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$QuizRangeImplToJson(
-      this,
-    );
+    return _$$QuizRangeImplToJson(this);
   }
 }
 
 abstract class _QuizRange implements QuizRange {
-  const factory _QuizRange(
-      {final int id,
-      final int maxNo,
-      final String? displayName}) = _$QuizRangeImpl;
+  const factory _QuizRange({
+    final int id,
+    final int maxNo,
+    final String? displayName,
+  }) = _$QuizRangeImpl;
 
   factory _QuizRange.fromJson(Map<String, dynamic> json) =
       _$QuizRangeImpl.fromJson;
 
   @override
   int get id;
+
   @override
   int get maxNo;
+
   @override
   String? get displayName;
 

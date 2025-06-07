@@ -12,9 +12,7 @@ void main() {
   test('WordInput(save/load)', () async {
     const quizType = QuizTypes.endless;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType),
-      ],
+      overrides: [quizOverride(quizType: quizType)],
     );
 
     const wordInput = WordInput(
@@ -38,8 +36,9 @@ void main() {
         .saveWordInput(wordInput);
 
     // 読み込み
-    final targetWordInfo =
-        await container.read(wordInputRepositoryProvider(quizType).future);
+    final targetWordInfo = await container.read(
+      wordInputRepositoryProvider(quizType).future,
+    );
 
     expect(targetWordInfo!.wordsList, wordInput.wordsList);
     expect(targetWordInfo.wordsResultList, wordInput.wordsResultList);

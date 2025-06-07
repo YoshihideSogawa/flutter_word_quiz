@@ -15,9 +15,7 @@ import '../../../mock/mock_box_data.dart';
 void main() {
   testWidgets('Daily', (tester) async {
     const quizType = QuizTypes.daily;
-    const quizInfo = QuizInfo(
-      quizRange: diamondPearl,
-    );
+    const quizInfo = QuizInfo(quizRange: diamondPearl);
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -28,9 +26,7 @@ void main() {
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: QuizFooterInfo(),
-            ),
+            child: Scaffold(body: QuizFooterInfo()),
           ),
         ),
       ),
@@ -51,9 +47,7 @@ void main() {
       quizProcess: QuizProcessType.failure,
     );
 
-    const quizStatistics = QuizStatistics(
-      lastChain: 10,
-    );
+    const quizStatistics = QuizStatistics(lastChain: 10);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -67,9 +61,7 @@ void main() {
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: QuizFooterInfo(),
-            ),
+            child: Scaffold(body: QuizFooterInfo()),
           ),
         ),
       ),
@@ -87,10 +79,7 @@ void main() {
       quizProcess: QuizProcessType.success,
     );
 
-    const quizStatistics = QuizStatistics(
-      lastChain: 10,
-      currentChain: 7,
-    );
+    const quizStatistics = QuizStatistics(lastChain: 10, currentChain: 7);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -104,9 +93,7 @@ void main() {
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: QuizFooterInfo(),
-            ),
+            child: Scaffold(body: QuizFooterInfo()),
           ),
         ),
       ),

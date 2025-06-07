@@ -36,8 +36,10 @@ void main() {
             builder: (context) {
               return ElevatedButton(
                 onPressed: () async {
-                  result =
-                      await showQuitQuizDialog(context: context, label: 'test');
+                  result = await showQuitQuizDialog(
+                    context: context,
+                    label: 'test',
+                  );
                 },
                 child: const Text('button'),
               );
@@ -66,8 +68,10 @@ void main() {
             builder: (context) {
               return ElevatedButton(
                 onPressed: () async {
-                  result =
-                      await showQuitQuizDialog(context: context, label: 'test');
+                  result = await showQuitQuizDialog(
+                    context: context,
+                    label: 'test',
+                  );
                 },
                 child: const Text('button'),
               );

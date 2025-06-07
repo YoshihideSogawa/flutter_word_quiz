@@ -15,12 +15,10 @@ import 'package:word_quiz/ui/quiz/component/word_quiz_layout.dart';
 
 /// きょうのもんだいの画面です。
 class DailyQuizPage extends HookConsumerWidget {
-  const DailyQuizPage({
-    super.key,
-  }); // coverage:ignore-line
+  const DailyQuizPage({super.key}); // coverage:ignore-line
 
   /// [QuizTypes]
-  static const _quizType = QuizTypes.daily;
+  static const QuizTypes _quizType = QuizTypes.daily;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,24 +32,20 @@ class DailyQuizPage extends HookConsumerWidget {
         // 日付が変わっている場合
 
         if (next.playDateChanged) {
-          quizPageInfo.value = const QuizPageInfo(
-            showQuizChanged: true,
-          );
+          quizPageInfo.value = const QuizPageInfo(showQuizChanged: true);
         }
 
         // きょうのもんだいが成功か失敗していたら統計画面を表示
         final quizProcess = next.valueOrNull?.quizProcess;
         if (quizProcess == QuizProcessType.success ||
             quizProcess == QuizProcessType.failure) {
-          quizPageInfo.value = const QuizPageInfo(
-            showStatistics: true,
-          );
+          quizPageInfo.value = const QuizPageInfo(showStatistics: true);
         }
       }
     });
 
     return quizInfoNotifier.maybeWhen(
-      error: (_, __) => const Scaffold(
+      error: (_, _) => const Scaffold(
         body: Center(
           child: Text(
             'もんだいが おこりました\nアプリを さいきどう してください',

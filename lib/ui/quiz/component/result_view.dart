@@ -16,10 +16,7 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 結果画面を表示します。（いっぱいやるモードのみ）
 class ResultView extends ConsumerWidget {
-  const ResultView({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const ResultView({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -31,15 +28,13 @@ class ResultView extends ConsumerWidget {
     final statistics = ref.watch(statisticsNotifierProvider(quizType));
     return QuizDialog(
       onTap: () {
-        quizPageInfo.value = quizPageInfo.value.copyWith(
-          showResult: false,
-        );
+        quizPageInfo.value = quizPageInfo.value.copyWith(showResult: false);
       },
       child: IntrinsicHeight(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
-            color: Theme.of(context).dialogBackgroundColor,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(4),
             boxShadow: const [
               BoxShadow(
@@ -57,8 +52,8 @@ class ResultView extends ConsumerWidget {
                 Text(
                   'いっぱいやる',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const _ResultText(),
@@ -104,10 +99,7 @@ class _ResultText extends ConsumerWidget {
     final quizType = QuizType.of(context).quizType;
     return Column(
       children: [
-        Text(
-          _subTitle(ref, quizType),
-          style: const TextStyle(fontSize: 10.5),
-        ),
+        Text(_subTitle(ref, quizType), style: const TextStyle(fontSize: 10.5)),
         _buildChainText(ref, quizType),
       ],
     );
@@ -141,10 +133,7 @@ class _ResultText extends ConsumerWidget {
         : statistics.value!.lastChain;
     return Text(
       '🎉 $chainNum れんさ 🎉',
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 24,
-      ),
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
     );
   }
 }
@@ -160,17 +149,11 @@ class _ResultDetail extends ConsumerWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const Text(
-          'しゅつだいはんい',
-          style: TextStyle(fontSize: 10.5),
-        ),
+        const Text('しゅつだいはんい', style: TextStyle(fontSize: 10.5)),
         const SizedBox(height: 4),
         Text('${quizInfo?.quizRange?.displayName ?? ''} まで'),
         const SizedBox(height: 8),
-        const Text(
-          'あいことば',
-          style: TextStyle(fontSize: 10.5),
-        ),
+        const Text('あいことば', style: TextStyle(fontSize: 10.5)),
         const SizedBox(height: 4),
         Text(quizInfo?.seedText ?? ''),
       ],
@@ -194,9 +177,7 @@ String shareText(QuizInfo? info, QuizStatistics statistics) {
 
 /// 下部のボタンです。
 class _ActionButtons extends ConsumerWidget {
-  const _ActionButtons({
-    required this.quizPageInfo,
-  });
+  const _ActionButtons({required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -244,9 +225,7 @@ class _ActionButtons extends ConsumerWidget {
 
     return TextButton(
       onPressed: () {
-        quizPageInfo.value = quizPageInfo.value.copyWith(
-          showResult: false,
-        );
+        quizPageInfo.value = quizPageInfo.value.copyWith(showResult: false);
       },
       child: const Text('とじる'),
     );

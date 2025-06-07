@@ -12,9 +12,7 @@ class AdvancedRule extends StatelessWidget {
         Center(
           child: Text(
             '🎓そのほかのルール🎓',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(height: 8),
@@ -25,9 +23,7 @@ class AdvancedRule extends StatelessWidget {
         Text.rich(
           TextSpan(
             children: [
-              TextSpan(
-                text: '・こたえのポケモンは かならず',
-              ),
+              TextSpan(text: '・こたえのポケモンは かならず'),
               TextSpan(
                 text: ' 5もじ ',
                 style: TextStyle(
