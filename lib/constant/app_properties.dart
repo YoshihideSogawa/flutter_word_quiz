@@ -1,5 +1,5 @@
 /// アプリストアへのリンク
-const appStoreLink = 'https://fwq.page.link/applink';
+const appStoreLink = 'https://word-quiz-eba98.web.app';
 
 /// アプリのハッシュタグ
 const appHashTag = '#ワードクイズ';
