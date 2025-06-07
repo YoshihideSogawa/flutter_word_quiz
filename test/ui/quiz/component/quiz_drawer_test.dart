@@ -19,11 +19,7 @@ void main() {
 
   testWidgets('QuizDrawer', (tester) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(
-          body: QuizDrawer(),
-        ),
-      ),
+      const MaterialApp(home: Scaffold(body: QuizDrawer())),
     );
 
     expect(find.text('ワードクイズ'), findsOneWidget);
@@ -36,18 +32,11 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: false,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: false),
         ],
         child: InheritedGoRouter(
           goRouter: router,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: QuizDrawer(),
-            ),
-          ),
+          child: const MaterialApp(home: Scaffold(body: QuizDrawer())),
         ),
       ),
     );
@@ -68,11 +57,7 @@ void main() {
         ],
         child: InheritedGoRouter(
           goRouter: router,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: QuizDrawer(),
-            ),
-          ),
+          child: const MaterialApp(home: Scaffold(body: QuizDrawer())),
         ),
       ),
     );
@@ -84,11 +69,7 @@ void main() {
 
   testWidgets('このアプリについてのタップ', (tester) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(
-          body: QuizDrawer(),
-        ),
-      ),
+      const MaterialApp(home: Scaffold(body: QuizDrawer())),
     );
 
     await tester.tap(find.text('このアプリについて'));

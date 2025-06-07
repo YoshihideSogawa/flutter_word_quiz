@@ -12,17 +12,13 @@ void main() {
   testWidgets('RefreshQuizButton', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: QuizTypes.daily),
-        ],
+        overrides: [quizOverride(quizType: QuizTypes.daily)],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
               body: RefreshQuizButton(
-                quizPageInfo: ValueNotifier<QuizPageInfo>(
-                  const QuizPageInfo(),
-                ),
+                quizPageInfo: ValueNotifier<QuizPageInfo>(const QuizPageInfo()),
               ),
             ),
           ),
@@ -38,17 +34,13 @@ void main() {
   testWidgets('RefreshQuizButtonのタップ', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: QuizTypes.daily),
-        ],
+        overrides: [quizOverride(quizType: QuizTypes.daily)],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
             child: Scaffold(
               body: RefreshQuizButton(
-                quizPageInfo: ValueNotifier<QuizPageInfo>(
-                  const QuizPageInfo(),
-                ),
+                quizPageInfo: ValueNotifier<QuizPageInfo>(const QuizPageInfo()),
               ),
             ),
           ),

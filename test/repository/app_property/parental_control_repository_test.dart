@@ -11,22 +11,20 @@ void main() {
   tearDown(() => AppPlatform.overridePlatForm = null);
 
   test('parentalControl/saveParentalControl', () async {
-    final container = ProviderContainer(
-      overrides: [
-        appPropertyOverride(),
-      ],
-    );
+    final container = ProviderContainer(overrides: [appPropertyOverride()]);
 
-    final isParentalControl =
-        await container.read(parentalControlRepositoryProvider.future);
+    final isParentalControl = await container.read(
+      parentalControlRepositoryProvider.future,
+    );
     expect(isParentalControl, isTrue);
 
     await container
         .read(parentalControlRepositoryProvider.notifier)
         .saveParentalControl(parentalControl: false);
 
-    final isNewParentalControl =
-        await container.read(parentalControlRepositoryProvider.future);
+    final isNewParentalControl = await container.read(
+      parentalControlRepositoryProvider.future,
+    );
     expect(isNewParentalControl, isFalse);
   });
 }

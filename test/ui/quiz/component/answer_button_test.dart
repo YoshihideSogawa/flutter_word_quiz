@@ -13,9 +13,7 @@ void main() {
         home: QuizType(
           quizType: QuizTypes.daily,
           child: AnswerButton(
-            quizPageInfo: ValueNotifier(
-              const QuizPageInfo(),
-            ),
+            quizPageInfo: ValueNotifier(const QuizPageInfo()),
           ),
         ),
       ),

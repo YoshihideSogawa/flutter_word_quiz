@@ -12,10 +12,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 入力した名前の一覧です。
 class WordNames extends StatefulHookConsumerWidget {
-  const WordNames({
-    super.key,
-    required this.wordAnimation,
-  });
+  const WordNames({super.key, required this.wordAnimation});
 
   /// 入力文字のアニメーション中かどうか
   final ValueNotifier<bool> wordAnimation;
@@ -38,7 +35,7 @@ class WordNamesState extends ConsumerState<WordNames> {
   static const double _nameRowSpace = 2;
 
   /// 文字1文字の最大サイズ
-  static const Size _nameTextMaxSize = Size(72, 64);
+  static const _nameTextMaxSize = Size(72, 64);
 
   /// 1文字のWidgetのサイズ
   late Size _wordNameSize;
@@ -55,7 +52,7 @@ class WordNamesState extends ConsumerState<WordNames> {
   @override
   Widget build(BuildContext context) {
     final quizType = QuizType.of(context).quizType;
-    ref.listen(wordInputNotifierProvider(quizType), (previous, next) async {
+    ref.listen(wordInputNotifierProvider(quizType), (previous, next) {
       if (widget.wordAnimation.value) {
         return;
       }
@@ -100,7 +97,8 @@ class WordNamesState extends ConsumerState<WordNames> {
 
     // 入力最終行はアニメーション対象
     final isLastRow = rowIndex == inputIndex - 1;
-    final nameStates = (rowIndex < wordsResultList.length
+    final nameStates =
+        (rowIndex < wordsResultList.length
             ? wordsResultList[rowIndex]
             : <WordNameState>[]) ??
         [];
@@ -119,14 +117,18 @@ class WordNamesState extends ConsumerState<WordNames> {
           }
 
           // 1文字ずつ増やしていく
-          nameStatesValue.value =
-              nameStates.sublist(0, nameStatesValue.value.length + 1);
+          nameStatesValue.value = nameStates.sublist(
+            0,
+            nameStatesValue.value.length + 1,
+          );
         }
 
         // タイマーの初期化
         _timer?.cancel();
-        _timer =
-            Timer.periodic(const Duration(milliseconds: 300), timerCallback);
+        _timer = Timer.periodic(
+          const Duration(milliseconds: 300),
+          timerCallback,
+        );
         // 初回はノータイムでコール
         timerCallback.call(_timer!);
       }
@@ -145,7 +147,8 @@ class WordNamesState extends ConsumerState<WordNames> {
                   ? EdgeInsets.zero
                   : const EdgeInsets.only(left: _nameRowSpace),
               child: NameText(
-                text: rowIndex < wordsList.length &&
+                text:
+                    rowIndex < wordsList.length &&
                         i < wordsList[rowIndex]!.length
                     ? wordsList[rowIndex]![i]
                     : '',

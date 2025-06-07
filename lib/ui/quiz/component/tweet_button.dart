@@ -9,22 +9,18 @@ import 'package:word_quiz/routing/routes.dart';
 
 /// ツイートボタンです。
 class TweetButton extends ConsumerWidget {
-  const TweetButton({
-    super.key,
-    required this.tweetText,
-  });
+  const TweetButton({super.key, required this.tweetText});
 
   /// ツイートするテキスト
   final String tweetText;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).valueOrNull;
+    final isParentalControl = ref
+        .watch(parentalControlRepositoryProvider)
+        .valueOrNull;
     return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
-      ),
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
       onPressed: () async {
         if (isParentalControl == null) {
           return;
@@ -43,12 +39,8 @@ class TweetButton extends ConsumerWidget {
 
   /// Tweet用のテキストに変換します。
   Uri _tweetUri(String tweetText) {
-    return Uri.https(
-      'twitter.com',
-      'intent/tweet',
-      <String, dynamic>{
-        'text': tweetText,
-      },
-    );
+    return Uri.https('twitter.com', 'intent/tweet', <String, dynamic>{
+      'text': tweetText,
+    });
   }
 }

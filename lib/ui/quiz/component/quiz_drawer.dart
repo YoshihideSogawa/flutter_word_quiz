@@ -4,9 +4,7 @@ import 'package:word_quiz/routing/routes.dart';
 
 /// クイズ画面共通のドロワーです。
 class QuizDrawer extends StatelessWidget {
-  const QuizDrawer({
-    super.key,
-  }); // coverage:ignore-line
+  const QuizDrawer({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +15,11 @@ class QuizDrawer extends StatelessWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.catching_pokemon,
-                  color: Colors.redAccent,
-                ),
+                Icon(Icons.catching_pokemon, color: Colors.redAccent),
                 SizedBox(width: 12),
-                Text(
-                  'ワードクイズ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text('ワードクイズ', style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(width: 12),
-                Icon(
-                  Icons.catching_pokemon,
-                  color: Colors.redAccent,
-                ),
+                Icon(Icons.catching_pokemon, color: Colors.redAccent),
               ],
             ),
           ),

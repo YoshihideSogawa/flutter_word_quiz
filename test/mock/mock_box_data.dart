@@ -15,10 +15,7 @@ import 'package:word_quiz/repository/settings/settings_keys.dart';
 
 import 'mock_hive_box.dart';
 
-Override appPropertyOverride({
-  bool? parentalControl,
-  bool? alreadyLaunched,
-}) =>
+Override appPropertyOverride({bool? parentalControl, bool? alreadyLaunched}) =>
     appPropertyOverrideAndBox(
       parentalControl: parentalControl,
       alreadyLaunched: alreadyLaunched,
@@ -30,23 +27,18 @@ OverrideAndBox appPropertyOverrideAndBox({
 }) {
   final box = MockHiveBox<dynamic>(
     initData: {
-      if (parentalControl != null) parentalControlKey: parentalControl,
-      if (alreadyLaunched != null) alreadyLaunchedKey: alreadyLaunched,
+      parentalControlKey: ?parentalControl,
+      alreadyLaunchedKey: ?alreadyLaunched,
     },
   );
-  final override =
-      hiveBoxProvider(appPropertyBoxName).overrideWith((ref) => box);
+  final override = hiveBoxProvider(
+    appPropertyBoxName,
+  ).overrideWith((ref) => box);
   return (override: override, box: box);
 }
 
-Override settingsOverride({
-  InputTypes? inputType,
-  QuizRange? quizRange,
-}) =>
-    settingsOverrideAndBox(
-      inputType: inputType,
-      quizRange: quizRange,
-    ).override;
+Override settingsOverride({InputTypes? inputType, QuizRange? quizRange}) =>
+    settingsOverrideAndBox(inputType: inputType, quizRange: quizRange).override;
 
 OverrideAndBox settingsOverrideAndBox({
   InputTypes? inputType,
@@ -67,13 +59,12 @@ Override quizOverride({
   QuizStatistics? statistics,
   QuizInfo? quizInfo,
   WordInput? wordInput,
-}) =>
-    quizOverrideAndBox(
-      quizType: quizType,
-      statistics: statistics,
-      quizInfo: quizInfo,
-      wordInput: wordInput,
-    ).override;
+}) => quizOverrideAndBox(
+  quizType: quizType,
+  statistics: statistics,
+  quizInfo: quizInfo,
+  wordInput: wordInput,
+).override;
 
 OverrideAndBox quizOverrideAndBox({
   required QuizTypes quizType,

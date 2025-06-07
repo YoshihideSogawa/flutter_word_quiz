@@ -21,9 +21,7 @@ class SplashPageNotifier extends _$SplashPageNotifier {
         .watch(alreadyLaunchedRepositoryProvider.notifier)
         .markAsLaunched();
 
-    return const SplashPageInfo(
-      showRule: true,
-    );
+    return const SplashPageInfo(showRule: true);
   }
 }
 

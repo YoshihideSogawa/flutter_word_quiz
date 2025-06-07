@@ -3,11 +3,7 @@ import 'package:word_quiz/model/quiz_type.dart';
 
 /// [QuizTypes]を保持します。
 class QuizType extends InheritedWidget {
-  const QuizType({
-    super.key,
-    required this.quizType,
-    required super.child,
-  });
+  const QuizType({super.key, required this.quizType, required super.child});
 
   /// [QuizTypes]
   final QuizTypes quizType;

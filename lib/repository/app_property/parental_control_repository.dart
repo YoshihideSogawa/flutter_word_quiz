@@ -17,21 +17,21 @@ class ParentalControlRepository extends _$ParentalControlRepository {
     }
 
     // iOSのみペアレンタルコントロールを取得
-    final appPropertyBox =
-        await ref.watch(hiveBoxProvider(appPropertyBoxName).future);
+    final appPropertyBox = await ref.watch(
+      hiveBoxProvider(appPropertyBoxName).future,
+    );
     return appPropertyBox.get(parentalControlKey) as bool? ?? true;
   }
 
   /// ペアレンタルコントロールを保存します。
-  Future<void> saveParentalControl({
-    required bool parentalControl,
-  }) async {
+  Future<void> saveParentalControl({required bool parentalControl}) async {
     if (!AppPlatform.isIOS) {
       return;
     }
 
-    final appPropertyBox =
-        await ref.read(hiveBoxProvider(appPropertyBoxName).future);
+    final appPropertyBox = await ref.read(
+      hiveBoxProvider(appPropertyBoxName).future,
+    );
     await appPropertyBox.put(parentalControlKey, parentalControl);
     ref.invalidateSelf();
   }

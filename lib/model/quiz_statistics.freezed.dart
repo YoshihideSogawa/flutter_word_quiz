@@ -12,7 +12,8 @@ part of 'quiz_statistics.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 QuizStatistics _$QuizStatisticsFromJson(Map<String, dynamic> json) {
   return _QuizStatistics.fromJson(json);
@@ -21,9 +22,13 @@ QuizStatistics _$QuizStatisticsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$QuizStatistics {
   int get clearCount => throw _privateConstructorUsedError;
+
   int get currentChain => throw _privateConstructorUsedError;
+
   int get lastChain => throw _privateConstructorUsedError;
+
   int get maxChain => throw _privateConstructorUsedError;
+
   int get playCount => throw _privateConstructorUsedError;
 
   /// Serializes this QuizStatistics to a JSON map.
@@ -39,15 +44,18 @@ mixin _$QuizStatistics {
 /// @nodoc
 abstract class $QuizStatisticsCopyWith<$Res> {
   factory $QuizStatisticsCopyWith(
-          QuizStatistics value, $Res Function(QuizStatistics) then) =
-      _$QuizStatisticsCopyWithImpl<$Res, QuizStatistics>;
+    QuizStatistics value,
+    $Res Function(QuizStatistics) then,
+  ) = _$QuizStatisticsCopyWithImpl<$Res, QuizStatistics>;
+
   @useResult
-  $Res call(
-      {int clearCount,
-      int currentChain,
-      int lastChain,
-      int maxChain,
-      int playCount});
+  $Res call({
+    int clearCount,
+    int currentChain,
+    int lastChain,
+    int maxChain,
+    int playCount,
+  });
 }
 
 /// @nodoc
@@ -57,6 +65,7 @@ class _$QuizStatisticsCopyWithImpl<$Res, $Val extends QuizStatistics>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -71,45 +80,51 @@ class _$QuizStatisticsCopyWithImpl<$Res, $Val extends QuizStatistics>
     Object? maxChain = null,
     Object? playCount = null,
   }) {
-    return _then(_value.copyWith(
-      clearCount: null == clearCount
-          ? _value.clearCount
-          : clearCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentChain: null == currentChain
-          ? _value.currentChain
-          : currentChain // ignore: cast_nullable_to_non_nullable
-              as int,
-      lastChain: null == lastChain
-          ? _value.lastChain
-          : lastChain // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxChain: null == maxChain
-          ? _value.maxChain
-          : maxChain // ignore: cast_nullable_to_non_nullable
-              as int,
-      playCount: null == playCount
-          ? _value.playCount
-          : playCount // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            clearCount: null == clearCount
+                ? _value.clearCount
+                : clearCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            currentChain: null == currentChain
+                ? _value.currentChain
+                : currentChain // ignore: cast_nullable_to_non_nullable
+                      as int,
+            lastChain: null == lastChain
+                ? _value.lastChain
+                : lastChain // ignore: cast_nullable_to_non_nullable
+                      as int,
+            maxChain: null == maxChain
+                ? _value.maxChain
+                : maxChain // ignore: cast_nullable_to_non_nullable
+                      as int,
+            playCount: null == playCount
+                ? _value.playCount
+                : playCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$QuizStatisticsImplCopyWith<$Res>
     implements $QuizStatisticsCopyWith<$Res> {
-  factory _$$QuizStatisticsImplCopyWith(_$QuizStatisticsImpl value,
-          $Res Function(_$QuizStatisticsImpl) then) =
-      __$$QuizStatisticsImplCopyWithImpl<$Res>;
+  factory _$$QuizStatisticsImplCopyWith(
+    _$QuizStatisticsImpl value,
+    $Res Function(_$QuizStatisticsImpl) then,
+  ) = __$$QuizStatisticsImplCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call(
-      {int clearCount,
-      int currentChain,
-      int lastChain,
-      int maxChain,
-      int playCount});
+  $Res call({
+    int clearCount,
+    int currentChain,
+    int lastChain,
+    int maxChain,
+    int playCount,
+  });
 }
 
 /// @nodoc
@@ -117,8 +132,9 @@ class __$$QuizStatisticsImplCopyWithImpl<$Res>
     extends _$QuizStatisticsCopyWithImpl<$Res, _$QuizStatisticsImpl>
     implements _$$QuizStatisticsImplCopyWith<$Res> {
   __$$QuizStatisticsImplCopyWithImpl(
-      _$QuizStatisticsImpl _value, $Res Function(_$QuizStatisticsImpl) _then)
-      : super(_value, _then);
+    _$QuizStatisticsImpl _value,
+    $Res Function(_$QuizStatisticsImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of QuizStatistics
   /// with the given fields replaced by the non-null parameter values.
@@ -131,28 +147,30 @@ class __$$QuizStatisticsImplCopyWithImpl<$Res>
     Object? maxChain = null,
     Object? playCount = null,
   }) {
-    return _then(_$QuizStatisticsImpl(
-      clearCount: null == clearCount
-          ? _value.clearCount
-          : clearCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentChain: null == currentChain
-          ? _value.currentChain
-          : currentChain // ignore: cast_nullable_to_non_nullable
-              as int,
-      lastChain: null == lastChain
-          ? _value.lastChain
-          : lastChain // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxChain: null == maxChain
-          ? _value.maxChain
-          : maxChain // ignore: cast_nullable_to_non_nullable
-              as int,
-      playCount: null == playCount
-          ? _value.playCount
-          : playCount // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _$QuizStatisticsImpl(
+        clearCount: null == clearCount
+            ? _value.clearCount
+            : clearCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        currentChain: null == currentChain
+            ? _value.currentChain
+            : currentChain // ignore: cast_nullable_to_non_nullable
+                  as int,
+        lastChain: null == lastChain
+            ? _value.lastChain
+            : lastChain // ignore: cast_nullable_to_non_nullable
+                  as int,
+        maxChain: null == maxChain
+            ? _value.maxChain
+            : maxChain // ignore: cast_nullable_to_non_nullable
+                  as int,
+        playCount: null == playCount
+            ? _value.playCount
+            : playCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
 
@@ -161,12 +179,13 @@ class __$$QuizStatisticsImplCopyWithImpl<$Res>
 class _$QuizStatisticsImpl
     with DiagnosticableTreeMixin
     implements _QuizStatistics {
-  const _$QuizStatisticsImpl(
-      {this.clearCount = 0,
-      this.currentChain = 0,
-      this.lastChain = 0,
-      this.maxChain = 0,
-      this.playCount = 0});
+  const _$QuizStatisticsImpl({
+    this.clearCount = 0,
+    this.currentChain = 0,
+    this.lastChain = 0,
+    this.maxChain = 0,
+    this.playCount = 0,
+  });
 
   factory _$QuizStatisticsImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuizStatisticsImplFromJson(json);
@@ -224,7 +243,13 @@ class _$QuizStatisticsImpl
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, clearCount, currentChain, lastChain, maxChain, playCount);
+    runtimeType,
+    clearCount,
+    currentChain,
+    lastChain,
+    maxChain,
+    playCount,
+  );
 
   /// Create a copy of QuizStatistics
   /// with the given fields replaced by the non-null parameter values.
@@ -233,35 +258,40 @@ class _$QuizStatisticsImpl
   @pragma('vm:prefer-inline')
   _$$QuizStatisticsImplCopyWith<_$QuizStatisticsImpl> get copyWith =>
       __$$QuizStatisticsImplCopyWithImpl<_$QuizStatisticsImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$QuizStatisticsImplToJson(
-      this,
-    );
+    return _$$QuizStatisticsImplToJson(this);
   }
 }
 
 abstract class _QuizStatistics implements QuizStatistics {
-  const factory _QuizStatistics(
-      {final int clearCount,
-      final int currentChain,
-      final int lastChain,
-      final int maxChain,
-      final int playCount}) = _$QuizStatisticsImpl;
+  const factory _QuizStatistics({
+    final int clearCount,
+    final int currentChain,
+    final int lastChain,
+    final int maxChain,
+    final int playCount,
+  }) = _$QuizStatisticsImpl;
 
   factory _QuizStatistics.fromJson(Map<String, dynamic> json) =
       _$QuizStatisticsImpl.fromJson;
 
   @override
   int get clearCount;
+
   @override
   int get currentChain;
+
   @override
   int get lastChain;
+
   @override
   int get maxChain;
+
   @override
   int get playCount;
 

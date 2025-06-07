@@ -13,26 +13,20 @@ class ClockText extends HookWidget {
     final timer = useRef<Timer?>(null);
     final remainingTime = useState(parseRemainingTimeText());
 
-    useEffect(
-      () {
-        timer.value = Timer.periodic(const Duration(milliseconds: 50), (timer) {
-          final newRemainingTime = parseRemainingTimeText();
-          if (newRemainingTime != remainingTime.value) {
-            remainingTime.value = parseRemainingTimeText();
-          }
-        });
-        return timer.value?.cancel;
-      },
-      const [],
-    );
+    useEffect(() {
+      timer.value = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+        final newRemainingTime = parseRemainingTimeText();
+        if (newRemainingTime != remainingTime.value) {
+          remainingTime.value = parseRemainingTimeText();
+        }
+      });
+      return timer.value?.cancel;
+    }, const []);
 
     return Text(
       key: const Key('clock_text'),
       remainingTime.value,
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
+      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
     );
   }
 }

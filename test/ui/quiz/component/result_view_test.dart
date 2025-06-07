@@ -23,10 +23,7 @@ void main() {
       seedText: 'フシギダネ',
       playDate: generateDate(),
     );
-    const quizStatistics = QuizStatistics(
-      currentChain: 3,
-      lastChain: 2,
-    );
+    const quizStatistics = QuizStatistics(currentChain: 3, lastChain: 2);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -40,9 +37,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -76,10 +71,7 @@ void main() {
       quizRange: diamondPearl,
       seedText: 'フシギダネ',
     );
-    const quizStatistics = QuizStatistics(
-      currentChain: 3,
-      lastChain: 2,
-    );
+    const quizStatistics = QuizStatistics(currentChain: 3, lastChain: 2);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -94,9 +86,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -124,10 +114,7 @@ void main() {
       quizRange: diamondPearl,
       seedText: 'フシギダネ',
     );
-    const quizStatistics = QuizStatistics(
-      currentChain: 3,
-      lastChain: 2,
-    );
+    const quizStatistics = QuizStatistics(currentChain: 3, lastChain: 2);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -142,9 +129,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -172,10 +157,7 @@ void main() {
       quizRange: diamondPearl,
       seedText: 'フシギダネ',
     );
-    const quizStatistics = QuizStatistics(
-      currentChain: 3,
-      lastChain: 2,
-    );
+    const quizStatistics = QuizStatistics(currentChain: 3, lastChain: 2);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -189,9 +171,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -214,10 +194,7 @@ void main() {
       seedText: 'フシギダネ',
     );
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
-    const quizStatistics = QuizStatistics(
-      currentChain: 3,
-      lastChain: 2,
-    );
+    const quizStatistics = QuizStatistics(currentChain: 3, lastChain: 2);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -231,9 +208,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -255,10 +230,7 @@ void main() {
     );
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
 
-    const quizStatistics = QuizStatistics(
-      currentChain: 3,
-      lastChain: 2,
-    );
+    const quizStatistics = QuizStatistics(currentChain: 3, lastChain: 2);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -273,9 +245,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: ResultView(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: ResultView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -287,15 +257,10 @@ void main() {
     expect(quizPageInfo.value.showResult, isFalse);
   });
 
-  test('とじるのタップ', () async {
+  test('とじるのタップ', () {
     final text = shareText(
-      const QuizInfo(
-        quizRange: diamondPearl,
-        seedText: 'フシギダネ',
-      ),
-      const QuizStatistics(
-        lastChain: 2,
-      ),
+      const QuizInfo(quizRange: diamondPearl, seedText: 'フシギダネ'),
+      const QuizStatistics(lastChain: 2),
     );
 
     expect(text.contains('ワードクイズ いっぱいやるモード'), isTrue);

@@ -9,17 +9,13 @@ import 'package:word_quiz/routing/routes.dart';
 
 /// 起動時の処理を行うスプラッシュページです。
 class SplashPage extends ConsumerWidget {
-  const SplashPage({
-    super.key,
-  }); // coverage:ignore-line
+  const SplashPage({super.key}); // coverage:ignore-line
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final splashPageNotifier = ref.watch(splashPageNotifierProvider);
 
-    const emptyWidget = Scaffold(
-      body: SizedBox.shrink(),
-    );
+    const emptyWidget = Scaffold(body: SizedBox.shrink());
 
     ref.listen(splashPageNotifierProvider, (previous, next) {
       if (next.valueOrNull != null) {
@@ -29,7 +25,7 @@ class SplashPage extends ConsumerWidget {
 
     return splashPageNotifier.when(
       loading: () => emptyWidget,
-      error: (_, __) => const Scaffold(
+      error: (_, _) => const Scaffold(
         body: Center(
           child: Text(
             'もんだいが おこりました\nアプリを さいきどう してください',

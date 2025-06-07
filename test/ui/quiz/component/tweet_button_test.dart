@@ -34,9 +34,7 @@ void main() {
     const quizType = QuizTypes.daily;
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          appPropertyOverride(parentalControl: false),
-        ],
+        overrides: [appPropertyOverride(parentalControl: false)],
         child: InheritedGoRouter(
           goRouter: router,
           child: const MaterialApp(
@@ -62,9 +60,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          appPropertyOverrideAndBox(parentalControl: true).override,
-        ],
+        overrides: [appPropertyOverrideAndBox(parentalControl: true).override],
         child: InheritedGoRouter(
           goRouter: router,
           child: const MaterialApp(
@@ -89,11 +85,7 @@ void main() {
 
   testWidgets('TweetButton(Tap)', (tester) async {
     const quizType = QuizTypes.daily;
-    final box = MockHiveBox<dynamic>(
-      initData: {
-        parentalControlKey: false,
-      },
-    );
+    final box = MockHiveBox<dynamic>(initData: {parentalControlKey: false});
     await tester.pumpWidget(
       ProviderScope(
         overrides: [

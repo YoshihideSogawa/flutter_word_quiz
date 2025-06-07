@@ -4,10 +4,7 @@ import 'package:word_quiz/model/quiz_type.dart';
 import 'package:word_quiz/provider/quiz_info_notifier.dart';
 
 class FakeQuizInfoNotifier extends MockQuizInfoNotifier {
-  FakeQuizInfoNotifier({
-    this.quizInfo,
-    this.exception,
-  });
+  FakeQuizInfoNotifier({this.quizInfo, this.exception});
 
   @visibleForTesting
   final QuizInfo? quizInfo;

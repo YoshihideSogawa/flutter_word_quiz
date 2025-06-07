@@ -37,9 +37,7 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverrideBox.override,
-        ],
+        overrides: [quizOverrideBox.override],
         child: const MaterialApp(
           home: QuizType(
             quizType: quizType,
@@ -55,9 +53,6 @@ void main() {
     await tester.pumpAndSettle();
 
     final wordInputData = parseWordInput(quizOverrideBox.box);
-    expect(
-      wordInputData?.wordsList.first,
-      ['フ', 'シ', 'ギ', 'ダ'],
-    );
+    expect(wordInputData?.wordsList.first, ['フ', 'シ', 'ギ', 'ダ']);
   });
 }

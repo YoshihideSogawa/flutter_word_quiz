@@ -4,10 +4,7 @@ import 'package:word_quiz/model/quiz_page_info.dart';
 
 /// 結果表示ボタンです。
 class StatisticsButton extends ConsumerWidget {
-  const StatisticsButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const StatisticsButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -19,7 +16,8 @@ class StatisticsButton extends ConsumerWidget {
       message: 'せいかいすう',
       child: IconButton(
         icon: const Icon(Icons.leaderboard_outlined),
-        onPressed: !quizPage.showAnswer &&
+        onPressed:
+            !quizPage.showAnswer &&
                 !quizPage.showStatistics &&
                 !quizPage.showQuizSelection &&
                 !quizPage.showResult &&

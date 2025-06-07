@@ -17,14 +17,13 @@ class ShareButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isParentalControl =
-        ref.watch(parentalControlRepositoryProvider).valueOrNull;
+    final isParentalControl = ref
+        .watch(parentalControlRepositoryProvider)
+        .valueOrNull;
 
     return ElevatedButton.icon(
       key: const Key('share_button'),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey,
-      ),
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
       onPressed: () {
         if (isParentalControl == null) {
           return;
@@ -34,7 +33,7 @@ class ShareButton extends ConsumerWidget {
         if (isParentalControl) {
           context.push(Routes.parentalGate);
         } else {
-          Share.share(shareText);
+          SharePlus.instance.share(ShareParams(text: shareText));
         }
       },
       label: const Text('シェア'),

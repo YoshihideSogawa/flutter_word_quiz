@@ -24,14 +24,16 @@ void main() {
       ),
     );
 
-    final standardKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_アイウ')));
+    final standardKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_アイウ')),
+    );
     final standardKeyColor =
         (standardKeyInk.decoration as BoxDecoration?)?.color;
     expect(standardKeyColor, selectedKeyColor);
 
-    final advKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_゛゜ァ')));
+    final advKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_゛゜ァ')),
+    );
     final advKeyColor = (advKeyInk.decoration as BoxDecoration?)?.color;
     expect(advKeyColor, unusedKeyColor);
   });
@@ -45,9 +47,7 @@ void main() {
             child: Scaffold(
               body: KeyboardSwitchButton(
                 quizPageInfo: ValueNotifier(
-                  const QuizPageInfo(
-                    normalKeyboard: false,
-                  ),
+                  const QuizPageInfo(normalKeyboard: false),
                 ),
               ),
             ),
@@ -56,14 +56,16 @@ void main() {
       ),
     );
 
-    final standardKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_アイウ')));
+    final standardKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_アイウ')),
+    );
     final standardKeyColor =
         (standardKeyInk.decoration as BoxDecoration?)?.color;
     expect(standardKeyColor, unusedKeyColor);
 
-    final advKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_゛゜ァ')));
+    final advKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_゛゜ァ')),
+    );
     final advKeyColor = (advKeyInk.decoration as BoxDecoration?)?.color;
     expect(advKeyColor, selectedKeyColor);
   });
@@ -88,14 +90,16 @@ void main() {
     await tester.tap(find.byKey(const Key('switch_button_ink_アイウ')));
     await tester.pumpAndSettle();
 
-    final standardKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_アイウ')));
+    final standardKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_アイウ')),
+    );
     final standardKeyColor =
         (standardKeyInk.decoration as BoxDecoration?)?.color;
     expect(standardKeyColor, selectedKeyColor);
 
-    final advKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_゛゜ァ')));
+    final advKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_゛゜ァ')),
+    );
     final advKeyColor = (advKeyInk.decoration as BoxDecoration?)?.color;
     expect(advKeyColor, unusedKeyColor);
   });
@@ -108,8 +112,9 @@ void main() {
             quizType: QuizTypes.daily,
             child: Scaffold(
               body: KeyboardSwitchButton(
-                quizPageInfo:
-                    ValueNotifier(const QuizPageInfo(normalKeyboard: false)),
+                quizPageInfo: ValueNotifier(
+                  const QuizPageInfo(normalKeyboard: false),
+                ),
               ),
             ),
           ),
@@ -121,14 +126,16 @@ void main() {
     await tester.tap(find.byKey(const Key('switch_button_ink_゛゜ァ')));
     await tester.pumpAndSettle();
 
-    final standardKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_アイウ')));
+    final standardKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_アイウ')),
+    );
     final standardKeyColor =
         (standardKeyInk.decoration as BoxDecoration?)?.color;
     expect(standardKeyColor, unusedKeyColor);
 
-    final advKeyInk =
-        tester.widget<Ink>(find.byKey(const Key('switch_button_ink_゛゜ァ')));
+    final advKeyInk = tester.widget<Ink>(
+      find.byKey(const Key('switch_button_ink_゛゜ァ')),
+    );
     final advKeyColor = (advKeyInk.decoration as BoxDecoration?)?.color;
     expect(advKeyColor, selectedKeyColor);
   });

@@ -16,11 +16,11 @@ _$QuizStatisticsImpl _$$QuizStatisticsImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$QuizStatisticsImplToJson(
-        _$QuizStatisticsImpl instance) =>
-    <String, dynamic>{
-      'clearCount': instance.clearCount,
-      'currentChain': instance.currentChain,
-      'lastChain': instance.lastChain,
-      'maxChain': instance.maxChain,
-      'playCount': instance.playCount,
-    };
+  _$QuizStatisticsImpl instance,
+) => <String, dynamic>{
+  'clearCount': instance.clearCount,
+  'currentChain': instance.currentChain,
+  'lastChain': instance.lastChain,
+  'maxChain': instance.maxChain,
+  'playCount': instance.playCount,
+};

@@ -6,7 +6,7 @@ part of 'clear_quiz_data_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clearQuizDataHash() => r'bb873a89cfc3d77af6a0d69ce572504e2a3a71d7';
+String _$clearQuizDataHash() => r'8c7654d1c065bde5200874d6cd77fcfceda174ed';
 
 /// Copied from Dart SDK
 class _SystemHash {

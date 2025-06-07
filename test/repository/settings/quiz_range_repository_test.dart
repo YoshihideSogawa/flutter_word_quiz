@@ -7,22 +7,17 @@ import '../../mock/mock_box_data.dart';
 
 void main() {
   test('問題範囲が保存されていない場合', () async {
-    final container = ProviderContainer(
-      overrides: [
-        settingsOverride(),
-      ],
-    );
+    final container = ProviderContainer(overrides: [settingsOverride()]);
 
-    final settingsQuizRange =
-        await container.read(quizRangeRepositoryProvider.future);
+    final settingsQuizRange = await container.read(
+      quizRangeRepositoryProvider.future,
+    );
     expect(settingsQuizRange, diamondPearl);
   });
 
   test('問題範囲が保存されている場合', () async {
     final container = ProviderContainer(
-      overrides: [
-        settingsOverride(quizRange: blackWhite),
-      ],
+      overrides: [settingsOverride(quizRange: blackWhite)],
     );
 
     final quizRange = await container.read(quizRangeRepositoryProvider.future);
@@ -31,9 +26,7 @@ void main() {
 
   test('updateQuizRange', () async {
     final container = ProviderContainer(
-      overrides: [
-        settingsOverride(quizRange: blackWhite),
-      ],
+      overrides: [settingsOverride(quizRange: blackWhite)],
     );
 
     await container

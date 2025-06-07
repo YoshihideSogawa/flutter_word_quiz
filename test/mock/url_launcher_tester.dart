@@ -13,20 +13,24 @@ class FakeUrlLauncher extends Fake
     implements UrlLauncherPlatform {
   String? launchedUrl;
 
-  bool canLaunchCalled = false;
+  var _canLaunchCalled = false;
 
-  bool launchCalled = false;
+  bool get canLaunchCalled => _canLaunchCalled;
+
+  var _launchCalled = false;
+
+  bool get launchCalled => _launchCalled;
 
   @override
   Future<bool> canLaunch(String url) async {
-    canLaunchCalled = true;
+    _canLaunchCalled = true;
     return true;
   }
 
   @override
   Future<bool> launchUrl(String url, LaunchOptions options) async {
     launchedUrl = url;
-    launchCalled = true;
+    _launchCalled = true;
     return true;
   }
 }

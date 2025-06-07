@@ -17,9 +17,7 @@ class ParentalGatePageNotifier extends _$ParentalGatePageNotifier {
     // さらに個別のanswerListをシャッフルする
     final parentalGateDataList = parentGateDataList.map((parentalGateData) {
       final newAnswerList = [...?parentalGateData.answerList]..shuffle();
-      return parentalGateData.copyWith(
-        answerList: newAnswerList,
-      );
+      return parentalGateData.copyWith(answerList: newAnswerList);
     }).toList();
 
     return ParentalGatePageInfo(

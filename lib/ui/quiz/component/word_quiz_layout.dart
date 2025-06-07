@@ -28,10 +28,7 @@ import 'package:word_quiz/ui/quiz/component/word_names.dart';
 
 /// 問題表示の共通レイアウトです。
 class WordQuizLayout extends HookConsumerWidget {
-  const WordQuizLayout({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const WordQuizLayout({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -71,12 +68,13 @@ class WordQuizLayout extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 16, right: 16, top: 4),
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 4,
+                      ),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 752,
-                        ),
+                        constraints: const BoxConstraints(maxWidth: 752),
                         child: Row(
                           children: [
                             if (inputType.valueOrNull == InputTypes.switching)
@@ -122,25 +120,15 @@ class WordQuizLayout extends HookConsumerWidget {
           ],
         ),
         if (controlEnabled && quizPageInfo.value.showAnswer)
-          Positioned.fill(
-            child: AnswerView(quizPageInfo: quizPageInfo),
-          ),
+          Positioned.fill(child: AnswerView(quizPageInfo: quizPageInfo)),
         if (controlEnabled && quizPageInfo.value.showStatistics)
-          Positioned.fill(
-            child: StatisticsView(quizPageInfo: quizPageInfo),
-          ),
+          Positioned.fill(child: StatisticsView(quizPageInfo: quizPageInfo)),
         if (quizPageInfo.value.showQuizSelection)
-          Positioned.fill(
-            child: QuizSelectionView(quizPageInfo: quizPageInfo),
-          ),
+          Positioned.fill(child: QuizSelectionView(quizPageInfo: quizPageInfo)),
         if (controlEnabled && quizPageInfo.value.showResult)
-          Positioned.fill(
-            child: ResultView(quizPageInfo: quizPageInfo),
-          ),
+          Positioned.fill(child: ResultView(quizPageInfo: quizPageInfo)),
         if (quizPageInfo.value.showQuizChanged)
-          Positioned.fill(
-            child: QuizChangedView(quizPageInfo: quizPageInfo),
-          ),
+          Positioned.fill(child: QuizChangedView(quizPageInfo: quizPageInfo)),
       ],
     );
   }

@@ -79,9 +79,7 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(1000, 1000));
     final quizPageInfo = ValueNotifier(const QuizPageInfo());
     const wordInput = WordInput(
-      keyResultList: <String, WordKeyboardInfo>{
-        'ア': WordKeyboardInfo.notMatch,
-      },
+      keyResultList: <String, WordKeyboardInfo>{'ア': WordKeyboardInfo.notMatch},
     );
 
     await tester.pumpWidget(
@@ -127,7 +125,7 @@ void main() {
           WordNameState.notMatch,
           WordNameState.hit,
           WordNameState.match,
-        ]
+        ],
       ],
       inputIndex: 1,
     );

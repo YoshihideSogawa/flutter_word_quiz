@@ -7,10 +7,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_type.dart';
 
 /// 答えの表示です。
 class AnswerView extends ConsumerWidget {
-  const AnswerView({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const AnswerView({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -21,9 +18,7 @@ class AnswerView extends ConsumerWidget {
     final quizInfoNotifier = ref.watch(quizInfoNotifierProvider(quizType));
     return QuizDialog(
       onTap: () {
-        quizPageInfo.value = quizPageInfo.value.copyWith(
-          showAnswer: false,
-        );
+        quizPageInfo.value = quizPageInfo.value.copyWith(showAnswer: false);
       },
       child: Container(
         width: 160,

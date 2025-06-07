@@ -14,9 +14,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: NextQuizButton(),
-            ),
+            child: Scaffold(body: NextQuizButton()),
           ),
         ),
       ),
@@ -30,15 +28,11 @@ void main() {
   testWidgets('NextQuizButtonのタップ', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: QuizTypes.daily),
-        ],
+        overrides: [quizOverride(quizType: QuizTypes.daily)],
         child: const MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: NextQuizButton(),
-            ),
+            child: Scaffold(body: NextQuizButton()),
           ),
         ),
       ),

@@ -7,10 +7,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
 
 /// 最初から始めるボタンです。
 class RestartButton extends ConsumerWidget {
-  const RestartButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const RestartButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;

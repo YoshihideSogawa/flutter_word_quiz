@@ -24,10 +24,7 @@ class MonsterListRepository extends _$MonsterListRepository {
 
   /// モンスター選択を行います。
   // TODO(sogawa): 同じモンスターが連続で選出される可能性がある
-  Future<Monster> pick({
-    QuizRange? range,
-    int? seed,
-  }) async {
+  Future<Monster> pick({QuizRange? range, int? seed}) async {
     // buildの完了を待つ
     final monsterList = await future;
 

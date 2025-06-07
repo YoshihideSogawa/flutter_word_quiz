@@ -26,9 +26,5 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(
-    const ProviderScope(
-      child: WordQuiz(),
-    ),
-  );
+  runApp(const ProviderScope(child: WordQuiz()));
 }

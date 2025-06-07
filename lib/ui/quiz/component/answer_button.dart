@@ -8,10 +8,7 @@ import 'package:word_quiz/ui/quiz/component/quiz_control_frame.dart';
 
 /// 答えを確認するボタンです。
 class AnswerButton extends ConsumerWidget {
-  const AnswerButton({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const AnswerButton({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;

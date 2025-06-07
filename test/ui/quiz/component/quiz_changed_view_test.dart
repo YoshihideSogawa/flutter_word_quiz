@@ -12,9 +12,7 @@ void main() {
   testWidgets('QuizChallengeView', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: QuizTypes.daily),
-        ],
+        overrides: [quizOverride(quizType: QuizTypes.daily)],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
@@ -38,17 +36,11 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: QuizTypes.daily),
-        ],
+        overrides: [quizOverride(quizType: QuizTypes.daily)],
         child: MaterialApp(
           home: QuizType(
             quizType: QuizTypes.daily,
-            child: Scaffold(
-              body: QuizChangedView(
-                quizPageInfo: quizPageInfo,
-              ),
-            ),
+            child: Scaffold(body: QuizChangedView(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

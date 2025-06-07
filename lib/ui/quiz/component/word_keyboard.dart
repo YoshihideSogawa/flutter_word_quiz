@@ -38,7 +38,7 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
   static const double _keySpace = 4;
 
   /// 文字1文字の最大サイズ
-  static const Size _nameInputMaxSize = Size(72, 64);
+  static const _nameInputMaxSize = Size(72, 64);
 
   /// キー1文字のサイズ
   late Size _keySize;
@@ -58,8 +58,9 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
     final inputType = ref.watch(inputTypeRepositoryProvider);
     final wordInputNotifier = ref.watch(wordInputNotifierProvider(quizType));
     final nameStatesValue = useRef(<WordNameState>[]);
-    final resultList =
-        useState<Map<String, WordKeyboardInfo>?>(<String, WordKeyboardInfo>{});
+    final resultList = useState<Map<String, WordKeyboardInfo>?>(
+      <String, WordKeyboardInfo>{},
+    );
     final wordInput = wordInputNotifier.value;
     final wordsResultList = wordInput?.wordsResultList;
 
@@ -81,21 +82,27 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
           }
 
           // 1文字ずつ増やしていく
-          nameStatesValue.value =
-              nameStates.sublist(0, nameStatesValue.value.length + 1);
+          nameStatesValue.value = nameStates.sublist(
+            0,
+            nameStatesValue.value.length + 1,
+          );
 
           final currentWordsResultList = [...?wordsResultList]
             ..removeLast()
             ..add(nameStatesValue.value);
 
-          resultList.value =
-              checkKeyboard(wordInput!.wordsList, currentWordsResultList);
+          resultList.value = checkKeyboard(
+            wordInput!.wordsList,
+            currentWordsResultList,
+          );
         }
 
         // タイマーの初期化
         _timer?.cancel();
-        _timer =
-            Timer.periodic(const Duration(milliseconds: 300), timerCallback);
+        _timer = Timer.periodic(
+          const Duration(milliseconds: 300),
+          timerCallback,
+        );
         // 初回はノータイムでコール
         timerCallback.call(_timer!);
       }
@@ -161,9 +168,9 @@ class WordKeyboardState extends ConsumerState<WordKeyboard> {
               height: _keySize.height,
               keyboardInfo:
                   (resultList?.containsKey(keyMap[index * 5 + i]) ?? false)
-                      ? (resultList?[keyMap[index * 5 + i]] ??
-                          WordKeyboardInfo.none)
-                      : WordKeyboardInfo.none,
+                  ? (resultList?[keyMap[index * 5 + i]] ??
+                        WordKeyboardInfo.none)
+                  : WordKeyboardInfo.none,
             ),
           ),
       ],

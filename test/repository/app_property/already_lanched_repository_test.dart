@@ -6,14 +6,11 @@ import '../../mock/mock_box_data.dart';
 
 void main() {
   test('alreadyLaunched/saveLaunched', () async {
-    final container = ProviderContainer(
-      overrides: [
-        appPropertyOverride(),
-      ],
-    );
+    final container = ProviderContainer(overrides: [appPropertyOverride()]);
 
-    final alreadyLaunched =
-        await container.read(alreadyLaunchedRepositoryProvider.future);
+    final alreadyLaunched = await container.read(
+      alreadyLaunchedRepositoryProvider.future,
+    );
     expect(alreadyLaunched, isNull);
 
     await container
@@ -22,8 +19,9 @@ void main() {
 
     container.invalidate(alreadyLaunchedRepositoryProvider);
 
-    final newAlreadyLaunched =
-        await container.read(alreadyLaunchedRepositoryProvider.future);
+    final newAlreadyLaunched = await container.read(
+      alreadyLaunchedRepositoryProvider.future,
+    );
     expect(newAlreadyLaunched, isTrue);
   });
 }

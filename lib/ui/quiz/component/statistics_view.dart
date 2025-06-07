@@ -22,10 +22,7 @@ import 'package:word_quiz/ui/quiz/component/tweet_button.dart';
 
 /// 統計とシェアの表示です。
 class StatisticsView extends ConsumerWidget {
-  const StatisticsView({
-    super.key,
-    required this.quizPageInfo,
-  });
+  const StatisticsView({super.key, required this.quizPageInfo});
 
   /// [QuizPageInfo]
   final ValueNotifier<QuizPageInfo> quizPageInfo;
@@ -45,7 +42,7 @@ class StatisticsView extends ConsumerWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
-            color: Theme.of(context).dialogBackgroundColor,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(4),
             boxShadow: const [
               BoxShadow(
@@ -63,8 +60,8 @@ class StatisticsView extends ConsumerWidget {
                 Text(
                   _title(quizType),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 if (quizType == QuizTypes.daily) const _ResultText(),
@@ -128,17 +125,11 @@ class StatisticsView extends ConsumerWidget {
   Widget _buildSecretText(QuizInfo? quizInfo) {
     return Column(
       children: [
-        const Text(
-          'さいごにあそんだ あいことば',
-          style: TextStyle(fontSize: 10.5),
-        ),
+        const Text('さいごにあそんだ あいことば', style: TextStyle(fontSize: 10.5)),
         const SizedBox(height: 4),
         Text(
           quizInfo?.seedText ?? '-',
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -148,10 +139,7 @@ class StatisticsView extends ConsumerWidget {
   Widget _buildClockLayout() {
     return const Column(
       children: [
-        Text(
-          'もんだいが かわるまで',
-          style: TextStyle(fontSize: 10.5),
-        ),
+        Text('もんだいが かわるまで', style: TextStyle(fontSize: 10.5)),
         SizedBox(height: 4),
         ClockText(),
       ],
@@ -163,9 +151,7 @@ class StatisticsView extends ConsumerWidget {
     await ref
         .read(quizInfoNotifierProvider(quizType).notifier)
         .refreshDailyQuiz();
-    quizPageInfo.value = quizPageInfo.value.copyWith(
-      showStatistics: false,
-    );
+    quizPageInfo.value = quizPageInfo.value.copyWith(showStatistics: false);
   }
 }
 
@@ -176,8 +162,10 @@ class _ResultText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizType = QuizType.of(context).quizType;
-    final quizProcess =
-        ref.watch(quizInfoNotifierProvider(quizType)).value?.quizProcess;
+    final quizProcess = ref
+        .watch(quizInfoNotifierProvider(quizType))
+        .value
+        ?.quizProcess;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -187,9 +175,9 @@ class _ResultText extends ConsumerWidget {
         Text(
           _buildLabel(quizProcess),
           key: const Key('statistics_label'),
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(width: 4),
         _buildIcon(quizProcess),
@@ -217,11 +205,7 @@ class _ResultText extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 3),
-      child: Icon(
-        Icons.catching_pokemon,
-        color: color,
-        size: 18,
-      ),
+      child: Icon(Icons.catching_pokemon, color: color, size: 18),
     );
   }
 
@@ -270,18 +254,11 @@ class _ResultDetail extends ConsumerWidget {
   Widget _buildDetailContent(String title, int num) {
     return Column(
       children: [
-        Text(
-          '$num',
-          style: const TextStyle(
-            fontSize: 30,
-          ),
-        ),
+        Text('$num', style: const TextStyle(fontSize: 30)),
         Text(
           title,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 9.5,
-          ),
+          style: const TextStyle(fontSize: 9.5),
         ),
       ],
     );

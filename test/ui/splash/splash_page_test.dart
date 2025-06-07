@@ -25,19 +25,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: true,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: true),
           settingsOverride(inputType: InputTypes.switching),
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
         ],
         child: InheritedGoRouter(
           goRouter: router,
-          child: const MaterialApp(
-            home: SplashPage(),
-          ),
+          child: const MaterialApp(home: SplashPage()),
         ),
       ),
     );
@@ -52,18 +47,13 @@ void main() {
       ProviderScope(
         overrides: [
           settingsOverride(inputType: InputTypes.switching),
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: false,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: false),
           quizOverride(quizType: QuizTypes.daily),
           quizOverride(quizType: QuizTypes.endless),
         ],
         child: InheritedGoRouter(
           goRouter: router,
-          child: const MaterialApp(
-            home: SplashPage(),
-          ),
+          child: const MaterialApp(home: SplashPage()),
         ),
       ),
     );
@@ -81,17 +71,12 @@ void main() {
         overrides: [
           splashPageNotifierProvider.overrideWith(() => errorNotifier),
         ],
-        child: const MaterialApp(
-          home: SplashPage(),
-        ),
+        child: const MaterialApp(home: SplashPage()),
       ),
     );
 
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('もんだいが おこりました\nアプリを さいきどう してください'),
-      findsOneWidget,
-    );
+    expect(find.text('もんだいが おこりました\nアプリを さいきどう してください'), findsOneWidget);
   });
 }

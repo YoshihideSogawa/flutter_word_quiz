@@ -18,13 +18,12 @@ void main() {
   test('初期値が保存されていない場合', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType),
-      ],
+      overrides: [quizOverride(quizType: quizType)],
     );
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput.wordsList, <List<String?>>[[]]);
     expect(wordInput.wordsResultList, <List<WordNameState>?>[]);
     expect(wordInput.keyResultList, <String, WordKeyboardInfo>{});
@@ -35,22 +34,19 @@ void main() {
     const quizType = QuizTypes.daily;
 
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest),
-      ],
+      overrides: [quizOverride(quizType: quizType, wordInput: _wordInputTest)],
     );
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest);
   });
 
   test('inputWord(複数文字入力)', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest),
-      ],
+      overrides: [quizOverride(quizType: quizType, wordInput: _wordInputTest)],
     );
 
     await container
@@ -58,17 +54,16 @@ void main() {
         .inputWord('アイ');
 
     // 変わらない
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest);
   });
 
   test('inputWord(すでに5文字入力)', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest2),
-      ],
+      overrides: [quizOverride(quizType: quizType, wordInput: _wordInputTest2)],
     );
 
     await container
@@ -76,24 +71,24 @@ void main() {
         .inputWord('ア');
 
     // 変わらない
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest2);
   });
 
   test('inputWord(入力可能状態)', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest3),
-      ],
+      overrides: [quizOverride(quizType: quizType, wordInput: _wordInputTest3)],
     );
 
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .inputWord('ア');
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput.wordsList.last, ['テ', 'ス', 'ア']);
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
@@ -103,32 +98,30 @@ void main() {
   test('deleteWord(文字入力なし)', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest4),
-      ],
+      overrides: [quizOverride(quizType: quizType, wordInput: _wordInputTest4)],
     );
 
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .deleteWord();
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest4);
   });
 
   test('deleteWord(文字入力なし)', () async {
     const quizType = QuizTypes.daily;
     final container = ProviderContainer(
-      overrides: [
-        quizOverride(quizType: quizType, wordInput: _wordInputTest3),
-      ],
+      overrides: [quizOverride(quizType: quizType, wordInput: _wordInputTest3)],
     );
 
     await container
         .read(wordInputNotifierProvider(quizType).notifier)
         .deleteWord();
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput.wordsList.last, ['テ']);
     expect(wordInput.wordsResultList, _wordInputTest3.wordsResultList);
     expect(wordInput.keyResultList, _wordInputTest3.keyResultList);
@@ -150,8 +143,9 @@ void main() {
           wordInput: _wordInputTest5,
           quizInfo: quizInfo,
         ),
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
+        monsterListRepositoryProvider.overrideWith(
+          FakeMonsterListRepository.new,
+        ),
       ],
     );
 
@@ -163,8 +157,9 @@ void main() {
         .submit();
     expect(result, SubmitResult.skip);
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest5);
   });
 
@@ -183,8 +178,9 @@ void main() {
           quizInfo: quizInfo,
           wordInput: _wordInputTest4,
         ),
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
+        monsterListRepositoryProvider.overrideWith(
+          FakeMonsterListRepository.new,
+        ),
       ],
     );
 
@@ -196,8 +192,9 @@ void main() {
         .submit();
     expect(result, SubmitResult.noInput);
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest4);
   });
 
@@ -216,8 +213,9 @@ void main() {
           quizInfo: quizInfo,
           wordInput: _wordInputTest3,
         ),
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
+        monsterListRepositoryProvider.overrideWith(
+          FakeMonsterListRepository.new,
+        ),
       ],
     );
 
@@ -229,8 +227,9 @@ void main() {
         .submit();
     expect(result, SubmitResult.unknownMonster);
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput, _wordInputTest3);
   });
 
@@ -249,8 +248,9 @@ void main() {
           quizInfo: quizInfo,
           wordInput: _wordInputTest5,
         ),
-        monsterListRepositoryProvider
-            .overrideWith(FakeMonsterListRepository.new),
+        monsterListRepositoryProvider.overrideWith(
+          FakeMonsterListRepository.new,
+        ),
       ],
     );
 
@@ -262,8 +262,9 @@ void main() {
         .submit();
     expect(result, SubmitResult.success);
 
-    final wordInput =
-        await container.read(wordInputNotifierProvider(quizType).future);
+    final wordInput = await container.read(
+      wordInputNotifierProvider(quizType).future,
+    );
     expect(wordInput.wordsList.last, <String>[]);
     expect(wordInput.wordsResultList.last?.length, 5);
     expect(wordInput.keyResultList.length, 7);

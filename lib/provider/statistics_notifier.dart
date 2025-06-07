@@ -12,8 +12,9 @@ part 'statistics_notifier.g.dart';
 class StatisticsNotifier extends _$StatisticsNotifier {
   @override
   Future<QuizStatistics> build(QuizTypes quizType) async {
-    final quizStatistics =
-        await ref.watch(statisticsRepositoryProvider(quizType).future);
+    final quizStatistics = await ref.watch(
+      statisticsRepositoryProvider(quizType).future,
+    );
     return quizStatistics ?? const QuizStatistics();
   }
 

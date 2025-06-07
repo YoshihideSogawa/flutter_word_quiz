@@ -21,9 +21,7 @@ void main() {
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: RetireButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: RetireButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -44,15 +42,11 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType, quizInfo: quizInfo),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: RetireButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: RetireButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),
@@ -81,15 +75,11 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          quizOverride(quizType: quizType, quizInfo: quizInfo),
-        ],
+        overrides: [quizOverride(quizType: quizType, quizInfo: quizInfo)],
         child: MaterialApp(
           home: QuizType(
             quizType: quizType,
-            child: Scaffold(
-              body: RetireButton(quizPageInfo: quizPageInfo),
-            ),
+            child: Scaffold(body: RetireButton(quizPageInfo: quizPageInfo)),
           ),
         ),
       ),

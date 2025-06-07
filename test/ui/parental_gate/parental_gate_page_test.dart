@@ -29,9 +29,7 @@ void main() {
         overrides: [
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
         ],
-        child: const MaterialApp(
-          home: ParentalGatePage(),
-        ),
+        child: const MaterialApp(home: ParentalGatePage()),
       ),
     );
 
@@ -58,10 +56,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: true,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: true),
           quizOverride(
             quizType: QuizTypes.daily,
             quizInfo: const QuizInfo(),
@@ -127,9 +122,7 @@ void main() {
         overrides: [
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
         ],
-        child: const MaterialApp(
-          home: ParentalGatePage(),
-        ),
+        child: const MaterialApp(home: ParentalGatePage()),
       ),
     );
 
@@ -152,14 +145,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          appPropertyOverride(
-            parentalControl: false,
-            alreadyLaunched: true,
-          ),
+          appPropertyOverride(parentalControl: false, alreadyLaunched: true),
           parentalGatePageNotifierProvider.overrideWith(() => notifier),
-          settingsOverride(
-            inputType: InputTypes.switching,
-          ),
+          settingsOverride(inputType: InputTypes.switching),
           quizOverride(
             quizType: QuizTypes.daily,
             quizInfo: const QuizInfo(),
