@@ -32,7 +32,7 @@ class TweetButton extends ConsumerWidget {
           await launchUrl(_tweetUri(tweetText));
         }
       },
-      label: const Text('ツイート'),
+      label: const Text('ポスト'),
       icon: const Icon(Icons.send),
     );
   }
