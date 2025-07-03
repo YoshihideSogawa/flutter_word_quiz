@@ -42,7 +42,7 @@ class StatisticsView extends ConsumerWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(4),
             boxShadow: const [
               BoxShadow(
