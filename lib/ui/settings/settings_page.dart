@@ -60,38 +60,35 @@ class SettingsPage extends ConsumerWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text('にゅうりょくタイプ'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RadioListTile<InputTypes>(
-                value: InputTypes.switching,
-                groupValue: inputTypes,
-                toggleable: true,
-                title: const Text('きりかえタイプ'),
-                onChanged: (value) async {
-                  await ref
-                      .read(inputTypeRepositoryProvider.notifier)
-                      .updateInputType(InputTypes.switching);
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-              RadioListTile<InputTypes>(
-                value: InputTypes.all,
-                groupValue: inputTypes,
-                toggleable: true,
-                title: const Text('ぜんぶひょうじタイプ'),
-                onChanged: (value) async {
-                  await ref
-                      .read(inputTypeRepositoryProvider.notifier)
-                      .updateInputType(InputTypes.all);
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-            ],
+          content: RadioGroup<InputTypes>(
+            groupValue: inputTypes,
+            onChanged: (value) async {
+              if (value == null) {
+                return;
+              }
+
+              await ref
+                  .read(inputTypeRepositoryProvider.notifier)
+                  .updateInputType(value);
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            },
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RadioListTile<InputTypes>(
+                  value: InputTypes.switching,
+                  toggleable: true,
+                  title: Text('きりかえタイプ'),
+                ),
+                RadioListTile<InputTypes>(
+                  value: InputTypes.all,
+                  toggleable: true,
+                  title: Text('ぜんぶひょうじタイプ'),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -118,25 +115,31 @@ class SettingsPage extends ConsumerWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text('もんだいのはんい'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ...quizRangeList.map(
-                  (e) => RadioListTile<QuizRange>(
-                    value: e,
-                    groupValue: quizRange,
-                    title: Text('${e.displayName}'),
-                    toggleable: true,
-                    onChanged: (value) {
-                      ref
-                          .read(quizRangeRepositoryProvider.notifier)
-                          .updateQuizRange(e);
-                      Navigator.pop(context);
-                    },
+          content: RadioGroup<QuizRange>(
+            groupValue: quizRange,
+            onChanged: (value) {
+              if (value == null) {
+                return;
+              }
+
+              ref
+                  .read(quizRangeRepositoryProvider.notifier)
+                  .updateQuizRange(value);
+              Navigator.pop(context);
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ...quizRangeList.map(
+                    (e) => RadioListTile<QuizRange>(
+                      value: e,
+                      toggleable: true,
+                      title: Text('${e.displayName}'),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
