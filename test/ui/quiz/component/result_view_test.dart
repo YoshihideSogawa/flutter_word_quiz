@@ -101,7 +101,7 @@ void main() {
     expect(find.text('ダイヤモンド・パール まで'), findsOneWidget);
     expect(find.text('あいことば'), findsOneWidget);
     expect(find.text('フシギダネ'), findsOneWidget);
-    expect(find.text('ツイート'), findsOneWidget);
+    expect(find.text('ポスト'), findsOneWidget);
     expect(find.text('シェア'), findsOneWidget);
     expect(find.text('とじる'), findsOneWidget);
   });
@@ -144,7 +144,7 @@ void main() {
     expect(find.text('ダイヤモンド・パール まで'), findsOneWidget);
     expect(find.text('あいことば'), findsOneWidget);
     expect(find.text('フシギダネ'), findsOneWidget);
-    expect(find.text('ツイート'), findsOneWidget);
+    expect(find.text('ポスト'), findsOneWidget);
     expect(find.text('シェア'), findsOneWidget);
     expect(find.text('とじる'), findsOneWidget);
   });
@@ -268,7 +268,7 @@ void main() {
     expect(text.contains('もんだいのはんい：ダイヤモンド・パール'), isTrue);
     expect(text.contains('あいことば：フシギダネ'), isTrue);
     expect(text.contains('で おなじもんだいにちょうせんできるよ'), isTrue);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 }
