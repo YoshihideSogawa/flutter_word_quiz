@@ -64,6 +64,9 @@ class SettingsPage extends ConsumerWidget {
             groupValue: inputTypes,
             onChanged: (value) async {
               if (value == null) {
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
                 return;
               }
 
@@ -119,6 +122,9 @@ class SettingsPage extends ConsumerWidget {
             groupValue: quizRange,
             onChanged: (value) {
               if (value == null) {
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
                 return;
               }
 
