@@ -7,7 +7,7 @@ part 'quiz_statistics.g.dart';
 
 /// クイズの成績データです。
 @freezed
-class QuizStatistics with _$QuizStatistics {
+abstract class QuizStatistics with _$QuizStatistics {
   const factory QuizStatistics({
     @Default(0) int clearCount,
     @Default(0) int currentChain,

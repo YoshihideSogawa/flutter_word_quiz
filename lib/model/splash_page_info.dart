@@ -6,7 +6,7 @@ part 'splash_page_info.freezed.dart';
 part 'splash_page_info.g.dart';
 
 @freezed
-class SplashPageInfo with _$SplashPageInfo {
+abstract class SplashPageInfo with _$SplashPageInfo {
   const factory SplashPageInfo({@Default(false) bool showRule}) =
       _SplashPageInfo;
 

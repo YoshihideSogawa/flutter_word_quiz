@@ -11,7 +11,7 @@ part 'quiz_info.g.dart';
 
 /// クイズの情報です。
 @freezed
-class QuizInfo with _$QuizInfo {
+abstract class QuizInfo with _$QuizInfo {
   const factory QuizInfo({
     Monster? answer,
     @Default(0) int maxAnswer,

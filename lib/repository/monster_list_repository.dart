@@ -50,6 +50,5 @@ class MonsterListRepository extends _$MonsterListRepository {
 
 /// テスト用のMock
 @visibleForTesting
-class MockMonsterListRepository extends _$MonsterListRepository
-    with Mock
-    implements MonsterListRepository {}
+class MockMonsterListRepository extends MonsterListRepository
+    with Mock {}

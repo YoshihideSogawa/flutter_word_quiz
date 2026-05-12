@@ -7,7 +7,7 @@ part 'quiz_page_info.g.dart';
 
 /// クイズページに関する情報です。
 @freezed
-class QuizPageInfo with _$QuizPageInfo {
+abstract class QuizPageInfo with _$QuizPageInfo {
   const factory QuizPageInfo({
     @Default(false) bool showAnswer,
     @Default(false) bool showStatistics,

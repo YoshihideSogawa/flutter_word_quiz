@@ -37,6 +37,5 @@ class QuizInfoRepository extends _$QuizInfoRepository {
 }
 
 @visibleForTesting
-class MockQuizInfoRepository extends _$QuizInfoRepository
-    with Mock
-    implements QuizInfoRepository {}
+class MockQuizInfoRepository extends QuizInfoRepository
+    with Mock {}

@@ -9,7 +9,7 @@ part 'word_input.g.dart';
 
 /// 入力されたデータです。
 @freezed
-class WordInput with _$WordInput {
+abstract class WordInput with _$WordInput {
   const factory WordInput({
     @Default(<InputWords?>[]) List<InputWords?> wordsList,
     @Default(<WordResults?>[]) List<WordResults?> wordsResultList,

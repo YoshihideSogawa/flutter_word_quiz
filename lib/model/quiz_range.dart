@@ -7,7 +7,7 @@ part 'quiz_range.g.dart';
 
 /// クイズの出題範囲です。
 @freezed
-class QuizRange with _$QuizRange {
+abstract class QuizRange with _$QuizRange {
   const factory QuizRange({
     @Default(0) int id,
     @Default(0) int maxNo,

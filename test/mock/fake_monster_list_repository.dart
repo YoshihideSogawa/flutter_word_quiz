@@ -6,7 +6,9 @@ import 'package:word_quiz/repository/monster_list_repository.dart';
 import 'monster_test_list.dart';
 
 class FakeMonsterListRepository extends MockMonsterListRepository {
-  FakeMonsterListRepository({this.monsterList});
+  FakeMonsterListRepository() : monsterList = null;
+
+  FakeMonsterListRepository.withMonsterList(this.monsterList);
 
   @visibleForTesting
   final List<Monster>? monsterList;
