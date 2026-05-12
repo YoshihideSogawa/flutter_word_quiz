@@ -34,9 +34,7 @@ abstract class _$StatisticsNotifier
     extends BuildlessAutoDisposeAsyncNotifier<QuizStatistics> {
   late final QuizTypes quizType;
 
-  FutureOr<QuizStatistics> build(
-    QuizTypes quizType,
-  );
+  FutureOr<QuizStatistics> build(QuizTypes quizType);
 }
 
 /// 統計情報の処理を行います。
@@ -57,21 +55,15 @@ class StatisticsNotifierFamily extends Family<AsyncValue<QuizStatistics>> {
   /// 統計情報の処理を行います。
   ///
   /// Copied from [StatisticsNotifier].
-  StatisticsNotifierProvider call(
-    QuizTypes quizType,
-  ) {
-    return StatisticsNotifierProvider(
-      quizType,
-    );
+  StatisticsNotifierProvider call(QuizTypes quizType) {
+    return StatisticsNotifierProvider(quizType);
   }
 
   @override
   StatisticsNotifierProvider getProviderOverride(
     covariant StatisticsNotifierProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -92,26 +84,28 @@ class StatisticsNotifierFamily extends Family<AsyncValue<QuizStatistics>> {
 /// 統計情報の処理を行います。
 ///
 /// Copied from [StatisticsNotifier].
-class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    StatisticsNotifier, QuizStatistics> {
+class StatisticsNotifierProvider
+    extends
+        AutoDisposeAsyncNotifierProviderImpl<
+          StatisticsNotifier,
+          QuizStatistics
+        > {
   /// 統計情報の処理を行います。
   ///
   /// Copied from [StatisticsNotifier].
-  StatisticsNotifierProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          () => StatisticsNotifier()..quizType = quizType,
-          from: statisticsNotifierProvider,
-          name: r'statisticsNotifierProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$statisticsNotifierHash,
-          dependencies: StatisticsNotifierFamily._dependencies,
-          allTransitiveDependencies:
-              StatisticsNotifierFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  StatisticsNotifierProvider(QuizTypes quizType)
+    : this._internal(
+        () => StatisticsNotifier()..quizType = quizType,
+        from: statisticsNotifierProvider,
+        name: r'statisticsNotifierProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$statisticsNotifierHash,
+        dependencies: StatisticsNotifierFamily._dependencies,
+        allTransitiveDependencies:
+            StatisticsNotifierFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   StatisticsNotifierProvider._internal(
     super._createNotifier, {
@@ -129,9 +123,7 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   FutureOr<QuizStatistics> runNotifierBuild(
     covariant StatisticsNotifier notifier,
   ) {
-    return notifier.build(
-      quizType,
-    );
+    return notifier.build(quizType);
   }
 
   @override
@@ -152,7 +144,7 @@ class StatisticsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   AutoDisposeAsyncNotifierProviderElement<StatisticsNotifier, QuizStatistics>
-      createElement() {
+  createElement() {
     return _StatisticsNotifierProviderElement(this);
   }
 
@@ -179,12 +171,17 @@ mixin StatisticsNotifierRef
 }
 
 class _StatisticsNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<StatisticsNotifier,
-        QuizStatistics> with StatisticsNotifierRef {
+    extends
+        AutoDisposeAsyncNotifierProviderElement<
+          StatisticsNotifier,
+          QuizStatistics
+        >
+    with StatisticsNotifierRef {
   _StatisticsNotifierProviderElement(super.provider);
 
   @override
   QuizTypes get quizType => (origin as StatisticsNotifierProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

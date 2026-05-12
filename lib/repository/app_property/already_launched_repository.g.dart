@@ -15,14 +15,14 @@ String _$alreadyLaunchedRepositoryHash() =>
 @ProviderFor(AlreadyLaunchedRepository)
 final alreadyLaunchedRepositoryProvider =
     AutoDisposeAsyncNotifierProvider<AlreadyLaunchedRepository, bool?>.internal(
-  AlreadyLaunchedRepository.new,
-  name: r'alreadyLaunchedRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$alreadyLaunchedRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AlreadyLaunchedRepository.new,
+      name: r'alreadyLaunchedRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$alreadyLaunchedRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AlreadyLaunchedRepository = AutoDisposeAsyncNotifier<bool?>;
 // ignore_for_file: type=lint

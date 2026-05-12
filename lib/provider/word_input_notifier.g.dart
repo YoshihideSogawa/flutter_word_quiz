@@ -33,9 +33,7 @@ abstract class _$WordInputNotifier
     extends BuildlessAutoDisposeAsyncNotifier<WordInput> {
   late final QuizTypes quizType;
 
-  FutureOr<WordInput> build(
-    QuizTypes quizType,
-  );
+  FutureOr<WordInput> build(QuizTypes quizType);
 }
 
 /// 文字入力に関する処理を行います。
@@ -56,21 +54,15 @@ class WordInputNotifierFamily extends Family<AsyncValue<WordInput>> {
   /// 文字入力に関する処理を行います。
   ///
   /// Copied from [WordInputNotifier].
-  WordInputNotifierProvider call(
-    QuizTypes quizType,
-  ) {
-    return WordInputNotifierProvider(
-      quizType,
-    );
+  WordInputNotifierProvider call(QuizTypes quizType) {
+    return WordInputNotifierProvider(quizType);
   }
 
   @override
   WordInputNotifierProvider getProviderOverride(
     covariant WordInputNotifierProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -96,21 +88,19 @@ class WordInputNotifierProvider
   /// 文字入力に関する処理を行います。
   ///
   /// Copied from [WordInputNotifier].
-  WordInputNotifierProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          () => WordInputNotifier()..quizType = quizType,
-          from: wordInputNotifierProvider,
-          name: r'wordInputNotifierProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$wordInputNotifierHash,
-          dependencies: WordInputNotifierFamily._dependencies,
-          allTransitiveDependencies:
-              WordInputNotifierFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  WordInputNotifierProvider(QuizTypes quizType)
+    : this._internal(
+        () => WordInputNotifier()..quizType = quizType,
+        from: wordInputNotifierProvider,
+        name: r'wordInputNotifierProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$wordInputNotifierHash,
+        dependencies: WordInputNotifierFamily._dependencies,
+        allTransitiveDependencies:
+            WordInputNotifierFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   WordInputNotifierProvider._internal(
     super._createNotifier, {
@@ -125,12 +115,8 @@ class WordInputNotifierProvider
   final QuizTypes quizType;
 
   @override
-  FutureOr<WordInput> runNotifierBuild(
-    covariant WordInputNotifier notifier,
-  ) {
-    return notifier.build(
-      quizType,
-    );
+  FutureOr<WordInput> runNotifierBuild(covariant WordInputNotifier notifier) {
+    return notifier.build(quizType);
   }
 
   @override
@@ -151,7 +137,7 @@ class WordInputNotifierProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<WordInputNotifier, WordInput>
-      createElement() {
+  createElement() {
     return _WordInputNotifierProviderElement(this);
   }
 
@@ -177,12 +163,14 @@ mixin WordInputNotifierRef on AutoDisposeAsyncNotifierProviderRef<WordInput> {
 }
 
 class _WordInputNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<WordInputNotifier,
-        WordInput> with WordInputNotifierRef {
+    extends
+        AutoDisposeAsyncNotifierProviderElement<WordInputNotifier, WordInput>
+    with WordInputNotifierRef {
   _WordInputNotifierProviderElement(super.provider);
 
   @override
   QuizTypes get quizType => (origin as WordInputNotifierProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

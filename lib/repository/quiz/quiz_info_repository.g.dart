@@ -34,9 +34,7 @@ abstract class _$QuizInfoRepository
     extends BuildlessAutoDisposeAsyncNotifier<QuizInfo?> {
   late final QuizTypes quizType;
 
-  FutureOr<QuizInfo?> build(
-    QuizTypes quizType,
-  );
+  FutureOr<QuizInfo?> build(QuizTypes quizType);
 }
 
 /// See also [QuizInfoRepository].
@@ -49,21 +47,15 @@ class QuizInfoRepositoryFamily extends Family<AsyncValue<QuizInfo?>> {
   const QuizInfoRepositoryFamily();
 
   /// See also [QuizInfoRepository].
-  QuizInfoRepositoryProvider call(
-    QuizTypes quizType,
-  ) {
-    return QuizInfoRepositoryProvider(
-      quizType,
-    );
+  QuizInfoRepositoryProvider call(QuizTypes quizType) {
+    return QuizInfoRepositoryProvider(quizType);
   }
 
   @override
   QuizInfoRepositoryProvider getProviderOverride(
     covariant QuizInfoRepositoryProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -82,24 +74,23 @@ class QuizInfoRepositoryFamily extends Family<AsyncValue<QuizInfo?>> {
 }
 
 /// See also [QuizInfoRepository].
-class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    QuizInfoRepository, QuizInfo?> {
+class QuizInfoRepositoryProvider
+    extends
+        AutoDisposeAsyncNotifierProviderImpl<QuizInfoRepository, QuizInfo?> {
   /// See also [QuizInfoRepository].
-  QuizInfoRepositoryProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          () => QuizInfoRepository()..quizType = quizType,
-          from: quizInfoRepositoryProvider,
-          name: r'quizInfoRepositoryProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$quizInfoRepositoryHash,
-          dependencies: QuizInfoRepositoryFamily._dependencies,
-          allTransitiveDependencies:
-              QuizInfoRepositoryFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  QuizInfoRepositoryProvider(QuizTypes quizType)
+    : this._internal(
+        () => QuizInfoRepository()..quizType = quizType,
+        from: quizInfoRepositoryProvider,
+        name: r'quizInfoRepositoryProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$quizInfoRepositoryHash,
+        dependencies: QuizInfoRepositoryFamily._dependencies,
+        allTransitiveDependencies:
+            QuizInfoRepositoryFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   QuizInfoRepositoryProvider._internal(
     super._createNotifier, {
@@ -114,12 +105,8 @@ class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final QuizTypes quizType;
 
   @override
-  FutureOr<QuizInfo?> runNotifierBuild(
-    covariant QuizInfoRepository notifier,
-  ) {
-    return notifier.build(
-      quizType,
-    );
+  FutureOr<QuizInfo?> runNotifierBuild(covariant QuizInfoRepository notifier) {
+    return notifier.build(quizType);
   }
 
   @override
@@ -140,7 +127,7 @@ class QuizInfoRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   AutoDisposeAsyncNotifierProviderElement<QuizInfoRepository, QuizInfo?>
-      createElement() {
+  createElement() {
     return _QuizInfoRepositoryProviderElement(this);
   }
 
@@ -166,12 +153,14 @@ mixin QuizInfoRepositoryRef on AutoDisposeAsyncNotifierProviderRef<QuizInfo?> {
 }
 
 class _QuizInfoRepositoryProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<QuizInfoRepository,
-        QuizInfo?> with QuizInfoRepositoryRef {
+    extends
+        AutoDisposeAsyncNotifierProviderElement<QuizInfoRepository, QuizInfo?>
+    with QuizInfoRepositoryRef {
   _QuizInfoRepositoryProviderElement(super.provider);
 
   @override
   QuizTypes get quizType => (origin as QuizInfoRepositoryProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

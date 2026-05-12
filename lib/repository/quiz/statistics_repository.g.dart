@@ -34,9 +34,7 @@ abstract class _$StatisticsRepository
     extends BuildlessAutoDisposeAsyncNotifier<QuizStatistics?> {
   late final QuizTypes quizType;
 
-  FutureOr<QuizStatistics?> build(
-    QuizTypes quizType,
-  );
+  FutureOr<QuizStatistics?> build(QuizTypes quizType);
 }
 
 /// 問題の成績などを扱います。
@@ -57,21 +55,15 @@ class StatisticsRepositoryFamily extends Family<AsyncValue<QuizStatistics?>> {
   /// 問題の成績などを扱います。
   ///
   /// Copied from [StatisticsRepository].
-  StatisticsRepositoryProvider call(
-    QuizTypes quizType,
-  ) {
-    return StatisticsRepositoryProvider(
-      quizType,
-    );
+  StatisticsRepositoryProvider call(QuizTypes quizType) {
+    return StatisticsRepositoryProvider(quizType);
   }
 
   @override
   StatisticsRepositoryProvider getProviderOverride(
     covariant StatisticsRepositoryProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -92,26 +84,28 @@ class StatisticsRepositoryFamily extends Family<AsyncValue<QuizStatistics?>> {
 /// 問題の成績などを扱います。
 ///
 /// Copied from [StatisticsRepository].
-class StatisticsRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    StatisticsRepository, QuizStatistics?> {
+class StatisticsRepositoryProvider
+    extends
+        AutoDisposeAsyncNotifierProviderImpl<
+          StatisticsRepository,
+          QuizStatistics?
+        > {
   /// 問題の成績などを扱います。
   ///
   /// Copied from [StatisticsRepository].
-  StatisticsRepositoryProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          () => StatisticsRepository()..quizType = quizType,
-          from: statisticsRepositoryProvider,
-          name: r'statisticsRepositoryProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$statisticsRepositoryHash,
-          dependencies: StatisticsRepositoryFamily._dependencies,
-          allTransitiveDependencies:
-              StatisticsRepositoryFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  StatisticsRepositoryProvider(QuizTypes quizType)
+    : this._internal(
+        () => StatisticsRepository()..quizType = quizType,
+        from: statisticsRepositoryProvider,
+        name: r'statisticsRepositoryProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$statisticsRepositoryHash,
+        dependencies: StatisticsRepositoryFamily._dependencies,
+        allTransitiveDependencies:
+            StatisticsRepositoryFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   StatisticsRepositoryProvider._internal(
     super._createNotifier, {
@@ -129,9 +123,7 @@ class StatisticsRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   FutureOr<QuizStatistics?> runNotifierBuild(
     covariant StatisticsRepository notifier,
   ) {
-    return notifier.build(
-      quizType,
-    );
+    return notifier.build(quizType);
   }
 
   @override
@@ -152,7 +144,7 @@ class StatisticsRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   AutoDisposeAsyncNotifierProviderElement<StatisticsRepository, QuizStatistics?>
-      createElement() {
+  createElement() {
     return _StatisticsRepositoryProviderElement(this);
   }
 
@@ -179,12 +171,17 @@ mixin StatisticsRepositoryRef
 }
 
 class _StatisticsRepositoryProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<StatisticsRepository,
-        QuizStatistics?> with StatisticsRepositoryRef {
+    extends
+        AutoDisposeAsyncNotifierProviderElement<
+          StatisticsRepository,
+          QuizStatistics?
+        >
+    with StatisticsRepositoryRef {
   _StatisticsRepositoryProviderElement(super.provider);
 
   @override
   QuizTypes get quizType => (origin as StatisticsRepositoryProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -15,14 +15,14 @@ String _$quizRangeRepositoryHash() =>
 @ProviderFor(QuizRangeRepository)
 final quizRangeRepositoryProvider =
     AutoDisposeAsyncNotifierProvider<QuizRangeRepository, QuizRange>.internal(
-  QuizRangeRepository.new,
-  name: r'quizRangeRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$quizRangeRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      QuizRangeRepository.new,
+      name: r'quizRangeRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$quizRangeRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$QuizRangeRepository = AutoDisposeAsyncNotifier<QuizRange>;
 // ignore_for_file: type=lint

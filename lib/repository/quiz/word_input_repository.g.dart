@@ -34,9 +34,7 @@ abstract class _$WordInputRepository
     extends BuildlessAutoDisposeAsyncNotifier<WordInput?> {
   late final QuizTypes quizType;
 
-  FutureOr<WordInput?> build(
-    QuizTypes quizType,
-  );
+  FutureOr<WordInput?> build(QuizTypes quizType);
 }
 
 /// 回答の入力データを扱います。
@@ -57,21 +55,15 @@ class WordInputRepositoryFamily extends Family<AsyncValue<WordInput?>> {
   /// 回答の入力データを扱います。
   ///
   /// Copied from [WordInputRepository].
-  WordInputRepositoryProvider call(
-    QuizTypes quizType,
-  ) {
-    return WordInputRepositoryProvider(
-      quizType,
-    );
+  WordInputRepositoryProvider call(QuizTypes quizType) {
+    return WordInputRepositoryProvider(quizType);
   }
 
   @override
   WordInputRepositoryProvider getProviderOverride(
     covariant WordInputRepositoryProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -92,26 +84,25 @@ class WordInputRepositoryFamily extends Family<AsyncValue<WordInput?>> {
 /// 回答の入力データを扱います。
 ///
 /// Copied from [WordInputRepository].
-class WordInputRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    WordInputRepository, WordInput?> {
+class WordInputRepositoryProvider
+    extends
+        AutoDisposeAsyncNotifierProviderImpl<WordInputRepository, WordInput?> {
   /// 回答の入力データを扱います。
   ///
   /// Copied from [WordInputRepository].
-  WordInputRepositoryProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          () => WordInputRepository()..quizType = quizType,
-          from: wordInputRepositoryProvider,
-          name: r'wordInputRepositoryProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$wordInputRepositoryHash,
-          dependencies: WordInputRepositoryFamily._dependencies,
-          allTransitiveDependencies:
-              WordInputRepositoryFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  WordInputRepositoryProvider(QuizTypes quizType)
+    : this._internal(
+        () => WordInputRepository()..quizType = quizType,
+        from: wordInputRepositoryProvider,
+        name: r'wordInputRepositoryProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$wordInputRepositoryHash,
+        dependencies: WordInputRepositoryFamily._dependencies,
+        allTransitiveDependencies:
+            WordInputRepositoryFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   WordInputRepositoryProvider._internal(
     super._createNotifier, {
@@ -129,9 +120,7 @@ class WordInputRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
   FutureOr<WordInput?> runNotifierBuild(
     covariant WordInputRepository notifier,
   ) {
-    return notifier.build(
-      quizType,
-    );
+    return notifier.build(quizType);
   }
 
   @override
@@ -152,7 +141,7 @@ class WordInputRepositoryProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   AutoDisposeAsyncNotifierProviderElement<WordInputRepository, WordInput?>
-      createElement() {
+  createElement() {
     return _WordInputRepositoryProviderElement(this);
   }
 
@@ -179,12 +168,14 @@ mixin WordInputRepositoryRef
 }
 
 class _WordInputRepositoryProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<WordInputRepository,
-        WordInput?> with WordInputRepositoryRef {
+    extends
+        AutoDisposeAsyncNotifierProviderElement<WordInputRepository, WordInput?>
+    with WordInputRepositoryRef {
   _WordInputRepositoryProviderElement(super.provider);
 
   @override
   QuizTypes get quizType => (origin as WordInputRepositoryProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

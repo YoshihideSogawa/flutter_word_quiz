@@ -6,13 +6,8 @@ part of 'splash_page_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SplashPageInfoImpl _$$SplashPageInfoImplFromJson(Map<String, dynamic> json) =>
-    _$SplashPageInfoImpl(
-      showRule: json['showRule'] as bool? ?? false,
-    );
+_SplashPageInfo _$SplashPageInfoFromJson(Map<String, dynamic> json) =>
+    _SplashPageInfo(showRule: json['showRule'] as bool? ?? false);
 
-Map<String, dynamic> _$$SplashPageInfoImplToJson(
-        _$SplashPageInfoImpl instance) =>
-    <String, dynamic>{
-      'showRule': instance.showRule,
-    };
+Map<String, dynamic> _$SplashPageInfoToJson(_SplashPageInfo instance) =>
+    <String, dynamic>{'showRule': instance.showRule};

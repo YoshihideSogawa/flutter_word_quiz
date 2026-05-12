@@ -15,14 +15,14 @@ String _$parentalControlRepositoryHash() =>
 @ProviderFor(ParentalControlRepository)
 final parentalControlRepositoryProvider =
     AutoDisposeAsyncNotifierProvider<ParentalControlRepository, bool>.internal(
-  ParentalControlRepository.new,
-  name: r'parentalControlRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$parentalControlRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ParentalControlRepository.new,
+      name: r'parentalControlRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$parentalControlRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ParentalControlRepository = AutoDisposeAsyncNotifier<bool>;
 // ignore_for_file: type=lint

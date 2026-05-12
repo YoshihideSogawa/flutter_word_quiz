@@ -47,21 +47,15 @@ class ClearQuizDataFamily extends Family<AsyncValue<void>> {
   /// 問題データを削除します。
   ///
   /// Copied from [clearQuizData].
-  ClearQuizDataProvider call(
-    QuizTypes quizType,
-  ) {
-    return ClearQuizDataProvider(
-      quizType,
-    );
+  ClearQuizDataProvider call(QuizTypes quizType) {
+    return ClearQuizDataProvider(quizType);
   }
 
   @override
   ClearQuizDataProvider getProviderOverride(
     covariant ClearQuizDataProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -86,24 +80,19 @@ class ClearQuizDataProvider extends AutoDisposeFutureProvider<void> {
   /// 問題データを削除します。
   ///
   /// Copied from [clearQuizData].
-  ClearQuizDataProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          (ref) => clearQuizData(
-            ref as ClearQuizDataRef,
-            quizType,
-          ),
-          from: clearQuizDataProvider,
-          name: r'clearQuizDataProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$clearQuizDataHash,
-          dependencies: ClearQuizDataFamily._dependencies,
-          allTransitiveDependencies:
-              ClearQuizDataFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  ClearQuizDataProvider(QuizTypes quizType)
+    : this._internal(
+        (ref) => clearQuizData(ref as ClearQuizDataRef, quizType),
+        from: clearQuizDataProvider,
+        name: r'clearQuizDataProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$clearQuizDataHash,
+        dependencies: ClearQuizDataFamily._dependencies,
+        allTransitiveDependencies:
+            ClearQuizDataFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   ClearQuizDataProvider._internal(
     super._createNotifier, {
@@ -162,11 +151,13 @@ mixin ClearQuizDataRef on AutoDisposeFutureProviderRef<void> {
 }
 
 class _ClearQuizDataProviderElement
-    extends AutoDisposeFutureProviderElement<void> with ClearQuizDataRef {
+    extends AutoDisposeFutureProviderElement<void>
+    with ClearQuizDataRef {
   _ClearQuizDataProviderElement(super.provider);
 
   @override
   QuizTypes get quizType => (origin as ClearQuizDataProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

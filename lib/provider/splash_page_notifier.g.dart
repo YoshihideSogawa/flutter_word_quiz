@@ -13,16 +13,19 @@ String _$splashPageNotifierHash() =>
 ///
 /// Copied from [SplashPageNotifier].
 @ProviderFor(SplashPageNotifier)
-final splashPageNotifierProvider = AutoDisposeAsyncNotifierProvider<
-    SplashPageNotifier, SplashPageInfo>.internal(
-  SplashPageNotifier.new,
-  name: r'splashPageNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$splashPageNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final splashPageNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<
+      SplashPageNotifier,
+      SplashPageInfo
+    >.internal(
+      SplashPageNotifier.new,
+      name: r'splashPageNotifierProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$splashPageNotifierHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$SplashPageNotifier = AutoDisposeAsyncNotifier<SplashPageInfo>;
 // ignore_for_file: type=lint
