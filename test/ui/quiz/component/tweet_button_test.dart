@@ -51,7 +51,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('ツイート'), findsOneWidget);
+    expect(find.text('ポスト'), findsOneWidget);
     expect(find.byIcon(Icons.send), findsOneWidget);
   });
 
@@ -77,7 +77,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('ツイート'));
+    await tester.tap(find.text('ポスト'));
     await tester.pumpAndSettle();
 
     expect(router.lastLocation, Routes.parentalGate);
@@ -107,7 +107,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('ツイート'));
+    await tester.tap(find.text('ポスト'));
     await tester.pumpAndSettle();
     expect(
       urlLauncher.launchedUrl,

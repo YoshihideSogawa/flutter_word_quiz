@@ -51,7 +51,7 @@ void main() {
     expect(find.text('きょうの もんだい'), findsOneWidget);
     expect(find.text('ちょうせんちゅう'), findsOneWidget);
     expect(find.text('もんだいが かわるまで'), findsOneWidget);
-    expect(find.text('ツイート'), findsOneWidget);
+    expect(find.text('ポスト'), findsOneWidget);
     expect(find.text('5'), findsOneWidget);
     expect(find.text('プレイ\nかいすう'), findsOneWidget);
     expect(find.text('4'), findsOneWidget);
@@ -60,7 +60,7 @@ void main() {
     expect(find.text('れんさ\nかいすう'), findsOneWidget);
     expect(find.text('3'), findsOneWidget);
     expect(find.text('さいだい\nれんさ'), findsOneWidget);
-    expect(find.text('ツイート'), findsOneWidget);
+    expect(find.text('ポスト'), findsOneWidget);
     expect(find.text('シェア'), findsOneWidget);
     expect(find.text('とじる'), findsOneWidget);
 
@@ -119,7 +119,7 @@ void main() {
     expect(find.text('れんさ\nかいすう'), findsOneWidget);
     expect(find.text('3'), findsOneWidget);
     expect(find.text('さいだい\nれんさ'), findsOneWidget);
-    expect(find.text('ツイート'), findsOneWidget);
+    expect(find.text('ポスト'), findsOneWidget);
     expect(find.text('シェア'), findsOneWidget);
     expect(find.text('とじる'), findsOneWidget);
 
@@ -397,7 +397,7 @@ void main() {
     expect(text.contains('⬛⬛⬛⬛⬛'), isTrue);
     expect(text.contains('🟨🟨🟨🟨⬜'), isTrue);
     expect(text.contains('🟩🟩🟩🟩🟩'), isTrue);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
@@ -468,7 +468,7 @@ void main() {
     expect(text.contains('⬛🟨⬛⬛🟨'), isTrue);
     expect(text.contains('⬛⬛⬛⬛🟩'), isTrue);
     expect(text.contains('🟨🟨🟨🟨⬜'), isTrue);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
@@ -518,7 +518,7 @@ void main() {
     expect(text.contains('⬛⬛⬛⬛⬛'), isFalse);
     expect(text.contains('🟨🟨🟨🟨⬜'), isFalse);
     expect(text.contains('🟩🟩🟩🟩🟩'), isFalse);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
@@ -567,7 +567,7 @@ void main() {
     expect(text.contains('⬛⬛⬛⬛⬛'), isFalse);
     expect(text.contains('🟨🟨🟨🟨⬜'), isFalse);
     expect(text.contains('🟩🟩🟩🟩🟩'), isFalse);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
@@ -612,7 +612,7 @@ void main() {
     expect(text.contains('⬛⬛⬛⬛⬛'), isFalse);
     expect(text.contains('🟨🟨🟨🟨⬜'), isFalse);
     expect(text.contains('🟩🟩🟩🟩🟩'), isFalse);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 
@@ -637,7 +637,7 @@ void main() {
     expect(text.contains('クリアかいすう：4'), isTrue);
     expect(text.contains('いまのれんさ　：2'), isTrue);
     expect(text.contains('さいだいれんさ：3'), isTrue);
-    expect(text.contains('https://fwq.page.link/applink'), isTrue);
+    expect(text.contains('https://word-quiz-eba98.web.app'), isTrue);
     expect(text.contains('#ワードクイズ'), isTrue);
   });
 }
