@@ -6,7 +6,7 @@ part of 'quiz_info_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quizInfoNotifierHash() => r'5dd1acdd5cf038df3b34e78088ca96271faea544';
+String _$quizInfoNotifierHash() => r'450cb1449887dc16e64acf69cdd9b2b196633084';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,9 +33,7 @@ abstract class _$QuizInfoNotifier
     extends BuildlessAutoDisposeAsyncNotifier<QuizInfo> {
   late final QuizTypes quizType;
 
-  FutureOr<QuizInfo> build(
-    QuizTypes quizType,
-  );
+  FutureOr<QuizInfo> build(QuizTypes quizType);
 }
 
 /// 問題情報に関するNotifierです。
@@ -56,21 +54,15 @@ class QuizInfoNotifierFamily extends Family<AsyncValue<QuizInfo>> {
   /// 問題情報に関するNotifierです。
   ///
   /// Copied from [QuizInfoNotifier].
-  QuizInfoNotifierProvider call(
-    QuizTypes quizType,
-  ) {
-    return QuizInfoNotifierProvider(
-      quizType,
-    );
+  QuizInfoNotifierProvider call(QuizTypes quizType) {
+    return QuizInfoNotifierProvider(quizType);
   }
 
   @override
   QuizInfoNotifierProvider getProviderOverride(
     covariant QuizInfoNotifierProvider provider,
   ) {
-    return call(
-      provider.quizType,
-    );
+    return call(provider.quizType);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -96,21 +88,19 @@ class QuizInfoNotifierProvider
   /// 問題情報に関するNotifierです。
   ///
   /// Copied from [QuizInfoNotifier].
-  QuizInfoNotifierProvider(
-    QuizTypes quizType,
-  ) : this._internal(
-          () => QuizInfoNotifier()..quizType = quizType,
-          from: quizInfoNotifierProvider,
-          name: r'quizInfoNotifierProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$quizInfoNotifierHash,
-          dependencies: QuizInfoNotifierFamily._dependencies,
-          allTransitiveDependencies:
-              QuizInfoNotifierFamily._allTransitiveDependencies,
-          quizType: quizType,
-        );
+  QuizInfoNotifierProvider(QuizTypes quizType)
+    : this._internal(
+        () => QuizInfoNotifier()..quizType = quizType,
+        from: quizInfoNotifierProvider,
+        name: r'quizInfoNotifierProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$quizInfoNotifierHash,
+        dependencies: QuizInfoNotifierFamily._dependencies,
+        allTransitiveDependencies:
+            QuizInfoNotifierFamily._allTransitiveDependencies,
+        quizType: quizType,
+      );
 
   QuizInfoNotifierProvider._internal(
     super._createNotifier, {
@@ -125,12 +115,8 @@ class QuizInfoNotifierProvider
   final QuizTypes quizType;
 
   @override
-  FutureOr<QuizInfo> runNotifierBuild(
-    covariant QuizInfoNotifier notifier,
-  ) {
-    return notifier.build(
-      quizType,
-    );
+  FutureOr<QuizInfo> runNotifierBuild(covariant QuizInfoNotifier notifier) {
+    return notifier.build(quizType);
   }
 
   @override
@@ -151,7 +137,7 @@ class QuizInfoNotifierProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<QuizInfoNotifier, QuizInfo>
-      createElement() {
+  createElement() {
     return _QuizInfoNotifierProviderElement(this);
   }
 
@@ -184,5 +170,6 @@ class _QuizInfoNotifierProviderElement
   @override
   QuizTypes get quizType => (origin as QuizInfoNotifierProvider).quizType;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

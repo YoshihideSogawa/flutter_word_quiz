@@ -15,14 +15,14 @@ String _$monsterListRepositoryHash() =>
 @ProviderFor(MonsterListRepository)
 final monsterListRepositoryProvider =
     AsyncNotifierProvider<MonsterListRepository, List<Monster>>.internal(
-  MonsterListRepository.new,
-  name: r'monsterListRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$monsterListRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      MonsterListRepository.new,
+      name: r'monsterListRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$monsterListRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$MonsterListRepository = AsyncNotifier<List<Monster>>;
 // ignore_for_file: type=lint

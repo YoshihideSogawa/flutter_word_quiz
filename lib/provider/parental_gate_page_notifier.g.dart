@@ -13,16 +13,19 @@ String _$parentalGatePageNotifierHash() =>
 ///
 /// Copied from [ParentalGatePageNotifier].
 @ProviderFor(ParentalGatePageNotifier)
-final parentalGatePageNotifierProvider = AutoDisposeNotifierProvider<
-    ParentalGatePageNotifier, ParentalGatePageInfo>.internal(
-  ParentalGatePageNotifier.new,
-  name: r'parentalGatePageNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$parentalGatePageNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final parentalGatePageNotifierProvider =
+    AutoDisposeNotifierProvider<
+      ParentalGatePageNotifier,
+      ParentalGatePageInfo
+    >.internal(
+      ParentalGatePageNotifier.new,
+      name: r'parentalGatePageNotifierProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$parentalGatePageNotifierHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ParentalGatePageNotifier = AutoDisposeNotifier<ParentalGatePageInfo>;
 // ignore_for_file: type=lint

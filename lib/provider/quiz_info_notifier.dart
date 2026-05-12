@@ -250,6 +250,5 @@ const defaultMaxAnswer = 10;
 
 /// テスト用のMock
 @visibleForTesting
-class MockQuizInfoNotifier extends _$QuizInfoNotifier
-    with Mock
-    implements QuizInfoNotifier {}
+class MockQuizInfoNotifier extends QuizInfoNotifier
+    with Mock {}

@@ -15,14 +15,14 @@ String _$inputTypeRepositoryHash() =>
 @ProviderFor(InputTypeRepository)
 final inputTypeRepositoryProvider =
     AutoDisposeAsyncNotifierProvider<InputTypeRepository, InputTypes>.internal(
-  InputTypeRepository.new,
-  name: r'inputTypeRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$inputTypeRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      InputTypeRepository.new,
+      name: r'inputTypeRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$inputTypeRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$InputTypeRepository = AutoDisposeAsyncNotifier<InputTypes>;
 // ignore_for_file: type=lint

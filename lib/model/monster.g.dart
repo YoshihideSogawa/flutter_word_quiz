@@ -6,14 +6,10 @@ part of 'monster.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MonsterImpl _$$MonsterImplFromJson(Map<String, dynamic> json) =>
-    _$MonsterImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-    );
+_Monster _$MonsterFromJson(Map<String, dynamic> json) =>
+    _Monster(id: (json['id'] as num).toInt(), name: json['name'] as String);
 
-Map<String, dynamic> _$$MonsterImplToJson(_$MonsterImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
+Map<String, dynamic> _$MonsterToJson(_Monster instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+};

@@ -6,33 +6,31 @@ part of 'quiz_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$QuizInfoImpl _$$QuizInfoImplFromJson(Map<String, dynamic> json) =>
-    _$QuizInfoImpl(
-      answer: json['answer'] == null
-          ? null
-          : Monster.fromJson(json['answer'] as Map<String, dynamic>),
-      maxAnswer: (json['maxAnswer'] as num?)?.toInt() ?? 0,
-      quizType: $enumDecodeNullable(_$QuizTypesEnumMap, json['quizType']),
-      quizProcess:
-          $enumDecodeNullable(_$QuizProcessTypeEnumMap, json['quizProcess']) ??
-              QuizProcessType.none,
-      quizRange: json['quizRange'] == null
-          ? null
-          : QuizRange.fromJson(json['quizRange'] as Map<String, dynamic>),
-      seedText: json['seedText'] as String?,
-      playDate: (json['playDate'] as num?)?.toInt() ?? 0,
-    );
+_QuizInfo _$QuizInfoFromJson(Map<String, dynamic> json) => _QuizInfo(
+  answer: json['answer'] == null
+      ? null
+      : Monster.fromJson(json['answer'] as Map<String, dynamic>),
+  maxAnswer: (json['maxAnswer'] as num?)?.toInt() ?? 0,
+  quizType: $enumDecodeNullable(_$QuizTypesEnumMap, json['quizType']),
+  quizProcess:
+      $enumDecodeNullable(_$QuizProcessTypeEnumMap, json['quizProcess']) ??
+      QuizProcessType.none,
+  quizRange: json['quizRange'] == null
+      ? null
+      : QuizRange.fromJson(json['quizRange'] as Map<String, dynamic>),
+  seedText: json['seedText'] as String?,
+  playDate: (json['playDate'] as num?)?.toInt() ?? 0,
+);
 
-Map<String, dynamic> _$$QuizInfoImplToJson(_$QuizInfoImpl instance) =>
-    <String, dynamic>{
-      'answer': instance.answer,
-      'maxAnswer': instance.maxAnswer,
-      'quizType': _$QuizTypesEnumMap[instance.quizType],
-      'quizProcess': _$QuizProcessTypeEnumMap[instance.quizProcess]!,
-      'quizRange': instance.quizRange,
-      'seedText': instance.seedText,
-      'playDate': instance.playDate,
-    };
+Map<String, dynamic> _$QuizInfoToJson(_QuizInfo instance) => <String, dynamic>{
+  'answer': instance.answer,
+  'maxAnswer': instance.maxAnswer,
+  'quizType': _$QuizTypesEnumMap[instance.quizType],
+  'quizProcess': _$QuizProcessTypeEnumMap[instance.quizProcess]!,
+  'quizRange': instance.quizRange,
+  'seedText': instance.seedText,
+  'playDate': instance.playDate,
+};
 
 const _$QuizTypesEnumMap = {
   QuizTypes.daily: 'daily',

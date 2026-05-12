@@ -48,6 +48,5 @@ class WordInputRepository extends _$WordInputRepository {
 }
 
 @visibleForTesting
-class MockWordInputRepository extends _$WordInputRepository
-    with Mock
-    implements WordInputRepository {}
+class MockWordInputRepository extends WordInputRepository
+    with Mock {}

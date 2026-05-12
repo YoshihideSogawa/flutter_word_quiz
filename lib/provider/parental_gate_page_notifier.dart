@@ -39,6 +39,5 @@ const _maxAnswerNum = 3;
 
 /// テスト用のMock
 @visibleForTesting
-class MockParentalGatePageNotifier extends _$ParentalGatePageNotifier
-    with Mock
-    implements ParentalGatePageNotifier {}
+class MockParentalGatePageNotifier extends ParentalGatePageNotifier
+    with Mock {}

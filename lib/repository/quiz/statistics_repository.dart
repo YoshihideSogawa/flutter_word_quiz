@@ -39,6 +39,5 @@ class StatisticsRepository extends _$StatisticsRepository {
 }
 
 @visibleForTesting
-class MockStatisticsRepository extends _$StatisticsRepository
-    with Mock
-    implements StatisticsRepository {}
+class MockStatisticsRepository extends StatisticsRepository
+    with Mock {}

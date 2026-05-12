@@ -6,8 +6,8 @@ part of 'quiz_page_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$QuizPageInfoImpl _$$QuizPageInfoImplFromJson(Map<String, dynamic> json) =>
-    _$QuizPageInfoImpl(
+_QuizPageInfo _$QuizPageInfoFromJson(Map<String, dynamic> json) =>
+    _QuizPageInfo(
       showAnswer: json['showAnswer'] as bool? ?? false,
       showStatistics: json['showStatistics'] as bool? ?? false,
       normalKeyboard: json['normalKeyboard'] as bool? ?? true,
@@ -16,7 +16,7 @@ _$QuizPageInfoImpl _$$QuizPageInfoImplFromJson(Map<String, dynamic> json) =>
       showQuizChanged: json['showQuizChanged'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$QuizPageInfoImplToJson(_$QuizPageInfoImpl instance) =>
+Map<String, dynamic> _$QuizPageInfoToJson(_QuizPageInfo instance) =>
     <String, dynamic>{
       'showAnswer': instance.showAnswer,
       'showStatistics': instance.showStatistics,

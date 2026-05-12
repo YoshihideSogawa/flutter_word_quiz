@@ -89,6 +89,30 @@ void main() {
     expect(settings.box.data[inputTypeKey], InputTypes.switching.typeId);
   });
 
+  testWidgets('にゅうりょくタイプで選択済み項目を再タップすると閉じる', (tester) async {
+    final settings = settingsOverrideAndBox(
+      inputType: InputTypes.switching,
+      quizRange: blackWhite,
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [settings.override],
+        child: const MaterialApp(home: SettingsPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('にゅうりょくタイプ'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('きりかえタイプ').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('ぜんぶひょうじタイプ'), findsNothing);
+    expect(settings.box.data[inputTypeKey], InputTypes.switching.typeId);
+  });
+
   testWidgets('もんだいのはんいのタップ', (tester) async {
     final settings = settingsOverrideAndBox(
       inputType: InputTypes.switching,
@@ -122,6 +146,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(settings.box.data[quizRangeKey], swordShield.id);
+  });
+
+  testWidgets('もんだいのはんいで選択済み項目を再タップすると閉じる', (tester) async {
+    final settings = settingsOverrideAndBox(
+      inputType: InputTypes.switching,
+      quizRange: blackWhite,
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [settings.override],
+        child: const MaterialApp(home: SettingsPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('もんだいのはんい'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('ブラック・ホワイト').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('あか・みどり'), findsNothing);
+    expect(settings.box.data[quizRangeKey], blackWhite.id);
   });
 
   testWidgets('きょうのもんだいのデータ削除のタップ', (tester) async {

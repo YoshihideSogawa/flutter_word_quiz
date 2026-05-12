@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,296 +9,293 @@ part of 'quiz_statistics.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
-QuizStatistics _$QuizStatisticsFromJson(Map<String, dynamic> json) {
-  return _QuizStatistics.fromJson(json);
-}
-
 /// @nodoc
-mixin _$QuizStatistics {
-  int get clearCount => throw _privateConstructorUsedError;
+mixin _$QuizStatistics implements DiagnosticableTreeMixin {
 
-  int get currentChain => throw _privateConstructorUsedError;
-
-  int get lastChain => throw _privateConstructorUsedError;
-
-  int get maxChain => throw _privateConstructorUsedError;
-
-  int get playCount => throw _privateConstructorUsedError;
+ int get clearCount; int get currentChain; int get lastChain; int get maxChain; int get playCount;
+/// Create a copy of QuizStatistics
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$QuizStatisticsCopyWith<QuizStatistics> get copyWith => _$QuizStatisticsCopyWithImpl<QuizStatistics>(this as QuizStatistics, _$identity);
 
   /// Serializes this QuizStatistics to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of QuizStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $QuizStatisticsCopyWith<QuizStatistics> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'QuizStatistics'))
+    ..add(DiagnosticsProperty('clearCount', clearCount))..add(DiagnosticsProperty('currentChain', currentChain))..add(DiagnosticsProperty('lastChain', lastChain))..add(DiagnosticsProperty('maxChain', maxChain))..add(DiagnosticsProperty('playCount', playCount));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QuizStatistics&&(identical(other.clearCount, clearCount) || other.clearCount == clearCount)&&(identical(other.currentChain, currentChain) || other.currentChain == currentChain)&&(identical(other.lastChain, lastChain) || other.lastChain == lastChain)&&(identical(other.maxChain, maxChain) || other.maxChain == maxChain)&&(identical(other.playCount, playCount) || other.playCount == playCount));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,clearCount,currentChain,lastChain,maxChain,playCount);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'QuizStatistics(clearCount: $clearCount, currentChain: $currentChain, lastChain: $lastChain, maxChain: $maxChain, playCount: $playCount)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $QuizStatisticsCopyWith<$Res> {
-  factory $QuizStatisticsCopyWith(
-    QuizStatistics value,
-    $Res Function(QuizStatistics) then,
-  ) = _$QuizStatisticsCopyWithImpl<$Res, QuizStatistics>;
+abstract mixin class $QuizStatisticsCopyWith<$Res>  {
+  factory $QuizStatisticsCopyWith(QuizStatistics value, $Res Function(QuizStatistics) _then) = _$QuizStatisticsCopyWithImpl;
+@useResult
+$Res call({
+ int clearCount, int currentChain, int lastChain, int maxChain, int playCount
+});
 
-  @useResult
-  $Res call({
-    int clearCount,
-    int currentChain,
-    int lastChain,
-    int maxChain,
-    int playCount,
-  });
+
+
+
 }
-
 /// @nodoc
-class _$QuizStatisticsCopyWithImpl<$Res, $Val extends QuizStatistics>
+class _$QuizStatisticsCopyWithImpl<$Res>
     implements $QuizStatisticsCopyWith<$Res> {
-  _$QuizStatisticsCopyWithImpl(this._value, this._then);
+  _$QuizStatisticsCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
+  final QuizStatistics _self;
+  final $Res Function(QuizStatistics) _then;
 
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of QuizStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? clearCount = null,
-    Object? currentChain = null,
-    Object? lastChain = null,
-    Object? maxChain = null,
-    Object? playCount = null,
-  }) {
-    return _then(
-      _value.copyWith(
-            clearCount: null == clearCount
-                ? _value.clearCount
-                : clearCount // ignore: cast_nullable_to_non_nullable
-                      as int,
-            currentChain: null == currentChain
-                ? _value.currentChain
-                : currentChain // ignore: cast_nullable_to_non_nullable
-                      as int,
-            lastChain: null == lastChain
-                ? _value.lastChain
-                : lastChain // ignore: cast_nullable_to_non_nullable
-                      as int,
-            maxChain: null == maxChain
-                ? _value.maxChain
-                : maxChain // ignore: cast_nullable_to_non_nullable
-                      as int,
-            playCount: null == playCount
-                ? _value.playCount
-                : playCount // ignore: cast_nullable_to_non_nullable
-                      as int,
-          )
-          as $Val,
-    );
-  }
+/// Create a copy of QuizStatistics
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? clearCount = null,Object? currentChain = null,Object? lastChain = null,Object? maxChain = null,Object? playCount = null,}) {
+  return _then(_self.copyWith(
+clearCount: null == clearCount ? _self.clearCount : clearCount // ignore: cast_nullable_to_non_nullable
+as int,currentChain: null == currentChain ? _self.currentChain : currentChain // ignore: cast_nullable_to_non_nullable
+as int,lastChain: null == lastChain ? _self.lastChain : lastChain // ignore: cast_nullable_to_non_nullable
+as int,maxChain: null == maxChain ? _self.maxChain : maxChain // ignore: cast_nullable_to_non_nullable
+as int,playCount: null == playCount ? _self.playCount : playCount // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-abstract class _$$QuizStatisticsImplCopyWith<$Res>
-    implements $QuizStatisticsCopyWith<$Res> {
-  factory _$$QuizStatisticsImplCopyWith(
-    _$QuizStatisticsImpl value,
-    $Res Function(_$QuizStatisticsImpl) then,
-  ) = __$$QuizStatisticsImplCopyWithImpl<$Res>;
-
-  @override
-  @useResult
-  $Res call({
-    int clearCount,
-    int currentChain,
-    int lastChain,
-    int maxChain,
-    int playCount,
-  });
 }
 
-/// @nodoc
-class __$$QuizStatisticsImplCopyWithImpl<$Res>
-    extends _$QuizStatisticsCopyWithImpl<$Res, _$QuizStatisticsImpl>
-    implements _$$QuizStatisticsImplCopyWith<$Res> {
-  __$$QuizStatisticsImplCopyWithImpl(
-    _$QuizStatisticsImpl _value,
-    $Res Function(_$QuizStatisticsImpl) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of QuizStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? clearCount = null,
-    Object? currentChain = null,
-    Object? lastChain = null,
-    Object? maxChain = null,
-    Object? playCount = null,
-  }) {
-    return _then(
-      _$QuizStatisticsImpl(
-        clearCount: null == clearCount
-            ? _value.clearCount
-            : clearCount // ignore: cast_nullable_to_non_nullable
-                  as int,
-        currentChain: null == currentChain
-            ? _value.currentChain
-            : currentChain // ignore: cast_nullable_to_non_nullable
-                  as int,
-        lastChain: null == lastChain
-            ? _value.lastChain
-            : lastChain // ignore: cast_nullable_to_non_nullable
-                  as int,
-        maxChain: null == maxChain
-            ? _value.maxChain
-            : maxChain // ignore: cast_nullable_to_non_nullable
-                  as int,
-        playCount: null == playCount
-            ? _value.playCount
-            : playCount // ignore: cast_nullable_to_non_nullable
-                  as int,
-      ),
-    );
-  }
+/// Adds pattern-matching-related methods to [QuizStatistics].
+extension QuizStatisticsPatterns on QuizStatistics {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _QuizStatistics value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _QuizStatistics() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _QuizStatistics value)  $default,){
+final _that = this;
+switch (_that) {
+case _QuizStatistics():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _QuizStatistics value)?  $default,){
+final _that = this;
+switch (_that) {
+case _QuizStatistics() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int clearCount,  int currentChain,  int lastChain,  int maxChain,  int playCount)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _QuizStatistics() when $default != null:
+return $default(_that.clearCount,_that.currentChain,_that.lastChain,_that.maxChain,_that.playCount);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int clearCount,  int currentChain,  int lastChain,  int maxChain,  int playCount)  $default,) {final _that = this;
+switch (_that) {
+case _QuizStatistics():
+return $default(_that.clearCount,_that.currentChain,_that.lastChain,_that.maxChain,_that.playCount);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int clearCount,  int currentChain,  int lastChain,  int maxChain,  int playCount)?  $default,) {final _that = this;
+switch (_that) {
+case _QuizStatistics() when $default != null:
+return $default(_that.clearCount,_that.currentChain,_that.lastChain,_that.maxChain,_that.playCount);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$QuizStatisticsImpl
-    with DiagnosticableTreeMixin
-    implements _QuizStatistics {
-  const _$QuizStatisticsImpl({
-    this.clearCount = 0,
-    this.currentChain = 0,
-    this.lastChain = 0,
-    this.maxChain = 0,
-    this.playCount = 0,
-  });
 
-  factory _$QuizStatisticsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$QuizStatisticsImplFromJson(json);
+class _QuizStatistics with DiagnosticableTreeMixin implements QuizStatistics {
+  const _QuizStatistics({this.clearCount = 0, this.currentChain = 0, this.lastChain = 0, this.maxChain = 0, this.playCount = 0});
+  factory _QuizStatistics.fromJson(Map<String, dynamic> json) => _$QuizStatisticsFromJson(json);
 
-  @override
-  @JsonKey()
-  final int clearCount;
-  @override
-  @JsonKey()
-  final int currentChain;
-  @override
-  @JsonKey()
-  final int lastChain;
-  @override
-  @JsonKey()
-  final int maxChain;
-  @override
-  @JsonKey()
-  final int playCount;
+@override@JsonKey() final  int clearCount;
+@override@JsonKey() final  int currentChain;
+@override@JsonKey() final  int lastChain;
+@override@JsonKey() final  int maxChain;
+@override@JsonKey() final  int playCount;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizStatistics(clearCount: $clearCount, currentChain: $currentChain, lastChain: $lastChain, maxChain: $maxChain, playCount: $playCount)';
-  }
+/// Create a copy of QuizStatistics
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$QuizStatisticsCopyWith<_QuizStatistics> get copyWith => __$QuizStatisticsCopyWithImpl<_QuizStatistics>(this, _$identity);
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'QuizStatistics'))
-      ..add(DiagnosticsProperty('clearCount', clearCount))
-      ..add(DiagnosticsProperty('currentChain', currentChain))
-      ..add(DiagnosticsProperty('lastChain', lastChain))
-      ..add(DiagnosticsProperty('maxChain', maxChain))
-      ..add(DiagnosticsProperty('playCount', playCount));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$QuizStatisticsImpl &&
-            (identical(other.clearCount, clearCount) ||
-                other.clearCount == clearCount) &&
-            (identical(other.currentChain, currentChain) ||
-                other.currentChain == currentChain) &&
-            (identical(other.lastChain, lastChain) ||
-                other.lastChain == lastChain) &&
-            (identical(other.maxChain, maxChain) ||
-                other.maxChain == maxChain) &&
-            (identical(other.playCount, playCount) ||
-                other.playCount == playCount));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    clearCount,
-    currentChain,
-    lastChain,
-    maxChain,
-    playCount,
-  );
-
-  /// Create a copy of QuizStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$QuizStatisticsImplCopyWith<_$QuizStatisticsImpl> get copyWith =>
-      __$$QuizStatisticsImplCopyWithImpl<_$QuizStatisticsImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$QuizStatisticsImplToJson(this);
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$QuizStatisticsToJson(this, );
+}
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'QuizStatistics'))
+    ..add(DiagnosticsProperty('clearCount', clearCount))..add(DiagnosticsProperty('currentChain', currentChain))..add(DiagnosticsProperty('lastChain', lastChain))..add(DiagnosticsProperty('maxChain', maxChain))..add(DiagnosticsProperty('playCount', playCount));
 }
 
-abstract class _QuizStatistics implements QuizStatistics {
-  const factory _QuizStatistics({
-    final int clearCount,
-    final int currentChain,
-    final int lastChain,
-    final int maxChain,
-    final int playCount,
-  }) = _$QuizStatisticsImpl;
-
-  factory _QuizStatistics.fromJson(Map<String, dynamic> json) =
-      _$QuizStatisticsImpl.fromJson;
-
-  @override
-  int get clearCount;
-
-  @override
-  int get currentChain;
-
-  @override
-  int get lastChain;
-
-  @override
-  int get maxChain;
-
-  @override
-  int get playCount;
-
-  /// Create a copy of QuizStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$QuizStatisticsImplCopyWith<_$QuizStatisticsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QuizStatistics&&(identical(other.clearCount, clearCount) || other.clearCount == clearCount)&&(identical(other.currentChain, currentChain) || other.currentChain == currentChain)&&(identical(other.lastChain, lastChain) || other.lastChain == lastChain)&&(identical(other.maxChain, maxChain) || other.maxChain == maxChain)&&(identical(other.playCount, playCount) || other.playCount == playCount));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,clearCount,currentChain,lastChain,maxChain,playCount);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'QuizStatistics(clearCount: $clearCount, currentChain: $currentChain, lastChain: $lastChain, maxChain: $maxChain, playCount: $playCount)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$QuizStatisticsCopyWith<$Res> implements $QuizStatisticsCopyWith<$Res> {
+  factory _$QuizStatisticsCopyWith(_QuizStatistics value, $Res Function(_QuizStatistics) _then) = __$QuizStatisticsCopyWithImpl;
+@override @useResult
+$Res call({
+ int clearCount, int currentChain, int lastChain, int maxChain, int playCount
+});
+
+
+
+
+}
+/// @nodoc
+class __$QuizStatisticsCopyWithImpl<$Res>
+    implements _$QuizStatisticsCopyWith<$Res> {
+  __$QuizStatisticsCopyWithImpl(this._self, this._then);
+
+  final _QuizStatistics _self;
+  final $Res Function(_QuizStatistics) _then;
+
+/// Create a copy of QuizStatistics
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? clearCount = null,Object? currentChain = null,Object? lastChain = null,Object? maxChain = null,Object? playCount = null,}) {
+  return _then(_QuizStatistics(
+clearCount: null == clearCount ? _self.clearCount : clearCount // ignore: cast_nullable_to_non_nullable
+as int,currentChain: null == currentChain ? _self.currentChain : currentChain // ignore: cast_nullable_to_non_nullable
+as int,lastChain: null == lastChain ? _self.lastChain : lastChain // ignore: cast_nullable_to_non_nullable
+as int,maxChain: null == maxChain ? _self.maxChain : maxChain // ignore: cast_nullable_to_non_nullable
+as int,playCount: null == playCount ? _self.playCount : playCount // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+// dart format on
