@@ -194,6 +194,7 @@ class QuizInfoNotifier extends _$QuizInfoNotifier {
       final lastResultList = wordInput.wordsResultList[currentIndex - 1];
       // 正答している場合
       if (lastResultList != null &&
+          lastResultList.length == (state.value?.answer?.name.length ?? -1) &&
           lastResultList.every((element) => element == WordNameState.match)) {
         await _successProcess();
         return true;
