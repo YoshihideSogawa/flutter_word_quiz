@@ -148,10 +148,10 @@ class StatisticsView extends ConsumerWidget {
 
   /// この画面を閉じます。(問題の更新があれば更新します。)
   Future<void> close(WidgetRef ref, QuizTypes quizType) async {
+    quizPageInfo.value = quizPageInfo.value.copyWith(showStatistics: false);
     await ref
         .read(quizInfoNotifierProvider(quizType).notifier)
         .refreshDailyQuiz();
-    quizPageInfo.value = quizPageInfo.value.copyWith(showStatistics: false);
   }
 }
 
