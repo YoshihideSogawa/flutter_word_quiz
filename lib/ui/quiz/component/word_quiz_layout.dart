@@ -50,12 +50,16 @@ class WordQuizLayout extends HookConsumerWidget {
       lazyQuizProcess.value = quizInfo?.quizProcess;
     }
 
+    useEffect(() {
+      wordAnimation.addListener(wordAnimationCallback);
+      return () => wordAnimation.removeListener(wordAnimationCallback);
+    }, [wordAnimation, quizInfo?.quizProcess]);
+
     // quizProcessの初期設定
     if (lazyQuizProcess.value == null ||
         lazyQuizProcess.value != quizInfo?.quizProcess) {
       wordAnimationCallback();
     }
-    wordAnimation.addListener(wordAnimationCallback);
     // debugPrint('$quizType >>> ${quizInfo?.answer?.name}');
     return Stack(
       children: [
